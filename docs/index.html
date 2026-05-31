@@ -11,6 +11,7 @@
         />
         <title>基因工坊 - 免费基因图谱编辑工具</title>
         <link rel="icon" href="icon.png" type="image/png" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
         <link rel="stylesheet" href="styles.css" />
     </head>
     <body>
@@ -37,7 +38,21 @@
                 <a href="#features">功能</a>
                 <a href="#screenshots">界面</a>
                 <a href="#platforms">平台</a>
+                <a href="#feedback">反馈</a>
                 <a href="#license">许可</a>
+                <div class="nav-dropdown-wrapper">
+                    <a href="https://github.com/GenePad/GenePad.github.io/releases/latest" target="_blank" rel="noopener" class="nav-download">下载</a>
+                    <div class="nav-dropdown-menu">
+                        <a href="https://github.com/GenePad/GenePad.github.io/releases/latest" target="_blank" rel="noopener">
+                            <svg class="dropdown-item-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                            GitHub（国际）
+                        </a>
+                        <a href="https://gitee.com/GenePad/GenePad.github.io/releases/latest" target="_blank" rel="noopener">
+                            <svg class="gitee-icon-inline" viewBox="0 0 24 24" fill="currentColor"><path d="M11.984 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.016 0zm6.09 5.333c.328 0 .593.266.592.593v1.482a.594.594 0 0 1-.593.592H9.777c-.982 0-1.778.796-1.778 1.778v5.926c0 .327.266.592.593.592h5.926c.982 0 1.778-.796 1.778-1.778v-.296a.593.593 0 0 0-.592-.593h-3.408a.592.592 0 0 1-.592-.592v-1.482a.592.592 0 0 1 .593-.592h5.778c.327 0 .593.265.593.592v3.555a4 4 0 0 1-4 4H8.37a.593.593 0 0 1-.593-.592V8.592a4 4 0 0 1 4-4h6.298z"/></svg>
+                            Gitee（大陆）
+                        </a>
+                    </div>
+                </div>
                 <a href="tech-support.html">技术支持</a>
             </nav>
         </header>
@@ -53,9 +68,24 @@
                         等常见格式，提供图谱浏览、序列编辑、注释管理、引物设计与可视化分析。
                     </p>
                     <div class="hero-actions">
-                        <a class="button primary" href="#screenshots"
-                            >查看界面</a
-                        >
+                        <div class="dropdown">
+                            <button class="button primary" type="button">
+                                <i class="fa-solid fa-download button-icon"></i>
+                                免费下载
+                                <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a href="https://github.com/GenePad/GenePad.github.io/releases/latest" target="_blank" rel="noopener">
+                                    <svg class="dropdown-item-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                                    <span>GitHub（国际）</span>
+                                </a>
+                                <a href="https://gitee.com/GenePad/GenePad.github.io/releases/latest" target="_blank" rel="noopener">
+                                    <svg class="gitee-icon-inline" viewBox="0 0 24 24" fill="currentColor"><path d="M11.984 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.016 0zm6.09 5.333c.328 0 .593.266.592.593v1.482a.594.594 0 0 1-.593.592H9.777c-.982 0-1.778.796-1.778 1.778v5.926c0 .327.266.592.593.592h5.926c.982 0 1.778-.796 1.778-1.778v-.296a.593.593 0 0 0-.592-.593h-3.408a.592.592 0 0 1-.592-.592v-1.482a.592.592 0 0 1 .593-.592h5.778c.327 0 .593.265.593.592v3.555a4 4 0 0 1-4 4H8.37a.593.593 0 0 1-.593-.592V8.592a4 4 0 0 1 4-4h6.298z"/></svg>
+                                    <span>Gitee（大陆）</span>
+                                </a>
+                            </div>
+                        </div>
+                        <a class="button secondary" href="#screenshots">查看界面</a>
                         <a class="button secondary" href="#license">使用许可</a>
                     </div>
                     <dl class="hero-stats" aria-label="产品能力">
@@ -255,14 +285,52 @@
                     <h2>覆盖常用平台</h2>
                 </div>
                 <div class="platforms" aria-label="支持平台">
-                    <span>Windows</span>
-                    <span>macOS</span>
-                    <span>Linux</span>
-                    <span>Android</span>
+                    <span>
+                        <i class="fa-brands fa-windows platform-icon"></i>
+                        Windows
+                    </span>
+                    <span>
+                        <i class="fa-brands fa-apple platform-icon"></i>
+                        macOS
+                    </span>
+                    <span>
+                        <i class="fa-brands fa-linux platform-icon"></i>
+                        Linux
+                    </span>
+                    <span>
+                        <i class="fa-brands fa-android platform-icon"></i>
+                        Android
+                    </span>
                 </div>
                 <p class="platform-note">
                     当前免费版与即将上线的个人专业版功能暂时无区别。下载与发布信息可根据项目发布节奏补充到本页面。
                 </p>
+            </section>
+
+            <section class="section feedback-section" id="feedback">
+                <div class="section-heading">
+                    <p class="eyebrow">Feedback</p>
+                    <h2>反馈与建议</h2>
+                </div>
+                <p class="feedback-desc">
+                    我们重视每一位用户的声音。如果您在使用过程中遇到问题或有改进建议，欢迎通过以下平台提交 Issue：
+                </p>
+                <div class="feedback-links">
+                    <a class="feedback-card" href="https://github.com/GenePad/GenePad.github.io/issues" target="_blank" rel="noopener">
+                        <svg class="feedback-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                        <div>
+                            <strong>GitHub Issues</strong>
+                            <span>国际用户 — 在 GitHub 提交问题或建议</span>
+                        </div>
+                    </a>
+                    <a class="feedback-card" href="https://gitee.com/GenePad/GenePad.github.io/issues" target="_blank" rel="noopener">
+                        <svg class="feedback-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M11.984 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.016 0zm6.09 5.333c.328 0 .593.266.592.593v1.482a.594.594 0 0 1-.593.592H9.777c-.982 0-1.778.796-1.778 1.778v5.926c0 .327.266.592.593.592h5.926c.982 0 1.778-.796 1.778-1.778v-.296a.593.593 0 0 0-.592-.593h-3.408a.592.592 0 0 1-.592-.592v-1.482a.592.592 0 0 1 .593-.592h5.778c.327 0 .593.265.593.592v3.555a4 4 0 0 1-4 4H8.37a.593.593 0 0 1-.593-.592V8.592a4 4 0 0 1 4-4h6.298z"/></svg>
+                        <div>
+                            <strong>Gitee Issues</strong>
+                            <span>大陆用户 — 在 Gitee 提交问题或建议</span>
+                        </div>
+                    </a>
+                </div>
             </section>
 
             <section class="section license-section" id="license">
@@ -281,6 +349,11 @@
 
         <footer class="site-footer">
             <span>© 2026 基因工坊</span>
+            <div class="footer-links">
+                <a href="https://github.com/GenePad/GenePad.github.io/releases/latest" target="_blank" rel="noopener">GitHub 下载</a>
+                <a href="https://gitee.com/GenePad/GenePad.github.io/releases/latest" target="_blank" rel="noopener">Gitee 下载</a>
+                <a href="https://github.com/GenePad/GenePad.github.io/issues" target="_blank" rel="noopener">反馈问题</a>
+            </div>
             <span>Free for personal evaluation and learning only.</span>
         </footer>
 

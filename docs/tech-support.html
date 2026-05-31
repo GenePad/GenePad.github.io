@@ -39,6 +39,7 @@
                 <a href="#schema">数据表</a>
                 <a href="#encoding">编码方式</a>
                 <a href="#workflow">读写流程</a>
+                <a href="#source">源码</a>
             </nav>
         </header>
 
@@ -462,6 +463,1442 @@
                 </div>
             </section>
 
+            <section class="section source-section" id="source">
+                <div class="section-heading">
+                    <p class="eyebrow">Source Code</p>
+                    <h2>完整读写源码</h2>
+                    <p>以下为 <code>.gen</code> 文件读写的完整实现代码，共 6 个核心文件。</p>
+                </div>
+
+                <div class="source-list">
+                    <details class="source-item" open>
+                        <summary><strong>schema.ts</strong> <span>表结构与常量定义</span></summary>
+                        <pre class="code-block"><code>const BLOCK_SIZE = 10000;
+
+export const SCHEMA_VERSION = 2;
+
+export const CREATE_TABLES_SQL = `
+CREATE TABLE IF NOT EXISTS schema_version (
+  key TEXT PRIMARY KEY,
+  value TEXT
+);
+
+CREATE TABLE IF NOT EXISTS project_meta (
+  key TEXT PRIMARY KEY,
+  value TEXT
+);
+
+CREATE TABLE IF NOT EXISTS sequence_blocks (
+  block_index INTEGER PRIMARY KEY,
+  bases TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS features (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  type TEXT NOT NULL,
+  start_pos INTEGER NOT NULL,
+  end_pos INTEGER NOT NULL,
+  strand TEXT NOT NULL,
+  color TEXT,
+  label TEXT,
+  note TEXT,
+  frame INTEGER,
+  visible INTEGER DEFAULT 1
+);
+CREATE INDEX IF NOT EXISTS idx_features_range ON features(start_pos, end_pos);
+
+CREATE TABLE IF NOT EXISTS primers (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  sequence TEXT NOT NULL,
+  description TEXT,
+  visible INTEGER DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS primer_binding_sites (
+  id TEXT PRIMARY KEY,
+  primer_id TEXT NOT NULL,
+  start_pos INTEGER NOT NULL,
+  end_pos INTEGER NOT NULL,
+  bound_strand TEXT NOT NULL,
+  annealed_bases TEXT,
+  melting_temperature REAL,
+  components TEXT,
+  alignment TEXT
+);
+CREATE INDEX IF NOT EXISTS idx_binding_range ON primer_binding_sites(start_pos, end_pos);
+CREATE INDEX IF NOT EXISTS idx_binding_primer ON primer_binding_sites(primer_id);
+
+CREATE TABLE IF NOT EXISTS alignment_entries (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  sequence TEXT NOT NULL,
+  visible INTEGER DEFAULT 1,
+  features_json TEXT,
+  chromatogram_json TEXT
+);
+
+CREATE TABLE IF NOT EXISTS attachments (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  mime_type TEXT NOT NULL,
+  data BLOB NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS undo_entries (
+  sequence_number INTEGER PRIMARY KEY AUTOINCREMENT,
+  stack_type TEXT NOT NULL DEFAULT 'undo',
+  operation_type TEXT NOT NULL,
+  target_id TEXT,
+  before_diff TEXT,
+  after_diff TEXT
+);
+
+CREATE TABLE IF NOT EXISTS edit_history (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  timestamp TEXT NOT NULL,
+  operation_type TEXT NOT NULL,
+  target_id TEXT,
+  description TEXT,
+  before_snapshot TEXT,
+  after_snapshot TEXT
+);
+
+CREATE TABLE IF NOT EXISTS chromatogram_data (
+  id TEXT PRIMARY KEY,
+  trace_a BLOB,
+  trace_c BLOB,
+  trace_g BLOB,
+  trace_t BLOB,
+  peak_locations BLOB
+);
+`;
+
+export { BLOCK_SIZE };</code></pre>
+                    </details>
+
+                    <details class="source-item">
+                        <summary><strong>dataAccessLayer.ts</strong> <span>数据访问层接口</span></summary>
+                        <pre class="code-block"><code>import type { DNASequence, Feature, Primer, AlignmentEntry } from '@/types/dna';
+import type { SequenceInfo, EditHistoryEntry } from '@/types/sequenceInfo';
+
+export interface ProjectMeta {
+  name: string;
+  description: string;
+  isCircular: boolean;
+  accession?: string;
+  organism?: string;
+  date?: string;
+  typeOfDisplay: 'file_name' | 'custom';
+  customName: string;
+  fileName?: string;
+  originalFormat?: string;
+  originalPath?: string;
+}
+
+export type UndoOperationType =
+  | 'addFeature' | 'removeFeature' | 'updateFeature'
+  | 'addPrimer' | 'removePrimer' | 'updatePrimer'
+  | 'insertBases' | 'deleteBases' | 'replaceBases' | 'replaceSequence'
+  | 'addAlignmentEntry' | 'removeAlignmentEntry';
+
+export interface UndoEntry {
+  operationType: UndoOperationType;
+  targetId?: string;
+  beforeDiff: unknown;
+  afterDiff: unknown;
+}
+
+export interface AttachmentMeta {
+  id: string;
+  name: string;
+  mimeType: string;
+}
+
+export interface DataAccessLayer {
+  open(path: string): Promise&lt;void&gt;;
+  openFromBytes(data: Uint8Array): Promise&lt;void&gt;;
+  close(): Promise&lt;void&gt;;
+  isOpen(): boolean;
+
+  getAllMetadata(): Promise&lt;Record&lt;string, string&gt;&gt;;
+  setMetadata(values: Record&lt;string, string&gt;): Promise&lt;void&gt;;
+
+  getSequenceLength(): Promise&lt;number&gt;;
+  getSequenceChunk(startIndex: number, length: number): Promise&lt;string&gt;;
+  writeSequence(startIndex: number, newBases: string): Promise&lt;void&gt;;
+
+  getSequenceInfo(): Promise&lt;SequenceInfo&gt;;
+
+  getAllFeatures(): Promise&lt;Feature[]&gt;;
+  getFeaturesInRange(start: number, end: number): Promise&lt;Feature[]&gt;;
+  addFeature(feature: Feature): Promise&lt;void&gt;;
+  updateFeature(id: string, changes: Partial&lt;Feature&gt;): Promise&lt;void&gt;;
+  removeFeature(id: string): Promise&lt;void&gt;;
+  batchUpdateFeaturePositions(adjustments: Array&lt;{ id: string; start?: number; end?: number }&gt;): Promise&lt;void&gt;;
+
+  getAllPrimers(): Promise&lt;Primer[]&gt;;
+  getPrimersInRange(start: number, end: number): Promise&lt;Primer[]&gt;;
+  addPrimer(primer: Primer): Promise&lt;void&gt;;
+  updatePrimer(id: string, changes: Partial&lt;Primer&gt;): Promise&lt;void&gt;;
+  removePrimer(id: string): Promise&lt;void&gt;;
+
+  getAlignmentEntries(): Promise&lt;AlignmentEntry[]&gt;;
+  addAlignmentEntry(entry: AlignmentEntry): Promise&lt;void&gt;;
+  removeAlignmentEntry(id: string): Promise&lt;void&gt;;
+
+  getAttachments(): Promise&lt;AttachmentMeta[]&gt;;
+  addAttachment(name: string, data: ArrayBuffer, mimeType: string): Promise&lt;void&gt;;
+  getAttachmentData(id: string): Promise&lt;ArrayBuffer&gt;;
+  removeAttachment(id: string): Promise&lt;void&gt;;
+
+  pushUndoEntry(entry: UndoEntry): Promise&lt;void&gt;;
+  popUndo(): Promise&lt;UndoEntry | null&gt;;
+  peekRedo(): Promise&lt;UndoEntry | null&gt;;
+  popRedo(): Promise&lt;UndoEntry | null&gt;;
+  clearUndoHistory(): Promise&lt;void&gt;;
+  getUndoStackSize(): Promise&lt;number&gt;;
+  getRedoStackSize(): Promise&lt;number&gt;;
+
+  getEditHistory(limit: number, offset: number): Promise&lt;EditHistoryEntry[]&gt;;
+  addEditHistory(entry: Omit&lt;EditHistoryEntry, 'id'&gt;): Promise&lt;void&gt;;
+
+  importFromSequence(seq: DNASequence): Promise&lt;void&gt;;
+  exportToSequence(): Promise&lt;DNASequence&gt;;
+  getRawBytes(): Promise&lt;Uint8Array&gt;;
+
+  commitWorkingCopy(seq: DNASequence): Promise&lt;void&gt;;
+}</code></pre>
+                    </details>
+
+                    <details class="source-item">
+                        <summary><strong>dalFactory.ts</strong> <span>平台自适应工厂</span></summary>
+                        <pre class="code-block"><code>import type { DataAccessLayer } from '@/utils/dataAccessLayer';
+import { TauriSqlDataAccessLayer } from '@/utils/tauriSqlDAL';
+import { SqlJsDataAccessLayer } from '@/utils/sqljsDAL';
+
+export async function createDataAccessLayer(): Promise&lt;DataAccessLayer&gt; {
+  const isTauri = typeof window !== 'undefined' &amp;&amp; (
+    '__TAURI_INTERNALS__' in window || '__TAURI__' in window
+  );
+
+  if (isTauri) {
+    return new TauriSqlDataAccessLayer();
+  }
+
+  return new SqlJsDataAccessLayer();
+}</code></pre>
+                    </details>
+
+                    <details class="source-item">
+                        <summary><strong>fileParser.ts</strong> <span>文件格式检测与解析</span></summary>
+                        <pre class="code-block"><code>import type { DNASequence } from '@/types/dna';
+import { parseGenBank } from '@/utils/genbankParser';
+import { parseGjson } from '@/utils/gjsonParser';
+import { parseSnapGeneDna } from '@/utils/snapgeneParser';
+import { parseAb1Async } from '@/utils/tauriCommands';
+
+export interface FileParser {
+  format: string;
+  extensions: string[];
+  canParse(content: string | Uint8Array, fileName: string): boolean;
+  parse(content: string | Uint8Array): Promise&lt;DNASequence&gt; | DNASequence;
+}
+
+function parseFastaContent(content: string): DNASequence {
+  const lines = content.split(/\r?\n/);
+  const seqLines: string[] = [];
+  let name = '';
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (trimmed.startsWith('&gt;')) {
+      if (!name &amp;&amp; seqLines.length === 0) {
+        name = trimmed.substring(1).trim();
+      }
+      continue;
+    }
+    if (trimmed) {
+      seqLines.push(trimmed);
+    }
+  }
+  const sequence = seqLines.join('').toUpperCase().replace(/[^ATCG]/g, '');
+  return {
+    id: name || `seq-${Date.now()}`,
+    name: name || 'Unnamed',
+    typeOfDisplay: 'file_name',
+    customName: '',
+    description: '',
+    sequence,
+    length: sequence.length,
+    isCircular: false,
+    features: [],
+    primers: [],
+    restrictionSites: [],
+  };
+}
+
+export const fileParsers: FileParser[] = [
+  {
+    format: 'genbank',
+    extensions: ['.gb', '.gbk', '.genbank'],
+    canParse: (content, fileName) =&gt; {
+      if (typeof content !== 'string') return false;
+      return fileName.endsWith('.gb') || fileName.endsWith('.gbk')
+        || fileName.endsWith('.genbank') || content.startsWith('LOCUS');
+    },
+    parse: (content) =&gt; parseGenBank(content as string),
+  },
+  {
+    format: 'gjson',
+    extensions: ['.gjson'],
+    canParse: (content, fileName) =&gt; {
+      if (typeof content !== 'string') return false;
+      return fileName.endsWith('.gjson') || content.trim().startsWith('{');
+    },
+    parse: (content) =&gt; parseGjson(content as string),
+  },
+  {
+    format: 'snapgene',
+    extensions: ['.dna'],
+    canParse: (_content, fileName) =&gt; {
+      return fileName.endsWith('.dna');
+    },
+    parse: (content) =&gt; parseSnapGeneDna((content as Uint8Array).buffer as ArrayBuffer),
+  },
+  {
+    format: 'ab1',
+    extensions: ['.ab1'],
+    canParse: (_content, fileName) =&gt; {
+      return fileName.endsWith('.ab1');
+    },
+    parse: async (content) =&gt; {
+      const result = await parseAb1Async(content as Uint8Array);
+      return {
+        id: `ab1-${Date.now()}`,
+        name: 'AB1 Trace',
+        typeOfDisplay: 'file_name',
+        customName: '',
+        description: '',
+        sequence: result.sequence || '',
+        length: (result.sequence || '').length,
+        isCircular: false,
+        features: [],
+        primers: [],
+        restrictionSites: [],
+        chromatogram: {
+          traceA: result.traceA,
+          traceC: result.traceC,
+          traceG: result.traceG,
+          traceT: result.traceT,
+          peakLocations: result.peakLocations,
+        },
+      };
+    },
+  },
+  {
+    format: 'gen',
+    extensions: ['.gen'],
+    canParse: (_content, fileName) =&gt; {
+      return fileName.toLowerCase().endsWith('.gen');
+    },
+    parse: (content) =&gt; {
+      const header = new TextDecoder().decode(((content as Uint8Array).slice(0, 16)));
+      if (header !== 'SQLite format 3\u0000') {
+        throw new Error('Invalid .gen file');
+      }
+      throw new Error('.gen files must be loaded via DataAccessLayer, not via parse().');
+    },
+  },
+  {
+    format: 'fasta',
+    extensions: ['.fa', '.fasta', '.fna', '.ffn', '.faa', '.mpfa'],
+    canParse: (content, fileName) =&gt; {
+      if (typeof content !== 'string') return false;
+      const name = fileName.toLowerCase();
+      return name.endsWith('.fa') || name.endsWith('.fasta') || name.endsWith('.fna')
+        || name.endsWith('.ffn') || name.endsWith('.faa') || name.endsWith('.mpfa')
+        || content.trim().startsWith('&gt;');
+    },
+    parse: (content) =&gt; parseFastaContent(content as string),
+  },
+];
+
+export function findParser(content: string | Uint8Array, fileName: string): FileParser | undefined {
+  return fileParsers.find(p =&gt; p.canParse(content, fileName));
+}</code></pre>
+                    </details>
+
+                    <details class="source-item">
+                        <summary><strong>sqljsDAL.ts</strong> <span>浏览器端实现（sql.js）</span></summary>
+                        <pre class="code-block"><code>import type { DataAccessLayer, UndoEntry, AttachmentMeta } from '@/utils/dataAccessLayer';
+import { CREATE_TABLES_SQL, BLOCK_SIZE } from '@/utils/schema';
+import type { DNASequence, Feature, Primer, AlignmentEntry } from '@/types/dna';
+import type { SequenceInfo, EditHistoryEntry } from '@/types/sequenceInfo';
+
+let SqlJsInitPromise: Promise&lt;unknown&gt; | null = null;
+
+async function getSqlJs() {
+  if (!SqlJsInitPromise) {
+    SqlJsInitPromise = import('sql.js').then(mod =&gt; {
+      return mod.default({
+        locateFile: (file: string) =&gt; `https://sql.js.org/dist/${file}`,
+      });
+    });
+  }
+  return SqlJsInitPromise;
+}
+
+interface SqlJsDatabase {
+  run(sql: string, params?: unknown[]): void;
+  exec(sql: string, params?: unknown[]): Array&lt;{ columns: string[]; values: unknown[][] }&gt;;
+  export(): Uint8Array;
+  close(): void;
+}
+
+function createId(prefix: string): string {
+  return `${prefix}-${Date.now()}`;
+}
+
+function resultToRows&lt;T&gt;(columns: string[], values: unknown[][]): T[] {
+  return values.map(row =&gt; {
+    const obj: Record&lt;string, unknown&gt; = {};
+    columns.forEach((col, i) =&gt; { obj[col] = row[i]; });
+    return obj as T;
+  });
+}
+
+export class SqlJsDataAccessLayer implements DataAccessLayer {
+  private sqlJsDb: SqlJsDatabase | null = null;
+
+  async open(_path: string): Promise&lt;void&gt; {
+    const dbConstructor = await getSqlJs() as { Database: new (data?: ArrayLike&lt;number&gt; | null) =&gt; SqlJsDatabase };
+    this.sqlJsDb = new dbConstructor.Database();
+    this.sqlJsDb.run(CREATE_TABLES_SQL);
+  }
+
+  async openFromBytes(data: Uint8Array): Promise&lt;void&gt; {
+    const dbConstructor = await getSqlJs() as { Database: new (data?: ArrayLike&lt;number&gt; | null) =&gt; SqlJsDatabase };
+    this.sqlJsDb = new dbConstructor.Database(data);
+    this.sqlJsDb.run(CREATE_TABLES_SQL);
+  }
+
+  async close(): Promise&lt;void&gt; {
+    this.sqlJsDb?.close();
+    this.sqlJsDb = null;
+  }
+
+  isOpen(): boolean {
+    return this.sqlJsDb !== null;
+  }
+
+  private ensureDb(): SqlJsDatabase {
+    if (!this.sqlJsDb) throw new Error('Database not opened');
+    return this.sqlJsDb;
+  }
+
+  private execSingle(sql: string, params?: unknown[]): Array&lt;{ columns: string[]; values: unknown[][] }&gt; {
+    const db = this.ensureDb();
+    const result = db.exec(sql, params);
+    if (result.length === 0) return [{ columns: [], values: [] }];
+    return result;
+  }
+
+  async getAllMetadata(): Promise&lt;Record&lt;string, string&gt;&gt; {
+    const result = this.execSingle('SELECT key, value FROM project_meta')[0];
+    if (result.values.length === 0) return {};
+    const rows = resultToRows&lt;{ key: string; value: string }&gt;(result.columns, result.values);
+    const out: Record&lt;string, string&gt; = {};
+    for (const r of rows) { out[r.key] = r.value; }
+    return out;
+  }
+
+  async setMetadata(values: Record&lt;string, string&gt;): Promise&lt;void&gt; {
+    const db = this.ensureDb();
+    for (const [key, value] of Object.entries(values)) {
+      db.run(
+        'INSERT INTO project_meta (key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value=excluded.value',
+        [key, value]
+      );
+    }
+  }
+
+  async getSequenceLength(): Promise&lt;number&gt; {
+    const result = this.execSingle('SELECT COALESCE(SUM(LENGTH(bases)), 0) AS total FROM sequence_blocks')[0];
+    if (result.values.length === 0) return 0;
+    return resultToRows&lt;{ total: number }&gt;(result.columns, result.values)[0]?.total ?? 0;
+  }
+
+  async getSequenceChunk(startIndex: number, length: number): Promise&lt;string&gt; {
+    const blockStart = Math.floor(startIndex / BLOCK_SIZE);
+    const endIndex = startIndex + length;
+    const blockEnd = Math.floor((endIndex - 1) / BLOCK_SIZE);
+
+    const result = this.execSingle(
+      'SELECT block_index, bases FROM sequence_blocks WHERE block_index BETWEEN ? AND ? ORDER BY block_index',
+      [blockStart, blockEnd]
+    )[0];
+
+    if (result.values.length === 0) return '';
+
+    const rows = resultToRows&lt;{ block_index: number; bases: string }&gt;(result.columns, result.values);
+    const blockMap = new Map&lt;number, string&gt;();
+    for (const row of rows) { blockMap.set(row.block_index, row.bases); }
+
+    let seq = '';
+    for (let i = blockStart; i &lt;= blockEnd; i++) { seq += blockMap.get(i) ?? ''; }
+    const offset = startIndex - blockStart * BLOCK_SIZE;
+    return seq.slice(offset, offset + length);
+  }
+
+  async writeSequence(startIndex: number, newBases: string): Promise&lt;void&gt; {
+    const db = this.ensureDb();
+    const oldLen = await this.getSequenceLength();
+    const oldSeq = await this.getSequenceChunk(0, oldLen);
+    const updated = oldSeq.slice(0, startIndex) + newBases + oldSeq.slice(startIndex);
+
+    db.run('DELETE FROM sequence_blocks');
+    for (let i = 0; i &lt; updated.length; i += BLOCK_SIZE) {
+      db.run('INSERT INTO sequence_blocks (block_index, bases) VALUES (?, ?)', [
+        Math.floor(i / BLOCK_SIZE),
+        updated.slice(i, i + BLOCK_SIZE),
+      ]);
+    }
+  }
+
+  async getSequenceInfo(): Promise&lt;SequenceInfo&gt; {
+    const meta = await this.getAllMetadata();
+    const length = await this.getSequenceLength();
+    return {
+      id: meta['accession'] || `seq-${Date.now()}`,
+      name: meta['name'] || 'Untitled',
+      typeOfDisplay: (meta['typeOfDisplay'] as 'file_name' | 'custom') || 'file_name',
+      customName: meta['customName'] || '',
+      description: meta['description'] || '',
+      length,
+      isCircular: meta['isCircular'] === 'true',
+      accession: meta['accession'] || undefined,
+      organism: meta['organism'] || undefined,
+      date: meta['date'] || undefined,
+      fileName: meta['fileName'] || undefined,
+    };
+  }
+
+  async getAllFeatures(): Promise&lt;Feature[]&gt; {
+    const result = this.execSingle('SELECT * FROM features ORDER BY start_pos')[0];
+    if (result.values.length === 0) return [];
+    return resultToRows&lt;{
+      id: string; name: string; type: string; start_pos: number; end_pos: number;
+      strand: string; color: string | null; label: string | null; note: string | null;
+      frame: number | null; visible: number;
+    }&gt;(result.columns, result.values).map(r =&gt; ({
+      id: r.id, name: r.name, type: r.type, start: r.start_pos, end: r.end_pos,
+      strand: r.strand as 'forward' | 'reverse' | 'none',
+      color: r.color ?? undefined, label: r.label ?? undefined,
+      note: r.note ?? undefined, frame: r.frame ?? undefined, visible: r.visible === 1,
+    }));
+  }
+
+  async getFeaturesInRange(start: number, end: number): Promise&lt;Feature[]&gt; {
+    const result = this.execSingle(
+      'SELECT * FROM features WHERE start_pos &lt;= ? AND end_pos &gt;= ? ORDER BY start_pos',
+      [end, start]
+    )[0];
+    if (result.values.length === 0) return [];
+    return resultToRows&lt;{
+      id: string; name: string; type: string; start_pos: number; end_pos: number;
+      strand: string; color: string | null; label: string | null; note: string | null;
+      frame: number | null; visible: number;
+    }&gt;(result.columns, result.values).map(r =&gt; ({
+      id: r.id, name: r.name, type: r.type, start: r.start_pos, end: r.end_pos,
+      strand: r.strand as 'forward' | 'reverse' | 'none',
+      color: r.color ?? undefined, label: r.label ?? undefined,
+      note: r.note ?? undefined, frame: r.frame ?? undefined, visible: r.visible === 1,
+    }));
+  }
+
+  async addFeature(feature: Feature): Promise&lt;void&gt; {
+    this.ensureDb().run(
+      `INSERT INTO features (id, name, type, start_pos, end_pos, strand, color, label, note, frame, visible)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [feature.id, feature.name, feature.type, feature.start, feature.end,
+        feature.strand, feature.color ?? null, feature.label ?? null,
+        feature.note ?? null, feature.frame ?? null, (feature.visible ?? true) ? 1 : 0]
+    );
+  }
+
+  async updateFeature(id: string, changes: Partial&lt;Feature&gt;): Promise&lt;void&gt; {
+    const db = this.ensureDb();
+    const result = db.exec('SELECT * FROM features WHERE id = ?', [id]);
+    if (result.length === 0 || result[0].values.length === 0) return;
+
+    const rows = resultToRows&lt;{
+      name: string; type: string; start_pos: number; end_pos: number;
+      strand: string; color: string | null; label: string | null; note: string | null;
+      frame: number | null; visible: number;
+    }&gt;(result[0].columns, result[0].values);
+    const cur = rows[0];
+
+    db.run(
+      `UPDATE features SET name=?, type=?, start_pos=?, end_pos=?, strand=?,
+       color=?, label=?, note=?, frame=?, visible=? WHERE id=?`,
+      [changes.name ?? cur.name, changes.type ?? cur.type,
+        changes.start ?? cur.start_pos, changes.end ?? cur.end_pos,
+        changes.strand ?? cur.strand,
+        changes.color !== undefined ? (changes.color ?? null) : cur.color,
+        changes.label !== undefined ? (changes.label ?? null) : cur.label,
+        changes.note !== undefined ? (changes.note ?? null) : cur.note,
+        changes.frame ?? cur.frame,
+        changes.visible !== undefined ? (changes.visible ? 1 : 0) : cur.visible,
+        id]
+    );
+  }
+
+  async removeFeature(id: string): Promise&lt;void&gt; {
+    this.ensureDb().run('DELETE FROM features WHERE id = ?', [id]);
+  }
+
+  async batchUpdateFeaturePositions(adjustments: Array&lt;{ id: string; start?: number; end?: number }&gt;): Promise&lt;void&gt; {
+    const db = this.ensureDb();
+    for (const adj of adjustments) {
+      if (adj.start !== undefined) {
+        db.run('UPDATE features SET start_pos=? WHERE id=?', [adj.start, adj.id]);
+      }
+      if (adj.end !== undefined) {
+        db.run('UPDATE features SET end_pos=? WHERE id=?', [adj.end, adj.id]);
+      }
+    }
+  }
+
+  async getAllPrimers(): Promise&lt;Primer[]&gt; {
+    const db = this.ensureDb();
+    const prResult = db.exec('SELECT * FROM primers');
+    if (prResult.length === 0 || prResult[0].values.length === 0) return [];
+
+    const prRows = resultToRows&lt;{
+      id: string; name: string; sequence: string; description: string | null; visible: number;
+    }&gt;(prResult[0].columns, prResult[0].values);
+
+    const primers: Primer[] = [];
+    for (const pr of prRows) {
+      const siteResult = db.exec('SELECT * FROM primer_binding_sites WHERE primer_id = ?', [pr.id]);
+      const siteRows = siteResult.length &gt; 0
+        ? resultToRows&lt;{
+            id: string; start_pos: number; end_pos: number; bound_strand: string;
+            annealed_bases: string | null; melting_temperature: number;
+            components: string | null; alignment: string | null;
+          }&gt;(siteResult[0].columns, siteResult[0].values)
+        : [];
+
+      primers.push({
+        id: pr.id, name: pr.name, sequence: pr.sequence,
+        description: pr.description ?? undefined, visible: pr.visible === 1,
+        bindingSites: siteRows.map(s =&gt; ({
+          start: s.start_pos, end: s.end_pos,
+          boundStrand: s.bound_strand as 'forward' | 'reverse' | 'none',
+          annealedBases: s.annealed_bases ?? '', meltingTemperature: s.melting_temperature ?? 0,
+          components: s.components ? JSON.parse(s.components) : [],
+          alignment: s.alignment ? JSON.parse(s.alignment) : undefined,
+        })),
+      });
+    }
+    return primers;
+  }
+
+  async addPrimer(primer: Primer): Promise&lt;void&gt; {
+    const db = this.ensureDb();
+    db.run('INSERT INTO primers (id, name, sequence, description, visible) VALUES (?, ?, ?, ?, ?)',
+      [primer.id, primer.name, primer.sequence, primer.description ?? null, (primer.visible ?? true) ? 1 : 0]);
+    for (const site of primer.bindingSites) {
+      db.run(
+        `INSERT INTO primer_binding_sites (id, primer_id, start_pos, end_pos, bound_strand,
+         annealed_bases, melting_temperature, components, alignment) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [`${primer.id}-site-${site.start}`, primer.id, site.start, site.end, site.boundStrand,
+          site.annealedBases, site.meltingTemperature,
+          JSON.stringify(site.components), site.alignment ? JSON.stringify(site.alignment) : null]
+      );
+    }
+  }
+
+  async updatePrimer(id: string, changes: Partial&lt;Primer&gt;): Promise&lt;void&gt; {
+    const db = this.ensureDb();
+    const res = db.exec('SELECT * FROM primers WHERE id = ?', [id]);
+    if (res.length === 0 || res[0].values.length === 0) return;
+    const cur = resultToRows&lt;{
+      name: string; sequence: string; description: string | null; visible: number;
+    }&gt;(res[0].columns, res[0].values)[0];
+    db.run('UPDATE primers SET name=?, sequence=?, description=?, visible=? WHERE id=?',
+      [changes.name ?? cur.name, changes.sequence ?? cur.sequence,
+        changes.description !== undefined ? (changes.description ?? null) : cur.description,
+        changes.visible !== undefined ? (changes.visible ? 1 : 0) : cur.visible, id]);
+  }
+
+  async removePrimer(id: string): Promise&lt;void&gt; {
+    const db = this.ensureDb();
+    db.run('DELETE FROM primer_binding_sites WHERE primer_id = ?', [id]);
+    db.run('DELETE FROM primers WHERE id = ?', [id]);
+  }
+
+  async getAlignmentEntries(): Promise&lt;AlignmentEntry[]&gt; {
+    const result = this.ensureDb().exec('SELECT * FROM alignment_entries');
+    if (result.length === 0 || result[0].values.length === 0) return [];
+    return resultToRows&lt;{
+      id: string; name: string; sequence: string; visible: number;
+      features_json: string | null; chromatogram_json: string | null;
+    }&gt;(result[0].columns, result[0].values).map(r =&gt; ({
+      id: r.id, name: r.name, sequence: r.sequence, visible: r.visible === 1,
+      features: r.features_json ? JSON.parse(r.features_json) : undefined,
+      chromatogram: r.chromatogram_json ? JSON.parse(r.chromatogram_json) : undefined,
+    }));
+  }
+
+  async addAlignmentEntry(entry: AlignmentEntry): Promise&lt;void&gt; {
+    this.ensureDb().run(
+      'INSERT INTO alignment_entries (id, name, sequence, visible, features_json, chromatogram_json) VALUES (?, ?, ?, ?, ?, ?)',
+      [entry.id, entry.name, entry.sequence, entry.visible ? 1 : 0,
+        entry.features ? JSON.stringify(entry.features) : null,
+        entry.chromatogram ? JSON.stringify(entry.chromatogram) : null]
+    );
+  }
+
+  async removeAlignmentEntry(id: string): Promise&lt;void&gt; {
+    this.ensureDb().run('DELETE FROM alignment_entries WHERE id = ?', [id]);
+  }
+
+  async getAttachments(): Promise&lt;AttachmentMeta[]&gt; {
+    const result = this.ensureDb().exec('SELECT id, name, mime_type FROM attachments');
+    if (result.length === 0 || result[0].values.length === 0) return [];
+    return resultToRows&lt;{ id: string; name: string; mime_type: string }&gt;(result[0].columns, result[0].values).map(r =&gt; ({
+      id: r.id, name: r.name, mimeType: r.mime_type,
+    }));
+  }
+
+  async addAttachment(name: string, data: ArrayBuffer, mimeType: string): Promise&lt;void&gt; {
+    const bytes = new Uint8Array(data);
+    this.ensureDb().run('INSERT INTO attachments (id, name, mime_type, data) VALUES (?, ?, ?, ?)',
+      [createId('att'), name, mimeType, bytes]);
+  }
+
+  async getAttachmentData(id: string): Promise&lt;ArrayBuffer&gt; {
+    const result = this.ensureDb().exec('SELECT data FROM attachments WHERE id = ?', [id]);
+    if (result.length === 0 || result[0].values.length === 0) throw new Error('Attachment not found');
+    const rows = resultToRows&lt;{ data: Uint8Array }&gt;(result[0].columns, result[0].values);
+    return rows[0].data.buffer as ArrayBuffer;
+  }
+
+  async removeAttachment(id: string): Promise&lt;void&gt; {
+    this.ensureDb().run('DELETE FROM attachments WHERE id = ?', [id]);
+  }
+
+  async pushUndoEntry(entry: UndoEntry): Promise&lt;void&gt; {
+    const db = this.ensureDb();
+    db.run("DELETE FROM undo_entries WHERE stack_type = 'redo'");
+    db.run(
+      "INSERT INTO undo_entries (stack_type, operation_type, target_id, before_diff, after_diff) VALUES ('undo', ?, ?, ?, ?)",
+      [entry.operationType, entry.targetId ?? null, JSON.stringify(entry.beforeDiff), JSON.stringify(entry.afterDiff)]
+    );
+    const cntResult = db.exec("SELECT COUNT(*) AS cnt FROM undo_entries WHERE stack_type = 'undo'");
+    if (cntResult.length &gt; 0 &amp;&amp; cntResult[0].values.length &gt; 0) {
+      const cnt = resultToRows&lt;{ cnt: number }&gt;(cntResult[0].columns, cntResult[0].values)[0];
+      if (cnt.cnt &gt; 200) {
+        db.run("DELETE FROM undo_entries WHERE stack_type = 'undo' AND sequence_number = (SELECT MIN(sequence_number) FROM undo_entries WHERE stack_type = 'undo')");
+      }
+    }
+  }
+
+  async popUndo(): Promise&lt;UndoEntry | null&gt; {
+    const db = this.ensureDb();
+    const result = db.exec("SELECT * FROM undo_entries WHERE stack_type = 'undo' ORDER BY sequence_number DESC LIMIT 1");
+    if (result.length === 0 || result[0].values.length === 0) return null;
+
+    const rows = resultToRows&lt;{
+      sequence_number: number; operation_type: string; target_id: string | null;
+      before_diff: string; after_diff: string;
+    }&gt;(result[0].columns, result[0].values);
+    if (rows.length === 0) return null;
+
+    const row = rows[0];
+    const entry: UndoEntry = {
+      operationType: row.operation_type as UndoEntry['operationType'],
+      targetId: row.target_id ?? undefined,
+      beforeDiff: JSON.parse(row.before_diff),
+      afterDiff: JSON.parse(row.after_diff),
+    };
+
+    db.run("UPDATE undo_entries SET stack_type = 'redo' WHERE sequence_number = ?", [row.sequence_number]);
+    return entry;
+  }
+
+  async peekRedo(): Promise&lt;UndoEntry | null&gt; {
+    const result = this.execSingle("SELECT * FROM undo_entries WHERE stack_type = 'redo' ORDER BY sequence_number DESC LIMIT 1")[0];
+    if (result.values.length === 0) return null;
+    const rows = resultToRows&lt;{
+      sequence_number: number; operation_type: string; target_id: string | null;
+      before_diff: string; after_diff: string;
+    }&gt;(result.columns, result.values);
+    if (rows.length === 0) return null;
+    const row = rows[0];
+    return {
+      operationType: row.operation_type as UndoEntry['operationType'],
+      targetId: row.target_id ?? undefined,
+      beforeDiff: JSON.parse(row.before_diff),
+      afterDiff: JSON.parse(row.after_diff),
+    };
+  }
+
+  async popRedo(): Promise&lt;UndoEntry | null&gt; {
+    const db = this.ensureDb();
+    const result = db.exec("SELECT * FROM undo_entries WHERE stack_type = 'redo' ORDER BY sequence_number DESC LIMIT 1");
+    if (result.length === 0 || result[0].values.length === 0) return null;
+    const rows = resultToRows&lt;{
+      sequence_number: number; operation_type: string; target_id: string | null;
+      before_diff: string; after_diff: string;
+    }&gt;(result[0].columns, result[0].values);
+    if (rows.length === 0) return null;
+    const row = rows[0];
+    const entry: UndoEntry = {
+      operationType: row.operation_type as UndoEntry['operationType'],
+      targetId: row.target_id ?? undefined,
+      beforeDiff: JSON.parse(row.before_diff),
+      afterDiff: JSON.parse(row.after_diff),
+    };
+    db.run('DELETE FROM undo_entries WHERE sequence_number = ?', [row.sequence_number]);
+    return entry;
+  }
+
+  async clearUndoHistory(): Promise&lt;void&gt; {
+    this.ensureDb().run('DELETE FROM undo_entries');
+  }
+
+  async getUndoStackSize(): Promise&lt;number&gt; {
+    const result = this.execSingle("SELECT COUNT(*) AS cnt FROM undo_entries WHERE stack_type = 'undo'")[0];
+    if (result.values.length === 0) return 0;
+    return resultToRows&lt;{ cnt: number }&gt;(result.columns, result.values)[0]?.cnt ?? 0;
+  }
+
+  async getRedoStackSize(): Promise&lt;number&gt; {
+    const result = this.execSingle("SELECT COUNT(*) AS cnt FROM undo_entries WHERE stack_type = 'redo'")[0];
+    if (result.values.length === 0) return 0;
+    return resultToRows&lt;{ cnt: number }&gt;(result.columns, result.values)[0]?.cnt ?? 0;
+  }
+
+  async getEditHistory(limit: number, offset: number): Promise&lt;EditHistoryEntry[]&gt; {
+    const result = this.execSingle(
+      'SELECT * FROM edit_history ORDER BY id DESC LIMIT ? OFFSET ?',
+      [limit, offset]
+    )[0];
+    if (result.values.length === 0) return [];
+    return resultToRows&lt;{
+      id: number; timestamp: string; operation_type: string; target_id: string | null;
+      description: string | null; before_snapshot: string | null; after_snapshot: string | null;
+    }&gt;(result.columns, result.values).map(r =&gt; ({
+      id: r.id,
+      timestamp: r.timestamp,
+      operationType: r.operation_type,
+      targetId: r.target_id,
+      description: r.description ?? '',
+      beforeSnapshot: r.before_snapshot,
+      afterSnapshot: r.after_snapshot,
+    }));
+  }
+
+  async addEditHistory(entry: Omit&lt;EditHistoryEntry, 'id'&gt;): Promise&lt;void&gt; {
+    this.ensureDb().run(
+      'INSERT INTO edit_history (timestamp, operation_type, target_id, description, before_snapshot, after_snapshot) VALUES (?, ?, ?, ?, ?, ?)',
+      [entry.timestamp, entry.operationType, entry.targetId ?? null, entry.description ?? null,
+       entry.beforeSnapshot ?? null, entry.afterSnapshot ?? null]
+    );
+  }
+
+  async importFromSequence(seq: DNASequence): Promise&lt;void&gt; {
+    await this.setMetadata({
+      name: seq.name, description: seq.description, isCircular: String(seq.isCircular),
+      accession: seq.accession ?? '', organism: seq.organism ?? '', date: seq.date ?? '',
+      typeOfDisplay: seq.typeOfDisplay, customName: seq.customName, fileName: seq.fileName ?? '',
+    });
+
+    const db = this.ensureDb();
+    db.run('DELETE FROM sequence_blocks');
+    db.run('DELETE FROM features');
+    db.run('DELETE FROM primer_binding_sites');
+    db.run('DELETE FROM primers');
+    for (let i = 0; i &lt; seq.sequence.length; i += BLOCK_SIZE) {
+      db.run('INSERT INTO sequence_blocks (block_index, bases) VALUES (?, ?)',
+        [Math.floor(i / BLOCK_SIZE), seq.sequence.slice(i, i + BLOCK_SIZE)]);
+    }
+    for (const feature of seq.features) { await this.addFeature(feature); }
+    for (const primer of seq.primers || []) { await this.addPrimer(primer); }
+  }
+
+  async exportToSequence(): Promise&lt;DNASequence&gt; {
+    const meta = await this.getAllMetadata();
+    const length = await this.getSequenceLength();
+    const sequence = await this.getSequenceChunk(0, length);
+    const features = await this.getAllFeatures();
+    const primers = await this.getAllPrimers();
+
+    return {
+      id: meta['accession'] || `seq-${Date.now()}`,
+      name: meta['name'] || 'Untitled',
+      typeOfDisplay: (meta['typeOfDisplay'] as 'file_name' | 'custom') || 'file_name',
+      customName: meta['customName'] || '',
+      description: meta['description'] || '',
+      sequence,
+      length,
+      isCircular: meta['isCircular'] === 'true',
+      accession: meta['accession'] || undefined,
+      organism: meta['organism'] || undefined,
+      date: meta['date'] || undefined,
+      features,
+      primers,
+      restrictionSites: [],
+      fileName: meta['fileName'] || undefined,
+    };
+  }
+
+  async commitWorkingCopy(seq: DNASequence): Promise&lt;void&gt; {
+    await this.importFromSequence(seq);
+    await this.setMetadata({ isDirty: '0' });
+  }
+
+  async getRawBytes(): Promise&lt;Uint8Array&gt; {
+    return this.ensureDb().export();
+  }
+}</code></pre>
+                    </details>
+
+                    <details class="source-item">
+                        <summary><strong>tauriSqlDAL.ts</strong> <span>桌面端实现（Tauri SQLite）</span></summary>
+                        <pre class="code-block"><code>import Database from '@tauri-apps/plugin-sql';
+import type { DataAccessLayer, UndoEntry, AttachmentMeta } from '@/utils/dataAccessLayer';
+import { CREATE_TABLES_SQL, BLOCK_SIZE } from '@/utils/schema';
+import type { DNASequence, Feature, Primer, AlignmentEntry } from '@/types/dna';
+import type { SequenceInfo, EditHistoryEntry } from '@/types/sequenceInfo';
+
+function createId(prefix: string): string {
+  return `${prefix}-${Date.now()}`;
+}
+
+export class TauriSqlDataAccessLayer implements DataAccessLayer {
+  private db: Database | null = null;
+  private dbPath: string | null = null;
+
+  async open(path: string): Promise&lt;void&gt; {
+    this.dbPath = path;
+    this.db = await Database.load(`sqlite:${path}`);
+    await this.db.execute('PRAGMA journal_mode=WAL');
+    await this.db.execute('PRAGMA synchronous=NORMAL');
+    await this.db.execute(CREATE_TABLES_SQL);
+  }
+
+  async openFromBytes(data: Uint8Array): Promise&lt;void&gt; {
+    const { tempDir, join } = await import('@tauri-apps/api/path');
+    const dir = await tempDir();
+    const randomSuffix = Math.random().toString(36).substring(2, 8);
+    const tempPath = await join(dir, `gene-editor-import-${randomSuffix}.gen`);
+    const { writeFile } = await import('@tauri-apps/plugin-fs');
+    await writeFile(tempPath, data);
+    await this.open(tempPath);
+  }
+
+  async close(): Promise&lt;void&gt; {
+    if (this.db) {
+      await this.db.close();
+      this.db = null;
+    }
+  }
+
+  isOpen(): boolean {
+    return this.db !== null;
+  }
+
+  private ensureDb(): Database {
+    if (!this.db) throw new Error('Database not opened');
+    return this.db;
+  }
+
+  async getAllMetadata(): Promise&lt;Record&lt;string, string&gt;&gt; {
+    const db = this.ensureDb();
+    const rows = await db.select&lt;Array&lt;{ key: string; value: string }&gt;&gt;(
+      'SELECT key, value FROM project_meta'
+    );
+    const result: Record&lt;string, string&gt; = {};
+    for (const row of rows) { result[row.key] = row.value; }
+    return result;
+  }
+
+  async setMetadata(values: Record&lt;string, string&gt;): Promise&lt;void&gt; {
+    const db = this.ensureDb();
+    for (const [key, value] of Object.entries(values)) {
+      await db.execute(
+        'INSERT INTO project_meta (key, value) VALUES ($1, $2) ON CONFLICT(key) DO UPDATE SET value=$2',
+        [key, value]
+      );
+    }
+  }
+
+  async getSequenceLength(): Promise&lt;number&gt; {
+    const db = this.ensureDb();
+    const row = await db.select&lt;Array&lt;{ total: number }&gt;&gt;(
+      'SELECT COALESCE(SUM(LENGTH(bases)), 0) AS total FROM sequence_blocks'
+    );
+    return row[0]?.total ?? 0;
+  }
+
+  async getSequenceChunk(startIndex: number, length: number): Promise&lt;string&gt; {
+    const db = this.ensureDb();
+    const blockStart = Math.floor(startIndex / BLOCK_SIZE);
+    const endIndex = startIndex + length;
+    const blockEnd = Math.floor((endIndex - 1) / BLOCK_SIZE);
+
+    const rows = await db.select&lt;Array&lt;{ block_index: number; bases: string }&gt;&gt;(
+      'SELECT block_index, bases FROM sequence_blocks WHERE block_index BETWEEN $1 AND $2 ORDER BY block_index',
+      [blockStart, blockEnd]
+    );
+
+    const blockMap = new Map&lt;number, string&gt;();
+    for (const row of rows) { blockMap.set(row.block_index, row.bases); }
+
+    let result = '';
+    for (let i = blockStart; i &lt;= blockEnd; i++) { result += blockMap.get(i) ?? ''; }
+    const offset = startIndex - blockStart * BLOCK_SIZE;
+    return result.slice(offset, offset + length);
+  }
+
+  async writeSequence(startIndex: number, newBases: string): Promise&lt;void&gt; {
+    const db = this.ensureDb();
+    const oldLen = await this.getSequenceLength();
+    const oldSeq = await this.getSequenceChunk(0, oldLen);
+    const updated = oldSeq.slice(0, startIndex) + newBases + oldSeq.slice(startIndex);
+
+    await db.execute('DELETE FROM sequence_blocks');
+    for (let i = 0; i &lt; updated.length; i += BLOCK_SIZE) {
+      await db.execute('INSERT INTO sequence_blocks (block_index, bases) VALUES ($1, $2)', [
+        Math.floor(i / BLOCK_SIZE),
+        updated.slice(i, i + BLOCK_SIZE),
+      ]);
+    }
+  }
+
+  async getSequenceInfo(): Promise&lt;SequenceInfo&gt; {
+    const meta = await this.getAllMetadata();
+    const length = await this.getSequenceLength();
+    return {
+      id: meta['accession'] || `seq-${Date.now()}`,
+      name: meta['name'] || 'Untitled',
+      typeOfDisplay: (meta['typeOfDisplay'] as 'file_name' | 'custom') || 'file_name',
+      customName: meta['customName'] || '',
+      description: meta['description'] || '',
+      length,
+      isCircular: meta['isCircular'] === 'true',
+      accession: meta['accession'] || undefined,
+      organism: meta['organism'] || undefined,
+      date: meta['date'] || undefined,
+      fileName: meta['fileName'] || undefined,
+    };
+  }
+
+  async getAllFeatures(): Promise&lt;Feature[]&gt; {
+    const db = this.ensureDb();
+    const rows = await db.select&lt;Array&lt;{
+      id: string; name: string; type: string; start_pos: number; end_pos: number;
+      strand: string; color: string | null; label: string | null; note: string | null;
+      frame: number | null; visible: number;
+    }&gt;&gt;('SELECT * FROM features ORDER BY start_pos');
+
+    return rows.map(r =&gt; ({
+      id: r.id, name: r.name, type: r.type,
+      start: r.start_pos, end: r.end_pos,
+      strand: r.strand as 'forward' | 'reverse' | 'none',
+      color: r.color ?? undefined, label: r.label ?? undefined,
+      note: r.note ?? undefined, frame: r.frame ?? undefined, visible: r.visible === 1,
+    }));
+  }
+
+  async getFeaturesInRange(start: number, end: number): Promise&lt;Feature[]&gt; {
+    const db = this.ensureDb();
+    const rows = await db.select&lt;Array&lt;{
+      id: string; name: string; type: string; start_pos: number; end_pos: number;
+      strand: string; color: string | null; label: string | null; note: string | null;
+      frame: number | null; visible: number;
+    }&gt;&gt;(
+      'SELECT * FROM features WHERE start_pos &lt;= $2 AND end_pos &gt;= $1 ORDER BY start_pos',
+      [start, end]
+    );
+    return rows.map(r =&gt; ({
+      id: r.id, name: r.name, type: r.type,
+      start: r.start_pos, end: r.end_pos,
+      strand: r.strand as 'forward' | 'reverse' | 'none',
+      color: r.color ?? undefined, label: r.label ?? undefined,
+      note: r.note ?? undefined, frame: r.frame ?? undefined, visible: r.visible === 1,
+    }));
+  }
+
+  async addFeature(feature: Feature): Promise&lt;void&gt; {
+    const db = this.ensureDb();
+    await db.execute(
+      `INSERT INTO features (id, name, type, start_pos, end_pos, strand, color, label, note, frame, visible)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
+      [feature.id, feature.name, feature.type, feature.start, feature.end,
+        feature.strand, feature.color ?? null, feature.label ?? null,
+        feature.note ?? null, feature.frame ?? null, (feature.visible ?? true) ? 1 : 0]
+    );
+  }
+
+  async updateFeature(id: string, changes: Partial&lt;Feature&gt;): Promise&lt;void&gt; {
+    const db = this.ensureDb();
+    const existing = await db.select&lt;Array&lt;{
+      name: string; type: string; start_pos: number; end_pos: number;
+      strand: string; color: string | null; label: string | null; note: string | null;
+      frame: number | null; visible: number;
+    }&gt;&gt;('SELECT * FROM features WHERE id = $1', [id]);
+    if (existing.length === 0) return;
+    const cur = existing[0];
+    await db.execute(
+      `UPDATE features SET name=$1, type=$2, start_pos=$3, end_pos=$4, strand=$5,
+       color=$6, label=$7, note=$8, frame=$9, visible=$10 WHERE id=$11`,
+      [changes.name ?? cur.name, changes.type ?? cur.type,
+        changes.start ?? cur.start_pos, changes.end ?? cur.end_pos,
+        changes.strand ?? cur.strand,
+        changes.color ?? cur.color, changes.label ?? cur.label,
+        changes.note ?? cur.note, changes.frame ?? cur.frame,
+        changes.visible !== undefined ? (changes.visible ? 1 : 0) : cur.visible, id]
+    );
+  }
+
+  async removeFeature(id: string): Promise&lt;void&gt; {
+    const db = this.ensureDb();
+    await db.execute('DELETE FROM features WHERE id = $1', [id]);
+  }
+
+  async batchUpdateFeaturePositions(adjustments: Array&lt;{ id: string; start?: number; end?: number }&gt;): Promise&lt;void&gt; {
+    const db = this.ensureDb();
+    for (const adj of adjustments) {
+      const parts: string[] = [];
+      const params: unknown[] = [];
+      let idx = 1;
+      if (adj.start !== undefined) {
+        parts.push(`start_pos=$${idx}`);
+        params.push(adj.start);
+        idx++;
+      }
+      if (adj.end !== undefined) {
+        parts.push(`end_pos=$${idx}`);
+        params.push(adj.end);
+        idx++;
+      }
+      if (parts.length &gt; 0) {
+        params.push(adj.id);
+        await db.execute(`UPDATE features SET ${parts.join(', ')} WHERE id=$${idx}`, params);
+      }
+    }
+  }
+
+  async getAllPrimers(): Promise&lt;Primer[]&gt; {
+    const db = this.ensureDb();
+    const primerRows = await db.select&lt;Array&lt;{
+      id: string; name: string; sequence: string; description: string | null; visible: number;
+    }&gt;&gt;('SELECT * FROM primers');
+
+    const primers: Primer[] = [];
+    for (const pr of primerRows) {
+      const siteRows = await db.select&lt;Array&lt;{
+        id: string; start_pos: number; end_pos: number; bound_strand: string;
+        annealed_bases: string | null; melting_temperature: number;
+        components: string | null; alignment: string | null;
+      }&gt;&gt;('SELECT * FROM primer_binding_sites WHERE primer_id = $1', [pr.id]);
+
+      primers.push({
+        id: pr.id, name: pr.name, sequence: pr.sequence,
+        description: pr.description ?? undefined, visible: pr.visible === 1,
+        bindingSites: siteRows.map(s =&gt; ({
+          start: s.start_pos, end: s.end_pos,
+          boundStrand: s.bound_strand as 'forward' | 'reverse' | 'none',
+          annealedBases: s.annealed_bases ?? '', meltingTemperature: s.melting_temperature ?? 0,
+          components: s.components ? JSON.parse(s.components) : [],
+          alignment: s.alignment ? JSON.parse(s.alignment) : undefined,
+        })),
+      });
+    }
+    return primers;
+  }
+
+  async addPrimer(primer: Primer): Promise&lt;void&gt; {
+    const db = this.ensureDb();
+    await db.execute(
+      'INSERT INTO primers (id, name, sequence, description, visible) VALUES ($1, $2, $3, $4, $5)',
+      [primer.id, primer.name, primer.sequence, primer.description ?? null, (primer.visible ?? true) ? 1 : 0]
+    );
+    for (const site of primer.bindingSites) {
+      await db.execute(
+        `INSERT INTO primer_binding_sites (id, primer_id, start_pos, end_pos, bound_strand,
+         annealed_bases, melting_temperature, components, alignment) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+        [`${primer.id}-site-${site.start}`, primer.id, site.start, site.end, site.boundStrand,
+          site.annealedBases, site.meltingTemperature,
+          JSON.stringify(site.components), site.alignment ? JSON.stringify(site.alignment) : null]
+      );
+    }
+  }
+
+  async updatePrimer(id: string, changes: Partial&lt;Primer&gt;): Promise&lt;void&gt; {
+    const db = this.ensureDb();
+    const existing = await db.select&lt;Array&lt;{
+      name: string; sequence: string; description: string | null; visible: number;
+    }&gt;&gt;('SELECT * FROM primers WHERE id = $1', [id]);
+    if (existing.length === 0) return;
+    const cur = existing[0];
+    await db.execute(
+      'UPDATE primers SET name=$1, sequence=$2, description=$3, visible=$4 WHERE id=$5',
+      [changes.name ?? cur.name, changes.sequence ?? cur.sequence,
+        changes.description !== undefined ? (changes.description ?? null) : cur.description,
+        changes.visible !== undefined ? (changes.visible ? 1 : 0) : cur.visible, id]
+    );
+  }
+
+  async removePrimer(id: string): Promise&lt;void&gt; {
+    const db = this.ensureDb();
+    await db.execute('DELETE FROM primer_binding_sites WHERE primer_id = $1', [id]);
+    await db.execute('DELETE FROM primers WHERE id = $1', [id]);
+  }
+
+  async getAlignmentEntries(): Promise&lt;AlignmentEntry[]&gt; {
+    const db = this.ensureDb();
+    const rows = await db.select&lt;Array&lt;{
+      id: string; name: string; sequence: string; visible: number;
+      features_json: string | null; chromatogram_json: string | null;
+    }&gt;&gt;('SELECT * FROM alignment_entries');
+    return rows.map(r =&gt; ({
+      id: r.id, name: r.name, sequence: r.sequence, visible: r.visible === 1,
+      features: r.features_json ? JSON.parse(r.features_json) : undefined,
+      chromatogram: r.chromatogram_json ? JSON.parse(r.chromatogram_json) : undefined,
+    }));
+  }
+
+  async addAlignmentEntry(entry: AlignmentEntry): Promise&lt;void&gt; {
+    const db = this.ensureDb();
+    await db.execute(
+      'INSERT INTO alignment_entries (id, name, sequence, visible, features_json, chromatogram_json) VALUES ($1, $2, $3, $4, $5, $6)',
+      [entry.id, entry.name, entry.sequence, entry.visible ? 1 : 0,
+        entry.features ? JSON.stringify(entry.features) : null,
+        entry.chromatogram ? JSON.stringify(entry.chromatogram) : null]
+    );
+  }
+
+  async removeAlignmentEntry(id: string): Promise&lt;void&gt; {
+    const db = this.ensureDb();
+    await db.execute('DELETE FROM alignment_entries WHERE id = $1', [id]);
+  }
+
+  async getAttachments(): Promise&lt;AttachmentMeta[]&gt; {
+    const db = this.ensureDb();
+    const rows = await db.select&lt;Array&lt;{ id: string; name: string; mime_type: string }&gt;&gt;(
+      'SELECT id, name, mime_type FROM attachments'
+    );
+    return rows.map(r =&gt; ({ id: r.id, name: r.name, mimeType: r.mime_type }));
+  }
+
+  async addAttachment(name: string, data: ArrayBuffer, mimeType: string): Promise&lt;void&gt; {
+    const db = this.ensureDb();
+    const bytes = new Uint8Array(data);
+    await db.execute(
+      'INSERT INTO attachments (id, name, mime_type, data) VALUES ($1, $2, $3, $4)',
+      [createId('att'), name, mimeType, bytes]
+    );
+  }
+
+  async getAttachmentData(id: string): Promise&lt;ArrayBuffer&gt; {
+    const db = this.ensureDb();
+    const rows = await db.select&lt;Array&lt;{ data: number[] }&gt;&gt;(
+      'SELECT data FROM attachments WHERE id = $1', [id]
+    );
+    if (rows.length === 0) throw new Error('Attachment not found');
+    return new Uint8Array(rows[0].data).buffer;
+  }
+
+  async removeAttachment(id: string): Promise&lt;void&gt; {
+    const db = this.ensureDb();
+    await db.execute('DELETE FROM attachments WHERE id = $1', [id]);
+  }
+
+  async pushUndoEntry(entry: UndoEntry): Promise&lt;void&gt; {
+    const db = this.ensureDb();
+    await db.execute("DELETE FROM undo_entries WHERE stack_type = 'redo'");
+    await db.execute(
+      "INSERT INTO undo_entries (stack_type, operation_type, target_id, before_diff, after_diff) VALUES ('undo', $1, $2, $3, $4)",
+      [entry.operationType, entry.targetId ?? null,
+        JSON.stringify(entry.beforeDiff), JSON.stringify(entry.afterDiff)]
+    );
+    const count = await db.select&lt;Array&lt;{ cnt: number }&gt;&gt;(
+      "SELECT COUNT(*) AS cnt FROM undo_entries WHERE stack_type = 'undo'"
+    );
+    if (count[0].cnt &gt; 200) {
+      await db.execute(
+        "DELETE FROM undo_entries WHERE stack_type = 'undo' AND sequence_number = (SELECT MIN(sequence_number) FROM undo_entries WHERE stack_type = 'undo')"
+      );
+    }
+  }
+
+  async popUndo(): Promise&lt;UndoEntry | null&gt; {
+    const db = this.ensureDb();
+    const rows = await db.select&lt;Array&lt;{
+      sequence_number: number; operation_type: string; target_id: string | null;
+      before_diff: string; after_diff: string;
+    }&gt;&gt;("SELECT * FROM undo_entries WHERE stack_type = 'undo' ORDER BY sequence_number DESC LIMIT 1");
+    if (rows.length === 0) return null;
+    const row = rows[0];
+    const entry: UndoEntry = {
+      operationType: row.operation_type as UndoEntry['operationType'],
+      targetId: row.target_id ?? undefined,
+      beforeDiff: JSON.parse(row.before_diff),
+      afterDiff: JSON.parse(row.after_diff),
+    };
+    await db.execute("UPDATE undo_entries SET stack_type = 'redo' WHERE sequence_number = $1", [row.sequence_number]);
+    return entry;
+  }
+
+  async peekRedo(): Promise&lt;UndoEntry | null&gt; {
+    const db = this.ensureDb();
+    const rows = await db.select&lt;Array&lt;{
+      sequence_number: number; operation_type: string; target_id: string | null;
+      before_diff: string; after_diff: string;
+    }&gt;&gt;("SELECT * FROM undo_entries WHERE stack_type = 'redo' ORDER BY sequence_number DESC LIMIT 1");
+    if (rows.length === 0) return null;
+    const row = rows[0];
+    return {
+      operationType: row.operation_type as UndoEntry['operationType'],
+      targetId: row.target_id ?? undefined,
+      beforeDiff: JSON.parse(row.before_diff),
+      afterDiff: JSON.parse(row.after_diff),
+    };
+  }
+
+  async popRedo(): Promise&lt;UndoEntry | null&gt; {
+    const db = this.ensureDb();
+    const rows = await db.select&lt;Array&lt;{
+      sequence_number: number; operation_type: string; target_id: string | null;
+      before_diff: string; after_diff: string;
+    }&gt;&gt;("SELECT * FROM undo_entries WHERE stack_type = 'redo' ORDER BY sequence_number DESC LIMIT 1");
+    if (rows.length === 0) return null;
+    const row = rows[0];
+    const entry: UndoEntry = {
+      operationType: row.operation_type as UndoEntry['operationType'],
+      targetId: row.target_id ?? undefined,
+      beforeDiff: JSON.parse(row.before_diff),
+      afterDiff: JSON.parse(row.after_diff),
+    };
+    await db.execute('DELETE FROM undo_entries WHERE sequence_number = $1', [row.sequence_number]);
+    return entry;
+  }
+
+  async clearUndoHistory(): Promise&lt;void&gt; {
+    const db = this.ensureDb();
+    await db.execute('DELETE FROM undo_entries');
+  }
+
+  async getUndoStackSize(): Promise&lt;number&gt; {
+    const db = this.ensureDb();
+    const rows = await db.select&lt;Array&lt;{ cnt: number }&gt;&gt;(
+      "SELECT COUNT(*) AS cnt FROM undo_entries WHERE stack_type = 'undo'"
+    );
+    return rows[0].cnt;
+  }
+
+  async getRedoStackSize(): Promise&lt;number&gt; {
+    const db = this.ensureDb();
+    const rows = await db.select&lt;Array&lt;{ cnt: number }&gt;&gt;(
+      "SELECT COUNT(*) AS cnt FROM undo_entries WHERE stack_type = 'redo'"
+    );
+    return rows[0].cnt;
+  }
+
+  async getEditHistory(limit: number, offset: number): Promise&lt;EditHistoryEntry[]&gt; {
+    const db = this.ensureDb();
+    const rows = await db.select&lt;Array&lt;{
+      id: number; timestamp: string; operation_type: string; target_id: string | null;
+      description: string | null; before_snapshot: string | null; after_snapshot: string | null;
+    }&gt;&gt;('SELECT * FROM edit_history ORDER BY id DESC LIMIT $1 OFFSET $2', [limit, offset]);
+    return rows.map(r =&gt; ({
+      id: r.id, timestamp: r.timestamp, operationType: r.operation_type,
+      targetId: r.target_id, description: r.description ?? '',
+      beforeSnapshot: r.before_snapshot, afterSnapshot: r.after_snapshot,
+    }));
+  }
+
+  async addEditHistory(entry: Omit&lt;EditHistoryEntry, 'id'&gt;): Promise&lt;void&gt; {
+    const db = this.ensureDb();
+    await db.execute(
+      'INSERT INTO edit_history (timestamp, operation_type, target_id, description, before_snapshot, after_snapshot) VALUES ($1, $2, $3, $4, $5, $6)',
+      [entry.timestamp, entry.operationType, entry.targetId ?? null,
+        entry.description ?? null, entry.beforeSnapshot ?? null, entry.afterSnapshot ?? null]
+    );
+  }
+
+  async importFromSequence(seq: DNASequence): Promise&lt;void&gt; {
+    await this.setMetadata({
+      name: seq.name, description: seq.description, isCircular: String(seq.isCircular),
+      accession: seq.accession ?? '', organism: seq.organism ?? '', date: seq.date ?? '',
+      typeOfDisplay: seq.typeOfDisplay, customName: seq.customName, fileName: seq.fileName ?? '',
+    });
+
+    const db = this.ensureDb();
+    await db.execute('DELETE FROM sequence_blocks');
+    await db.execute('DELETE FROM features');
+    await db.execute('DELETE FROM primer_binding_sites');
+    await db.execute('DELETE FROM primers');
+
+    for (let i = 0; i &lt; seq.sequence.length; i += BLOCK_SIZE) {
+      await db.execute('INSERT INTO sequence_blocks (block_index, bases) VALUES ($1, $2)', [
+        Math.floor(i / BLOCK_SIZE),
+        seq.sequence.slice(i, i + BLOCK_SIZE),
+      ]);
+    }
+
+    for (const feature of seq.features) { await this.addFeature(feature); }
+    for (const primer of seq.primers || []) { await this.addPrimer(primer); }
+  }
+
+  async exportToSequence(): Promise&lt;DNASequence&gt; {
+    const meta = await this.getAllMetadata();
+    const length = await this.getSequenceLength();
+    const sequence = await this.getSequenceChunk(0, length);
+    const features = await this.getAllFeatures();
+    const primers = await this.getAllPrimers();
+
+    return {
+      id: meta['accession'] || `seq-${Date.now()}`,
+      name: meta['name'] || 'Untitled',
+      typeOfDisplay: (meta['typeOfDisplay'] as 'file_name' | 'custom') || 'file_name',
+      customName: meta['customName'] || '',
+      description: meta['description'] || '',
+      sequence,
+      length,
+      isCircular: meta['isCircular'] === 'true',
+      accession: meta['accession'] || undefined,
+      organism: meta['organism'] || undefined,
+      date: meta['date'] || undefined,
+      features,
+      primers,
+      restrictionSites: [],
+      fileName: meta['fileName'] || undefined,
+    };
+  }
+
+  async commitWorkingCopy(seq: DNASequence): Promise&lt;void&gt; {
+    await this.importFromSequence(seq);
+    await this.setMetadata({ isDirty: '0' });
+    const db = this.ensureDb();
+    await db.execute('PRAGMA wal_checkpoint(TRUNCATE)');
+  }
+
+  async getRawBytes(): Promise&lt;Uint8Array&gt; {
+    if (!this.dbPath) throw new Error('No database path');
+    const { readFile } = await import('@tauri-apps/plugin-fs');
+    return readFile(this.dbPath);
+  }
+}</code></pre>
+                    </details>
+                </div>
+            </section>
 
         </main>
 
