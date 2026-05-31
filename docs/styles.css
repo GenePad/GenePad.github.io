@@ -401,6 +401,100 @@ h3 {
   font-weight: 700;
 }
 
+.lang-switcher {
+  position: relative;
+  margin-left: 4px;
+}
+
+.lang-switcher-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--nav-ink);
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 120ms ease;
+}
+
+.lang-switcher-btn:hover {
+  background: var(--nav-hover);
+}
+
+.lang-switcher-arrow {
+  font-size: 10px;
+  transition: transform 160ms ease;
+}
+
+.lang-switcher:hover .lang-switcher-arrow,
+.lang-switcher.open .lang-switcher-arrow {
+  transform: rotate(180deg);
+}
+
+.lang-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 140px;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--panel);
+  box-shadow: 0 16px 40px rgba(16, 30, 54, 0.18);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity 160ms ease, transform 160ms ease, visibility 160ms ease;
+  z-index: 20;
+}
+
+.lang-switcher:hover .lang-dropdown,
+.lang-switcher.open .lang-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.lang-dropdown button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  background: none;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 120ms ease;
+}
+
+.lang-dropdown button:hover {
+  background: var(--nav-hover);
+}
+
+.lang-dropdown button.active {
+  color: var(--blue);
+}
+
+.lang-dropdown button.active::before {
+  content: "✓";
+  font-size: 12px;
+}
+
+.lang-dropdown button:not(.active)::before {
+  content: "";
+  width: 12px;
+}
+
 .hero-stats {
   display: grid;
   gap: 14px;
@@ -445,7 +539,7 @@ h3 {
 }
 
 .preview-trigger::after {
-  content: "点击预览";
+  content: var(--preview-hint, "点击预览");
   position: absolute;
   right: 12px;
   bottom: 12px;
@@ -1280,19 +1374,51 @@ code {
     transform: none;
   }
 
+  .dropdown {
+    position: relative;
+  }
+
+  .dropdown.open .dropdown-menu {
+    display: block;
+  }
+
   .dropdown-menu {
+    display: none;
     position: static;
     box-shadow: none;
     border: none;
-    padding: 8px 0 0;
-    opacity: 1;
-    visibility: visible;
-    transform: none;
+    border-radius: 0;
+    padding: 4px 0 0;
+    margin: 0;
     background: none;
   }
 
   .dropdown:hover .dropdown-menu {
     transform: none;
+  }
+
+  .lang-switcher {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .lang-switcher-btn {
+    display: none;
+  }
+
+  .lang-dropdown {
+    position: static;
+    transform: none;
+    box-shadow: none;
+    border: none;
+    opacity: 1;
+    visibility: visible;
+    background: none;
+    padding: 0 0 0 16px;
+  }
+
+  .lang-dropdown button {
+    padding: 8px 12px;
   }
 
   .hero,

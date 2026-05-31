@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-i18n-lang="html.lang">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -8,18 +8,19 @@
         <meta
             name="description"
             content="基因工坊是一款免费的基因图谱编辑工具，支持 GeneBank、DNA、AB1 等格式，提供序列编辑、注释、引物设计与可视化分析。"
+            data-i18n-meta="meta.description"
         />
-        <title>基因工坊 - 免费基因图谱编辑工具</title>
+        <title data-i18n-title="title">基因工坊 - 免费基因图谱编辑工具</title>
         <link rel="icon" href="icon.png" type="image/png" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
         <link rel="stylesheet" href="styles.css" />
     </head>
     <body>
         <header class="site-header">
-            <a class="brand" href="#top" aria-label="基因工坊首页">
+            <a class="brand" href="#top" aria-label="基因工坊首页" data-i18n-aria="brand.aria">
                 <span class="brand-mark"><img src="icon.png" alt="" /></span>
                 <span>
-                    <strong>基因工坊</strong>
+                    <strong data-i18n="brand.name">基因工坊</strong>
                     <small>Gene Pad</small>
                 </span>
             </a>
@@ -32,37 +33,49 @@
                 <span></span>
                 <span></span>
                 <span></span>
-                <span class="sr-only">打开导航</span>
+                <span class="sr-only" data-i18n="nav.toggle">打开导航</span>
             </button>
             <nav class="nav" id="site-nav" aria-label="主导航">
-                <a href="#features">功能</a>
-                <a href="#screenshots">界面</a>
-                <a href="#platforms">平台</a>
-                <a href="#feedback">反馈</a>
-                <a href="#license">许可</a>
+                <a href="#features" data-i18n="nav.features">功能</a>
+                <a href="#screenshots" data-i18n="nav.screenshots">界面</a>
+                <a href="#platforms" data-i18n="nav.platforms">平台</a>
+                <a href="#feedback" data-i18n="nav.feedback">反馈</a>
+                <a href="#license" data-i18n="nav.license">许可</a>
                 <div class="nav-dropdown-wrapper">
-                    <a href="https://github.com/GenePad/GenePad.github.io/releases/latest" target="_blank" rel="noopener" class="nav-download">下载</a>
+                    <a href="https://github.com/GenePad/GenePad.github.io/releases/latest" target="_blank" rel="noopener" class="nav-download" data-i18n="nav.download">下载</a>
                     <div class="nav-dropdown-menu">
                         <a href="https://github.com/GenePad/GenePad.github.io/releases/latest" target="_blank" rel="noopener">
                             <svg class="dropdown-item-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-                            GitHub（国际）
+                            <span data-i18n="download.github">GitHub（国际）</span>
                         </a>
                         <a href="https://gitee.com/GenePad/GenePad.github.io/releases/latest" target="_blank" rel="noopener">
                             <svg class="gitee-icon-inline" viewBox="0 0 24 24" fill="currentColor"><path d="M11.984 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.016 0zm6.09 5.333c.328 0 .593.266.592.593v1.482a.594.594 0 0 1-.593.592H9.777c-.982 0-1.778.796-1.778 1.778v5.926c0 .327.266.592.593.592h5.926c.982 0 1.778-.796 1.778-1.778v-.296a.593.593 0 0 0-.592-.593h-3.408a.592.592 0 0 1-.592-.592v-1.482a.592.592 0 0 1 .593-.592h5.778c.327 0 .593.265.593.592v3.555a4 4 0 0 1-4 4H8.37a.593.593 0 0 1-.593-.592V8.592a4 4 0 0 1 4-4h6.298z"/></svg>
-                            Gitee（大陆）
+                            <span data-i18n="download.gitee">Gitee（大陆）</span>
                         </a>
                     </div>
                 </div>
-                <a href="tech-support.html">技术支持</a>
+                <div class="lang-switcher" id="lang-switcher">
+                    <button type="button" class="lang-switcher-btn" aria-label="Switch language">
+                        <span class="lang-switcher-label">中文</span>
+                        <span class="lang-switcher-arrow">▼</span>
+                    </button>
+                    <div class="lang-dropdown" id="lang-dropdown">
+                        <button type="button" data-lang="zh" class="active">中文</button>
+                        <button type="button" data-lang="en">English</button>
+                        <button type="button" data-lang="de">Deutsch</button>
+                        <button type="button" data-lang="fr">Français</button>
+                    </div>
+                </div>
+                <a href="tech-support.html" data-i18n="nav.techsupport">技术支持</a>
             </nav>
         </header>
 
         <main id="top">
             <section class="hero">
                 <div class="hero-copy">
-                    <p class="eyebrow">免费基因图谱编辑工具</p>
-                    <h1>基因工坊</h1>
-                    <p class="lead">
+                    <p class="eyebrow" data-i18n="hero.eyebrow">免费基因图谱编辑工具</p>
+                    <h1 data-i18n="hero.title">基因工坊</h1>
+                    <p class="lead" data-i18n="hero.lead">
                         面向个人评估与学习场景的基因序列编辑器，支持
                         GeneBank、DNA、AB1
                         等常见格式，提供图谱浏览、序列编辑、注释管理、引物设计与可视化分析。
@@ -71,31 +84,31 @@
                         <div class="dropdown">
                             <button class="button primary" type="button">
                                 <i class="fa-solid fa-download button-icon"></i>
-                                免费下载
+                                <span data-i18n="hero.download">免费下载</span>
                                 <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
                             </button>
                             <div class="dropdown-menu">
                                 <a href="https://github.com/GenePad/GenePad.github.io/releases/latest" target="_blank" rel="noopener">
                                     <svg class="dropdown-item-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-                                    <span>GitHub（国际）</span>
+                                    <span data-i18n="download.github">GitHub（国际）</span>
                                 </a>
                                 <a href="https://gitee.com/GenePad/GenePad.github.io/releases/latest" target="_blank" rel="noopener">
                                     <svg class="gitee-icon-inline" viewBox="0 0 24 24" fill="currentColor"><path d="M11.984 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.016 0zm6.09 5.333c.328 0 .593.266.592.593v1.482a.594.594 0 0 1-.593.592H9.777c-.982 0-1.778.796-1.778 1.778v5.926c0 .327.266.592.593.592h5.926c.982 0 1.778-.796 1.778-1.778v-.296a.593.593 0 0 0-.592-.593h-3.408a.592.592 0 0 1-.592-.592v-1.482a.592.592 0 0 1 .593-.592h5.778c.327 0 .593.265.593.592v3.555a4 4 0 0 1-4 4H8.37a.593.593 0 0 1-.593-.592V8.592a4 4 0 0 1 4-4h6.298z"/></svg>
-                                    <span>Gitee（大陆）</span>
+                                    <span data-i18n="download.gitee">Gitee（大陆）</span>
                                 </a>
                             </div>
                         </div>
-                        <a class="button secondary" href="#screenshots">查看界面</a>
-                        <a class="button secondary" href="#license">使用许可</a>
+                        <a class="button secondary" href="#screenshots" data-i18n="hero.viewScreenshots">查看界面</a>
+                        <a class="button secondary" href="#license" data-i18n="hero.viewLicense">使用许可</a>
                     </div>
                     <dl class="hero-stats" aria-label="产品能力">
                         <div>
                             <dt>GeneBank / DNA / AB1</dt>
-                            <dd>多格式导入与查看</dd>
+                            <dd data-i18n="hero.stat1.desc">多格式导入与查看</dd>
                         </div>
                         <div>
                             <dt>Windows / macOS / Linux / Android</dt>
-                            <dd>覆盖桌面与移动平台</dd>
+                            <dd data-i18n="hero.stat2.desc">覆盖桌面与移动平台</dd>
                         </div>
                     </dl>
                 </div>
@@ -117,34 +130,34 @@
             <section class="section feature-band" id="features">
                 <div class="section-heading">
                     <p class="eyebrow">Core Workflow</p>
-                    <h2>从序列文件到可视化分析</h2>
+                    <h2 data-i18n="features.heading">从序列文件到可视化分析</h2>
                 </div>
                 <div class="feature-grid">
                     <article class="feature">
                         <span class="icon">01</span>
-                        <h3>序列与图谱编辑</h3>
-                        <p>
+                        <h3 data-i18n="features.f1.title">序列与图谱编辑</h3>
+                        <p data-i18n="features.f1.desc">
                             在同一工作区查看环状或线性图谱，快速定位序列区域，编辑碱基并管理基因元件。
                         </p>
                     </article>
                     <article class="feature">
                         <span class="icon">02</span>
-                        <h3>注释与标注管理</h3>
-                        <p>
+                        <h3 data-i18n="features.f2.title">注释与标注管理</h3>
+                        <p data-i18n="features.f2.desc">
                             以图谱、注释表和序列视图联动管理功能元件，适合质粒检查、教学演示和方案评估。
                         </p>
                     </article>
                     <article class="feature">
                         <span class="icon">03</span>
-                        <h3>限制酶与引物</h3>
-                        <p>
+                        <h3 data-i18n="features.f3.title">限制酶与引物</h3>
+                        <p data-i18n="features.f3.desc">
                             内置限制酶位点显示、引物设计和序列定位能力，减少在多个工具之间切换。
                         </p>
                     </article>
                     <article class="feature">
                         <span class="icon">04</span>
-                        <h3>测序结果辅助分析</h3>
-                        <p>
+                        <h3 data-i18n="features.f4.title">测序结果辅助分析</h3>
+                        <p data-i18n="features.f4.desc">
                             支持 AB1
                             测序结果查看，结合序列与图谱信息完成更直观的校验流程。
                         </p>
@@ -155,8 +168,8 @@
             <section class="section split">
                 <div>
                     <p class="eyebrow">Interface</p>
-                    <h2>清晰的浅色与夜间工作模式</h2>
-                    <p>
+                    <h2 data-i18n="interface.heading">清晰的浅色与夜间工作模式</h2>
+                    <p data-i18n="interface.desc">
                         基因工坊的界面以高密度科研工具为中心，保留文件操作、注释、限制酶、引物和图谱视图等关键入口，同时支持白天与夜间模式，适配不同工作环境。
                     </p>
                 </div>
@@ -189,7 +202,7 @@
             <section class="section gallery-section" id="screenshots">
                 <div class="section-heading">
                     <p class="eyebrow">Screenshots</p>
-                    <h2>主要界面截图</h2>
+                    <h2 data-i18n="screenshots.heading">主要界面截图</h2>
                 </div>
                 <div class="gallery">
                     <figure>
@@ -204,7 +217,7 @@
                                 alt="整体图谱视图"
                             />
                         </button>
-                        <figcaption>整体图谱</figcaption>
+                        <figcaption data-i18n="gallery.cap1">整体图谱</figcaption>
                     </figure>
                     <figure>
                         <button
@@ -218,7 +231,7 @@
                                 alt="图谱一键直达序列视图"
                             />
                         </button>
-                        <figcaption>图谱一键直达序列</figcaption>
+                        <figcaption data-i18n="gallery.cap2">图谱一键直达序列</figcaption>
                     </figure>
                     <figure>
                         <button
@@ -232,7 +245,7 @@
                                 alt="酶切位点显示视图"
                             />
                         </button>
-                        <figcaption>酶切位点显示</figcaption>
+                        <figcaption data-i18n="gallery.cap3">酶切位点显示</figcaption>
                     </figure>
                     <figure>
                         <button
@@ -246,7 +259,7 @@
                                 alt="测序结果查看界面"
                             />
                         </button>
-                        <figcaption>测序结果</figcaption>
+                        <figcaption data-i18n="gallery.cap4">测序结果</figcaption>
                     </figure>
                     <figure>
                         <button
@@ -260,7 +273,7 @@
                                 alt="蛋白属性显示界面"
                             />
                         </button>
-                        <figcaption>蛋白属性显示</figcaption>
+                        <figcaption data-i18n="gallery.cap5">蛋白属性显示</figcaption>
                     </figure>
                     <figure>
                         <button
@@ -274,7 +287,7 @@
                                 alt="多语言支持界面"
                             />
                         </button>
-                        <figcaption>多语言支持</figcaption>
+                        <figcaption data-i18n="gallery.cap6">多语言支持</figcaption>
                     </figure>
                 </div>
             </section>
@@ -282,7 +295,7 @@
             <section class="section platform-section" id="platforms">
                 <div class="section-heading">
                     <p class="eyebrow">Platforms</p>
-                    <h2>覆盖常用平台</h2>
+                    <h2 data-i18n="platforms.heading">覆盖常用平台</h2>
                 </div>
                 <div class="platforms" aria-label="支持平台">
                     <span>
@@ -302,7 +315,7 @@
                         Android
                     </span>
                 </div>
-                <p class="platform-note">
+                <p class="platform-note" data-i18n="platforms.note">
                     当前免费版与即将上线的个人专业版功能暂时无区别。下载与发布信息可根据项目发布节奏补充到本页面。
                 </p>
             </section>
@@ -310,9 +323,9 @@
             <section class="section feedback-section" id="feedback">
                 <div class="section-heading">
                     <p class="eyebrow">Feedback</p>
-                    <h2>反馈与建议</h2>
+                    <h2 data-i18n="feedback.heading">反馈与建议</h2>
                 </div>
-                <p class="feedback-desc">
+                <p class="feedback-desc" data-i18n="feedback.desc">
                     我们重视每一位用户的声音。如果您在使用过程中遇到问题或有改进建议，欢迎通过以下平台提交 Issue：
                 </p>
                 <div class="feedback-links">
@@ -320,14 +333,14 @@
                         <svg class="feedback-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
                         <div>
                             <strong>GitHub Issues</strong>
-                            <span>国际用户 — 在 GitHub 提交问题或建议</span>
+                            <span data-i18n="feedback.github.desc">国际用户 — 在 GitHub 提交问题或建议</span>
                         </div>
                     </a>
                     <a class="feedback-card" href="https://gitee.com/GenePad/GenePad.github.io/issues" target="_blank" rel="noopener">
                         <svg class="feedback-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M11.984 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.016 0zm6.09 5.333c.328 0 .593.266.592.593v1.482a.594.594 0 0 1-.593.592H9.777c-.982 0-1.778.796-1.778 1.778v5.926c0 .327.266.592.593.592h5.926c.982 0 1.778-.796 1.778-1.778v-.296a.593.593 0 0 0-.592-.593h-3.408a.592.592 0 0 1-.592-.592v-1.482a.592.592 0 0 1 .593-.592h5.778c.327 0 .593.265.593.592v3.555a4 4 0 0 1-4 4H8.37a.593.593 0 0 1-.593-.592V8.592a4 4 0 0 1 4-4h6.298z"/></svg>
                         <div>
                             <strong>Gitee Issues</strong>
-                            <span>大陆用户 — 在 Gitee 提交问题或建议</span>
+                            <span data-i18n="feedback.gitee.desc">大陆用户 — 在 Gitee 提交问题或建议</span>
                         </div>
                     </a>
                 </div>
@@ -336,29 +349,29 @@
             <section class="section license-section" id="license">
                 <div>
                     <p class="eyebrow">License</p>
-                    <h2>免费版使用说明</h2>
+                    <h2 data-i18n="license.heading">免费版使用说明</h2>
                 </div>
                 <div class="notice">
-                    <p>
+                    <p data-i18n="license.p1">
                         基因工坊免费版仅供个人评估学习使用，不可用于商业用途。项目暂不开放源码。
                     </p>
-                    <p>如需商业或学术用途，请关注即将上线的个人专业版。</p>
+                    <p data-i18n="license.p2">如需商业或学术用途，请关注即将上线的个人专业版。</p>
                 </div>
             </section>
         </main>
 
         <footer class="site-footer">
-            <span>© 2026 基因工坊</span>
+            <span>© 2026 <span data-i18n="brand.name">基因工坊</span></span>
             <div class="footer-links">
-                <a href="https://github.com/GenePad/GenePad.github.io/releases/latest" target="_blank" rel="noopener">GitHub 下载</a>
-                <a href="https://gitee.com/GenePad/GenePad.github.io/releases/latest" target="_blank" rel="noopener">Gitee 下载</a>
-                <a href="https://github.com/GenePad/GenePad.github.io/issues" target="_blank" rel="noopener">反馈问题</a>
+                <a href="https://github.com/GenePad/GenePad.github.io/releases/latest" target="_blank" rel="noopener" data-i18n="footer.github">GitHub 下载</a>
+                <a href="https://gitee.com/GenePad/GenePad.github.io/releases/latest" target="_blank" rel="noopener" data-i18n="footer.gitee">Gitee 下载</a>
+                <a href="https://github.com/GenePad/GenePad.github.io/issues" target="_blank" rel="noopener" data-i18n="footer.feedback">反馈问题</a>
             </div>
-            <span>Free for personal evaluation and learning only.</span>
+            <span data-i18n="footer.note">Free for personal evaluation and learning only.</span>
         </footer>
 
         <div class="lightbox" id="lightbox" aria-hidden="true">
-            <button class="lightbox-close" type="button" aria-label="关闭预览">
+            <button class="lightbox-close" type="button" aria-label="关闭预览" data-i18n-aria="lightbox.close">
                 ×
             </button>
             <figure class="lightbox-panel">
@@ -368,26 +381,321 @@
         </div>
 
         <script>
-            const lightbox = document.getElementById("lightbox");
-            const lightboxImage = document.getElementById("lightbox-image");
-            const lightboxCaption = document.getElementById("lightbox-caption");
-            const closeButton = lightbox.querySelector(".lightbox-close");
-            const navToggle = document.querySelector(".nav-toggle");
-            const siteHeader = document.querySelector(".site-header");
+            const translations = {
+                zh: {
+                    "html.lang": "zh-CN",
+                    "title": "基因工坊 - 免费基因图谱编辑工具",
+                    "meta.description": "基因工坊是一款免费的基因图谱编辑工具，支持 GeneBank、DNA、AB1 等格式，提供序列编辑、注释、引物设计与可视化分析。",
+                    "brand.name": "基因工坊",
+                    "brand.aria": "基因工坊首页",
+                    "nav.toggle": "打开导航",
+                    "nav.features": "功能",
+                    "nav.screenshots": "界面",
+                    "nav.platforms": "平台",
+                    "nav.feedback": "反馈",
+                    "nav.license": "许可",
+                    "nav.download": "下载",
+                    "nav.techsupport": "技术支持",
+                    "download.github": "GitHub（国际）",
+                    "download.gitee": "Gitee（大陆）",
+                    "hero.eyebrow": "免费基因图谱编辑工具",
+                    "hero.title": "基因工坊",
+                    "hero.lead": "面向个人评估与学习场景的基因序列编辑器，支持 GeneBank、DNA、AB1 等常见格式，提供图谱浏览、序列编辑、注释管理、引物设计与可视化分析。",
+                    "hero.download": "免费下载",
+                    "hero.viewScreenshots": "查看界面",
+                    "hero.viewLicense": "使用许可",
+                    "hero.stat1.desc": "多格式导入与查看",
+                    "hero.stat2.desc": "覆盖桌面与移动平台",
+                    "features.heading": "从序列文件到可视化分析",
+                    "features.f1.title": "序列与图谱编辑",
+                    "features.f1.desc": "在同一工作区查看环状或线性图谱，快速定位序列区域，编辑碱基并管理基因元件。",
+                    "features.f2.title": "注释与标注管理",
+                    "features.f2.desc": "以图谱、注释表和序列视图联动管理功能元件，适合质粒检查、教学演示和方案评估。",
+                    "features.f3.title": "限制酶与引物",
+                    "features.f3.desc": "内置限制酶位点显示、引物设计和序列定位能力，减少在多个工具之间切换。",
+                    "features.f4.title": "测序结果辅助分析",
+                    "features.f4.desc": "支持 AB1 测序结果查看，结合序列与图谱信息完成更直观的校验流程。",
+                    "interface.heading": "清晰的浅色与夜间工作模式",
+                    "interface.desc": "基因工坊的界面以高密度科研工具为中心，保留文件操作、注释、限制酶、引物和图谱视图等关键入口，同时支持白天与夜间模式，适配不同工作环境。",
+                    "screenshots.heading": "主要界面截图",
+                    "platforms.heading": "覆盖常用平台",
+                    "platforms.note": "当前免费版与即将上线的个人专业版功能暂时无区别。下载与发布信息可根据项目发布节奏补充到本页面。",
+                    "feedback.heading": "反馈与建议",
+                    "feedback.desc": "我们重视每一位用户的声音。如果您在使用过程中遇到问题或有改进建议，欢迎通过以下平台提交 Issue：",
+                    "feedback.github.desc": "国际用户 — 在 GitHub 提交问题或建议",
+                    "feedback.gitee.desc": "大陆用户 — 在 Gitee 提交问题或建议",
+                    "license.heading": "免费版使用说明",
+                    "license.p1": "基因工坊免费版仅供个人评估学习使用，不可用于商业用途。项目暂不开放源码。",
+                    "license.p2": "如需商业或学术用途，请关注即将上线的个人专业版。",
+                    "footer.github": "GitHub 下载",
+                    "footer.gitee": "Gitee 下载",
+                    "footer.feedback": "反馈问题",
+                    "footer.note": "Free for personal evaluation and learning only.",
+                    "lightbox.close": "关闭预览",
+                    "preview.hint": "点击预览",
+                    "gallery.cap1": "整体图谱",
+                    "gallery.cap2": "图谱一键直达序列",
+                    "gallery.cap3": "酶切位点显示",
+                    "gallery.cap4": "测序结果",
+                    "gallery.cap5": "蛋白属性显示",
+                    "gallery.cap6": "多语言支持"
+                },
+                en: {
+                    "html.lang": "en",
+                    "title": "Gene Pad - Free Gene Map Editor",
+                    "meta.description": "Gene Pad is a free gene map editing tool supporting GeneBank, DNA, AB1 and more. Features sequence editing, annotation, primer design and visual analysis.",
+                    "brand.name": "Gene Pad",
+                    "brand.aria": "Gene Pad home",
+                    "nav.toggle": "Open navigation",
+                    "nav.features": "Features",
+                    "nav.screenshots": "Screenshots",
+                    "nav.platforms": "Platforms",
+                    "nav.feedback": "Feedback",
+                    "nav.license": "License",
+                    "nav.download": "Download",
+                    "nav.techsupport": "Tech Support",
+                    "download.github": "GitHub (Global)",
+                    "download.gitee": "Gitee (China)",
+                    "hero.eyebrow": "Free Gene Map Editor",
+                    "hero.title": "Gene Pad",
+                    "hero.lead": "A gene sequence editor for personal evaluation and learning, supporting GeneBank, DNA, AB1 and other common formats with map browsing, sequence editing, annotation management, primer design and visual analysis.",
+                    "hero.download": "Free Download",
+                    "hero.viewScreenshots": "View Screenshots",
+                    "hero.viewLicense": "License",
+                    "hero.stat1.desc": "Multi-format import & viewing",
+                    "hero.stat2.desc": "Desktop & mobile platforms",
+                    "features.heading": "From Sequence Files to Visual Analysis",
+                    "features.f1.title": "Sequence & Map Editing",
+                    "features.f1.desc": "View circular or linear maps in the same workspace, quickly locate sequence regions, edit bases and manage genetic elements.",
+                    "features.f2.title": "Annotation Management",
+                    "features.f2.desc": "Manage functional elements with linked map, annotation table and sequence views — ideal for plasmid inspection, teaching demos and protocol evaluation.",
+                    "features.f3.title": "Restriction Enzymes & Primers",
+                    "features.f3.desc": "Built-in restriction enzyme site display, primer design and sequence localization — reduce switching between multiple tools.",
+                    "features.f4.title": "Sequencing Analysis",
+                    "features.f4.desc": "Support AB1 trace viewing, combining sequence and map information for a more intuitive verification workflow.",
+                    "interface.heading": "Clean Light & Dark Work Modes",
+                    "interface.desc": "Gene Pad's interface centers on high-density research tools, keeping key entries for file operations, annotations, restriction enzymes, primers and map views, while supporting both light and dark modes for different work environments.",
+                    "screenshots.heading": "Main Interface Screenshots",
+                    "platforms.heading": "Supported Platforms",
+                    "platforms.note": "The current free version and the upcoming personal pro version have the same features for now. Download and release information may be added to this page as the project progresses.",
+                    "feedback.heading": "Feedback & Suggestions",
+                    "feedback.desc": "We value every user's voice. If you encounter issues or have suggestions, feel free to submit an Issue on the following platforms:",
+                    "feedback.github.desc": "Global users — Submit issues or suggestions on GitHub",
+                    "feedback.gitee.desc": "China users — Submit issues or suggestions on Gitee",
+                    "license.heading": "Free Version Notice",
+                    "license.p1": "Gene Pad free version is for personal evaluation and learning only. Commercial use is not permitted. The project is not open source at this time.",
+                    "license.p2": "For commercial or academic use, please stay tuned for the upcoming personal pro version.",
+                    "footer.github": "GitHub Download",
+                    "footer.gitee": "Gitee Download",
+                    "footer.feedback": "Report Issue",
+                    "footer.note": "Free for personal evaluation and learning only.",
+                    "lightbox.close": "Close preview",
+                    "preview.hint": "Click to preview",
+                    "gallery.cap1": "Overall Map",
+                    "gallery.cap2": "Map to Sequence",
+                    "gallery.cap3": "Restriction Sites",
+                    "gallery.cap4": "Sequencing Results",
+                    "gallery.cap5": "Protein Properties",
+                    "gallery.cap6": "Multi-language Support"
+                },
+                de: {
+                    "html.lang": "de",
+                    "title": "Gene Pad - Kostenloser Genkarten-Editor",
+                    "meta.description": "Gene Pad ist ein kostenloses Genkarten-Bearbeitungstool mit Unterstützung für GeneBank, DNA, AB1 und mehr. Bietet Sequenzbearbeitung, Annotation, Primer-Design und visuelle Analyse.",
+                    "brand.name": "Gene Pad",
+                    "brand.aria": "Gene Pad Startseite",
+                    "nav.toggle": "Navigation öffnen",
+                    "nav.features": "Funktionen",
+                    "nav.screenshots": "Screenshots",
+                    "nav.platforms": "Plattformen",
+                    "nav.feedback": "Feedback",
+                    "nav.license": "Lizenz",
+                    "nav.download": "Download",
+                    "nav.techsupport": "Technik-Support",
+                    "download.github": "GitHub (International)",
+                    "download.gitee": "Gitee (China)",
+                    "hero.eyebrow": "Kostenloser Genkarten-Editor",
+                    "hero.title": "Gene Pad",
+                    "hero.lead": "Ein Gensequenz-Editor für persönliche Auswertung und Lernen. Unterstützt GeneBank, DNA, AB1 und andere gängige Formate mit Kartenansicht, Sequenzbearbeitung, Annotationsverwaltung, Primer-Design und visueller Analyse.",
+                    "hero.download": "Kostenloser Download",
+                    "hero.viewScreenshots": "Screenshots ansehen",
+                    "hero.viewLicense": "Lizenz",
+                    "hero.stat1.desc": "Multi-Format-Import & Anzeige",
+                    "hero.stat2.desc": "Desktop- & Mobilplattformen",
+                    "features.heading": "Von Sequenzdateien zur visuellen Analyse",
+                    "features.f1.title": "Sequenz- & Kartenbearbeitung",
+                    "features.f1.desc": "Zirkuläre oder lineare Karten in einem Arbeitsbereich anzeigen, Sequenzbereiche schnell lokalisieren, Basen bearbeiten und genetische Elemente verwalten.",
+                    "features.f2.title": "Annotationsverwaltung",
+                    "features.f2.desc": "Funktionselemente mit verknüpfter Karte, Annotationstabelle und Sequenzansicht verwalten — ideal für Plasmid-Prüfung, Lehrdemonstrationen und Protokollbewertung.",
+                    "features.f3.title": "Restriktionsenzyme & Primer",
+                    "features.f3.desc": "Integrierte Restriktionsenzym-Stellenanzeige, Primer-Design und Sequenzlokalisierung — weniger Wechsel zwischen mehreren Tools.",
+                    "features.f4.title": "Sequenzierungsanalyse",
+                    "features.f4.desc": "AB1-Spurenansicht wird unterstützt, kombiniert mit Sequenz- und Karteninformationen für einen intuitiveren Verifizierungsworkflow.",
+                    "interface.heading": "Klares helles und dunkles Arbeitsmodus",
+                    "interface.desc": "Die Benutzeroberfläche von Gene Pad konzentriert sich auf Forschungstools mit hoher Dichte und behält wichtige Zugänge für Dateioperationen, Annotationen, Restriktionsenzyme, Primer und Kartenansichten bei. Helles und dunkles Modus werden unterstützt.",
+                    "screenshots.heading": "Hauptoberfläche-Screenshots",
+                    "platforms.heading": "Unterstützte Plattformen",
+                    "platforms.note": "Die aktuelle kostenlose Version und die kommende persönliche Pro-Version haben vorerst dieselben Funktionen. Download- und Release-Informationen können je nach Projektfortschritt ergänzt werden.",
+                    "feedback.heading": "Feedback & Vorschläge",
+                    "feedback.desc": "Wir schätzen jede Nutzerstimme. Wenn Sie Probleme haben oder Vorschläge machen möchten, reichen Sie gerne ein Issue auf folgenden Plattformen ein:",
+                    "feedback.github.desc": "Internationale Nutzer — Issues auf GitHub einreichen",
+                    "feedback.gitee.desc": "China-Nutzer — Issues auf Gitee einreichen",
+                    "license.heading": "Hinweis zur kostenlosen Version",
+                    "license.p1": "Die kostenlose Version von Gene Pad ist nur für persönliche Auswertung und Lernen bestimmt. Kommerzielle Nutzung ist nicht gestattet. Das Projekt ist derzeit nicht Open Source.",
+                    "license.p2": "Für kommerzielle oder akademische Nutzung beachten Sie bitte die kommende persönliche Pro-Version.",
+                    "footer.github": "GitHub Download",
+                    "footer.gitee": "Gitee Download",
+                    "footer.feedback": "Problem melden",
+                    "footer.note": "Nur für persönliche Auswertung und Lernen.",
+                    "lightbox.close": "Vorschau schließen",
+                    "preview.hint": "Klicken für Vorschau",
+                    "gallery.cap1": "Gesamtkarte",
+                    "gallery.cap2": "Karte zu Sequenz",
+                    "gallery.cap3": "Restriktionsstellen",
+                    "gallery.cap4": "Sequenzierungsergebnisse",
+                    "gallery.cap5": "Proteineigenschaften",
+                    "gallery.cap6": "Mehrsprachige Unterstützung"
+                },
+                fr: {
+                    "html.lang": "fr",
+                    "title": "Gene Pad - Éditeur de cartes génétiques gratuit",
+                    "meta.description": "Gene Pad est un outil gratuit d'édition de cartes génétiques prenant en charge GeneBank, DNA, AB1 et d'autres formats. Édition de séquences, annotation, conception d'amorces et analyse visuelle.",
+                    "brand.name": "Gene Pad",
+                    "brand.aria": "Page d'accueil Gene Pad",
+                    "nav.toggle": "Ouvrir la navigation",
+                    "nav.features": "Fonctionnalités",
+                    "nav.screenshots": "Captures d'écran",
+                    "nav.platforms": "Plateformes",
+                    "nav.feedback": "Commentaires",
+                    "nav.license": "Licence",
+                    "nav.download": "Télécharger",
+                    "nav.techsupport": "Support technique",
+                    "download.github": "GitHub (International)",
+                    "download.gitee": "Gitee (Chine)",
+                    "hero.eyebrow": "Éditeur de cartes génétiques gratuit",
+                    "hero.title": "Gene Pad",
+                    "hero.lead": "Un éditeur de séquences génétiques pour l'évaluation personnelle et l'apprentissage, prenant en charge GeneBank, DNA, AB1 et d'autres formats courants avec navigation cartographique, édition de séquences, gestion des annotations, conception d'amorces et analyse visuelle.",
+                    "hero.download": "Téléchargement gratuit",
+                    "hero.viewScreenshots": "Voir les captures",
+                    "hero.viewLicense": "Licence",
+                    "hero.stat1.desc": "Import et visualisation multi-formats",
+                    "hero.stat2.desc": "Plateformes bureau et mobile",
+                    "features.heading": "Des fichiers de séquences à l'analyse visuelle",
+                    "features.f1.title": "Édition de séquences et cartes",
+                    "features.f1.desc": "Visualisez des cartes circulaires ou linéaires dans le même espace de travail, localisez rapidement les régions de séquence, éditez les bases et gérez les éléments génétiques.",
+                    "features.f2.title": "Gestion des annotations",
+                    "features.f2.desc": "Gérez les éléments fonctionnels avec des vues cartographiques, tableaux d'annotation et vues de séquence liées — idéal pour l'inspection de plasmides, les démonstrations pédagogiques et l'évaluation de protocoles.",
+                    "features.f3.title": "Enzymes de restriction et amorces",
+                    "features.f3.desc": "Affichage intégré des sites d'enzymes de restriction, conception d'amorces et localisation de séquences — réduisez les changements entre plusieurs outils.",
+                    "features.f4.title": "Analyse de séquençage",
+                    "features.f4.desc": "Prise en charge de la visualisation des traces AB1, combinée aux informations de séquence et de carte pour un flux de vérification plus intuitif.",
+                    "interface.heading": "Modes de travail clair et sombre",
+                    "interface.desc": "L'interface de Gene Pad est centrée sur des outils de recherche à haute densité, conservant les accès clés pour les opérations de fichiers, les annotations, les enzymes de restriction, les amorces et les vues cartographiques, avec prise en charge des modes clair et sombre.",
+                    "screenshots.heading": "Captures d'écran principales",
+                    "platforms.heading": "Plateformes prises en charge",
+                    "platforms.note": "La version gratuite actuelle et la prochaine version pro personnelle ont temporairement les mêmes fonctionnalités. Les informations de téléchargement et de publication peuvent être ajoutées à cette page selon le rythme du projet.",
+                    "feedback.heading": "Commentaires et suggestions",
+                    "feedback.desc": "Nous valorisons la voix de chaque utilisateur. Si vous rencontrez des problèmes ou avez des suggestions, n'hésitez pas à soumettre un ticket sur les plateformes suivantes :",
+                    "feedback.github.desc": "Utilisateurs internationaux — Soumettre des problèmes ou suggestions sur GitHub",
+                    "feedback.gitee.desc": "Utilisateurs chinois — Soumettre des problèmes ou suggestions sur Gitee",
+                    "license.heading": "Notice de la version gratuite",
+                    "license.p1": "La version gratuite de Gene Pad est destinée uniquement à l'évaluation personnelle et à l'apprentissage. L'utilisation commerciale n'est pas autorisée. Le projet n'est pas open source pour le moment.",
+                    "license.p2": "Pour une utilisation commerciale ou académique, veuillez suivre la prochaine version pro personnelle.",
+                    "footer.github": "Télécharger GitHub",
+                    "footer.gitee": "Télécharger Gitee",
+                    "footer.feedback": "Signaler un problème",
+                    "footer.note": "Gratuit pour l'évaluation personnelle et l'apprentissage uniquement.",
+                    "lightbox.close": "Fermer l'aperçu",
+                    "preview.hint": "Cliquer pour prévisualiser",
+                    "gallery.cap1": "Carte globale",
+                    "gallery.cap2": "Carte vers séquence",
+                    "gallery.cap3": "Sites de restriction",
+                    "gallery.cap4": "Résultats de séquençage",
+                    "gallery.cap5": "Propriétés des protéines",
+                    "gallery.cap6": "Support multilingue"
+                }
+            };
+
+            const langNames = { zh: "中文", en: "English", de: "Deutsch", fr: "Français" };
+            const langSwitcher = document.getElementById("lang-switcher");
+            const langDropdown = document.getElementById("lang-dropdown");
+            const langLabel = langSwitcher.querySelector(".lang-switcher-label");
+
+            function setLanguage(lang) {
+                if (!translations[lang]) return;
+                const t = translations[lang];
+                document.documentElement.lang = t["html.lang"];
+                document.title = t["title"];
+                const metaDesc = document.querySelector('meta[name="description"]');
+                if (metaDesc && t["meta.description"]) metaDesc.setAttribute("content", t["meta.description"]);
+
+                document.querySelectorAll("[data-i18n]").forEach(function(el) {
+                    var key = el.dataset.i18n;
+                    if (t[key]) el.textContent = t[key];
+                });
+                document.querySelectorAll("[data-i18n-aria]").forEach(function(el) {
+                    var key = el.dataset.i18nAria;
+                    if (t[key]) el.setAttribute("aria-label", t[key]);
+                });
+
+                var previewTriggers = document.querySelectorAll(".preview-trigger");
+                previewTriggers.forEach(function(btn) {
+                    btn.style.setProperty("--preview-hint", '"' + (t["preview.hint"] || "点击预览") + '"');
+                });
+
+                langLabel.textContent = langNames[lang];
+                langDropdown.querySelectorAll("button").forEach(function(btn) {
+                    btn.classList.toggle("active", btn.dataset.lang === lang);
+                });
+                localStorage.setItem("lang", lang);
+            }
+
+            langDropdown.addEventListener("click", function(e) {
+                var btn = e.target.closest("button[data-lang]");
+                if (!btn) return;
+                setLanguage(btn.dataset.lang);
+            });
+
+            var savedLang = localStorage.getItem("lang") || "zh";
+            if (savedLang !== "zh") setLanguage(savedLang);
+            else {
+                langLabel.textContent = langNames.zh;
+                langDropdown.querySelector('button[data-lang="zh"]').classList.add("active");
+            }
+
+            var lightbox = document.getElementById("lightbox");
+            var lightboxImage = document.getElementById("lightbox-image");
+            var lightboxCaption = document.getElementById("lightbox-caption");
+            var closeButton = lightbox.querySelector(".lightbox-close");
+            var navToggle = document.querySelector(".nav-toggle");
+            var siteHeader = document.querySelector(".site-header");
 
             if (navToggle && siteHeader) {
-                navToggle.addEventListener("click", () => {
-                    const isOpen = siteHeader.classList.toggle("nav-open");
+                navToggle.addEventListener("click", function() {
+                    var isOpen = siteHeader.classList.toggle("nav-open");
                     navToggle.setAttribute("aria-expanded", String(isOpen));
                 });
 
-                document.querySelectorAll(".nav a").forEach((link) => {
-                    link.addEventListener("click", () => {
+                document.querySelectorAll(".nav a").forEach(function(link) {
+                    link.addEventListener("click", function() {
                         siteHeader.classList.remove("nav-open");
                         navToggle.setAttribute("aria-expanded", "false");
                     });
                 });
             }
+
+            document.querySelectorAll(".dropdown > .button").forEach(function(btn) {
+                btn.addEventListener("click", function(e) {
+                    var dd = btn.parentElement;
+                    dd.classList.toggle("open");
+                    e.stopPropagation();
+                });
+            });
+            document.addEventListener("click", function() {
+                document.querySelectorAll(".dropdown.open").forEach(function(dd) {
+                    dd.classList.remove("open");
+                });
+            });
 
             function closePreview() {
                 lightbox.setAttribute("aria-hidden", "true");
@@ -395,13 +703,11 @@
                 document.body.classList.remove("preview-open");
             }
 
-            document.querySelectorAll(".preview-trigger").forEach((button) => {
-                button.addEventListener("click", () => {
-                    const image = button.querySelector("img");
+            document.querySelectorAll(".preview-trigger").forEach(function(button) {
+                button.addEventListener("click", function() {
+                    var image = button.querySelector("img");
                     lightboxImage.src = button.dataset.full;
-                    lightboxImage.alt = image
-                        ? image.alt
-                        : button.dataset.caption;
+                    lightboxImage.alt = image ? image.alt : button.dataset.caption;
                     lightboxCaption.textContent = button.dataset.caption || "";
                     lightbox.setAttribute("aria-hidden", "false");
                     document.body.classList.add("preview-open");
@@ -410,14 +716,11 @@
             });
 
             closeButton.addEventListener("click", closePreview);
-            lightbox.addEventListener("click", (event) => {
+            lightbox.addEventListener("click", function(event) {
                 if (event.target === lightbox) closePreview();
             });
-            document.addEventListener("keydown", (event) => {
-                if (
-                    event.key === "Escape" &&
-                    lightbox.getAttribute("aria-hidden") === "false"
-                ) {
+            document.addEventListener("keydown", function(event) {
+                if (event.key === "Escape" && lightbox.getAttribute("aria-hidden") === "false") {
                     closePreview();
                 }
             });

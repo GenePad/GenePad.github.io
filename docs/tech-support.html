@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-i18n-lang="html.lang">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -8,17 +8,18 @@
         <meta
             name="description"
             content="基因工坊 .gen 文件格式技术文档 — 基于 SQLite 3 的原生序列存储格式完整规范。"
+            data-i18n-meta="meta.description"
         />
-        <title>.gen 文件格式 — 基因工坊技术支持</title>
+        <title data-i18n-title="title">.gen 文件格式 — 基因工坊技术支持</title>
         <link rel="icon" href="icon.png" type="image/png" />
         <link rel="stylesheet" href="styles.css" />
     </head>
     <body>
         <header class="site-header">
-            <a class="brand" href="index.html" aria-label="基因工坊首页">
+            <a class="brand" href="index.html" aria-label="基因工坊首页" data-i18n-aria="brand.aria">
                 <span class="brand-mark"><img src="icon.png" alt="" /></span>
                 <span>
-                    <strong>基因工坊</strong>
+                    <strong data-i18n="brand.name">基因工坊</strong>
                     <small>Gene Pad</small>
                 </span>
             </a>
@@ -31,15 +32,27 @@
                 <span></span>
                 <span></span>
                 <span></span>
-                <span class="sr-only">打开导航</span>
+                <span class="sr-only" data-i18n="nav.toggle">打开导航</span>
             </button>
             <nav class="nav" id="site-nav" aria-label="主导航">
-                <a href="index.html">首页</a>
-                <a href="#overview">概述</a>
-                <a href="#schema">数据表</a>
-                <a href="#encoding">编码方式</a>
-                <a href="#workflow">读写流程</a>
-                <a href="#source">源码</a>
+                <a href="index.html" data-i18n="nav.home">首页</a>
+                <a href="#overview" data-i18n="nav.overview">概述</a>
+                <a href="#schema" data-i18n="nav.schema">数据表</a>
+                <a href="#encoding" data-i18n="nav.encoding">编码方式</a>
+                <a href="#workflow" data-i18n="nav.workflow">读写流程</a>
+                <a href="#source" data-i18n="nav.source">源码</a>
+                <div class="lang-switcher" id="lang-switcher">
+                    <button type="button" class="lang-switcher-btn" aria-label="Switch language">
+                        <span class="lang-switcher-label">中文</span>
+                        <span class="lang-switcher-arrow">▼</span>
+                    </button>
+                    <div class="lang-dropdown" id="lang-dropdown">
+                        <button type="button" data-lang="zh" class="active">中文</button>
+                        <button type="button" data-lang="en">English</button>
+                        <button type="button" data-lang="de">Deutsch</button>
+                        <button type="button" data-lang="fr">Français</button>
+                    </div>
+                </div>
             </nav>
         </header>
 
@@ -47,25 +60,25 @@
             <section class="hero tech-hero">
                 <div class="hero-copy">
                     <p class="eyebrow">Technical Reference</p>
-                    <h1>.gen 文件格式</h1>
-                    <p class="lead">
+                    <h1 data-i18n="tech.hero.title">.gen 文件格式</h1>
+                    <p class="lead" data-i18n="tech.hero.lead">
                         基因工坊的原生文件格式 <code>.gen</code> 基于 SQLite 3
                         数据库，以结构化方式存储 DNA
                         序列、注释特征、引物、测序图谱和操作历史。本文档描述当前格式版本（Schema
                         2）的完整规范。
                     </p>
                     <div class="hero-actions">
-                        <a class="button primary" href="#schema">查看数据表</a>
-                        <a class="button secondary" href="#workflow">读写流程</a>
+                        <a class="button primary" href="#schema" data-i18n="tech.hero.viewSchema">查看数据表</a>
+                        <a class="button secondary" href="#workflow" data-i18n="tech.hero.viewWorkflow">读写流程</a>
                     </div>
                     <dl class="hero-stats" aria-label="格式摘要">
                         <div>
                             <dt>SQLite 3 数据库</dt>
-                            <dd>标准文件头，通用工具可直接打开</dd>
+                            <dd data-i18n="tech.stat1.desc">标准文件头，通用工具可直接打开</dd>
                         </div>
                         <div>
                             <dt>Schema 版本 2</dt>
-                            <dd>10+ 张数据表，覆盖序列、注释与操作历史</dd>
+                            <dd data-i18n="tech.stat2.desc">10+ 张数据表，覆盖序列、注释与操作历史</dd>
                         </div>
                     </dl>
                 </div>
@@ -92,13 +105,13 @@
             <section class="section tech-overview" id="overview">
                 <div class="section-heading">
                     <p class="eyebrow">Overview</p>
-                    <h2>格式概述</h2>
+                    <h2 data-i18n="tech.overview.heading">格式概述</h2>
                 </div>
                 <div class="overview-grid">
                     <article class="overview-card">
                         <span class="icon">01</span>
-                        <h3>基于 SQLite 3</h3>
-                        <p>
+                        <h3 data-i18n="tech.overview.o1.title">基于 SQLite 3</h3>
+                        <p data-i18n="tech.overview.o1.desc">
                             <code>.gen</code> 文件本质是标准 SQLite 3
                             数据库，以 <code>.gen</code>
                             为扩展名。文件头前 16 字节为
@@ -108,8 +121,8 @@
                     </article>
                     <article class="overview-card">
                         <span class="icon">02</span>
-                        <h3>版本管理</h3>
-                        <p>
+                        <h3 data-i18n="tech.overview.o2.title">版本管理</h3>
+                        <p data-i18n="tech.overview.o2.desc">
                             通过 <code>schema_version</code> 表追踪格式版本。当前版本为
                             2，包含
                             <code>edit_history</code>、<code>chromatogram_data</code>
@@ -118,8 +131,8 @@
                     </article>
                     <article class="overview-card">
                         <span class="icon">03</span>
-                        <h3>无压缩无加密</h3>
-                        <p>
+                        <h3 data-i18n="tech.overview.o3.title">无压缩无加密</h3>
+                        <p data-i18n="tech.overview.o3.desc">
                             数据以 SQLite 原生的 TEXT、INTEGER、REAL、BLOB
                             类型存储，不使用额外的压缩或加密。SQLite WAL
                             模式提供崩溃恢复能力。
@@ -127,8 +140,8 @@
                     </article>
                     <article class="overview-card">
                         <span class="icon">04</span>
-                        <h3>分块序列存储</h3>
-                        <p>
+                        <h3 data-i18n="tech.overview.o4.title">分块序列存储</h3>
+                        <p data-i18n="tech.overview.o4.desc">
                             DNA 序列按 10,000 碱基为单位分块存入
                             <code>sequence_blocks</code>
                             表，支持按需加载，适合大序列场景。
@@ -140,14 +153,14 @@
             <section class="section schema-band" id="schema">
                 <div class="section-heading">
                     <p class="eyebrow">Schema</p>
-                    <h2>数据表结构</h2>
+                    <h2 data-i18n="tech.schema.heading">数据表结构</h2>
                 </div>
 
                 <div class="schema-list">
                     <details class="schema-item" open>
                         <summary>
                             <strong>project_meta</strong>
-                            <span>项目元数据（键值对）</span>
+                            <span data-i18n="tech.schema.project_meta">项目元数据（键值对）</span>
                         </summary>
                         <div class="schema-body">
                             <table>
@@ -170,7 +183,7 @@
                     <details class="schema-item">
                         <summary>
                             <strong>sequence_blocks</strong>
-                            <span>序列分块存储</span>
+                            <span data-i18n="tech.schema.sequence_blocks">序列分块存储</span>
                         </summary>
                         <div class="schema-body">
                             <table>
@@ -189,7 +202,7 @@
                     <details class="schema-item">
                         <summary>
                             <strong>features</strong>
-                            <span>序列注释特征</span>
+                            <span data-i18n="tech.schema.features">序列标注特征</span>
                         </summary>
                         <div class="schema-body">
                             <table>
@@ -217,7 +230,7 @@
                     <details class="schema-item">
                         <summary>
                             <strong>primers</strong>
-                            <span>引物定义</span>
+                            <span data-i18n="tech.schema.primers">引物定义</span>
                         </summary>
                         <div class="schema-body">
                             <table>
@@ -238,7 +251,7 @@
                     <details class="schema-item">
                         <summary>
                             <strong>primer_binding_sites</strong>
-                            <span>引物结合位点</span>
+                            <span data-i18n="tech.schema.primer_binding_sites">引物结合位点</span>
                         </summary>
                         <div class="schema-body">
                             <table>
@@ -264,7 +277,7 @@
                     <details class="schema-item">
                         <summary>
                             <strong>alignment_entries</strong>
-                            <span>序列比对条目</span>
+                            <span data-i18n="tech.schema.alignment_entries">序列比对条目</span>
                         </summary>
                         <div class="schema-body">
                             <table>
@@ -286,7 +299,7 @@
                     <details class="schema-item">
                         <summary>
                             <strong>attachments</strong>
-                            <span>附件存储</span>
+                            <span data-i18n="tech.schema.attachments">附件存储</span>
                         </summary>
                         <div class="schema-body">
                             <table>
@@ -306,7 +319,7 @@
                     <details class="schema-item">
                         <summary>
                             <strong>undo_entries</strong>
-                            <span>撤销/重做栈（上限 200 条）</span>
+                            <span data-i18n="tech.schema.undo_entries">撤销/重做栈（上限 200 条）</span>
                         </summary>
                         <div class="schema-body">
                             <table>
@@ -329,7 +342,7 @@
                     <details class="schema-item">
                         <summary>
                             <strong>edit_history</strong>
-                            <span>编辑审计日志</span>
+                            <span data-i18n="tech.schema.edit_history">编辑审计日志</span>
                         </summary>
                         <div class="schema-body">
                             <table>
@@ -352,7 +365,7 @@
                     <details class="schema-item">
                         <summary>
                             <strong>chromatogram_data</strong>
-                            <span>测序图谱数据</span>
+                            <span data-i18n="tech.schema.chromatogram_data">测序图谱数据</span>
                         </summary>
                         <div class="schema-body">
                             <table>
@@ -375,7 +388,7 @@
                     <details class="schema-item">
                         <summary>
                             <strong>schema_version</strong>
-                            <span>格式版本追踪</span>
+                            <span data-i18n="tech.schema.schema_version">格式版本追踪</span>
                         </summary>
                         <div class="schema-body">
                             <table>
@@ -396,32 +409,32 @@
             <section class="section" id="encoding">
                 <div class="section-heading">
                     <p class="eyebrow">Encoding</p>
-                    <h2>数据编码方式</h2>
+                    <h2 data-i18n="tech.encoding.heading">数据编码方式</h2>
                 </div>
                 <div class="encoding-grid">
                     <article class="encoding-card">
-                        <h3>DNA 序列</h3>
-                        <p>纯文本碱基字母，按 10,000 碱基分块存储在 <code>sequence_blocks</code> 表中。支持标准 A/T/C/G 及 IUPAC 歧义码。</p>
+                        <h3 data-i18n="tech.encoding.e1.title">DNA 序列</h3>
+                        <p data-i18n="tech.encoding.e1.desc">纯文本碱基字母，按 10,000 碱基分块存储在 <code>sequence_blocks</code> 表中。支持标准 A/T/C/G 及 IUPAC 歧义码。</p>
                     </article>
                     <article class="encoding-card">
-                        <h3>注释与引物</h3>
-                        <p>以独立 SQL 行存储。引物结合位点的 components 和 alignment 字段使用 JSON 字符串编码。</p>
+                        <h3 data-i18n="tech.encoding.e2.title">注释与引物</h3>
+                        <p data-i18n="tech.encoding.e2.desc">以独立 SQL 行存储。引物结合位点的 components 和 alignment 字段使用 JSON 字符串编码。</p>
                     </article>
                     <article class="encoding-card">
-                        <h3>图谱数据</h3>
-                        <p>测序图谱（chromatogram）的四通道信号数据以二进制 BLOB 存储。比对条目的图谱以 JSON 字符串存储。</p>
+                        <h3 data-i18n="tech.encoding.e3.title">图谱数据</h3>
+                        <p data-i18n="tech.encoding.e3.desc">测序图谱（chromatogram）的四通道信号数据以二进制 BLOB 存储。比对条目的图谱以 JSON 字符串存储。</p>
                     </article>
                     <article class="encoding-card">
-                        <h3>元数据</h3>
-                        <p>项目元信息以键值对 TEXT 形式存储在 <code>project_meta</code> 表。撤销/重做差异和编辑历史快照均为 JSON 编码。</p>
+                        <h3 data-i18n="tech.encoding.e4.title">元数据</h3>
+                        <p data-i18n="tech.encoding.e4.desc">项目元信息以键值对 TEXT 形式存储在 <code>project_meta</code> 表。撤销/重做差异和编辑历史快照均为 JSON 编码。</p>
                     </article>
                     <article class="encoding-card">
-                        <h3>附件</h3>
-                        <p>文件附件以 BLOB 二进制存储，附带文件名和 MIME 类型元信息。</p>
+                        <h3 data-i18n="tech.encoding.e5.title">附件</h3>
+                        <p data-i18n="tech.encoding.e5.desc">文件附件以 BLOB 二进制存储，附带文件名和 MIME 类型元信息。</p>
                     </article>
                     <article class="encoding-card">
-                        <h3>数据库配置</h3>
-                        <p>桌面端使用 WAL 日志模式（<code>PRAGMA journal_mode=WAL</code>），同步级别为 NORMAL。保存时执行 WAL checkpoint。</p>
+                        <h3 data-i18n="tech.encoding.e6.title">数据库配置</h3>
+                        <p data-i18n="tech.encoding.e6.desc">桌面端使用 WAL 日志模式（<code>PRAGMA journal_mode=WAL</code>），同步级别为 NORMAL。保存时执行 WAL checkpoint。</p>
                     </article>
                 </div>
             </section>
@@ -429,35 +442,35 @@
             <section class="section workflow-band" id="workflow">
                 <div class="section-heading">
                     <p class="eyebrow">Workflow</p>
-                    <h2>文件读写流程</h2>
+                    <h2 data-i18n="tech.workflow.heading">文件读写流程</h2>
                 </div>
                 <div class="workflow-steps">
                     <div class="workflow-step">
                         <span class="step-num">1</span>
                         <div>
-                            <h3>打开文件</h3>
-                            <p>验证文件头（前 16 字节 = <code>"SQLite format 3\0"</code>），复制到临时位置（桌面端）或加载到内存（浏览器端 sql.js）。</p>
+                            <h3 data-i18n="tech.workflow.s1.title">打开文件</h3>
+                            <p data-i18n="tech.workflow.s1.desc">验证文件头（前 16 字节 = <code>"SQLite format 3\0"</code>），复制到临时位置（桌面端）或加载到内存（浏览器端 sql.js）。</p>
                         </div>
                     </div>
                     <div class="workflow-step">
                         <span class="step-num">2</span>
                         <div>
-                            <h3>加载数据</h3>
-                            <p>从 <code>project_meta</code> 读取项目元信息，加载 features 和 primers 表。序列按需通过 <code>getSequenceChunk()</code> 按块加载，不全量读取。</p>
+                            <h3 data-i18n="tech.workflow.s2.title">加载数据</h3>
+                            <p data-i18n="tech.workflow.s2.desc">从 <code>project_meta</code> 读取项目元信息，加载 features 和 primers 表。序列按需通过 <code>getSequenceChunk()</code> 按块加载，不全量读取。</p>
                         </div>
                     </div>
                     <div class="workflow-step">
                         <span class="step-num">3</span>
                         <div>
-                            <h3>编辑操作</h3>
-                            <p>所有修改操作（碱基编辑、特征增删、引物设计等）实时写入 <code>undo_entries</code> 和 <code>edit_history</code>，确保可追溯和可撤销。</p>
+                            <h3 data-i18n="tech.workflow.s3.title">编辑操作</h3>
+                            <p data-i18n="tech.workflow.s3.desc">所有修改操作（碱基编辑、特征增删、引物设计等）实时写入 <code>undo_entries</code> 和 <code>edit_history</code>，确保可追溯和可撤销。</p>
                         </div>
                     </div>
                     <div class="workflow-step">
                         <span class="step-num">4</span>
                         <div>
-                            <h3>保存文件</h3>
-                            <p>调用 <code>commitWorkingCopy()</code>：写入元数据、序列块、特征和引物，设置 <code>isDirty = '0'</code>。桌面端执行 WAL checkpoint 刷盘；浏览器端导出为 <code>Uint8Array</code> 触发下载。</p>
+                            <h3 data-i18n="tech.workflow.s4.title">保存文件</h3>
+                            <p data-i18n="tech.workflow.s4.desc">调用 <code>commitWorkingCopy()</code>：写入元数据、序列块、特征和引物，设置 <code>isDirty = '0'</code>。桌面端执行 WAL checkpoint 刷盘；浏览器端导出为 <code>Uint8Array</code> 触发下载。</p>
                         </div>
                     </div>
                 </div>
@@ -466,13 +479,13 @@
             <section class="section source-section" id="source">
                 <div class="section-heading">
                     <p class="eyebrow">Source Code</p>
-                    <h2>完整读写源码</h2>
-                    <p>以下为 <code>.gen</code> 文件读写的完整实现代码，共 6 个核心文件。</p>
+                    <h2 data-i18n="tech.source.heading">完整读写源码</h2>
+                    <p data-i18n="tech.source.desc">以下为 <code>.gen</code> 文件读写的完整实现代码，共 6 个核心文件。</p>
                 </div>
 
                 <div class="source-list">
                     <details class="source-item" open>
-                        <summary><strong>schema.ts</strong> <span>表结构与常量定义</span></summary>
+                        <summary><strong>schema.ts</strong> <span data-i18n="tech.source.schema">表结构与常量定义</span></summary>
                         <pre class="code-block"><code>const BLOCK_SIZE = 10000;
 
 export const SCHEMA_VERSION = 2;
@@ -579,7 +592,7 @@ export { BLOCK_SIZE };</code></pre>
                     </details>
 
                     <details class="source-item">
-                        <summary><strong>dataAccessLayer.ts</strong> <span>数据访问层接口</span></summary>
+                        <summary><strong>dataAccessLayer.ts</strong> <span data-i18n="tech.source.dal">数据访问层接口</span></summary>
                         <pre class="code-block"><code>import type { DNASequence, Feature, Primer, AlignmentEntry } from '@/types/dna';
 import type { SequenceInfo, EditHistoryEntry } from '@/types/sequenceInfo';
 
@@ -673,7 +686,7 @@ export interface DataAccessLayer {
                     </details>
 
                     <details class="source-item">
-                        <summary><strong>dalFactory.ts</strong> <span>平台自适应工厂</span></summary>
+                        <summary><strong>dalFactory.ts</strong> <span data-i18n="tech.source.factory">平台自适应工厂</span></summary>
                         <pre class="code-block"><code>import type { DataAccessLayer } from '@/utils/dataAccessLayer';
 import { TauriSqlDataAccessLayer } from '@/utils/tauriSqlDAL';
 import { SqlJsDataAccessLayer } from '@/utils/sqljsDAL';
@@ -692,7 +705,7 @@ export async function createDataAccessLayer(): Promise&lt;DataAccessLayer&gt; {
                     </details>
 
                     <details class="source-item">
-                        <summary><strong>fileParser.ts</strong> <span>文件格式检测与解析</span></summary>
+                        <summary><strong>fileParser.ts</strong> <span data-i18n="tech.source.parser">文件格式检测与解析</span></summary>
                         <pre class="code-block"><code>import type { DNASequence } from '@/types/dna';
 import { parseGenBank } from '@/utils/genbankParser';
 import { parseGjson } from '@/utils/gjsonParser';
@@ -830,7 +843,7 @@ export function findParser(content: string | Uint8Array, fileName: string): File
                     </details>
 
                     <details class="source-item">
-                        <summary><strong>sqljsDAL.ts</strong> <span>浏览器端实现（sql.js）</span></summary>
+                        <summary><strong>sqljsDAL.ts</strong> <span data-i18n="tech.source.sqljs">浏览器端实现（sql.js）</span></summary>
                         <pre class="code-block"><code>import type { DataAccessLayer, UndoEntry, AttachmentMeta } from '@/utils/dataAccessLayer';
 import { CREATE_TABLES_SQL, BLOCK_SIZE } from '@/utils/schema';
 import type { DNASequence, Feature, Primer, AlignmentEntry } from '@/types/dna';
@@ -1368,7 +1381,7 @@ export class SqlJsDataAccessLayer implements DataAccessLayer {
                     </details>
 
                     <details class="source-item">
-                        <summary><strong>tauriSqlDAL.ts</strong> <span>桌面端实现（Tauri SQLite）</span></summary>
+                        <summary><strong>tauriSqlDAL.ts</strong> <span data-i18n="tech.source.tauri">桌面端实现（Tauri SQLite）</span></summary>
                         <pre class="code-block"><code>import Database from '@tauri-apps/plugin-sql';
 import type { DataAccessLayer, UndoEntry, AttachmentMeta } from '@/utils/dataAccessLayer';
 import { CREATE_TABLES_SQL, BLOCK_SIZE } from '@/utils/schema';
@@ -1903,21 +1916,354 @@ export class TauriSqlDataAccessLayer implements DataAccessLayer {
         </main>
 
         <footer class="site-footer">
-            <span>© 2026 基因工坊</span>
-            <span>Free for personal evaluation and learning only.</span>
+            <span>© 2026 <span data-i18n="brand.name">基因工坊</span></span>
+            <span data-i18n="footer.note">Free for personal evaluation and learning only.</span>
         </footer>
         <script>
-            const navToggle = document.querySelector(".nav-toggle");
-            const siteHeader = document.querySelector(".site-header");
+            var translations = {
+                zh: {
+                    "html.lang": "zh-CN",
+                    "title": ".gen 文件格式 — 基因工坊技术支持",
+                    "meta.description": "基因工坊 .gen 文件格式技术文档 — 基于 SQLite 3 的原生序列存储格式完整规范。",
+                    "brand.name": "基因工坊",
+                    "brand.aria": "基因工坊首页",
+                    "nav.toggle": "打开导航",
+                    "nav.home": "首页",
+                    "nav.overview": "概述",
+                    "nav.schema": "数据表",
+                    "nav.encoding": "编码方式",
+                    "nav.workflow": "读写流程",
+                    "nav.source": "源码",
+                    "tech.hero.title": ".gen 文件格式",
+                    "tech.hero.lead": "基因工坊的原生文件格式 .gen 基于 SQLite 3 数据库，以结构化方式存储 DNA 序列、注释特征、引物、测序图谱和操作历史。本文档描述当前格式版本（Schema 2）的完整规范。",
+                    "tech.hero.viewSchema": "查看数据表",
+                    "tech.hero.viewWorkflow": "读写流程",
+                    "tech.stat1.desc": "标准文件头，通用工具可直接打开",
+                    "tech.stat2.desc": "10+ 张数据表，覆盖序列、注释与操作历史",
+                    "tech.overview.heading": "格式概述",
+                    "tech.overview.o1.title": "基于 SQLite 3",
+                    "tech.overview.o1.desc": ".gen 文件本质是标准 SQLite 3 数据库，以 .gen 为扩展名。文件头前 16 字节为 \"SQLite format 3\\0\"，任何 SQLite 工具均可直接打开查看。",
+                    "tech.overview.o2.title": "版本管理",
+                    "tech.overview.o2.desc": "通过 schema_version 表追踪格式版本。当前版本为 2，包含 edit_history、chromatogram_data 等核心表，支持完整的编辑审计与测序图谱存储。",
+                    "tech.overview.o3.title": "无压缩无加密",
+                    "tech.overview.o3.desc": "数据以 SQLite 原生的 TEXT、INTEGER、REAL、BLOB 类型存储，不使用额外的压缩或加密。SQLite WAL 模式提供崩溃恢复能力。",
+                    "tech.overview.o4.title": "分块序列存储",
+                    "tech.overview.o4.desc": "DNA 序列按 10,000 碱基为单位分块存入 sequence_blocks 表，支持按需加载，适合大序列场景。",
+                    "tech.schema.heading": "数据表结构",
+                    "tech.encoding.heading": "数据编码方式",
+                    "tech.encoding.e1.title": "DNA 序列",
+                    "tech.encoding.e1.desc": "纯文本碱基字母，按 10,000 碱基分块存储在 sequence_blocks 表中。支持标准 A/T/C/G 及 IUPAC 歧义码。",
+                    "tech.encoding.e2.title": "注释与引物",
+                    "tech.encoding.e2.desc": "以独立 SQL 行存储。引物结合位点的 components 和 alignment 字段使用 JSON 字符串编码。",
+                    "tech.encoding.e3.title": "图谱数据",
+                    "tech.encoding.e3.desc": "测序图谱（chromatogram）的四通道信号数据以二进制 BLOB 存储。比对条目的图谱以 JSON 字符串存储。",
+                    "tech.encoding.e4.title": "元数据",
+                    "tech.encoding.e4.desc": "项目元信息以键值对 TEXT 形式存储在 project_meta 表。撤销/重做差异和编辑历史快照均为 JSON 编码。",
+                    "tech.encoding.e5.title": "附件",
+                    "tech.encoding.e5.desc": "文件附件以 BLOB 二进制存储，附带文件名和 MIME 类型元信息。",
+                    "tech.encoding.e6.title": "数据库配置",
+                    "tech.encoding.e6.desc": "桌面端使用 WAL 日志模式（PRAGMA journal_mode=WAL），同步级别为 NORMAL。保存时执行 WAL checkpoint。",
+                    "tech.workflow.heading": "文件读写流程",
+                    "tech.workflow.s1.title": "打开文件",
+                    "tech.workflow.s1.desc": "验证文件头（前 16 字节 = \"SQLite format 3\\0\"），复制到临时位置（桌面端）或加载到内存（浏览器端 sql.js）。",
+                    "tech.workflow.s2.title": "加载数据",
+                    "tech.workflow.s2.desc": "从 project_meta 读取项目元信息，加载 features 和 primers 表。序列按需通过 getSequenceChunk() 按块加载，不全量读取。",
+                    "tech.workflow.s3.title": "编辑操作",
+                    "tech.workflow.s3.desc": "所有修改操作（碱基编辑、标注增删、引物设计等）实时写入 undo_entries 和 edit_history，确保可追溯和可撤销。",
+                    "tech.workflow.s4.title": "保存文件",
+                    "tech.workflow.s4.desc": "调用 commitWorkingCopy()：写入元数据、序列块、标注和引物，设置 isDirty = '0'。桌面端执行 WAL checkpoint 刷盘；浏览器端导出为 Uint8Array 触发下载。",
+                    "tech.source.heading": "完整读写源码",
+                    "tech.source.desc": "以下为 .gen 文件读写的完整实现代码，共 6 个核心文件。",
+                    "tech.schema.project_meta": "项目元数据（键值对）",
+                    "tech.schema.sequence_blocks": "序列分块存储",
+                    "tech.schema.features": "序列标注特征",
+                    "tech.schema.primers": "引物定义",
+                    "tech.schema.primer_binding_sites": "引物结合位点",
+                    "tech.schema.alignment_entries": "序列比对条目",
+                    "tech.schema.attachments": "附件存储",
+                    "tech.schema.undo_entries": "撤销/重做栈（上限 200 条）",
+                    "tech.schema.edit_history": "编辑审计日志",
+                    "tech.schema.chromatogram_data": "测序图谱数据",
+                    "tech.schema.schema_version": "格式版本追踪",
+                    "tech.source.schema": "表结构与常量定义",
+                    "tech.source.dal": "数据访问层接口",
+                    "tech.source.factory": "平台自适应工厂",
+                    "tech.source.parser": "文件格式检测与解析",
+                    "tech.source.sqljs": "浏览器端实现（sql.js）",
+                    "tech.source.tauri": "桌面端实现（Tauri SQLite）",
+                    "footer.note": "Free for personal evaluation and learning only."
+                },
+                en: {
+                    "html.lang": "en",
+                    "title": ".gen File Format — Gene Pad Tech Support",
+                    "meta.description": "Gene Pad .gen file format technical documentation — complete specification for the native SQLite 3-based sequence storage format.",
+                    "brand.name": "Gene Pad",
+                    "brand.aria": "Gene Pad home",
+                    "nav.toggle": "Open navigation",
+                    "nav.home": "Home",
+                    "nav.overview": "Overview",
+                    "nav.schema": "Schema",
+                    "nav.encoding": "Encoding",
+                    "nav.workflow": "Workflow",
+                    "nav.source": "Source",
+                    "tech.hero.title": ".gen File Format",
+                    "tech.hero.lead": "Gene Pad's native file format .gen is based on SQLite 3 database, storing DNA sequences, annotation features, primers, chromatograms and edit history in a structured way. This document describes the complete specification for the current format version (Schema 2).",
+                    "tech.hero.viewSchema": "View Schema",
+                    "tech.hero.viewWorkflow": "Read/Write Workflow",
+                    "tech.stat1.desc": "Standard file header, can be opened with common tools",
+                    "tech.stat2.desc": "10+ data tables covering sequences, annotations and edit history",
+                    "tech.overview.heading": "Format Overview",
+                    "tech.overview.o1.title": "SQLite 3 Based",
+                    "tech.overview.o1.desc": "A .gen file is essentially a standard SQLite 3 database with the .gen extension. The first 16 bytes of the file header are \"SQLite format 3\\0\", which can be opened directly by any SQLite tool.",
+                    "tech.overview.o2.title": "Version Management",
+                    "tech.overview.o2.desc": "Format version is tracked through the schema_version table. The current version is 2, including core tables such as edit_history and chromatogram_data, supporting complete edit auditing and chromatogram storage.",
+                    "tech.overview.o3.title": "No Compression or Encryption",
+                    "tech.overview.o3.desc": "Data is stored using SQLite native types (TEXT, INTEGER, REAL, BLOB) without additional compression or encryption. SQLite WAL mode provides crash recovery.",
+                    "tech.overview.o4.title": "Chunked Sequence Storage",
+                    "tech.overview.o4.desc": "DNA sequences are chunked into 10,000 base units and stored in the sequence_blocks table, supporting on-demand loading for large sequences.",
+                    "tech.schema.heading": "Data Table Schema",
+                    "tech.encoding.heading": "Data Encoding",
+                    "tech.encoding.e1.title": "DNA Sequences",
+                    "tech.encoding.e1.desc": "Plain text base letters, chunked into 10,000-base blocks stored in the sequence_blocks table. Supports standard A/T/C/G and IUPAC ambiguity codes.",
+                    "tech.encoding.e2.title": "Annotations & Primers",
+                    "tech.encoding.e2.desc": "Stored as independent SQL rows. The components and alignment fields of primer binding sites use JSON string encoding.",
+                    "tech.encoding.e3.title": "Chromatogram Data",
+                    "tech.encoding.e3.desc": "The four-channel signal data of chromatograms is stored as binary BLOBs. Alignment entry chromatograms are stored as JSON strings.",
+                    "tech.encoding.e4.title": "Metadata",
+                    "tech.encoding.e4.desc": "Project metadata is stored as key-value TEXT pairs in the project_meta table. Undo/redo diffs and edit history snapshots are JSON-encoded.",
+                    "tech.encoding.e5.title": "Attachments",
+                    "tech.encoding.e5.desc": "File attachments are stored as binary BLOBs with filename and MIME type metadata.",
+                    "tech.encoding.e6.title": "Database Configuration",
+                    "tech.encoding.e6.desc": "Desktop uses WAL journal mode (PRAGMA journal_mode=WAL) with NORMAL sync level. WAL checkpoint is executed on save.",
+                    "tech.workflow.heading": "File Read/Write Workflow",
+                    "tech.workflow.s1.title": "Open File",
+                    "tech.workflow.s1.desc": "Verify file header (first 16 bytes = \"SQLite format 3\\0\"), copy to temporary location (desktop) or load into memory (browser sql.js).",
+                    "tech.workflow.s2.title": "Load Data",
+                    "tech.workflow.s2.desc": "Read project metadata from project_meta, load features and primers tables. Sequences are loaded on-demand via getSequenceChunk() in chunks, not all at once.",
+                    "tech.workflow.s3.title": "Edit Operations",
+                    "tech.workflow.s3.desc": "All modifications (base editing, annotation changes, primer design, etc.) are written in real-time to undo_entries and edit_history, ensuring traceability and undo capability.",
+                    "tech.workflow.s4.title": "Save File",
+                    "tech.workflow.s4.desc": "Call commitWorkingCopy(): write metadata, sequence blocks, annotations and primers, set isDirty = '0'. Desktop executes WAL checkpoint flush; browser exports as Uint8Array to trigger download.",
+                    "tech.source.heading": "Complete Read/Write Source Code",
+                    "tech.source.desc": "The following is the complete implementation code for .gen file read/write, consisting of 6 core files.",
+                    "tech.schema.project_meta": "Project metadata (key-value pairs)",
+                    "tech.schema.sequence_blocks": "Chunked sequence storage",
+                    "tech.schema.features": "Sequence annotation features",
+                    "tech.schema.primers": "Primer definitions",
+                    "tech.schema.primer_binding_sites": "Primer binding sites",
+                    "tech.schema.alignment_entries": "Alignment entries",
+                    "tech.schema.attachments": "Attachment storage",
+                    "tech.schema.undo_entries": "Undo/Redo stack (200 max)",
+                    "tech.schema.edit_history": "Edit audit log",
+                    "tech.schema.chromatogram_data": "Chromatogram data",
+                    "tech.schema.schema_version": "Format version tracking",
+                    "tech.source.schema": "Table schema & constants",
+                    "tech.source.dal": "Data access layer interface",
+                    "tech.source.factory": "Platform-adaptive factory",
+                    "tech.source.parser": "File format detection & parsing",
+                    "tech.source.sqljs": "Browser implementation (sql.js)",
+                    "tech.source.tauri": "Desktop implementation (Tauri SQLite)",
+                    "footer.note": "Free for personal evaluation and learning only."
+                },
+                de: {
+                    "html.lang": "de",
+                    "title": ".gen Dateiformat — Gene Pad Technik-Support",
+                    "meta.description": "Gene Pad .gen Dateiformat technische Dokumentation — vollständige Spezifikation des nativen SQLite 3-basierten Sequenzspeicherformats.",
+                    "brand.name": "Gene Pad",
+                    "brand.aria": "Gene Pad Startseite",
+                    "nav.toggle": "Navigation öffnen",
+                    "nav.home": "Startseite",
+                    "nav.overview": "Übersicht",
+                    "nav.schema": "Schema",
+                    "nav.encoding": "Kodierung",
+                    "nav.workflow": "Workflow",
+                    "nav.source": "Quellcode",
+                    "tech.hero.title": ".gen Dateiformat",
+                    "tech.hero.lead": "Das native Dateiformat .gen von Gene Pad basiert auf SQLite 3 und speichert DNA-Sequenzen, Annotationsmerkmale, Primer, Chromatogramme und Bearbeitungsverlauf strukturiert. Dieses Dokument beschreibt die vollständige Spezifikation der aktuellen Formatversion (Schema 2).",
+                    "tech.hero.viewSchema": "Schema anzeigen",
+                    "tech.hero.viewWorkflow": "Lese-/Schreibworkflow",
+                    "tech.stat1.desc": "Standard-Dateikopf, mit gängigen Tools öffnen",
+                    "tech.stat2.desc": "10+ Datentabellen für Sequenzen, Annotationen und Bearbeitungsverlauf",
+                    "tech.overview.heading": "Formatübersicht",
+                    "tech.overview.o1.title": "SQLite 3 basiert",
+                    "tech.overview.o1.desc": "Eine .gen-Datei ist im Wesentlichen eine Standard-SQLite-3-Datenbank mit der Erweiterung .gen. Die ersten 16 Bytes des Dateikopfs sind \"SQLite format 3\\0\" und können von jedem SQLite-Tool geöffnet werden.",
+                    "tech.overview.o2.title": "Versionsverwaltung",
+                    "tech.overview.o2.desc": "Die Formatversion wird über die Tabelle schema_version verfolgt. Die aktuelle Version ist 2 und enthält Core-Tabellen wie edit_history und chromatogram_data.",
+                    "tech.overview.o3.title": "Keine Kompression oder Verschlüsselung",
+                    "tech.overview.o3.desc": "Daten werden in nativen SQLite-Typen (TEXT, INTEGER, REAL, BLOB) ohne zusätzliche Kompression oder Verschlüsselung gespeichert. SQLite WAL-Modus bietet Absturzwiederherstellung.",
+                    "tech.overview.o4.title": "Chunke Sequenzspeicherung",
+                    "tech.overview.o4.desc": "DNA-Sequenzen werden in 10.000-Basen-Einheiten in der Tabelle sequence_blocks gespeichert und unterstützen bedarfsgesteuertes Laden.",
+                    "tech.schema.heading": "Datentabellen-Schema",
+                    "tech.encoding.heading": "Datenkodierung",
+                    "tech.encoding.e1.title": "DNA-Sequenzen",
+                    "tech.encoding.e1.desc": "Klartext-Basenbuchstaben, in 10.000-Basen-Blöcken in der Tabelle sequence_blocks gespeichert. Unterstützt Standard A/T/C/G und IUPAC-Ambiguitätscodes.",
+                    "tech.encoding.e2.title": "Annotationen & Primer",
+                    "tech.encoding.e2.desc": "Als unabhängige SQL-Zeilen gespeichert. Die Komponenten- und Alignment-Felder der Primer-Bindungsstellen verwenden JSON-String-Kodierung.",
+                    "tech.encoding.e3.title": "Chromatogramm-Daten",
+                    "tech.encoding.e3.desc": "Die Vier-Kanal-Signaldaten der Chromatogramme werden als binäre BLOBs gespeichert. Alignment-Eintrag-Chromatogramme als JSON-Strings.",
+                    "tech.encoding.e4.title": "Metadaten",
+                    "tech.encoding.e4.desc": "Projektmetadaten werden als Schlüssel-Wert-TEXT-Paare in der Tabelle project_meta gespeichert. Undo/Redo-Diffs und Bearbeitungsverlauf-Snapshots sind JSON-kodiert.",
+                    "tech.encoding.e5.title": "Anhänge",
+                    "tech.encoding.e5.desc": "Dateianhänge werden als binäre BLOBs mit Dateiname und MIME-Typ-Metadaten gespeichert.",
+                    "tech.encoding.e6.title": "Datenbankkonfiguration",
+                    "tech.encoding.e6.desc": "Desktop verwendet WAL-Journalmodus (PRAGMA journal_mode=WAL) mit NORMAL-Synchronisationsstufe. WAL-Checkpoint wird beim Speichern ausgeführt.",
+                    "tech.workflow.heading": "Datei-Lese-/Schreibworkflow",
+                    "tech.workflow.s1.title": "Datei öffnen",
+                    "tech.workflow.s1.desc": "Dateikopf verifizieren (erste 16 Bytes = \"SQLite format 3\\0\"), an temporären Ort kopieren (Desktop) oder in Speicher laden (Browser sql.js).",
+                    "tech.workflow.s2.title": "Daten laden",
+                    "tech.workflow.s2.desc": "Projektmetadaten aus project_meta lesen, features- und primers-Tabellen laden. Sequenzen werden bedarfsgesteuert über getSequenceChunk() in Blöcken geladen.",
+                    "tech.workflow.s3.title": "Bearbeitungsvorgänge",
+                    "tech.workflow.s3.desc": "Alle Änderungen (Basen-Bearbeitung, Annotationsänderungen, Primer-Design usw.) werden in Echtzeit in undo_entries und edit_history geschrieben.",
+                    "tech.workflow.s4.title": "Datei speichern",
+                    "tech.workflow.s4.desc": "commitWorkingCopy() aufrufen: Metadaten, Sequenzblöcke, Annotationen und Primer schreiben, isDirty = '0' setzen. Desktop führt WAL-Checkpoint-Flush durch; Browser exportiert als Uint8Array.",
+                    "tech.source.heading": "Vollständiger Lese-/Schreibquellcode",
+                    "tech.source.desc": "Der folgende vollständige Implementierungscode für .gen-Datei-Lese-/Schreibvorgänge besteht aus 6 Kern-Dateien.",
+                    "tech.schema.project_meta": "Projektmetadaten (Schlüssel-Wert-Paare)",
+                    "tech.schema.sequence_blocks": "Chunke Sequenzspeicherung",
+                    "tech.schema.features": "Annotationsmerkmale",
+                    "tech.schema.primers": "Primer-Definitionen",
+                    "tech.schema.primer_binding_sites": "Primer-Bindungsstellen",
+                    "tech.schema.alignment_entries": "Alignment-Einträge",
+                    "tech.schema.attachments": "Anhangsspeicherung",
+                    "tech.schema.undo_entries": "Undo/Redo-Stack (max. 200)",
+                    "tech.schema.edit_history": "Bearbeitungs-Audit-Log",
+                    "tech.schema.chromatogram_data": "Chromatogramm-Daten",
+                    "tech.schema.schema_version": "Formatversionsverfolgung",
+                    "tech.source.schema": "Tabellenschema & Konstanten",
+                    "tech.source.dal": "Datenzugriffsschicht-Schnittstelle",
+                    "tech.source.factory": "Plattform-adaptive Fabrik",
+                    "tech.source.parser": "Dateiformaterkennung & Parsing",
+                    "tech.source.sqljs": "Browser-Implementierung (sql.js)",
+                    "tech.source.tauri": "Desktop-Implementierung (Tauri SQLite)",
+                    "footer.note": "Nur für persönliche Auswertung und Lernen."
+                },
+                fr: {
+                    "html.lang": "fr",
+                    "title": "Format de fichier .gen — Support technique Gene Pad",
+                    "meta.description": "Documentation technique du format de fichier .gen de Gene Pad — spécification complète du format de stockage de séquences natif basé sur SQLite 3.",
+                    "brand.name": "Gene Pad",
+                    "brand.aria": "Page d'accueil Gene Pad",
+                    "nav.toggle": "Ouvrir la navigation",
+                    "nav.home": "Accueil",
+                    "nav.overview": "Aperçu",
+                    "nav.schema": "Schéma",
+                    "nav.encoding": "Encodage",
+                    "nav.workflow": "Workflow",
+                    "nav.source": "Code source",
+                    "tech.hero.title": "Format de fichier .gen",
+                    "tech.hero.lead": "Le format de fichier natif .gen de Gene Pad est basé sur SQLite 3, stockant les séquences DNA, les annotations, les amorces, les chromatogrammes et l'historique d'édition de manière structurée. Ce document décrit la spécification complète de la version actuelle (Schema 2).",
+                    "tech.hero.viewSchema": "Voir le schéma",
+                    "tech.hero.viewWorkflow": "Workflow lecture/écriture",
+                    "tech.stat1.desc": "En-tête de fichier standard, ouvert par les outils courants",
+                    "tech.stat2.desc": "10+ tables de données couvrant séquences, annotations et historique",
+                    "tech.overview.heading": "Aperçu du format",
+                    "tech.overview.o1.title": "Basé sur SQLite 3",
+                    "tech.overview.o1.desc": "Un fichier .gen est essentiellement une base de données SQLite 3 standard avec l'extension .gen. Les 16 premiers octets de l'en-tête sont \"SQLite format 3\\0\", pouvant être ouverts par tout outil SQLite.",
+                    "tech.overview.o2.title": "Gestion des versions",
+                    "tech.overview.o2.desc": "La version du format est suivie via la table schema_version. La version actuelle est 2, incluant les tables principales edit_history et chromatogram_data.",
+                    "tech.overview.o3.title": "Sans compression ni chiffrement",
+                    "tech.overview.o3.desc": "Les données sont stockées en types natifs SQLite (TEXT, INTEGER, REAL, BLOB) sans compression ni chiffrement supplémentaire. Le mode WAL de SQLite assure la récupération après crash.",
+                    "tech.overview.o4.title": "Stockage séquentiel par blocs",
+                    "tech.overview.o4.desc": "Les séquences DNA sont découpées en blocs de 10 000 bases et stockées dans la table sequence_blocks, avec chargement à la demande.",
+                    "tech.schema.heading": "Schéma des tables",
+                    "tech.encoding.heading": "Encodage des données",
+                    "tech.encoding.e1.title": "Séquences DNA",
+                    "tech.encoding.e1.desc": "Lettres de bases en texte brut, stockées par blocs de 10 000 bases dans la table sequence_blocks. Prend en charge les codes d'ambiguïté IUPAC standard.",
+                    "tech.encoding.e2.title": "Annotations et amorces",
+                    "tech.encoding.e2.desc": "Stockées en lignes SQL indépendantes. Les champs components et alignment des sites de liaison d'amorces utilisent l'encodage JSON.",
+                    "tech.encoding.e3.title": "Données de chromatogramme",
+                    "tech.encoding.e3.desc": "Les données de signal à quatre canaux des chromatogrammes sont stockées en BLOB binaires. Les chromatogrammes des entrées d'alignement sont en JSON.",
+                    "tech.encoding.e4.title": "Métadonnées",
+                    "tech.encoding.e4.desc": "Les métadonnées du projet sont stockées en paires clé-valeur TEXT dans la table project_meta. Les diffs d'annulation/rétablissement et les instantanés d'historique sont encodés en JSON.",
+                    "tech.encoding.e5.title": "Pièces jointes",
+                    "tech.encoding.e5.desc": "Les fichiers joints sont stockés en BLOB binaires avec le nom de fichier et le type MIME.",
+                    "tech.encoding.e6.title": "Configuration de la base de données",
+                    "tech.encoding.e6.desc": "Le bureau utilise le mode journal WAL (PRAGMA journal_mode=WAL) avec un niveau de synchronisation NORMAL. Le checkpoint WAL est exécuté lors de la sauvegarde.",
+                    "tech.workflow.heading": "Workflow de lecture/écriture",
+                    "tech.workflow.s1.title": "Ouvrir le fichier",
+                    "tech.workflow.s1.desc": "Vérifier l'en-tête (16 premiers octets = \"SQLite format 3\\0\"), copier vers un emplacement temporaire (bureau) ou charger en mémoire (navigateur sql.js).",
+                    "tech.workflow.s2.title": "Charger les données",
+                    "tech.workflow.s2.desc": "Lire les métadonnées depuis project_meta, charger les tables features et primers. Les séquences sont chargées à la demande via getSequenceChunk().",
+                    "tech.workflow.s3.title": "Opérations d'édition",
+                    "tech.workflow.s3.desc": "Toutes les modifications (édition de bases, modifications d'annotations, conception d'amorces, etc.) sont écrites en temps réel dans undo_entries et edit_history.",
+                    "tech.workflow.s4.title": "Sauvegarder le fichier",
+                    "tech.workflow.s4.desc": "Appeler commitWorkingCopy() : écrire les métadonnées, blocs de séquence, annotations et amorces, définir isDirty = '0'. Le bureau exécute le checkpoint WAL ; le navigateur exporte en Uint8Array.",
+                    "tech.source.heading": "Code source complet de lecture/écriture",
+                    "tech.source.desc": "Le code d'implémentation complet pour la lecture/écriture des fichiers .gen se compose de 6 fichiers principaux.",
+                    "tech.schema.project_meta": "Métadonnées du projet (paires clé-valeur)",
+                    "tech.schema.sequence_blocks": "Stockage séquentiel par blocs",
+                    "tech.schema.features": "Annotations de séquences",
+                    "tech.schema.primers": "Définitions d'amorces",
+                    "tech.schema.primer_binding_sites": "Sites de liaison d'amorces",
+                    "tech.schema.alignment_entries": "Entrées d'alignement",
+                    "tech.schema.attachments": "Stockage des pièces jointes",
+                    "tech.schema.undo_entries": "Pile annuler/rétablir (200 max)",
+                    "tech.schema.edit_history": "Journal d'audit d'édition",
+                    "tech.schema.chromatogram_data": "Données de chromatogramme",
+                    "tech.schema.schema_version": "Suivi de version du format",
+                    "tech.source.schema": "Schéma de tables et constantes",
+                    "tech.source.dal": "Interface de couche d'accès aux données",
+                    "tech.source.factory": "Fabrique adaptative par plateforme",
+                    "tech.source.parser": "Détection et analyse de format de fichier",
+                    "tech.source.sqljs": "Implémentation navigateur (sql.js)",
+                    "tech.source.tauri": "Implémentation bureau (Tauri SQLite)",
+                    "footer.note": "Gratuit pour l'évaluation personnelle et l'apprentissage uniquement."
+                }
+            };
+
+            var langNames = { zh: "中文", en: "English", de: "Deutsch", fr: "Français" };
+            var langSwitcher = document.getElementById("lang-switcher");
+            var langDropdown = document.getElementById("lang-dropdown");
+            var langLabel = langSwitcher.querySelector(".lang-switcher-label");
+
+            function setLanguage(lang) {
+                if (!translations[lang]) return;
+                var t = translations[lang];
+                document.documentElement.lang = t["html.lang"];
+                document.title = t["title"];
+                var metaDesc = document.querySelector('meta[name="description"]');
+                if (metaDesc && t["meta.description"]) metaDesc.setAttribute("content", t["meta.description"]);
+
+                document.querySelectorAll("[data-i18n]").forEach(function(el) {
+                    var key = el.dataset.i18n;
+                    if (t[key]) el.textContent = t[key];
+                });
+                document.querySelectorAll("[data-i18n-aria]").forEach(function(el) {
+                    var key = el.dataset.i18nAria;
+                    if (t[key]) el.setAttribute("aria-label", t[key]);
+                });
+
+                langLabel.textContent = langNames[lang];
+                langDropdown.querySelectorAll("button").forEach(function(btn) {
+                    btn.classList.toggle("active", btn.dataset.lang === lang);
+                });
+                localStorage.setItem("lang", lang);
+            }
+
+            langDropdown.addEventListener("click", function(e) {
+                var btn = e.target.closest("button[data-lang]");
+                if (!btn) return;
+                setLanguage(btn.dataset.lang);
+            });
+
+            var savedLang = localStorage.getItem("lang") || "zh";
+            if (savedLang !== "zh") setLanguage(savedLang);
+            else {
+                langLabel.textContent = langNames.zh;
+                langDropdown.querySelector('button[data-lang="zh"]').classList.add("active");
+            }
+
+            var navToggle = document.querySelector(".nav-toggle");
+            var siteHeader = document.querySelector(".site-header");
 
             if (navToggle && siteHeader) {
-                navToggle.addEventListener("click", () => {
-                    const isOpen = siteHeader.classList.toggle("nav-open");
+                navToggle.addEventListener("click", function() {
+                    var isOpen = siteHeader.classList.toggle("nav-open");
                     navToggle.setAttribute("aria-expanded", String(isOpen));
                 });
 
-                document.querySelectorAll(".nav a").forEach((link) => {
-                    link.addEventListener("click", () => {
+                document.querySelectorAll(".nav a").forEach(function(link) {
+                    link.addEventListener("click", function() {
                         siteHeader.classList.remove("nav-open");
                         navToggle.setAttribute("aria-expanded", "false");
                     });
