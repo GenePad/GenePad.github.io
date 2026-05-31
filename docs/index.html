@@ -3,6 +3,8 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#f4f7fb" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#0b111d" media="(prefers-color-scheme: dark)" />
         <meta
             name="description"
             content="基因工坊是一款免费的基因图谱编辑工具，支持 GeneBank、DNA、AB1 等格式，提供序列编辑、注释、引物设计与可视化分析。"
@@ -20,11 +22,23 @@
                     <small>Gene Pad</small>
                 </span>
             </a>
-            <nav class="nav" aria-label="主导航">
+            <button
+                class="nav-toggle"
+                type="button"
+                aria-controls="site-nav"
+                aria-expanded="false"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+                <span class="sr-only">打开导航</span>
+            </button>
+            <nav class="nav" id="site-nav" aria-label="主导航">
                 <a href="#features">功能</a>
                 <a href="#screenshots">界面</a>
                 <a href="#platforms">平台</a>
                 <a href="#license">许可</a>
+                <a href="tech-support.html">技术支持</a>
             </nav>
         </header>
 
@@ -285,6 +299,22 @@
             const lightboxImage = document.getElementById("lightbox-image");
             const lightboxCaption = document.getElementById("lightbox-caption");
             const closeButton = lightbox.querySelector(".lightbox-close");
+            const navToggle = document.querySelector(".nav-toggle");
+            const siteHeader = document.querySelector(".site-header");
+
+            if (navToggle && siteHeader) {
+                navToggle.addEventListener("click", () => {
+                    const isOpen = siteHeader.classList.toggle("nav-open");
+                    navToggle.setAttribute("aria-expanded", String(isOpen));
+                });
+
+                document.querySelectorAll(".nav a").forEach((link) => {
+                    link.addEventListener("click", () => {
+                        siteHeader.classList.remove("nav-open");
+                        navToggle.setAttribute("aria-expanded", "false");
+                    });
+                });
+            }
 
             function closePreview() {
                 lightbox.setAttribute("aria-hidden", "true");

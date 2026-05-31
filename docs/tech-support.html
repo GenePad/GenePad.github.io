@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#f4f7fb" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#0b111d" media="(prefers-color-scheme: dark)" />
+        <meta
+            name="description"
+            content="基因工坊 .gen 文件格式技术文档 — 基于 SQLite 3 的原生序列存储格式完整规范。"
+        />
+        <title>.gen 文件格式 — 基因工坊技术支持</title>
+        <link rel="icon" href="icon.png" type="image/png" />
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <header class="site-header">
+            <a class="brand" href="index.html" aria-label="基因工坊首页">
+                <span class="brand-mark"><img src="icon.png" alt="" /></span>
+                <span>
+                    <strong>基因工坊</strong>
+                    <small>Gene Pad</small>
+                </span>
+            </a>
+            <button
+                class="nav-toggle"
+                type="button"
+                aria-controls="site-nav"
+                aria-expanded="false"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+                <span class="sr-only">打开导航</span>
+            </button>
+            <nav class="nav" id="site-nav" aria-label="主导航">
+                <a href="index.html">首页</a>
+                <a href="#overview">概述</a>
+                <a href="#schema">数据表</a>
+                <a href="#encoding">编码方式</a>
+                <a href="#workflow">读写流程</a>
+            </nav>
+        </header>
+
+        <main id="top">
+            <section class="hero tech-hero">
+                <div class="hero-copy">
+                    <p class="eyebrow">Technical Reference</p>
+                    <h1>.gen 文件格式</h1>
+                    <p class="lead">
+                        基因工坊的原生文件格式 <code>.gen</code> 基于 SQLite 3
+                        数据库，以结构化方式存储 DNA
+                        序列、注释特征、引物、测序图谱和操作历史。本文档描述当前格式版本（Schema
+                        2）的完整规范。
+                    </p>
+                    <div class="hero-actions">
+                        <a class="button primary" href="#schema">查看数据表</a>
+                        <a class="button secondary" href="#workflow">读写流程</a>
+                    </div>
+                    <dl class="hero-stats" aria-label="格式摘要">
+                        <div>
+                            <dt>SQLite 3 数据库</dt>
+                            <dd>标准文件头，通用工具可直接打开</dd>
+                        </div>
+                        <div>
+                            <dt>Schema 版本 2</dt>
+                            <dd>10+ 张数据表，覆盖序列、注释与操作历史</dd>
+                        </div>
+                    </dl>
+                </div>
+                <div class="hero-card-stack" aria-hidden="true">
+                    <div class="card-float card-float-1">
+                        <span class="card-label">SQLite format 3</span>
+                        <span class="card-detail">文件头标识</span>
+                    </div>
+                    <div class="card-float card-float-2">
+                        <span class="card-label">schema_version</span>
+                        <span class="card-detail">版本追踪表</span>
+                    </div>
+                    <div class="card-float card-float-3">
+                        <span class="card-label">sequence_blocks</span>
+                        <span class="card-detail">序列分块存储</span>
+                    </div>
+                    <div class="card-float card-float-4">
+                        <span class="card-label">features / primers</span>
+                        <span class="card-detail">注释与引物</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section tech-overview" id="overview">
+                <div class="section-heading">
+                    <p class="eyebrow">Overview</p>
+                    <h2>格式概述</h2>
+                </div>
+                <div class="overview-grid">
+                    <article class="overview-card">
+                        <span class="icon">01</span>
+                        <h3>基于 SQLite 3</h3>
+                        <p>
+                            <code>.gen</code> 文件本质是标准 SQLite 3
+                            数据库，以 <code>.gen</code>
+                            为扩展名。文件头前 16 字节为
+                            <code>"SQLite format 3\0"</code>，任何 SQLite
+                            工具均可直接打开查看。
+                        </p>
+                    </article>
+                    <article class="overview-card">
+                        <span class="icon">02</span>
+                        <h3>版本管理</h3>
+                        <p>
+                            通过 <code>schema_version</code> 表追踪格式版本。当前版本为
+                            2，包含
+                            <code>edit_history</code>、<code>chromatogram_data</code>
+                            等核心表，支持完整的编辑审计与测序图谱存储。
+                        </p>
+                    </article>
+                    <article class="overview-card">
+                        <span class="icon">03</span>
+                        <h3>无压缩无加密</h3>
+                        <p>
+                            数据以 SQLite 原生的 TEXT、INTEGER、REAL、BLOB
+                            类型存储，不使用额外的压缩或加密。SQLite WAL
+                            模式提供崩溃恢复能力。
+                        </p>
+                    </article>
+                    <article class="overview-card">
+                        <span class="icon">04</span>
+                        <h3>分块序列存储</h3>
+                        <p>
+                            DNA 序列按 10,000 碱基为单位分块存入
+                            <code>sequence_blocks</code>
+                            表，支持按需加载，适合大序列场景。
+                        </p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section schema-band" id="schema">
+                <div class="section-heading">
+                    <p class="eyebrow">Schema</p>
+                    <h2>数据表结构</h2>
+                </div>
+
+                <div class="schema-list">
+                    <details class="schema-item" open>
+                        <summary>
+                            <strong>project_meta</strong>
+                            <span>项目元数据（键值对）</span>
+                        </summary>
+                        <div class="schema-body">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>列名</th>
+                                        <th>类型</th>
+                                        <th>说明</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><code>key</code></td><td>TEXT PK</td><td>键名</td></tr>
+                                    <tr><td><code>value</code></td><td>TEXT</td><td>值</td></tr>
+                                </tbody>
+                            </table>
+                            <p class="schema-note">已知键：<code>name</code>（项目名称）、<code>description</code>（描述）、<code>isCircular</code>（是否环状，<code>true</code>/<code>false</code>）、<code>accession</code>（GenBank 编号）、<code>organism</code>（物种）、<code>date</code>（日期，如 <code>25-APR-2026</code>）、<code>isDirty</code>（未保存标记，<code>0</code>/<code>1</code>）等。</p>
+                        </div>
+                    </details>
+
+                    <details class="schema-item">
+                        <summary>
+                            <strong>sequence_blocks</strong>
+                            <span>序列分块存储</span>
+                        </summary>
+                        <div class="schema-body">
+                            <table>
+                                <thead>
+                                    <tr><th>列名</th><th>类型</th><th>说明</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><code>block_index</code></td><td>INTEGER PK</td><td>块索引，从 0 开始</td></tr>
+                                    <tr><td><code>bases</code></td><td>TEXT NOT NULL</td><td>碱基字符串（≤10,000 字符）</td></tr>
+                                </tbody>
+                            </table>
+                            <p class="schema-note">序列被分割为最多 10,000 碱基的块。碱基使用标准字母（A/T/C/G）及 IUPAC 歧义码表示，区分大小写。</p>
+                        </div>
+                    </details>
+
+                    <details class="schema-item">
+                        <summary>
+                            <strong>features</strong>
+                            <span>序列注释特征</span>
+                        </summary>
+                        <div class="schema-body">
+                            <table>
+                                <thead>
+                                    <tr><th>列名</th><th>类型</th><th>说明</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><code>id</code></td><td>TEXT PK</td><td>如 <code>feature-0</code></td></tr>
+                                    <tr><td><code>name</code></td><td>TEXT NOT NULL</td><td>特征名称</td></tr>
+                                    <tr><td><code>type</code></td><td>TEXT NOT NULL</td><td>类型（gene、CDS、promoter 等）</td></tr>
+                                    <tr><td><code>start_pos</code></td><td>INTEGER NOT NULL</td><td>起始位置（1-based）</td></tr>
+                                    <tr><td><code>end_pos</code></td><td>INTEGER NOT NULL</td><td>结束位置（1-based，包含）</td></tr>
+                                    <tr><td><code>strand</code></td><td>TEXT NOT NULL</td><td><code>forward</code> / <code>reverse</code> / <code>none</code></td></tr>
+                                    <tr><td><code>color</code></td><td>TEXT</td><td>颜色，如 <code>#479f71</code></td></tr>
+                                    <tr><td><code>label</code></td><td>TEXT</td><td>显示标签</td></tr>
+                                    <tr><td><code>note</code></td><td>TEXT</td><td>备注</td></tr>
+                                    <tr><td><code>frame</code></td><td>INTEGER</td><td>阅读框</td></tr>
+                                    <tr><td><code>visible</code></td><td>INTEGER DEFAULT 1</td><td>是否可见</td></tr>
+                                </tbody>
+                            </table>
+                            <p class="schema-note">建有索引 <code>idx_features_range(start_pos, end_pos)</code> 以加速范围查询。</p>
+                        </div>
+                    </details>
+
+                    <details class="schema-item">
+                        <summary>
+                            <strong>primers</strong>
+                            <span>引物定义</span>
+                        </summary>
+                        <div class="schema-body">
+                            <table>
+                                <thead>
+                                    <tr><th>列名</th><th>类型</th><th>说明</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><code>id</code></td><td>TEXT PK</td><td>如 <code>primer-0</code></td></tr>
+                                    <tr><td><code>name</code></td><td>TEXT NOT NULL</td><td>引物名称</td></tr>
+                                    <tr><td><code>sequence</code></td><td>TEXT NOT NULL</td><td>碱基序列</td></tr>
+                                    <tr><td><code>description</code></td><td>TEXT</td><td>描述</td></tr>
+                                    <tr><td><code>visible</code></td><td>INTEGER DEFAULT 1</td><td>是否可见</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </details>
+
+                    <details class="schema-item">
+                        <summary>
+                            <strong>primer_binding_sites</strong>
+                            <span>引物结合位点</span>
+                        </summary>
+                        <div class="schema-body">
+                            <table>
+                                <thead>
+                                    <tr><th>列名</th><th>类型</th><th>说明</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><code>id</code></td><td>TEXT PK</td><td>如 <code>primer-0-site-100</code></td></tr>
+                                    <tr><td><code>primer_id</code></td><td>TEXT NOT NULL</td><td>关联 primers.id</td></tr>
+                                    <tr><td><code>start_pos</code></td><td>INTEGER NOT NULL</td><td>起始位置（1-based）</td></tr>
+                                    <tr><td><code>end_pos</code></td><td>INTEGER NOT NULL</td><td>结束位置（1-based，包含）</td></tr>
+                                    <tr><td><code>bound_strand</code></td><td>TEXT NOT NULL</td><td>结合链方向</td></tr>
+                                    <tr><td><code>annealed_bases</code></td><td>TEXT</td><td>退火碱基</td></tr>
+                                    <tr><td><code>melting_temperature</code></td><td>REAL</td><td>熔解温度 (Tm)</td></tr>
+                                    <tr><td><code>components</code></td><td>TEXT</td><td>JSON: PrimerComponent[]</td></tr>
+                                    <tr><td><code>alignment</code></td><td>TEXT</td><td>JSON: AlignmentSegment[]</td></tr>
+                                </tbody>
+                            </table>
+                            <p class="schema-note">建有索引 <code>idx_binding_range</code> 和 <code>idx_binding_primer</code>。components 和 alignment 列存储 JSON 编码的数组。</p>
+                        </div>
+                    </details>
+
+                    <details class="schema-item">
+                        <summary>
+                            <strong>alignment_entries</strong>
+                            <span>序列比对条目</span>
+                        </summary>
+                        <div class="schema-body">
+                            <table>
+                                <thead>
+                                    <tr><th>列名</th><th>类型</th><th>说明</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><code>id</code></td><td>TEXT PK</td><td>条目 ID</td></tr>
+                                    <tr><td><code>name</code></td><td>TEXT NOT NULL</td><td>名称</td></tr>
+                                    <tr><td><code>sequence</code></td><td>TEXT NOT NULL</td><td>比对序列</td></tr>
+                                    <tr><td><code>visible</code></td><td>INTEGER DEFAULT 1</td><td>是否可见</td></tr>
+                                    <tr><td><code>features_json</code></td><td>TEXT</td><td>JSON: Feature[]</td></tr>
+                                    <tr><td><code>chromatogram_json</code></td><td>TEXT</td><td>JSON: ChromatogramData</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </details>
+
+                    <details class="schema-item">
+                        <summary>
+                            <strong>attachments</strong>
+                            <span>附件存储</span>
+                        </summary>
+                        <div class="schema-body">
+                            <table>
+                                <thead>
+                                    <tr><th>列名</th><th>类型</th><th>说明</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><code>id</code></td><td>TEXT PK</td><td>如 <code>att-1714032000000</code></td></tr>
+                                    <tr><td><code>name</code></td><td>TEXT NOT NULL</td><td>文件名</td></tr>
+                                    <tr><td><code>mime_type</code></td><td>TEXT NOT NULL</td><td>MIME 类型</td></tr>
+                                    <tr><td><code>data</code></td><td>BLOB NOT NULL</td><td>二进制数据</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </details>
+
+                    <details class="schema-item">
+                        <summary>
+                            <strong>undo_entries</strong>
+                            <span>撤销/重做栈（上限 200 条）</span>
+                        </summary>
+                        <div class="schema-body">
+                            <table>
+                                <thead>
+                                    <tr><th>列名</th><th>类型</th><th>说明</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><code>sequence_number</code></td><td>INTEGER PK AI</td><td>自增序号</td></tr>
+                                    <tr><td><code>stack_type</code></td><td>TEXT NOT NULL DEFAULT 'undo'</td><td><code>undo</code> 或 <code>redo</code></td></tr>
+                                    <tr><td><code>operation_type</code></td><td>TEXT NOT NULL</td><td>操作类型</td></tr>
+                                    <tr><td><code>target_id</code></td><td>TEXT</td><td>目标元素 ID</td></tr>
+                                    <tr><td><code>before_diff</code></td><td>TEXT</td><td>JSON: 操作前状态</td></tr>
+                                    <tr><td><code>after_diff</code></td><td>TEXT</td><td>JSON: 操作后状态</td></tr>
+                                </tbody>
+                            </table>
+                            <p class="schema-note">操作类型包括：<code>addFeature</code>、<code>removeFeature</code>、<code>updateFeature</code>、<code>addPrimer</code>、<code>removePrimer</code>、<code>updatePrimer</code>、<code>insertBases</code>、<code>deleteBases</code>、<code>replaceBases</code>、<code>replaceSequence</code>、<code>addAlignmentEntry</code>、<code>removeAlignmentEntry</code>。</p>
+                        </div>
+                    </details>
+
+                    <details class="schema-item">
+                        <summary>
+                            <strong>edit_history</strong>
+                            <span>编辑审计日志</span>
+                        </summary>
+                        <div class="schema-body">
+                            <table>
+                                <thead>
+                                    <tr><th>列名</th><th>类型</th><th>说明</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><code>id</code></td><td>INTEGER PK AI</td><td>自增 ID</td></tr>
+                                    <tr><td><code>timestamp</code></td><td>TEXT NOT NULL</td><td>ISO 8601 时间戳</td></tr>
+                                    <tr><td><code>operation_type</code></td><td>TEXT NOT NULL</td><td>操作类型</td></tr>
+                                    <tr><td><code>target_id</code></td><td>TEXT</td><td>目标元素 ID</td></tr>
+                                    <tr><td><code>description</code></td><td>TEXT</td><td>人类可读描述</td></tr>
+                                    <tr><td><code>before_snapshot</code></td><td>TEXT</td><td>JSON: 操作前快照</td></tr>
+                                    <tr><td><code>after_snapshot</code></td><td>TEXT</td><td>JSON: 操作后快照</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </details>
+
+                    <details class="schema-item">
+                        <summary>
+                            <strong>chromatogram_data</strong>
+                            <span>测序图谱数据</span>
+                        </summary>
+                        <div class="schema-body">
+                            <table>
+                                <thead>
+                                    <tr><th>列名</th><th>类型</th><th>说明</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><code>id</code></td><td>TEXT PK</td><td>数据 ID</td></tr>
+                                    <tr><td><code>trace_a</code></td><td>BLOB</td><td>A 通道信号数据</td></tr>
+                                    <tr><td><code>trace_c</code></td><td>BLOB</td><td>C 通道信号数据</td></tr>
+                                    <tr><td><code>trace_g</code></td><td>BLOB</td><td>G 通道信号数据</td></tr>
+                                    <tr><td><code>trace_t</code></td><td>BLOB</td><td>T 通道信号数据</td></tr>
+                                    <tr><td><code>peak_locations</code></td><td>BLOB</td><td>峰位置数据</td></tr>
+                                </tbody>
+                            </table>
+                            <p class="schema-note">存储主序列（非仅比对条目）的测序图谱数据，四通道信号以二进制 BLOB 存储。</p>
+                        </div>
+                    </details>
+
+                    <details class="schema-item">
+                        <summary>
+                            <strong>schema_version</strong>
+                            <span>格式版本追踪</span>
+                        </summary>
+                        <div class="schema-body">
+                            <table>
+                                <thead>
+                                    <tr><th>列名</th><th>类型</th><th>说明</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><code>key</code></td><td>TEXT PK</td><td>键名</td></tr>
+                                    <tr><td><code>value</code></td><td>TEXT</td><td>值</td></tr>
+                                </tbody>
+                            </table>
+                            <p class="schema-note">固定一行：<code>{ key: 'version', value: '2' }</code>。</p>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <section class="section" id="encoding">
+                <div class="section-heading">
+                    <p class="eyebrow">Encoding</p>
+                    <h2>数据编码方式</h2>
+                </div>
+                <div class="encoding-grid">
+                    <article class="encoding-card">
+                        <h3>DNA 序列</h3>
+                        <p>纯文本碱基字母，按 10,000 碱基分块存储在 <code>sequence_blocks</code> 表中。支持标准 A/T/C/G 及 IUPAC 歧义码。</p>
+                    </article>
+                    <article class="encoding-card">
+                        <h3>注释与引物</h3>
+                        <p>以独立 SQL 行存储。引物结合位点的 components 和 alignment 字段使用 JSON 字符串编码。</p>
+                    </article>
+                    <article class="encoding-card">
+                        <h3>图谱数据</h3>
+                        <p>测序图谱（chromatogram）的四通道信号数据以二进制 BLOB 存储。比对条目的图谱以 JSON 字符串存储。</p>
+                    </article>
+                    <article class="encoding-card">
+                        <h3>元数据</h3>
+                        <p>项目元信息以键值对 TEXT 形式存储在 <code>project_meta</code> 表。撤销/重做差异和编辑历史快照均为 JSON 编码。</p>
+                    </article>
+                    <article class="encoding-card">
+                        <h3>附件</h3>
+                        <p>文件附件以 BLOB 二进制存储，附带文件名和 MIME 类型元信息。</p>
+                    </article>
+                    <article class="encoding-card">
+                        <h3>数据库配置</h3>
+                        <p>桌面端使用 WAL 日志模式（<code>PRAGMA journal_mode=WAL</code>），同步级别为 NORMAL。保存时执行 WAL checkpoint。</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section workflow-band" id="workflow">
+                <div class="section-heading">
+                    <p class="eyebrow">Workflow</p>
+                    <h2>文件读写流程</h2>
+                </div>
+                <div class="workflow-steps">
+                    <div class="workflow-step">
+                        <span class="step-num">1</span>
+                        <div>
+                            <h3>打开文件</h3>
+                            <p>验证文件头（前 16 字节 = <code>"SQLite format 3\0"</code>），复制到临时位置（桌面端）或加载到内存（浏览器端 sql.js）。</p>
+                        </div>
+                    </div>
+                    <div class="workflow-step">
+                        <span class="step-num">2</span>
+                        <div>
+                            <h3>加载数据</h3>
+                            <p>从 <code>project_meta</code> 读取项目元信息，加载 features 和 primers 表。序列按需通过 <code>getSequenceChunk()</code> 按块加载，不全量读取。</p>
+                        </div>
+                    </div>
+                    <div class="workflow-step">
+                        <span class="step-num">3</span>
+                        <div>
+                            <h3>编辑操作</h3>
+                            <p>所有修改操作（碱基编辑、特征增删、引物设计等）实时写入 <code>undo_entries</code> 和 <code>edit_history</code>，确保可追溯和可撤销。</p>
+                        </div>
+                    </div>
+                    <div class="workflow-step">
+                        <span class="step-num">4</span>
+                        <div>
+                            <h3>保存文件</h3>
+                            <p>调用 <code>commitWorkingCopy()</code>：写入元数据、序列块、特征和引物，设置 <code>isDirty = '0'</code>。桌面端执行 WAL checkpoint 刷盘；浏览器端导出为 <code>Uint8Array</code> 触发下载。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+        </main>
+
+        <footer class="site-footer">
+            <span>© 2026 基因工坊</span>
+            <span>Free for personal evaluation and learning only.</span>
+        </footer>
+        <script>
+            const navToggle = document.querySelector(".nav-toggle");
+            const siteHeader = document.querySelector(".site-header");
+
+            if (navToggle && siteHeader) {
+                navToggle.addEventListener("click", () => {
+                    const isOpen = siteHeader.classList.toggle("nav-open");
+                    navToggle.setAttribute("aria-expanded", String(isOpen));
+                });
+
+                document.querySelectorAll(".nav a").forEach((link) => {
+                    link.addEventListener("click", () => {
+                        siteHeader.classList.remove("nav-open");
+                        navToggle.setAttribute("aria-expanded", "false");
+                    });
+                });
+            }
+        </script>
+    </body>
+</html>
