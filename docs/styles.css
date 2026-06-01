@@ -1204,7 +1204,7 @@ code {
 }
 
 .source-section {
-  background: #fff;
+  background: var(--panel);
 }
 
 .source-list {
@@ -1525,6 +1525,37 @@ code {
 
   .lightbox-panel img {
     max-height: calc(100vh - 126px);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #e3e9f2;
+    --muted: #8b9ab5;
+    --soft: #172233;
+    --line: #2a3a52;
+    --panel: #0f1724;
+    --page: #0b111d;
+    --panel-2: #131d2e;
+    --header-bg: rgba(11, 17, 29, 0.88);
+    --header-line: rgba(42, 58, 82, 0.82);
+    --nav-ink: #8b9ab5;
+    --nav-hover: #1e2d44;
+    --hero-bg:
+      radial-gradient(circle at 16% 18%, rgba(56, 161, 111, 0.12), transparent 30%),
+      radial-gradient(circle at 82% 28%, rgba(79, 183, 196, 0.14), transparent 28%),
+      linear-gradient(150deg, #0b111d 0%, #0f1724 48%, #131d2e 100%);
+    --tech-hero-bg:
+      radial-gradient(circle at 16% 18%, rgba(47, 111, 237, 0.12), transparent 30%),
+      radial-gradient(circle at 82% 28%, rgba(107, 92, 255, 0.10), transparent 28%),
+      linear-gradient(150deg, #0b111d 0%, #0f1724 48%, #131d2e 100%);
+    --lead: #a0b4cc;
+    --code-bg: #1a2a40;
+    --shadow: 0 24px 70px rgba(0, 0, 0, 0.4);
+  }
+
+  .hero-shot {
+    border-color: rgba(80, 100, 130, 0.35);
   }
 }
 

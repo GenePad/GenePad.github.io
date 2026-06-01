@@ -656,8 +656,20 @@
                 setLanguage(btn.dataset.lang);
             });
 
-            var savedLang = localStorage.getItem("lang") || "zh";
-            if (savedLang !== "zh") setLanguage(savedLang);
+            function detectBrowserLang() {
+                var navLang = (navigator.language || navigator.userLanguage || "").toLowerCase();
+                if (navLang.startsWith("zh")) return "zh";
+                if (navLang.startsWith("de")) return "de";
+                if (navLang.startsWith("fr")) return "fr";
+                return "en";
+            }
+
+            var lang = localStorage.getItem("lang");
+            if (!lang) {
+                lang = detectBrowserLang();
+                localStorage.setItem("lang", lang);
+            }
+            if (lang !== "zh") setLanguage(lang);
             else {
                 langLabel.textContent = langNames.zh;
                 langDropdown.querySelector('button[data-lang="zh"]').classList.add("active");
