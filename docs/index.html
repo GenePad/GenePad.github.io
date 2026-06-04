@@ -7,10 +7,10 @@
         <meta name="theme-color" content="#0b111d" media="(prefers-color-scheme: dark)" />
         <meta
             name="description"
-            content="基因工坊是一款免费的基因图谱编辑工具，支持 GeneBank、DNA、AB1 等格式，提供序列编辑、注释、引物设计与可视化分析。"
+            content="基因工坊 GenePad 是一个轻量、跨平台的基因图谱编辑器，支持 GenBank、FASTA、DNA、AB1，覆盖日常分子克隆设计与质粒检查。"
             data-i18n-meta="meta.description"
         />
-        <title data-i18n-title="title">基因工坊 - 免费基因图谱编辑工具</title>
+        <title data-i18n-title="title">基因工坊 GenePad - 轻量跨平台基因图谱编辑器</title>
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href="https://genepad.pages.dev/" />
         <script type="application/ld+json">
@@ -18,9 +18,9 @@
                 "@context": "https://schema.org",
                 "@type": "SoftwareApplication",
                 "name": "基因工坊",
-                "alternateName": "Gene Pad",
+                "alternateName": "GenePad",
                 "image": "https://genepad.pages.dev/icon.png",
-                "description": "免费的基因图谱编辑工具，支持 GeneBank、DNA、AB1 等格式，提供序列编辑、注释、引物设计与可视化分析。",
+                "description": "轻量、跨平台的基因图谱编辑器，支持 GenBank、FASTA、DNA、AB1，覆盖日常分子克隆设计与质粒检查。",
                 "applicationCategory": "ScienceApplication",
                 "operatingSystem": "Windows, macOS, Linux, Android",
                 "offers": {
@@ -30,7 +30,7 @@
                 },
                 "author": {
                     "@type": "Organization",
-                    "name": "Gene Pad"
+                    "name": "GenePad"
                 }
             }
         </script>
@@ -44,7 +44,7 @@
                 <span class="brand-mark"><img src="icon.png" alt="" /></span>
                 <span>
                     <strong data-i18n="brand.name">基因工坊</strong>
-                    <small>Gene Pad</small>
+                    <small>GenePad</small>
                 </span>
             </a>
             <button
@@ -96,12 +96,11 @@
         <main id="top">
             <section class="hero">
                 <div class="hero-copy">
-                    <p class="eyebrow" data-i18n="hero.eyebrow">免费基因图谱编辑工具</p>
-                    <h1 data-i18n="hero.title">基因工坊</h1>
+                    <p class="eyebrow" data-i18n="hero.eyebrow">Free beta · Cross-platform · Gene map editor</p>
+                    <h1 data-i18n="hero.title">基因工坊 GenePad</h1>
+                    <p class="hero-slogan" data-i18n="hero.slogan">轻量、跨平台的基因图谱编辑器</p>
                     <p class="lead" data-i18n="hero.lead">
-                        面向个人评估与学习场景的基因序列编辑器，支持
-                        GeneBank、DNA、AB1
-                        等常见格式，提供图谱浏览、序列编辑、注释管理、引物设计与可视化分析。
+                        打开质粒图谱、编辑序列、管理注释、查看酶切位点和 Sanger 测序结果。一个软件完成日常分子克隆设计与检查。
                     </p>
                     <div class="hero-actions">
                         <div class="dropdown">
@@ -122,16 +121,19 @@
                             </div>
                         </div>
                         <a class="button secondary" href="#screenshots" data-i18n="hero.viewScreenshots">查看界面</a>
-                        <a class="button secondary" href="#license" data-i18n="hero.viewLicense">使用许可</a>
                     </div>
                     <dl class="hero-stats" aria-label="产品能力">
                         <div>
-                            <dt>GeneBank / DNA / AB1</dt>
-                            <dd data-i18n="hero.stat1.desc">多格式导入与查看</dd>
+                            <dt>GenBank / FASTA / DNA / AB1</dt>
+                            <dd data-i18n="hero.stat1.desc">常见序列与测序文件</dd>
+                        </div>
+                        <div>
+                            <dt>Plasmid Map / Annotation / Enzyme / Primer</dt>
+                            <dd data-i18n="hero.stat2.desc">日常质粒工作流</dd>
                         </div>
                         <div>
                             <dt>Windows / macOS / Linux / Android</dt>
-                            <dd data-i18n="hero.stat2.desc">覆盖桌面与移动平台</dd>
+                            <dd data-i18n="hero.stat3.desc">桌面与移动端可用</dd>
                         </div>
                     </dl>
                 </div>
@@ -152,38 +154,61 @@
 
             <section class="section feature-band" id="features">
                 <div class="section-heading">
-                    <p class="eyebrow">Core Workflow</p>
-                    <h2 data-i18n="features.heading">从序列文件到可视化分析</h2>
+                    <p class="eyebrow">Feature Highlights</p>
+                    <h2 data-i18n="features.heading">日常分子克隆工作所需的核心能力</h2>
                 </div>
                 <div class="feature-grid">
                     <article class="feature">
-                        <span class="icon">01</span>
-                        <h3 data-i18n="features.f1.title">序列与图谱编辑</h3>
+                        <span class="icon"><i class="fa-solid fa-circle-nodes"></i></span>
+                        <h3 data-i18n="features.f1.title">立即查看质粒图谱</h3>
                         <p data-i18n="features.f1.desc">
-                            在同一工作区查看环状或线性图谱，快速定位序列区域，编辑碱基并管理基因元件。
+                            导入序列文件后，快速查看环状或线性图谱，并在图谱、序列和注释之间联动定位。
                         </p>
                     </article>
                     <article class="feature">
-                        <span class="icon">02</span>
-                        <h3 data-i18n="features.f2.title">注释与标注管理</h3>
+                        <span class="icon"><i class="fa-solid fa-pen-to-square"></i></span>
+                        <h3 data-i18n="features.f2.title">带着上下文编辑序列</h3>
                         <p data-i18n="features.f2.desc">
-                            以图谱、注释表和序列视图联动管理功能元件，适合质粒检查、教学演示和方案评估。
+                            在同一工作区中编辑碱基、检查功能元件、管理注释，减少在多个软件之间切换。
                         </p>
                     </article>
                     <article class="feature">
-                        <span class="icon">03</span>
-                        <h3 data-i18n="features.f3.title">限制酶与引物</h3>
+                        <span class="icon"><i class="fa-solid fa-scissors"></i></span>
+                        <h3 data-i18n="features.f3.title">检查限制酶与引物</h3>
                         <p data-i18n="features.f3.desc">
-                            内置限制酶位点显示、引物设计和序列定位能力，减少在多个工具之间切换。
+                            显示限制性内切酶位点，辅助引物设计、片段定位和克隆方案检查。
                         </p>
                     </article>
                     <article class="feature">
-                        <span class="icon">04</span>
-                        <h3 data-i18n="features.f4.title">测序结果辅助分析</h3>
+                        <span class="icon"><i class="fa-solid fa-wave-square"></i></span>
+                        <h3 data-i18n="features.f4.title">查看 Sanger 测序结果</h3>
                         <p data-i18n="features.f4.desc">
-                            支持 AB1
-                            测序结果查看，结合序列与图谱信息完成更直观的校验流程。
+                            支持 AB1 文件查看，结合参考序列和图谱信息，更直观地检查测序结果。
                         </p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section why-section">
+                <div class="section-heading">
+                    <p class="eyebrow">Why GenePad?</p>
+                    <h2 data-i18n="why.heading">为什么选择基因工坊？</h2>
+                </div>
+                <div class="why-grid">
+                    <article class="why-card">
+                        <i class="fa-solid fa-bolt"></i>
+                        <h3 data-i18n="why.lightweight.title">更轻量</h3>
+                        <p data-i18n="why.lightweight.desc">聚焦日常质粒查看、编辑和检查，不让简单任务变复杂。</p>
+                    </article>
+                    <article class="why-card">
+                        <i class="fa-solid fa-laptop-code"></i>
+                        <h3 data-i18n="why.crossplatform.title">真正跨平台</h3>
+                        <p data-i18n="why.crossplatform.desc">支持 Windows、macOS、Linux 和 Android，桌面和移动端都能使用。</p>
+                    </article>
+                    <article class="why-card">
+                        <i class="fa-solid fa-diagram-project"></i>
+                        <h3 data-i18n="why.workflow.title">更贴近实验流程</h3>
+                        <p data-i18n="why.workflow.desc">围绕图谱、序列、注释、酶切、引物和测序结果组织功能，适合日常分子克隆工作。</p>
                     </article>
                 </div>
             </section>
@@ -339,7 +364,7 @@
                     </span>
                 </div>
                 <p class="platform-note" data-i18n="platforms.note">
-                    当前免费版与即将上线的个人专业版功能暂时无区别。下载与发布信息可根据项目发布节奏补充到本页面。
+                    无论是在实验室电脑、个人笔记本，还是移动设备上，都可以快速打开和检查序列文件。
                 </p>
             </section>
 
@@ -372,13 +397,13 @@
             <section class="section license-section" id="license">
                 <div>
                     <p class="eyebrow">License</p>
-                    <h2 data-i18n="license.heading">免费版使用说明</h2>
+                    <h2 data-i18n="license.heading">使用许可</h2>
                 </div>
                 <div class="notice">
                     <p data-i18n="license.p1">
-                        基因工坊免费版仅供个人评估学习使用，不可用于商业用途。项目暂不开放源码。
+                        GenePad 免费版可用于个人评估与学习，可满足日常基因图谱查看、编辑、保存。
                     </p>
-                    <p data-i18n="license.p2">如需商业或学术用途，请关注即将上线的个人专业版。</p>
+                    <p data-i18n="license.p2">商业用途、机构用途和长期科研使用将通过即将推出的 GenePad Pro 授权支持。</p>
                 </div>
             </section>
         </main>
@@ -390,7 +415,7 @@
                 <a href="https://gitee.com/GenePad/GenePad.github.io/releases/latest" target="_blank" rel="noopener" data-i18n="footer.gitee">Gitee 下载</a>
                 <a href="https://github.com/GenePad/GenePad.github.io/issues" target="_blank" rel="noopener" data-i18n="footer.feedback">反馈问题</a>
             </div>
-            <span data-i18n="footer.note">Free for personal evaluation and learning only.</span>
+            <span data-i18n="footer.note">GenePad 免费版可用于个人评估与学习，可满足日常基因图谱查看、编辑、保存。</span>
         </footer>
 
         <div class="lightbox" id="lightbox" aria-hidden="true">
@@ -407,8 +432,8 @@
             const translations = {
                 zh: {
                     "html.lang": "zh-CN",
-                    "title": "基因工坊 - 免费基因图谱编辑工具",
-                    "meta.description": "基因工坊是一款免费的基因图谱编辑工具，支持 GeneBank、DNA、AB1 等格式，提供序列编辑、注释、引物设计与可视化分析。",
+                    "title": "基因工坊 GenePad - 轻量跨平台基因图谱编辑器",
+                    "meta.description": "基因工坊 GenePad 是一个轻量、跨平台的基因图谱编辑器，支持 GenBank、FASTA、DNA、AB1，覆盖日常分子克隆设计与质粒检查。",
                     "brand.name": "基因工坊",
                     "brand.aria": "基因工坊首页",
                     "nav.toggle": "打开导航",
@@ -421,39 +446,47 @@
                     "nav.techsupport": "技术支持",
                     "download.github": "GitHub（国际）",
                     "download.gitee": "Gitee（大陆）",
-                    "hero.eyebrow": "免费基因图谱编辑工具",
-                    "hero.title": "基因工坊",
-                    "hero.lead": "面向个人评估与学习场景的基因序列编辑器，支持 GeneBank、DNA、AB1 等常见格式，提供图谱浏览、序列编辑、注释管理、引物设计与可视化分析。",
+                    "hero.eyebrow": "Free beta · Cross-platform · Gene map editor",
+                    "hero.title": "基因工坊 GenePad",
+                    "hero.slogan": "轻量、跨平台的基因图谱编辑器",
+                    "hero.lead": "打开质粒图谱、编辑序列、管理注释、查看酶切位点和 Sanger 测序结果。一个软件完成日常分子克隆设计与检查。",
                     "hero.download": "免费下载",
                     "hero.viewScreenshots": "查看界面",
-                    "hero.viewLicense": "使用许可",
-                    "hero.stat1.desc": "多格式导入与查看",
-                    "hero.stat2.desc": "覆盖桌面与移动平台",
-                    "features.heading": "从序列文件到可视化分析",
-                    "features.f1.title": "序列与图谱编辑",
-                    "features.f1.desc": "在同一工作区查看环状或线性图谱，快速定位序列区域，编辑碱基并管理基因元件。",
-                    "features.f2.title": "注释与标注管理",
-                    "features.f2.desc": "以图谱、注释表和序列视图联动管理功能元件，适合质粒检查、教学演示和方案评估。",
-                    "features.f3.title": "限制酶与引物",
-                    "features.f3.desc": "内置限制酶位点显示、引物设计和序列定位能力，减少在多个工具之间切换。",
-                    "features.f4.title": "测序结果辅助分析",
-                    "features.f4.desc": "支持 AB1 测序结果查看，结合序列与图谱信息完成更直观的校验流程。",
+                    "hero.stat1.desc": "常见序列与测序文件",
+                    "hero.stat2.desc": "日常质粒工作流",
+                    "hero.stat3.desc": "桌面与移动端可用",
+                    "features.heading": "日常分子克隆工作所需的核心能力",
+                    "features.f1.title": "立即查看质粒图谱",
+                    "features.f1.desc": "导入序列文件后，快速查看环状或线性图谱，并在图谱、序列和注释之间联动定位。",
+                    "features.f2.title": "带着上下文编辑序列",
+                    "features.f2.desc": "在同一工作区中编辑碱基、检查功能元件、管理注释，减少在多个软件之间切换。",
+                    "features.f3.title": "检查限制酶与引物",
+                    "features.f3.desc": "显示限制性内切酶位点，辅助引物设计、片段定位和克隆方案检查。",
+                    "features.f4.title": "查看 Sanger 测序结果",
+                    "features.f4.desc": "支持 AB1 文件查看，结合参考序列和图谱信息，更直观地检查测序结果。",
+                    "why.heading": "为什么选择基因工坊？",
+                    "why.lightweight.title": "更轻量",
+                    "why.lightweight.desc": "聚焦日常质粒查看、编辑和检查，不让简单任务变复杂。",
+                    "why.crossplatform.title": "真正跨平台",
+                    "why.crossplatform.desc": "支持 Windows、macOS、Linux 和 Android，桌面和移动端都能使用。",
+                    "why.workflow.title": "更贴近实验流程",
+                    "why.workflow.desc": "围绕图谱、序列、注释、酶切、引物和测序结果组织功能，适合日常分子克隆工作。",
                     "interface.heading": "清晰的浅色与夜间工作模式",
                     "interface.desc": "基因工坊的界面以高密度科研工具为中心，保留文件操作、注释、限制酶、引物和图谱视图等关键入口，同时支持白天与夜间模式，适配不同工作环境。",
                     "screenshots.heading": "主要界面截图",
                     "platforms.heading": "覆盖常用平台",
-                    "platforms.note": "当前免费版与即将上线的个人专业版功能暂时无区别。下载与发布信息可根据项目发布节奏补充到本页面。",
+                    "platforms.note": "无论是在实验室电脑、个人笔记本，还是移动设备上，都可以快速打开和检查序列文件。",
                     "feedback.heading": "反馈与建议",
                     "feedback.desc": "我们重视每一位用户的声音。如果您在使用过程中遇到问题或有改进建议，欢迎通过以下平台提交 Issue：",
                     "feedback.github.desc": "国际用户 — 在 GitHub 提交问题或建议",
                     "feedback.gitee.desc": "大陆用户 — 在 Gitee 提交问题或建议",
-                    "license.heading": "免费版使用说明",
-                    "license.p1": "基因工坊免费版仅供个人评估学习使用，不可用于商业用途。项目暂不开放源码。",
-                    "license.p2": "如需商业或学术用途，请关注即将上线的个人专业版。",
+                    "license.heading": "使用许可",
+                    "license.p1": "GenePad 免费版可用于个人评估与学习，可满足日常基因图谱查看、编辑、保存。",
+                    "license.p2": "商业用途、机构用途和长期科研使用将通过即将推出的 GenePad Pro 授权支持。",
                     "footer.github": "GitHub 下载",
                     "footer.gitee": "Gitee 下载",
                     "footer.feedback": "反馈问题",
-                    "footer.note": "Free for personal evaluation and learning only.",
+                    "footer.note": "GenePad 免费版可用于个人评估与学习，可满足日常基因图谱查看、编辑、保存。",
                     "lightbox.close": "关闭预览",
                     "preview.hint": "点击预览",
                     "gallery.cap1": "整体图谱",
@@ -465,10 +498,10 @@
                 },
                 en: {
                     "html.lang": "en",
-                    "title": "Gene Pad - Free Gene Map Editor",
-                    "meta.description": "Gene Pad is a free gene map editing tool supporting GeneBank, DNA, AB1 and more. Features sequence editing, annotation, primer design and visual analysis.",
-                    "brand.name": "Gene Pad",
-                    "brand.aria": "Gene Pad home",
+                    "title": "GenePad - Lightweight Cross-platform Gene Map Editor",
+                    "meta.description": "GenePad is a lightweight, cross-platform gene map editor for everyday molecular biology, supporting GenBank, FASTA, DNA and AB1 files.",
+                    "brand.name": "GenePad",
+                    "brand.aria": "GenePad home",
                     "nav.toggle": "Open navigation",
                     "nav.features": "Features",
                     "nav.screenshots": "Screenshots",
@@ -479,35 +512,43 @@
                     "nav.techsupport": "Tech Support",
                     "download.github": "GitHub (Global)",
                     "download.gitee": "Gitee (China)",
-                    "hero.eyebrow": "Free Gene Map Editor",
-                    "hero.title": "Gene Pad",
-                    "hero.lead": "A gene sequence editor for personal evaluation and learning, supporting GeneBank, DNA, AB1 and other common formats with map browsing, sequence editing, annotation management, primer design and visual analysis.",
+                    "hero.eyebrow": "Free beta · Cross-platform · Gene map editor",
+                    "hero.title": "GenePad",
+                    "hero.slogan": "A lightweight gene map editor for everyday molecular biology",
+                    "hero.lead": "Open plasmid maps, edit sequences, manage annotations, inspect restriction sites and review Sanger traces in one app for routine cloning design and checks.",
                     "hero.download": "Free Download",
                     "hero.viewScreenshots": "View Screenshots",
-                    "hero.viewLicense": "License",
-                    "hero.stat1.desc": "Multi-format import & viewing",
-                    "hero.stat2.desc": "Desktop & mobile platforms",
-                    "features.heading": "From Sequence Files to Visual Analysis",
-                    "features.f1.title": "Sequence & Map Editing",
-                    "features.f1.desc": "View circular or linear maps in the same workspace, quickly locate sequence regions, edit bases and manage genetic elements.",
-                    "features.f2.title": "Annotation Management",
-                    "features.f2.desc": "Manage functional elements with linked map, annotation table and sequence views — ideal for plasmid inspection, teaching demos and protocol evaluation.",
-                    "features.f3.title": "Restriction Enzymes & Primers",
-                    "features.f3.desc": "Built-in restriction enzyme site display, primer design and sequence localization — reduce switching between multiple tools.",
-                    "features.f4.title": "Sequencing Analysis",
-                    "features.f4.desc": "Support AB1 trace viewing, combining sequence and map information for a more intuitive verification workflow.",
+                    "hero.stat1.desc": "Common sequence and trace files",
+                    "hero.stat2.desc": "Routine plasmid workflow",
+                    "hero.stat3.desc": "Desktop and mobile ready",
+                    "features.heading": "Everything you need for routine plasmid work",
+                    "features.f1.title": "Visualize plasmids instantly",
+                    "features.f1.desc": "Import sequence files, view circular or linear maps, and jump between map, sequence and annotation context.",
+                    "features.f2.title": "Edit sequences with context",
+                    "features.f2.desc": "Edit bases, inspect functional elements and manage annotations in one workspace with less switching between tools.",
+                    "features.f3.title": "Check enzymes and primers",
+                    "features.f3.desc": "Display restriction sites and support primer design, fragment localization and cloning plan checks.",
+                    "features.f4.title": "Inspect Sanger results",
+                    "features.f4.desc": "Open AB1 files and check sequencing results against reference sequence and map context.",
+                    "why.heading": "Why GenePad?",
+                    "why.lightweight.title": "Lightweight",
+                    "why.lightweight.desc": "Focused on everyday plasmid viewing, editing and checking without making simple work feel complex.",
+                    "why.crossplatform.title": "Cross-platform",
+                    "why.crossplatform.desc": "Available for Windows, macOS, Linux and Android across desktop and mobile devices.",
+                    "why.workflow.title": "Familiar workflow",
+                    "why.workflow.desc": "Built around maps, sequences, annotations, enzymes, primers and sequencing results for routine molecular cloning.",
                     "interface.heading": "Clean Light & Dark Work Modes",
-                    "interface.desc": "Gene Pad's interface centers on high-density research tools, keeping key entries for file operations, annotations, restriction enzymes, primers and map views, while supporting both light and dark modes for different work environments.",
+                    "interface.desc": "GenePad's interface centers on high-density research tools, keeping key entries for file operations, annotations, restriction enzymes, primers and map views, while supporting both light and dark modes for different work environments.",
                     "screenshots.heading": "Main Interface Screenshots",
                     "platforms.heading": "Supported Platforms",
-                    "platforms.note": "The current free version and the upcoming personal pro version have the same features for now. Download and release information may be added to this page as the project progresses.",
+                    "platforms.note": "Use GenePad on lab computers, personal laptops or mobile devices to quickly open and check sequence files.",
                     "feedback.heading": "Feedback & Suggestions",
                     "feedback.desc": "We value every user's voice. If you encounter issues or have suggestions, feel free to submit an Issue on the following platforms:",
                     "feedback.github.desc": "Global users — Submit issues or suggestions on GitHub",
                     "feedback.gitee.desc": "China users — Submit issues or suggestions on Gitee",
-                    "license.heading": "Free Version Notice",
-                    "license.p1": "Gene Pad free version is for personal evaluation and learning only. Commercial use is not permitted. The project is not open source at this time.",
-                    "license.p2": "For commercial or academic use, please stay tuned for the upcoming personal pro version.",
+                    "license.heading": "License",
+                    "license.p1": "GenePad Free is available for personal evaluation and learning, and covers everyday gene map viewing, editing and saving.",
+                    "license.p2": "Commercial, institutional and long-term research use will be supported through the upcoming GenePad Pro license.",
                     "footer.github": "GitHub Download",
                     "footer.gitee": "Gitee Download",
                     "footer.feedback": "Report Issue",
@@ -523,10 +564,10 @@
                 },
                 de: {
                     "html.lang": "de",
-                    "title": "Gene Pad - Kostenloser Genkarten-Editor",
-                    "meta.description": "Gene Pad ist ein kostenloses Genkarten-Bearbeitungstool mit Unterstützung für GeneBank, DNA, AB1 und mehr. Bietet Sequenzbearbeitung, Annotation, Primer-Design und visuelle Analyse.",
-                    "brand.name": "Gene Pad",
-                    "brand.aria": "Gene Pad Startseite",
+                    "title": "GenePad - Leichter plattformübergreifender Genkarten-Editor",
+                    "meta.description": "GenePad ist ein leichter plattformübergreifender Genkarten-Editor für alltägliche molekularbiologische Arbeit mit GenBank-, FASTA-, DNA- und AB1-Dateien.",
+                    "brand.name": "GenePad",
+                    "brand.aria": "GenePad Startseite",
                     "nav.toggle": "Navigation öffnen",
                     "nav.features": "Funktionen",
                     "nav.screenshots": "Screenshots",
@@ -537,35 +578,43 @@
                     "nav.techsupport": "Technik-Support",
                     "download.github": "GitHub (International)",
                     "download.gitee": "Gitee (China)",
-                    "hero.eyebrow": "Kostenloser Genkarten-Editor",
-                    "hero.title": "Gene Pad",
-                    "hero.lead": "Ein Gensequenz-Editor für persönliche Auswertung und Lernen. Unterstützt GeneBank, DNA, AB1 und andere gängige Formate mit Kartenansicht, Sequenzbearbeitung, Annotationsverwaltung, Primer-Design und visueller Analyse.",
+                    "hero.eyebrow": "Free beta · Cross-platform · Gene map editor",
+                    "hero.title": "GenePad",
+                    "hero.slogan": "Ein leichter Genkarten-Editor für alltägliche molekularbiologische Arbeit",
+                    "hero.lead": "Plasmidkarten öffnen, Sequenzen bearbeiten, Annotationen verwalten, Restriktionsstellen prüfen und Sanger-Spuren in einer App ansehen.",
                     "hero.download": "Kostenloser Download",
                     "hero.viewScreenshots": "Screenshots ansehen",
-                    "hero.viewLicense": "Lizenz",
-                    "hero.stat1.desc": "Multi-Format-Import & Anzeige",
-                    "hero.stat2.desc": "Desktop- & Mobilplattformen",
-                    "features.heading": "Von Sequenzdateien zur visuellen Analyse",
-                    "features.f1.title": "Sequenz- & Kartenbearbeitung",
-                    "features.f1.desc": "Zirkuläre oder lineare Karten in einem Arbeitsbereich anzeigen, Sequenzbereiche schnell lokalisieren, Basen bearbeiten und genetische Elemente verwalten.",
-                    "features.f2.title": "Annotationsverwaltung",
-                    "features.f2.desc": "Funktionselemente mit verknüpfter Karte, Annotationstabelle und Sequenzansicht verwalten — ideal für Plasmid-Prüfung, Lehrdemonstrationen und Protokollbewertung.",
-                    "features.f3.title": "Restriktionsenzyme & Primer",
-                    "features.f3.desc": "Integrierte Restriktionsenzym-Stellenanzeige, Primer-Design und Sequenzlokalisierung — weniger Wechsel zwischen mehreren Tools.",
-                    "features.f4.title": "Sequenzierungsanalyse",
-                    "features.f4.desc": "AB1-Spurenansicht wird unterstützt, kombiniert mit Sequenz- und Karteninformationen für einen intuitiveren Verifizierungsworkflow.",
+                    "hero.stat1.desc": "Gängige Sequenz- und Trace-Dateien",
+                    "hero.stat2.desc": "Routine-Plasmid-Workflow",
+                    "hero.stat3.desc": "Desktop und Mobilgeräte",
+                    "features.heading": "Alles für routinemäßige Plasmidarbeit",
+                    "features.f1.title": "Plasmide sofort visualisieren",
+                    "features.f1.desc": "Sequenzdateien importieren, zirkuläre oder lineare Karten anzeigen und zwischen Karte, Sequenz und Annotation springen.",
+                    "features.f2.title": "Sequenzen mit Kontext bearbeiten",
+                    "features.f2.desc": "Basen bearbeiten, Funktionselemente prüfen und Annotationen in einem Arbeitsbereich verwalten.",
+                    "features.f3.title": "Enzyme und Primer prüfen",
+                    "features.f3.desc": "Restriktionsstellen anzeigen und Primer-Design, Fragmentlokalisierung und Klonierungsprüfung unterstützen.",
+                    "features.f4.title": "Sanger-Ergebnisse prüfen",
+                    "features.f4.desc": "AB1-Dateien öffnen und Sequenzierungsergebnisse mit Referenzsequenz und Kartenkontext prüfen.",
+                    "why.heading": "Warum GenePad?",
+                    "why.lightweight.title": "Leichtgewichtig",
+                    "why.lightweight.desc": "Fokussiert auf alltägliches Anzeigen, Bearbeiten und Prüfen von Plasmiden.",
+                    "why.crossplatform.title": "Plattformübergreifend",
+                    "why.crossplatform.desc": "Verfügbar für Windows, macOS, Linux und Android auf Desktop und Mobilgeräten.",
+                    "why.workflow.title": "Vertrauter Workflow",
+                    "why.workflow.desc": "Organisiert um Karten, Sequenzen, Annotationen, Enzyme, Primer und Sequenzierungsergebnisse.",
                     "interface.heading": "Klares helles und dunkles Arbeitsmodus",
-                    "interface.desc": "Die Benutzeroberfläche von Gene Pad konzentriert sich auf Forschungstools mit hoher Dichte und behält wichtige Zugänge für Dateioperationen, Annotationen, Restriktionsenzyme, Primer und Kartenansichten bei. Helles und dunkles Modus werden unterstützt.",
+                    "interface.desc": "Die Benutzeroberfläche von GenePad konzentriert sich auf Forschungstools mit hoher Dichte und behält wichtige Zugänge für Dateioperationen, Annotationen, Restriktionsenzyme, Primer und Kartenansichten bei.",
                     "screenshots.heading": "Hauptoberfläche-Screenshots",
                     "platforms.heading": "Unterstützte Plattformen",
-                    "platforms.note": "Die aktuelle kostenlose Version und die kommende persönliche Pro-Version haben vorerst dieselben Funktionen. Download- und Release-Informationen können je nach Projektfortschritt ergänzt werden.",
+                    "platforms.note": "GenePad kann auf Laborcomputern, persönlichen Laptops und Mobilgeräten Sequenzdateien schnell öffnen und prüfen.",
                     "feedback.heading": "Feedback & Vorschläge",
                     "feedback.desc": "Wir schätzen jede Nutzerstimme. Wenn Sie Probleme haben oder Vorschläge machen möchten, reichen Sie gerne ein Issue auf folgenden Plattformen ein:",
                     "feedback.github.desc": "Internationale Nutzer — Issues auf GitHub einreichen",
                     "feedback.gitee.desc": "China-Nutzer — Issues auf Gitee einreichen",
-                    "license.heading": "Hinweis zur kostenlosen Version",
-                    "license.p1": "Die kostenlose Version von Gene Pad ist nur für persönliche Auswertung und Lernen bestimmt. Kommerzielle Nutzung ist nicht gestattet. Das Projekt ist derzeit nicht Open Source.",
-                    "license.p2": "Für kommerzielle oder akademische Nutzung beachten Sie bitte die kommende persönliche Pro-Version.",
+                    "license.heading": "Lizenz",
+                    "license.p1": "GenePad Free ist für persönliche Auswertung und Lernen verfügbar und deckt alltägliches Anzeigen, Bearbeiten und Speichern von Genkarten ab.",
+                    "license.p2": "Kommerzielle, institutionelle und langfristige Forschungsnutzung wird über die kommende GenePad Pro-Lizenz unterstützt.",
                     "footer.github": "GitHub Download",
                     "footer.gitee": "Gitee Download",
                     "footer.feedback": "Problem melden",
@@ -581,10 +630,10 @@
                 },
                 fr: {
                     "html.lang": "fr",
-                    "title": "Gene Pad - Éditeur de cartes génétiques gratuit",
-                    "meta.description": "Gene Pad est un outil gratuit d'édition de cartes génétiques prenant en charge GeneBank, DNA, AB1 et d'autres formats. Édition de séquences, annotation, conception d'amorces et analyse visuelle.",
-                    "brand.name": "Gene Pad",
-                    "brand.aria": "Page d'accueil Gene Pad",
+                    "title": "GenePad - Éditeur léger de cartes génétiques multiplateforme",
+                    "meta.description": "GenePad est un éditeur léger de cartes génétiques multiplateforme pour le travail courant en biologie moléculaire, compatible GenBank, FASTA, DNA et AB1.",
+                    "brand.name": "GenePad",
+                    "brand.aria": "Page d'accueil GenePad",
                     "nav.toggle": "Ouvrir la navigation",
                     "nav.features": "Fonctionnalités",
                     "nav.screenshots": "Captures d'écran",
@@ -595,35 +644,43 @@
                     "nav.techsupport": "Support technique",
                     "download.github": "GitHub (International)",
                     "download.gitee": "Gitee (Chine)",
-                    "hero.eyebrow": "Éditeur de cartes génétiques gratuit",
-                    "hero.title": "Gene Pad",
-                    "hero.lead": "Un éditeur de séquences génétiques pour l'évaluation personnelle et l'apprentissage, prenant en charge GeneBank, DNA, AB1 et d'autres formats courants avec navigation cartographique, édition de séquences, gestion des annotations, conception d'amorces et analyse visuelle.",
+                    "hero.eyebrow": "Free beta · Cross-platform · Gene map editor",
+                    "hero.title": "GenePad",
+                    "hero.slogan": "Un éditeur léger de cartes génétiques pour la biologie moléculaire quotidienne",
+                    "hero.lead": "Ouvrez des cartes de plasmides, modifiez les séquences, gérez les annotations, vérifiez les sites de restriction et inspectez les traces Sanger dans une seule application.",
                     "hero.download": "Téléchargement gratuit",
                     "hero.viewScreenshots": "Voir les captures",
-                    "hero.viewLicense": "Licence",
-                    "hero.stat1.desc": "Import et visualisation multi-formats",
-                    "hero.stat2.desc": "Plateformes bureau et mobile",
-                    "features.heading": "Des fichiers de séquences à l'analyse visuelle",
-                    "features.f1.title": "Édition de séquences et cartes",
-                    "features.f1.desc": "Visualisez des cartes circulaires ou linéaires dans le même espace de travail, localisez rapidement les régions de séquence, éditez les bases et gérez les éléments génétiques.",
-                    "features.f2.title": "Gestion des annotations",
-                    "features.f2.desc": "Gérez les éléments fonctionnels avec des vues cartographiques, tableaux d'annotation et vues de séquence liées — idéal pour l'inspection de plasmides, les démonstrations pédagogiques et l'évaluation de protocoles.",
-                    "features.f3.title": "Enzymes de restriction et amorces",
-                    "features.f3.desc": "Affichage intégré des sites d'enzymes de restriction, conception d'amorces et localisation de séquences — réduisez les changements entre plusieurs outils.",
-                    "features.f4.title": "Analyse de séquençage",
-                    "features.f4.desc": "Prise en charge de la visualisation des traces AB1, combinée aux informations de séquence et de carte pour un flux de vérification plus intuitif.",
+                    "hero.stat1.desc": "Fichiers de séquence et traces courants",
+                    "hero.stat2.desc": "Flux de travail plasmidique",
+                    "hero.stat3.desc": "Bureau et mobile",
+                    "features.heading": "L'essentiel pour le travail quotidien sur les plasmides",
+                    "features.f1.title": "Visualiser les plasmides instantanément",
+                    "features.f1.desc": "Importez des fichiers de séquence, affichez des cartes circulaires ou linéaires et naviguez entre carte, séquence et annotations.",
+                    "features.f2.title": "Modifier les séquences avec contexte",
+                    "features.f2.desc": "Modifiez les bases, inspectez les éléments fonctionnels et gérez les annotations dans un seul espace de travail.",
+                    "features.f3.title": "Vérifier enzymes et amorces",
+                    "features.f3.desc": "Affichez les sites de restriction et aidez la conception d'amorces, la localisation de fragments et la vérification de clonage.",
+                    "features.f4.title": "Inspecter les résultats Sanger",
+                    "features.f4.desc": "Ouvrez les fichiers AB1 et comparez les résultats de séquençage avec la séquence de référence et la carte.",
+                    "why.heading": "Pourquoi GenePad ?",
+                    "why.lightweight.title": "Léger",
+                    "why.lightweight.desc": "Concentré sur l'affichage, l'édition et la vérification quotidienne des plasmides.",
+                    "why.crossplatform.title": "Multiplateforme",
+                    "why.crossplatform.desc": "Disponible sur Windows, macOS, Linux et Android, sur ordinateur et mobile.",
+                    "why.workflow.title": "Flux familier",
+                    "why.workflow.desc": "Organisé autour des cartes, séquences, annotations, enzymes, amorces et résultats de séquençage.",
                     "interface.heading": "Modes de travail clair et sombre",
-                    "interface.desc": "L'interface de Gene Pad est centrée sur des outils de recherche à haute densité, conservant les accès clés pour les opérations de fichiers, les annotations, les enzymes de restriction, les amorces et les vues cartographiques, avec prise en charge des modes clair et sombre.",
+                    "interface.desc": "L'interface de GenePad est centrée sur des outils de recherche à haute densité, avec les accès clés pour les fichiers, annotations, enzymes de restriction, amorces et vues cartographiques.",
                     "screenshots.heading": "Captures d'écran principales",
                     "platforms.heading": "Plateformes prises en charge",
-                    "platforms.note": "La version gratuite actuelle et la prochaine version pro personnelle ont temporairement les mêmes fonctionnalités. Les informations de téléchargement et de publication peuvent être ajoutées à cette page selon le rythme du projet.",
+                    "platforms.note": "Utilisez GenePad sur les ordinateurs du laboratoire, les portables personnels ou les appareils mobiles pour ouvrir et vérifier rapidement les fichiers de séquence.",
                     "feedback.heading": "Commentaires et suggestions",
                     "feedback.desc": "Nous valorisons la voix de chaque utilisateur. Si vous rencontrez des problèmes ou avez des suggestions, n'hésitez pas à soumettre un ticket sur les plateformes suivantes :",
                     "feedback.github.desc": "Utilisateurs internationaux — Soumettre des problèmes ou suggestions sur GitHub",
                     "feedback.gitee.desc": "Utilisateurs chinois — Soumettre des problèmes ou suggestions sur Gitee",
-                    "license.heading": "Notice de la version gratuite",
-                    "license.p1": "La version gratuite de Gene Pad est destinée uniquement à l'évaluation personnelle et à l'apprentissage. L'utilisation commerciale n'est pas autorisée. Le projet n'est pas open source pour le moment.",
-                    "license.p2": "Pour une utilisation commerciale ou académique, veuillez suivre la prochaine version pro personnelle.",
+                    "license.heading": "Licence",
+                    "license.p1": "GenePad Free est disponible pour l'évaluation personnelle et l'apprentissage, avec l'affichage, l'édition et l'enregistrement quotidiens des cartes génétiques.",
+                    "license.p2": "Les usages commerciaux, institutionnels et de recherche à long terme seront couverts par la future licence GenePad Pro.",
                     "footer.github": "Télécharger GitHub",
                     "footer.gitee": "Télécharger Gitee",
                     "footer.feedback": "Signaler un problème",
