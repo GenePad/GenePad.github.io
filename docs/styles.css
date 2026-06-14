@@ -417,7 +417,7 @@ h3 {
 .lang-switcher-btn {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   padding: 8px 12px;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -428,6 +428,11 @@ h3 {
   font-family: inherit;
   cursor: pointer;
   transition: background 120ms ease;
+}
+
+.lang-switcher-icon {
+  font-size: 15px;
+  line-height: 1;
 }
 
 .lang-switcher-btn:hover {
