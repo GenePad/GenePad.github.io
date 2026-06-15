@@ -854,7 +854,48 @@ body.local-dl-open {
   aspect-ratio: 16 / 10;
   object-fit: cover;
   object-position: center;
-  transition: transform 220ms ease;
+  transition: opacity 180ms ease, transform 220ms ease;
+}
+
+.hero-shot img.is-changing {
+  opacity: 0.28;
+}
+
+.hero-carousel-dots {
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  z-index: 2;
+  display: flex;
+  gap: 7px;
+  padding: 6px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  background: rgba(15, 23, 36, 0.58);
+  backdrop-filter: blur(8px);
+  transform: translateX(-50%);
+}
+
+.hero-carousel-dots button {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.46);
+  cursor: pointer;
+  transition: background 140ms ease, transform 140ms ease, width 140ms ease;
+}
+
+.hero-carousel-dots button:hover,
+.hero-carousel-dots button:focus-visible {
+  background: rgba(255, 255, 255, 0.86);
+  outline: none;
+}
+
+.hero-carousel-dots button.active {
+  width: 18px;
+  background: #fff;
 }
 
 .section {

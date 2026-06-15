@@ -1,5 +1,5 @@
 {
-  "version": "0.3.3",
+  "version": "0.3.5",
   "pub_date": "2026-06-01T00:00:00+08:00",
   "notes": "当前已是最新版本。\n\n功能特性：\n- 支持 GenBank / FASTA / SnapGene DNA / AB1 格式\n- 环状/线性质粒图谱可视化\n- 限制酶位点检测\n- 序列编辑与注释管理\n- 浅色/夜间模式",
   "platforms": {

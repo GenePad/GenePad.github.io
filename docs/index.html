@@ -119,16 +119,18 @@
                 </div>
                 <div class="hero-shot" aria-label="基因工坊软件截图">
                     <button
-                        class="preview-trigger"
+                        class="preview-trigger hero-carousel-trigger"
                         type="button"
                         data-full="screenshot/整体图谱.png"
                         data-caption="整体图谱"
                     >
                         <img
+                            id="hero-carousel-image"
                             src="screenshot/整体图谱.png"
                             alt="基因工坊整体图谱界面，展示环状质粒图谱、注释标签和工具栏"
                         />
                     </button>
+                    <div class="hero-carousel-dots" id="hero-carousel-dots" aria-label="主页截图轮播"></div>
                 </div>
             </section>
 
@@ -503,6 +505,8 @@
                     "hero.stat1.desc": "常见序列与测序文件",
                     "hero.stat2.desc": "日常质粒工作流",
                     "hero.stat3.desc": "桌面与移动端可用",
+                    "hero.slide.light": "白天模式",
+                    "hero.slide.dark": "夜间模式",
                     "features.heading": "日常分子克隆工作所需的核心能力",
                     "features.f1.title": "立即查看质粒图谱",
                     "features.f1.desc": "导入序列文件后，快速查看环状或线性图谱，并在图谱、序列和注释之间联动定位。",
@@ -585,6 +589,8 @@
                     "hero.stat1.desc": "Common sequence and trace files",
                     "hero.stat2.desc": "Routine plasmid workflow",
                     "hero.stat3.desc": "Desktop and mobile ready",
+                    "hero.slide.light": "Light mode",
+                    "hero.slide.dark": "Dark mode",
                     "features.heading": "Everything you need for routine plasmid work",
                     "features.f1.title": "Visualize plasmids instantly",
                     "features.f1.desc": "Import sequence files, view circular or linear maps, and jump between map, sequence and annotation context.",
@@ -667,6 +673,8 @@
                     "hero.stat1.desc": "Gängige Sequenz- und Trace-Dateien",
                     "hero.stat2.desc": "Routine-Plasmid-Workflow",
                     "hero.stat3.desc": "Desktop und Mobilgeräte",
+                    "hero.slide.light": "Heller Modus",
+                    "hero.slide.dark": "Dunkler Modus",
                     "features.heading": "Alles für routinemäßige Plasmidarbeit",
                     "features.f1.title": "Plasmide sofort visualisieren",
                     "features.f1.desc": "Sequenzdateien importieren, zirkuläre oder lineare Karten anzeigen und zwischen Karte, Sequenz und Annotation springen.",
@@ -749,6 +757,8 @@
                     "hero.stat1.desc": "Fichiers de séquence et traces courants",
                     "hero.stat2.desc": "Flux de travail plasmidique",
                     "hero.stat3.desc": "Bureau et mobile",
+                    "hero.slide.light": "Mode clair",
+                    "hero.slide.dark": "Mode sombre",
                     "features.heading": "L'essentiel pour le travail quotidien sur les plasmides",
                     "features.f1.title": "Visualiser les plasmides instantanément",
                     "features.f1.desc": "Importez des fichiers de séquence, affichez des cartes circulaires ou linéaires et naviguez entre carte, séquence et annotations.",
@@ -830,6 +840,14 @@
                     btn.classList.toggle("active", btn.dataset.lang === lang);
                 });
                 localStorage.setItem("lang", lang);
+                if (typeof heroSlides !== "undefined" && typeof setHeroSlide === "function") {
+                    setHeroSlide(heroSlideIndex || 0);
+                    if (heroCarouselDots) {
+                        heroCarouselDots.querySelectorAll("button").forEach(function(dot, i) {
+                            dot.setAttribute("aria-label", getHeroSlideCaption(heroSlides[i]));
+                        });
+                    }
+                }
             }
 
             langDropdown.addEventListener("click", function(e) {
@@ -895,10 +913,92 @@
                 lightbox.setAttribute("aria-hidden", "true");
                 lightboxImage.removeAttribute("src");
                 document.body.classList.remove("preview-open");
+                if (typeof startHeroCarousel === "function") startHeroCarousel();
+            }
+
+            var heroCarousel = document.querySelector(".hero-carousel-trigger");
+            var heroCarouselImage = document.getElementById("hero-carousel-image");
+            var heroCarouselDots = document.getElementById("hero-carousel-dots");
+            var heroSlides = [
+                { src: "screenshot/整体图谱.png", captionKey: "gallery.cap1", caption: "整体图谱" },
+                { src: "screenshot/图谱一键直达序列.png", captionKey: "gallery.cap2", caption: "图谱一键直达序列" },
+                { src: "screenshot/酶切位点显示.png", captionKey: "gallery.cap3", caption: "酶切位点显示" },
+                { src: "screenshot/测序结果1.png", captionKey: "gallery.cap4", caption: "测序结果" },
+                { src: "screenshot/蛋白属性显示.png", captionKey: "gallery.cap5", caption: "蛋白属性显示" },
+                { src: "screenshot/多语言支持.png", captionKey: "gallery.cap6", caption: "多语言支持" },
+                { src: "screenshot/白天模式.png", captionKey: "hero.slide.light", caption: "白天模式" },
+                { src: "screenshot/夜间模式.png", captionKey: "hero.slide.dark", caption: "夜间模式" }
+            ];
+            var heroSlideIndex = 0;
+            var heroCarouselTimer = null;
+            var heroCarouselDelay = 2800;
+
+            function getHeroSlideCaption(slide) {
+                var activeLang = localStorage.getItem("lang") || lang || "zh";
+                var t = translations[activeLang] || translations.zh;
+                return t[slide.captionKey] || slide.caption;
+            }
+
+            function setHeroSlide(index) {
+                if (!heroCarousel || !heroCarouselImage || !heroSlides.length) return;
+                heroSlideIndex = (index + heroSlides.length) % heroSlides.length;
+                var slide = heroSlides[heroSlideIndex];
+                var caption = getHeroSlideCaption(slide);
+                heroCarousel.dataset.full = slide.src;
+                heroCarousel.dataset.caption = caption;
+                heroCarouselImage.classList.add("is-changing");
+                window.setTimeout(function() {
+                    heroCarouselImage.src = slide.src;
+                    heroCarouselImage.alt = caption;
+                    heroCarouselImage.classList.remove("is-changing");
+                }, 120);
+                if (heroCarouselDots) {
+                    heroCarouselDots.querySelectorAll("button").forEach(function(dot, i) {
+                        dot.classList.toggle("active", i === heroSlideIndex);
+                        dot.setAttribute("aria-current", i === heroSlideIndex ? "true" : "false");
+                    });
+                }
+            }
+
+            function startHeroCarousel() {
+                if (heroCarouselTimer || !heroCarousel || !heroSlides.length) return;
+                heroCarouselTimer = window.setTimeout(function() {
+                    heroCarouselTimer = null;
+                    setHeroSlide(heroSlideIndex + 1);
+                    startHeroCarousel();
+                }, heroCarouselDelay);
+            }
+
+            function stopHeroCarousel() {
+                if (!heroCarouselTimer) return;
+                window.clearTimeout(heroCarouselTimer);
+                heroCarouselTimer = null;
+            }
+
+            if (heroCarousel && heroCarouselImage && heroCarouselDots) {
+                heroSlides.forEach(function(slide, index) {
+                    var dot = document.createElement("button");
+                    dot.type = "button";
+                    dot.setAttribute("aria-label", getHeroSlideCaption(slide));
+                    dot.addEventListener("click", function(e) {
+                        e.stopPropagation();
+                        stopHeroCarousel();
+                        setHeroSlide(index);
+                        startHeroCarousel();
+                    });
+                    heroCarouselDots.appendChild(dot);
+                });
+                heroCarousel.addEventListener("mouseenter", stopHeroCarousel);
+                heroCarousel.addEventListener("mouseleave", startHeroCarousel);
+                heroCarousel.addEventListener("focusin", stopHeroCarousel);
+                heroCarousel.addEventListener("focusout", startHeroCarousel);
+                setHeroSlide(0);
+                startHeroCarousel();
             }
 
             document.querySelectorAll(".preview-trigger").forEach(function(button) {
                 button.addEventListener("click", function() {
+                    if (button === heroCarousel) stopHeroCarousel();
                     var image = button.querySelector("img");
                     lightboxImage.src = button.dataset.full;
                     lightboxImage.alt = image ? image.alt : button.dataset.caption;
