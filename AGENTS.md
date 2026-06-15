@@ -25,16 +25,25 @@ wrangler.jsonc               # Cloudflare Pages configuration
 
 When updating to a new version, all of the following files must be touched:
 
-### 1. Place new release files
+### 1. Copy new release files from build outputs
 
-Put new binaries under `docs/release/`:
+Copy the latest built binaries from the Gene Editor source project into `docs/release/`. Look for files in these locations:
 
+| Platform | Source build output directory |
+|---|---|
+| Windows | `C:\Users\moqiq\PycharmProjects\Gene_Editor-master\src-tauri\target\release\bundle\nsis` |
+| Linux | `\\wsl.localhost\Ubuntu-24.04\home\chief\Gene_Editor\src-tauri\target\release\bundle` |
+| Android | `C:\Users\moqiq\PycharmProjects\Gene_Editor-master\src-tauri\gen\android\app\build\outputs\apk\universal\release` |
+
+Copy the latest version files to `docs/release/`:
 ```
 docs/release/windows/Gene Editor_x.x.x_x64-setup.exe
 docs/release/linux/Gene Editor_x.x.x_amd64.deb
 docs/release/linux/Gene Editor-x.x.x-1.x86_64.rpm
 docs/release/android/app-universal-release.apk   (in-place update, no version in filename)
 ```
+
+**Important: Do NOT include AppImage files** — skip any `.AppImage` files found in the Linux bundle directory.
 
 ### 2. Delete old release files
 
