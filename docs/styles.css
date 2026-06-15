@@ -415,20 +415,6 @@ h3 {
   transform: translateY(-1px);
 }
 
-.local-dl-arrow {
-  margin-left: auto;
-  color: var(--green);
-  font-size: 11px;
-  opacity: 0.82;
-  transition: transform 160ms ease, opacity 160ms ease;
-}
-
-.local-dl-trigger:hover .local-dl-arrow,
-.local-dl-trigger:focus-visible .local-dl-arrow {
-  opacity: 1;
-  transform: translateX(2px);
-}
-
 body.local-dl-open .dropdown:hover .dropdown-menu,
 body.local-dl-open .nav-dropdown-wrapper:hover .nav-dropdown-menu,
 body.local-dl-open .dropdown.open .dropdown-menu {
@@ -480,6 +466,23 @@ body.local-dl-open .dropdown.open .dropdown-menu {
   margin: 0;
   color: var(--muted);
   font-size: 14px;
+}
+
+.local-dl-section-title {
+  margin: 18px 0 8px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.local-dl-section-title:first-of-type {
+  margin-top: 0;
+}
+
+.local-dl-section-title.external {
+  margin-top: 18px;
 }
 
 .local-dl-item {
@@ -553,6 +556,36 @@ body.local-dl-open .dropdown.open .dropdown-menu {
   font-size: 14px;
 }
 
+.local-dl-external {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.local-dl-external .local-dl-item {
+  margin-top: 0;
+}
+
+.local-dl-item.external-platform:hover,
+.local-dl-item.external-platform:focus-visible {
+  border-color: var(--blue);
+}
+
+.external-icon {
+  border-color: rgba(47, 111, 237, 0.24);
+  background: rgba(47, 111, 237, 0.08);
+  color: var(--blue);
+}
+
+.external-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.external-cta {
+  background: var(--blue);
+}
+
 .local-dl-close {
   position: fixed;
   top: 18px;
@@ -624,6 +657,21 @@ body.local-dl-open {
 .nav-download {
   color: var(--blue) !important;
   font-weight: 700;
+}
+
+.nav-download-trigger {
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.nav-download-trigger:hover,
+.nav-download-trigger:focus-visible {
+  background: var(--nav-hover);
+  outline: none;
 }
 
 .lang-switcher {
@@ -1972,6 +2020,18 @@ code {
   .workflow-step,
   .notice {
     padding: 20px;
+  }
+
+  .local-dl-modal {
+    padding: 16px;
+  }
+
+  .local-dl-panel {
+    padding: 22px 18px 18px;
+  }
+
+  .local-dl-external {
+    grid-template-columns: 1fr;
   }
 
   .site-footer {

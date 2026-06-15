@@ -68,24 +68,7 @@
                     <i class="fa-solid fa-heart"></i>
                     <span data-i18n="nav.sponsor">赞助作者</span>
                 </a>
-                <div class="nav-dropdown-wrapper">
-                    <a href="https://github.com/GenePad/GenePad.github.io/releases/latest" target="_blank" rel="noopener" class="nav-download" data-i18n="nav.download">下载</a>
-                    <div class="nav-dropdown-menu">
-                        <button type="button" class="local-dl-trigger">
-                            <i class="fa-solid fa-house dropdown-fa-icon" aria-hidden="true"></i>
-                            <span data-i18n="download.local">本站下载</span>
-                            <i class="fa-solid fa-chevron-right local-dl-arrow" aria-hidden="true"></i>
-                        </button>
-                        <a href="https://github.com/GenePad/GenePad.github.io/releases/latest" target="_blank" rel="noopener">
-                            <svg class="dropdown-item-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-                            <span data-i18n="download.github">GitHub（国际）</span>
-                        </a>
-                        <a href="https://gitee.com/GenePad/GenePad.github.io/releases/latest" target="_blank" rel="noopener">
-                            <svg class="gitee-icon-inline" viewBox="0 0 24 24" fill="currentColor"><path d="M11.984 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.016 0zm6.09 5.333c.328 0 .593.266.592.593v1.482a.594.594 0 0 1-.593.592H9.777c-.982 0-1.778.796-1.778 1.778v5.926c0 .327.266.592.593.592h5.926c.982 0 1.778-.796 1.778-1.778v-.296a.593.593 0 0 0-.592-.593h-3.408a.592.592 0 0 1-.592-.592v-1.482a.592.592 0 0 1 .593-.592h5.778c.327 0 .593.265.593.592v3.555a4 4 0 0 1-4 4H8.37a.593.593 0 0 1-.593-.592V8.592a4 4 0 0 1 4-4h6.298z"/></svg>
-                            <span data-i18n="download.gitee">Gitee（大陆）</span>
-                        </a>
-                    </div>
-                </div>
+                <button type="button" class="nav-download nav-download-trigger local-dl-trigger" data-i18n="nav.download">下载</button>
                 <div class="lang-switcher" id="lang-switcher">
                     <button type="button" class="lang-switcher-btn" aria-label="Switch language">
                         <i class="fa-solid fa-language lang-switcher-icon" aria-hidden="true"></i>
@@ -113,28 +96,10 @@
                         打开质粒图谱、编辑序列、管理注释、查看酶切位点和 Sanger 测序结果。一个软件完成日常分子克隆设计与检查。
                     </p>
                     <div class="hero-actions">
-                        <div class="dropdown">
-                            <button class="button primary" type="button">
-                                <i class="fa-solid fa-download button-icon"></i>
-                                <span data-i18n="hero.download">免费下载</span>
-                                <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
-                            </button>
-                            <div class="dropdown-menu">
-                        <button type="button" class="local-dl-trigger">
-                            <i class="fa-solid fa-house dropdown-fa-icon" aria-hidden="true"></i>
-                            <span data-i18n="download.local">本站下载</span>
-                            <i class="fa-solid fa-chevron-right local-dl-arrow" aria-hidden="true"></i>
+                        <button class="button primary local-dl-trigger" type="button">
+                            <i class="fa-solid fa-download button-icon"></i>
+                            <span data-i18n="hero.download">免费下载</span>
                         </button>
-                        <a href="https://github.com/GenePad/GenePad.github.io/releases/latest" target="_blank" rel="noopener">
-                                    <svg class="dropdown-item-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-                                    <span data-i18n="download.github">GitHub（国际）</span>
-                                </a>
-                                <a href="https://gitee.com/GenePad/GenePad.github.io/releases/latest" target="_blank" rel="noopener">
-                                    <svg class="gitee-icon-inline" viewBox="0 0 24 24" fill="currentColor"><path d="M11.984 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.016 0zm6.09 5.333c.328 0 .593.266.592.593v1.482a.594.594 0 0 1-.593.592H9.777c-.982 0-1.778.796-1.778 1.778v5.926c0 .327.266.592.593.592h5.926c.982 0 1.778-.796 1.778-1.778v-.296a.593.593 0 0 0-.592-.593h-3.408a.592.592 0 0 1-.592-.592v-1.482a.592.592 0 0 1 .593-.592h5.778c.327 0 .593.265.593.592v3.555a4 4 0 0 1-4 4H8.37a.593.593 0 0 1-.593-.592V8.592a4 4 0 0 1 4-4h6.298z"/></svg>
-                                    <span data-i18n="download.gitee">Gitee（大陆）</span>
-                                </a>
-                            </div>
-                        </div>
                         <a class="button secondary" href="#screenshots" data-i18n="hero.viewScreenshots">查看界面</a>
                     </div>
                     <dl class="hero-stats" aria-label="产品能力">
@@ -460,10 +425,34 @@
             <button class="local-dl-close" type="button" aria-label="关闭" data-i18n-aria="localDl.close">×</button>
             <div class="local-dl-panel">
                 <div class="local-dl-header">
-                    <h2 id="local-dl-title" data-i18n="localDl.title">本站直接下载</h2>
-                    <p data-i18n="localDl.desc">从本站服务器直接下载安装包，无需访问第三方平台。</p>
+                    <h2 id="local-dl-title" data-i18n="localDl.title">选择下载方式</h2>
+                    <p data-i18n="localDl.desc">优先使用本站直链；也可以前往 GitHub 或 Gitee 查看发布版本。</p>
                 </div>
+                <h3 class="local-dl-section-title" data-i18n="localDl.localTitle">本站直链</h3>
                 <div class="local-dl-list" id="local-dl-list"></div>
+                <h3 class="local-dl-section-title external" data-i18n="localDl.externalTitle">外部平台</h3>
+                <div class="local-dl-external">
+                    <a class="local-dl-item external-platform" href="https://github.com/GenePad/GenePad.github.io/releases/latest" target="_blank" rel="noopener">
+                        <span class="local-dl-icon external-icon">
+                            <svg class="dropdown-item-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                        </span>
+                        <span class="local-dl-meta">
+                            <strong>GitHub</strong>
+                            <span class="local-dl-file" data-i18n="localDl.githubDesc">国际线路，查看最新发布页</span>
+                        </span>
+                        <span class="local-dl-cta external-cta"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+                    </a>
+                    <a class="local-dl-item external-platform" href="https://gitee.com/GenePad/GenePad.github.io/releases/latest" target="_blank" rel="noopener">
+                        <span class="local-dl-icon external-icon">
+                            <svg class="gitee-icon-inline" viewBox="0 0 24 24" fill="currentColor"><path d="M11.984 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.016 0zm6.09 5.333c.328 0 .593.266.592.593v1.482a.594.594 0 0 1-.593.592H9.777c-.982 0-1.778.796-1.778 1.778v5.926c0 .327.266.592.593.592h5.926c.982 0 1.778-.796 1.778-1.778v-.296a.593.593 0 0 0-.592-.593h-3.408a.592.592 0 0 1-.592-.592v-1.482a.592.592 0 0 1 .593-.592h5.778c.327 0 .593.265.593.592v3.555a4 4 0 0 1-4 4H8.37a.593.593 0 0 1-.593-.592V8.592a4 4 0 0 1 4-4h6.298z"/></svg>
+                        </span>
+                        <span class="local-dl-meta">
+                            <strong>Gitee</strong>
+                            <span class="local-dl-file" data-i18n="localDl.giteeDesc">大陆线路，查看最新发布页</span>
+                        </span>
+                        <span class="local-dl-cta external-cta"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+                    </a>
+                </div>
             </div>
         </div>
 
@@ -497,8 +486,13 @@
                     "download.github": "GitHub（国际）",
                     "download.gitee": "Gitee（大陆）",
                     "download.local": "本站下载",
-                    "localDl.title": "本站直接下载",
-                    "localDl.desc": "从本站服务器直接下载安装包，无需访问第三方平台。",
+                    "download.external": "外部平台",
+                    "localDl.title": "选择下载方式",
+                    "localDl.desc": "优先使用本站直链；也可以前往 GitHub 或 Gitee 查看发布版本。",
+                    "localDl.localTitle": "本站直链",
+                    "localDl.externalTitle": "外部平台",
+                    "localDl.githubDesc": "国际线路，查看最新发布页",
+                    "localDl.giteeDesc": "大陆线路，查看最新发布页",
                     "localDl.close": "关闭",
                     "hero.eyebrow": "Free beta · Cross-platform · Gene map editor",
                     "hero.title": "基因工坊 GenePad",
@@ -574,8 +568,13 @@
                     "download.github": "GitHub (Global)",
                     "download.gitee": "Gitee (China)",
                     "download.local": "Local (This site)",
-                    "localDl.title": "Direct Download from This Site",
-                    "localDl.desc": "Download installers straight from this site — no third-party platform needed.",
+                    "download.external": "External platforms",
+                    "localDl.title": "Choose Download Option",
+                    "localDl.desc": "Use the direct links from this site first, or open the GitHub/Gitee release pages.",
+                    "localDl.localTitle": "Direct links",
+                    "localDl.externalTitle": "External platforms",
+                    "localDl.githubDesc": "Global route, latest release page",
+                    "localDl.giteeDesc": "China route, latest release page",
                     "localDl.close": "Close",
                     "hero.eyebrow": "Free beta · Cross-platform · Gene map editor",
                     "hero.title": "GenePad",
@@ -651,8 +650,13 @@
                     "download.github": "GitHub (International)",
                     "download.gitee": "Gitee (China)",
                     "download.local": "Lokal (Diese Website)",
-                    "localDl.title": "Direkter Download von dieser Website",
-                    "localDl.desc": "Installationsdateien direkt von dieser Website herunterladen – ohne Drittplattform.",
+                    "download.external": "Externe Plattformen",
+                    "localDl.title": "Download-Option wählen",
+                    "localDl.desc": "Nutzen Sie bevorzugt die direkten Links dieser Website oder öffnen Sie die GitHub/Gitee-Release-Seiten.",
+                    "localDl.localTitle": "Direktlinks",
+                    "localDl.externalTitle": "Externe Plattformen",
+                    "localDl.githubDesc": "Internationale Route, neueste Release-Seite",
+                    "localDl.giteeDesc": "China-Route, neueste Release-Seite",
                     "localDl.close": "Schließen",
                     "hero.eyebrow": "Free beta · Cross-platform · Gene map editor",
                     "hero.title": "GenePad",
@@ -728,8 +732,13 @@
                     "download.github": "GitHub (International)",
                     "download.gitee": "Gitee (Chine)",
                     "download.local": "Local (Ce site)",
-                    "localDl.title": "Téléchargement direct depuis ce site",
-                    "localDl.desc": "Téléchargez les installateurs directement depuis ce site, sans plateforme tierce.",
+                    "download.external": "Plateformes externes",
+                    "localDl.title": "Choisir une option de téléchargement",
+                    "localDl.desc": "Utilisez d'abord les liens directs de ce site, ou ouvrez les pages de publication GitHub/Gitee.",
+                    "localDl.localTitle": "Liens directs",
+                    "localDl.externalTitle": "Plateformes externes",
+                    "localDl.githubDesc": "Route internationale, page de publication la plus récente",
+                    "localDl.giteeDesc": "Route Chine, page de publication la plus récente",
                     "localDl.close": "Fermer",
                     "hero.eyebrow": "Free beta · Cross-platform · Gene map editor",
                     "hero.title": "GenePad",
