@@ -21,6 +21,43 @@ docs/
 wrangler.jsonc               # Cloudflare Pages configuration
 ```
 
+## Release Checklist
+
+When updating to a new version, all of the following files must be touched:
+
+### 1. Place new release files
+
+Put new binaries under `docs/release/`:
+
+```
+docs/release/windows/Gene Editor_x.x.x_x64-setup.exe
+docs/release/linux/Gene Editor_x.x.x_amd64.deb
+docs/release/linux/Gene Editor-x.x.x-1.x86_64.rpm
+docs/release/android/app-universal-release.apk   (in-place update, no version in filename)
+```
+
+### 2. Delete old release files
+
+Remove the previous version's binaries from `docs/release/`.
+
+### 3. Update `docs/update.json`
+
+- `version` — match the new app package version.
+- `pub_date` — today's date in ISO 8601 with timezone (e.g. `2026-06-15T00:00:00+08:00`).
+- `notes` — read commit history from `C:\Users\moqiq\PycharmProjects\Gene_Editor-master` since the last release, summarize new features in Chinese.
+- `platforms.*.url` — point to the new version filenames under `https://genepad.pages.dev/release/...`.
+- Preserve platform keys: `windows-x86_64`, `linux-x86_64-deb`, `linux-x86_64-rpm`, `android`.
+
+### 4. Update `docs/index.html`
+
+Edit the `localFiles` array (around line 1022) — update version numbers in `name` and `path` for Windows/Linux entries, and update `size` fields to match actual file sizes (check with `dir`).
+
+### 5. Validate
+
+```powershell
+Get-Content -Raw docs/update.json | ConvertFrom-Json | Out-Null
+```
+
 ## Update Metadata
 
 `docs/update.json` is the stable update manifest fetched by the Gene Editor app from:
@@ -46,14 +83,6 @@ Required shape:
   }
 }
 ```
-
-When updating releases:
-
-- Update `version` to match the app package version.
-- Update `pub_date` using an ISO 8601 timestamp with timezone.
-- Keep `notes` user-facing and concise; it may contain `\n` line breaks.
-- Ensure every platform URL points to an existing file under `docs/release/` or another stable public URL.
-- Preserve platform keys used by the app: `windows-x86_64`, `linux-x86_64-deb`, `linux-x86_64-rpm`, and `android`.
 
 ## Validation
 
