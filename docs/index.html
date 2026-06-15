@@ -71,6 +71,11 @@
                 <div class="nav-dropdown-wrapper">
                     <a href="https://github.com/GenePad/GenePad.github.io/releases/latest" target="_blank" rel="noopener" class="nav-download" data-i18n="nav.download">下载</a>
                     <div class="nav-dropdown-menu">
+                        <button type="button" class="local-dl-trigger">
+                            <i class="fa-solid fa-house dropdown-fa-icon" aria-hidden="true"></i>
+                            <span data-i18n="download.local">本站下载</span>
+                            <i class="fa-solid fa-chevron-right local-dl-arrow" aria-hidden="true"></i>
+                        </button>
                         <a href="https://github.com/GenePad/GenePad.github.io/releases/latest" target="_blank" rel="noopener">
                             <svg class="dropdown-item-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
                             <span data-i18n="download.github">GitHub（国际）</span>
@@ -115,7 +120,12 @@
                                 <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
                             </button>
                             <div class="dropdown-menu">
-                                <a href="https://github.com/GenePad/GenePad.github.io/releases/latest" target="_blank" rel="noopener">
+                        <button type="button" class="local-dl-trigger">
+                            <i class="fa-solid fa-house dropdown-fa-icon" aria-hidden="true"></i>
+                            <span data-i18n="download.local">本站下载</span>
+                            <i class="fa-solid fa-chevron-right local-dl-arrow" aria-hidden="true"></i>
+                        </button>
+                        <a href="https://github.com/GenePad/GenePad.github.io/releases/latest" target="_blank" rel="noopener">
                                     <svg class="dropdown-item-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
                                     <span data-i18n="download.github">GitHub（国际）</span>
                                 </a>
@@ -446,6 +456,17 @@
             <span data-i18n="footer.note">GenePad 免费版可用于个人评估与学习，可满足日常基因图谱查看、编辑、保存。</span>
         </footer>
 
+        <div class="local-dl-modal" id="local-download-modal" role="dialog" aria-modal="true" aria-labelledby="local-dl-title" aria-hidden="true">
+            <button class="local-dl-close" type="button" aria-label="关闭" data-i18n-aria="localDl.close">×</button>
+            <div class="local-dl-panel">
+                <div class="local-dl-header">
+                    <h2 id="local-dl-title" data-i18n="localDl.title">本站直接下载</h2>
+                    <p data-i18n="localDl.desc">从本站服务器直接下载安装包，无需访问第三方平台。</p>
+                </div>
+                <div class="local-dl-list" id="local-dl-list"></div>
+            </div>
+        </div>
+
         <div class="lightbox" id="lightbox" aria-hidden="true">
             <button class="lightbox-close" type="button" aria-label="关闭预览" data-i18n-aria="lightbox.close">
                 ×
@@ -475,6 +496,10 @@
                     "nav.sponsor": "赞助作者",
                     "download.github": "GitHub（国际）",
                     "download.gitee": "Gitee（大陆）",
+                    "download.local": "本站下载",
+                    "localDl.title": "本站直接下载",
+                    "localDl.desc": "从本站服务器直接下载安装包，无需访问第三方平台。",
+                    "localDl.close": "关闭",
                     "hero.eyebrow": "Free beta · Cross-platform · Gene map editor",
                     "hero.title": "基因工坊 GenePad",
                     "hero.slogan": "轻量、跨平台的基因图谱编辑器",
@@ -548,6 +573,10 @@
                     "nav.sponsor": "Sponsor",
                     "download.github": "GitHub (Global)",
                     "download.gitee": "Gitee (China)",
+                    "download.local": "Local (This site)",
+                    "localDl.title": "Direct Download from This Site",
+                    "localDl.desc": "Download installers straight from this site — no third-party platform needed.",
+                    "localDl.close": "Close",
                     "hero.eyebrow": "Free beta · Cross-platform · Gene map editor",
                     "hero.title": "GenePad",
                     "hero.slogan": "A lightweight gene map editor for everyday molecular biology",
@@ -621,6 +650,10 @@
                     "nav.sponsor": "Sponsern",
                     "download.github": "GitHub (International)",
                     "download.gitee": "Gitee (China)",
+                    "download.local": "Lokal (Diese Website)",
+                    "localDl.title": "Direkter Download von dieser Website",
+                    "localDl.desc": "Installationsdateien direkt von dieser Website herunterladen – ohne Drittplattform.",
+                    "localDl.close": "Schließen",
                     "hero.eyebrow": "Free beta · Cross-platform · Gene map editor",
                     "hero.title": "GenePad",
                     "hero.slogan": "Ein leichter Genkarten-Editor für alltägliche molekularbiologische Arbeit",
@@ -694,6 +727,10 @@
                     "nav.sponsor": "Soutenir",
                     "download.github": "GitHub (International)",
                     "download.gitee": "Gitee (Chine)",
+                    "download.local": "Local (Ce site)",
+                    "localDl.title": "Téléchargement direct depuis ce site",
+                    "localDl.desc": "Téléchargez les installateurs directement depuis ce site, sans plateforme tierce.",
+                    "localDl.close": "Fermer",
                     "hero.eyebrow": "Free beta · Cross-platform · Gene map editor",
                     "hero.title": "GenePad",
                     "hero.slogan": "Un éditeur léger de cartes génétiques pour la biologie moléculaire quotidienne",
@@ -872,6 +909,75 @@
                     closePreview();
                 }
             });
+
+            var localFiles = [
+                { platform: "Windows", icon: "fa-brands fa-windows", files: [
+                    { name: "Gene Editor_0.3.3_x64-setup.exe", path: "release/windows/Gene Editor_0.3.3_x64-setup.exe", size: "5.6 MB" }
+                ]},
+                { platform: "Linux", icon: "fa-brands fa-linux", files: [
+                    { name: "Gene Editor_0.3.3_amd64.deb", path: "release/linux/Gene Editor_0.3.3_amd64.deb", size: "7.2 MB" },
+                    { name: "Gene Editor-0.3.3-1.x86_64.rpm", path: "release/linux/Gene Editor-0.3.3-1.x86_64.rpm", size: "7.2 MB" }
+                ]},
+                { platform: "Android", icon: "fa-brands fa-android", files: [
+                    { name: "app-universal-release.apk", path: "release/android/app-universal-release.apk", size: "15 MB" }
+                ]}
+            ];
+
+            var localDlModal = document.getElementById("local-download-modal");
+            var localDlList = document.getElementById("local-dl-list");
+
+            function renderLocalDownloads() {
+                if (!localDlList) return;
+                var html = "";
+                localFiles.forEach(function(group) {
+                    group.files.forEach(function(f) {
+                        html += '<a class="local-dl-item" href="' + f.path + '" download>' +
+                            '<span class="local-dl-icon"><i class="' + group.icon + '"></i></span>' +
+                            '<span class="local-dl-meta"><strong>' + group.platform + '</strong>' +
+                            '<span class="local-dl-file">' + f.name + ' · ' + f.size + '</span></span>' +
+                            '<span class="local-dl-cta"><i class="fa-solid fa-arrow-down"></i></span>' +
+                            '</a>';
+                    });
+                });
+                localDlList.innerHTML = html;
+            }
+
+            function openLocalDl() {
+                if (!localDlModal) return;
+                localDlModal.setAttribute("aria-hidden", "false");
+                document.body.classList.add("local-dl-open");
+                if (siteHeader) siteHeader.classList.remove("nav-open");
+                if (navToggle) navToggle.setAttribute("aria-expanded", "false");
+                document.querySelectorAll(".dropdown.open").forEach(function(dd) { dd.classList.remove("open"); });
+            }
+            function closeLocalDl() {
+                if (!localDlModal) return;
+                localDlModal.setAttribute("aria-hidden", "true");
+                document.body.classList.remove("local-dl-open");
+            }
+
+            document.querySelectorAll(".local-dl-trigger").forEach(function(btn) {
+                btn.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    openLocalDl();
+                });
+            });
+
+            if (localDlModal) {
+                var localDlCloseBtn = localDlModal.querySelector(".local-dl-close");
+                if (localDlCloseBtn) localDlCloseBtn.addEventListener("click", closeLocalDl);
+                localDlModal.addEventListener("click", function(e) {
+                    if (e.target === localDlModal) closeLocalDl();
+                });
+            }
+            document.addEventListener("keydown", function(e) {
+                if (e.key === "Escape" && localDlModal && localDlModal.getAttribute("aria-hidden") === "false") {
+                    closeLocalDl();
+                }
+            });
+
+            renderLocalDownloads();
         </script>
     </body>
 </html>
