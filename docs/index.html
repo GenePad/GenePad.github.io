@@ -426,34 +426,21 @@
         <div class="local-dl-modal" id="local-download-modal" role="dialog" aria-modal="true" aria-labelledby="local-dl-title" aria-hidden="true">
             <button class="local-dl-close" type="button" aria-label="关闭" data-i18n-aria="localDl.close">×</button>
             <div class="local-dl-panel">
-                <div class="local-dl-header">
-                    <h2 id="local-dl-title" data-i18n="localDl.title">选择下载方式</h2>
-                    <p data-i18n="localDl.desc">优先使用本站直链；也可以前往 GitHub 或 Gitee 查看发布版本。</p>
+                <div class="dl-step" id="dl-step-platform">
+                    <div class="local-dl-header">
+                        <h2 id="local-dl-title" data-i18n="localDl.title">选择平台</h2>
+                        <p data-i18n="localDl.desc">请选择您的操作系统平台</p>
+                    </div>
+                    <div class="dl-platform-list" id="dl-platform-list"></div>
                 </div>
-                <h3 class="local-dl-section-title" data-i18n="localDl.localTitle">本站直链</h3>
-                <div class="local-dl-list" id="local-dl-list"></div>
-                <h3 class="local-dl-section-title external" data-i18n="localDl.externalTitle">外部平台</h3>
-                <div class="local-dl-external">
-                    <a class="local-dl-item external-platform" href="https://github.com/GenePad/GenePad.github.io/releases/latest" target="_blank" rel="noopener">
-                        <span class="local-dl-icon external-icon">
-                            <svg class="dropdown-item-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-                        </span>
-                        <span class="local-dl-meta">
-                            <strong>GitHub</strong>
-                            <span class="local-dl-file" data-i18n="localDl.githubDesc">国际线路，查看最新发布页</span>
-                        </span>
-                        <span class="local-dl-cta external-cta"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
-                    </a>
-                    <a class="local-dl-item external-platform" href="https://gitee.com/GenePad/GenePad.github.io/releases/latest" target="_blank" rel="noopener">
-                        <span class="local-dl-icon external-icon">
-                            <svg class="gitee-icon-inline" viewBox="0 0 24 24" fill="currentColor"><path d="M11.984 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.016 0zm6.09 5.333c.328 0 .593.266.592.593v1.482a.594.594 0 0 1-.593.592H9.777c-.982 0-1.778.796-1.778 1.778v5.926c0 .327.266.592.593.592h5.926c.982 0 1.778-.796 1.778-1.778v-.296a.593.593 0 0 0-.592-.593h-3.408a.592.592 0 0 1-.592-.592v-1.482a.592.592 0 0 1 .593-.592h5.778c.327 0 .593.265.593.592v3.555a4 4 0 0 1-4 4H8.37a.593.593 0 0 1-.593-.592V8.592a4 4 0 0 1 4-4h6.298z"/></svg>
-                        </span>
-                        <span class="local-dl-meta">
-                            <strong>Gitee</strong>
-                            <span class="local-dl-file" data-i18n="localDl.giteeDesc">大陆线路，查看最新发布页</span>
-                        </span>
-                        <span class="local-dl-cta external-cta"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
-                    </a>
+                <div class="dl-step" id="dl-step-sources" style="display:none">
+                    <div class="dl-back-header">
+                        <button class="dl-back-btn" id="dl-back-btn" type="button" aria-label="返回" data-i18n-aria="localDl.back">
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                        <div class="dl-platform-info" id="dl-platform-info"></div>
+                    </div>
+                    <div class="dl-sources-list" id="dl-sources-list"></div>
                 </div>
             </div>
         </div>
@@ -489,13 +476,14 @@
                     "download.gitee": "Gitee（大陆）",
                     "download.local": "本站下载",
                     "download.external": "外部平台",
-                    "localDl.title": "选择下载方式",
-                    "localDl.desc": "优先使用本站直链；也可以前往 GitHub 或 Gitee 查看发布版本。",
-                    "localDl.localTitle": "本站直链",
-                    "localDl.externalTitle": "外部平台",
-                    "localDl.githubDesc": "国际线路，查看最新发布页",
-                    "localDl.giteeDesc": "大陆线路，查看最新发布页",
+                    "localDl.title": "选择平台",
+                    "localDl.desc": "请选择您的操作系统平台",
+                    "localDl.back": "返回",
                     "localDl.close": "关闭",
+                    "localDl.sourceDirect": "本站直链",
+                    "localDl.sourceGithub": "GitHub",
+                    "localDl.sourceGitee": "Gitee",
+                    "localDl.giteeBadge": "国内加速",
                     "hero.eyebrow": "Free beta · Cross-platform · Gene map editor",
                     "hero.title": "基因工坊 GenePad",
                     "hero.slogan": "轻量、跨平台的基因图谱编辑器",
@@ -573,13 +561,14 @@
                     "download.gitee": "Gitee (China)",
                     "download.local": "Local (This site)",
                     "download.external": "External platforms",
-                    "localDl.title": "Choose Download Option",
-                    "localDl.desc": "Use the direct links from this site first, or open the GitHub/Gitee release pages.",
-                    "localDl.localTitle": "Direct links",
-                    "localDl.externalTitle": "External platforms",
-                    "localDl.githubDesc": "Global route, latest release page",
-                    "localDl.giteeDesc": "China route, latest release page",
+                    "localDl.title": "Select Platform",
+                    "localDl.desc": "Choose your operating system",
+                    "localDl.back": "Back",
                     "localDl.close": "Close",
+                    "localDl.sourceDirect": "Direct",
+                    "localDl.sourceGithub": "GitHub",
+                    "localDl.sourceGitee": "Gitee",
+                    "localDl.giteeBadge": "CN CDN",
                     "hero.eyebrow": "Free beta · Cross-platform · Gene map editor",
                     "hero.title": "GenePad",
                     "hero.slogan": "A lightweight gene map editor for everyday molecular biology",
@@ -657,13 +646,14 @@
                     "download.gitee": "Gitee (China)",
                     "download.local": "Lokal (Diese Website)",
                     "download.external": "Externe Plattformen",
-                    "localDl.title": "Download-Option wählen",
-                    "localDl.desc": "Nutzen Sie bevorzugt die direkten Links dieser Website oder öffnen Sie die GitHub/Gitee-Release-Seiten.",
-                    "localDl.localTitle": "Direktlinks",
-                    "localDl.externalTitle": "Externe Plattformen",
-                    "localDl.githubDesc": "Internationale Route, neueste Release-Seite",
-                    "localDl.giteeDesc": "China-Route, neueste Release-Seite",
+                    "localDl.title": "Plattform wählen",
+                    "localDl.desc": "Wählen Sie Ihr Betriebssystem",
+                    "localDl.back": "Zurück",
                     "localDl.close": "Schließen",
+                    "localDl.sourceDirect": "Direkt",
+                    "localDl.sourceGithub": "GitHub",
+                    "localDl.sourceGitee": "Gitee",
+                    "localDl.giteeBadge": "CN CDN",
                     "hero.eyebrow": "Free beta · Cross-platform · Gene map editor",
                     "hero.title": "GenePad",
                     "hero.slogan": "Ein leichter Genkarten-Editor für alltägliche molekularbiologische Arbeit",
@@ -741,13 +731,14 @@
                     "download.gitee": "Gitee (Chine)",
                     "download.local": "Local (Ce site)",
                     "download.external": "Plateformes externes",
-                    "localDl.title": "Choisir une option de téléchargement",
-                    "localDl.desc": "Utilisez d'abord les liens directs de ce site, ou ouvrez les pages de publication GitHub/Gitee.",
-                    "localDl.localTitle": "Liens directs",
-                    "localDl.externalTitle": "Plateformes externes",
-                    "localDl.githubDesc": "Route internationale, page de publication la plus récente",
-                    "localDl.giteeDesc": "Route Chine, page de publication la plus récente",
+                    "localDl.title": "Choisir la plateforme",
+                    "localDl.desc": "Sélectionnez votre système d'exploitation",
+                    "localDl.back": "Retour",
                     "localDl.close": "Fermer",
+                    "localDl.sourceDirect": "Direct",
+                    "localDl.sourceGithub": "GitHub",
+                    "localDl.sourceGitee": "Gitee",
+                    "localDl.giteeBadge": "CN CDN",
                     "hero.eyebrow": "Free beta · Cross-platform · Gene map editor",
                     "hero.title": "GenePad",
                     "hero.slogan": "Un éditeur léger de cartes génétiques pour la biologie moléculaire quotidienne",
@@ -1019,40 +1010,150 @@
                 }
             });
 
-            var localFiles = [
-                { platform: "Windows", icon: "fa-brands fa-windows", files: [
-                    { name: "Gene Editor_0.3.4_x64-setup.exe", path: "release/windows/Gene Editor_0.3.4_x64-setup.exe", size: "5.6 MB" }
-                ]},
-                { platform: "Linux", icon: "fa-brands fa-linux", files: [
-                    { name: "Gene Editor_0.3.4_amd64.deb", path: "release/linux/Gene Editor_0.3.4_amd64.deb", size: "7.2 MB" },
-                    { name: "Gene Editor-0.3.4-1.x86_64.rpm", path: "release/linux/Gene Editor-0.3.4-1.x86_64.rpm", size: "7.2 MB" }
-                ]},
-                { platform: "Android", icon: "fa-brands fa-android", files: [
-                    { name: "app-universal-release.apk", path: "release/android/app-universal-release.apk", size: "15.0 MB" }
-                ]}
+            var downloadData = [
+                {
+                    id: "windows",
+                    name: "Windows",
+                    icon: "fa-brands fa-windows",
+                    files: [
+                        {
+                            name: "Gene Editor_0.3.4_x64-setup.exe",
+                            size: "5.6 MB",
+                            sources: {
+                                direct: "release/windows/Gene Editor_0.3.4_x64-setup.exe",
+                                github: "https://github.com/GenePad/GenePad.github.io/releases/latest/download/Gene.Editor_0.3.4_x64-setup.exe",
+                                gitee: "https://gitee.com/GenePad/GenePad.github.io/releases/download/v0.3.4/Gene Editor_0.3.4_x64-setup.exe"
+                            }
+                        }
+                    ]
+                },
+                {
+                    id: "linux",
+                    name: "Linux",
+                    icon: "fa-brands fa-linux",
+                    files: [
+                        {
+                            name: "Gene Editor_0.3.4_amd64.deb",
+                            size: "7.2 MB",
+                            sources: {
+                                direct: "release/linux/Gene Editor_0.3.4_amd64.deb",
+                                github: "https://github.com/GenePad/GenePad.github.io/releases/latest/download/Gene.Editor_0.3.4_amd64.deb",
+                                gitee: "https://gitee.com/GenePad/GenePad.github.io/releases/download/v0.3.4/Gene Editor_0.3.4_amd64.deb"
+                            }
+                        },
+                        {
+                            name: "Gene Editor-0.3.4-1.x86_64.rpm",
+                            size: "7.2 MB",
+                            sources: {
+                                direct: "release/linux/Gene Editor-0.3.4-1.x86_64.rpm",
+                                github: "https://github.com/GenePad/GenePad.github.io/releases/latest/download/Gene.Editor-0.3.4-1.x86_64.rpm",
+                                gitee: "https://gitee.com/GenePad/GenePad.github.io/releases/download/v0.3.4/Gene Editor-0.3.4-1.x86_64.rpm"
+                            }
+                        }
+                    ]
+                },
+                {
+                    id: "android",
+                    name: "Android",
+                    icon: "fa-brands fa-android",
+                    files: [
+                        {
+                            name: "app-universal-release.apk",
+                            size: "15.0 MB",
+                            sources: {
+                                direct: "release/android/app-universal-release.apk",
+                                github: "https://github.com/GenePad/GenePad.github.io/releases/latest/download/app-universal-release.apk",
+                                gitee: "https://gitee.com/GenePad/GenePad.github.io/releases/download/v0.3.4/app-universal-release.apk"
+                            }
+                        }
+                    ]
+                }
             ];
 
             var localDlModal = document.getElementById("local-download-modal");
-            var localDlList = document.getElementById("local-dl-list");
+            var dlStepPlatform = document.getElementById("dl-step-platform");
+            var dlStepSources = document.getElementById("dl-step-sources");
+            var dlPlatformList = document.getElementById("dl-platform-list");
+            var dlSourcesList = document.getElementById("dl-sources-list");
+            var dlPlatformInfo = document.getElementById("dl-platform-info");
+            var dlBackBtn = document.getElementById("dl-back-btn");
 
-            function renderLocalDownloads() {
-                if (!localDlList) return;
+            function t(key) {
+                var lang = localStorage.getItem("lang") || "zh";
+                if (translations[lang] && translations[lang][key]) return translations[lang][key];
+                if (translations["zh"] && translations["zh"][key]) return translations["zh"][key];
+                return key;
+            }
+
+            function renderPlatformCards() {
+                if (!dlPlatformList) return;
                 var html = "";
-                localFiles.forEach(function(group) {
-                    group.files.forEach(function(f) {
-                        html += '<a class="local-dl-item" href="' + f.path + '" download>' +
-                            '<span class="local-dl-icon"><i class="' + group.icon + '"></i></span>' +
-                            '<span class="local-dl-meta"><strong>' + group.platform + '</strong>' +
-                            '<span class="local-dl-file">' + f.name + ' · ' + f.size + '</span></span>' +
-                            '<span class="local-dl-cta"><i class="fa-solid fa-arrow-down"></i></span>' +
-                            '</a>';
+                downloadData.forEach(function(platform) {
+                    html += '<button class="dl-platform-card" data-platform="' + platform.id + '" type="button">' +
+                        '<span class="dl-platform-icon"><i class="' + platform.icon + '"></i></span>' +
+                        '<span class="dl-platform-name">' + platform.name + '</span>' +
+                        '<span class="dl-platform-arrow"><i class="fa-solid fa-chevron-right"></i></span>' +
+                        '</button>';
+                });
+                dlPlatformList.innerHTML = html;
+
+                dlPlatformList.querySelectorAll(".dl-platform-card").forEach(function(card) {
+                    card.addEventListener("click", function() {
+                        showSources(card.dataset.platform);
                     });
                 });
-                localDlList.innerHTML = html;
             }
+
+            function showSources(platformId) {
+                var platform = downloadData.find(function(p) { return p.id === platformId; });
+                if (!platform) return;
+
+                dlPlatformInfo.innerHTML = '<i class="' + platform.icon + '"></i><span>' + platform.name + '</span>';
+
+                var html = "";
+                platform.files.forEach(function(file) {
+                    html += '<div class="dl-file-section">' +
+                        '<div class="dl-file-header">' +
+                        '<span class="dl-file-name">' + file.name + '</span>' +
+                        '<span class="dl-file-size">' + file.size + '</span>' +
+                        '</div>' +
+                        '<div class="dl-source-buttons">' +
+                        '<a class="dl-source-btn direct" href="' + file.sources.direct + '" download>' +
+                        '<i class="fa-solid fa-download"></i>' +
+                        '<span>' + t("localDl.sourceDirect") + '</span>' +
+                        '</a>' +
+                        '<a class="dl-source-btn gitee" href="' + file.sources.gitee + '" download>' +
+                        '<i class="fa-solid fa-download"></i>' +
+                        '<span>' + t("localDl.sourceGitee") + '</span>' +
+                        '<span class="dl-source-badge">' + t("localDl.giteeBadge") + '</span>' +
+                        '</a>' +
+                        '<a class="dl-source-btn github" href="' + file.sources.github + '" download>' +
+                        '<i class="fa-solid fa-download"></i>' +
+                        '<span>' + t("localDl.sourceGithub") + '</span>' +
+                        '</a>' +
+                        '</div>' +
+                        '</div>';
+                });
+                dlSourcesList.innerHTML = html;
+
+                dlStepPlatform.style.display = "none";
+                dlStepSources.style.display = "block";
+            }
+
+            function showPlatforms() {
+                dlStepSources.style.display = "none";
+                dlStepPlatform.style.display = "block";
+            }
+
+            if (dlBackBtn) {
+                dlBackBtn.addEventListener("click", showPlatforms);
+            }
+
+            renderPlatformCards();
 
             function openLocalDl() {
                 if (!localDlModal) return;
+                showPlatforms();
                 localDlModal.setAttribute("aria-hidden", "false");
                 document.body.classList.add("local-dl-open");
                 if (siteHeader) siteHeader.classList.remove("nav-open");
@@ -1085,8 +1186,6 @@
                     closeLocalDl();
                 }
             });
-
-            renderLocalDownloads();
         </script>
     </body>
 </html>
