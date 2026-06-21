@@ -1,16 +1,16 @@
 {
-  "version": "0.3.4",
-  "pub_date": "2026-06-15T00:00:00+08:00",
-  "notes": "新变化：\n- 新增应用自动更新检测与下载功能\n- 修复 Linux 窗口裁剪及欢迎页背景显示问题\n- 修复 CRISPR 相关问题\n\n功能特性：\n- 支持 GenBank / FASTA / SnapGene DNA / AB1 格式\n- 环状/线性质粒图谱可视化\n- 限制酶位点检测\n- 序列编辑与注释管理\n- 浅色/夜间模式",
+  "version": "0.3.6",
+  "pub_date": "2026-06-21T00:00:00+08:00",
+  "notes": "新变化：\n- 序列编辑器交互全面优化（光标、选区、滚动）\n- 新增删除确认对话框与通知复制按钮\n- 引物工具视觉标记与对齐修复\n- 质粒图谱大批量酶切位点处理改进\n- 多项 Bug 修复与稳定性提升",
   "platforms": {
     "windows-x86_64": {
-      "url": "https://genepad.pages.dev/release/windows/Gene Editor_0.3.4_x64-setup.exe"
+      "url": "https://genepad.pages.dev/release/windows/Gene Editor_0.3.6_x64-setup.exe"
     },
     "linux-x86_64-deb": {
-      "url": "https://genepad.pages.dev/release/linux/Gene Editor_0.3.4_amd64.deb"
+      "url": "https://genepad.pages.dev/release/linux/Gene Editor_0.3.6_amd64.deb"
     },
     "linux-x86_64-rpm": {
-      "url": "https://genepad.pages.dev/release/linux/Gene Editor-0.3.4-1.x86_64.rpm"
+      "url": "https://genepad.pages.dev/release/linux/Gene Editor-0.3.6-1.x86_64.rpm"
     },
     "android": {
       "url": "https://genepad.pages.dev/release/android/app-universal-release.apk"
