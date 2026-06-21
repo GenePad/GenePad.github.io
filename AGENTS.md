@@ -67,6 +67,50 @@ Edit the `localFiles` array (around line 1022) — update version numbers in `na
 Get-Content -Raw docs/update.json | ConvertFrom-Json | Out-Null
 ```
 
+### 6. Commit, push to GitHub, and create GitHub Release
+
+```bash
+git add docs/update.json docs/index.html docs/release/
+git commit -m "release: bump to x.x.x"
+git push origin main
+
+# Create GitHub Release with all assets
+gh release create vx.x.x \
+  "docs/release/windows/Gene Editor_x.x.x_x64-setup.exe" \
+  "docs/release/linux/Gene Editor_x.x.x_amd64.deb" \
+  "docs/release/linux/Gene Editor-x.x.x-1.x86_64.rpm" \
+  "docs/release/android/app-universal-release.apk" \
+  --title "Gene Editor vx.x.x" \
+  --notes "<same Chinese release notes from update.json>"
+```
+
+### 7. Push to Gitee and create Gitee Release
+
+Gitee repo: `https://gitee.com/GenePad/GenePad.github.io`
+Gitee token: stored in 1Password (use `oauth2` as username with token)
+
+```bash
+# Push to Gitee
+git remote add gitee https://oauth2:<gitee_token>@gitee.com/GenePad/GenePad.github.io.git
+git push gitee main
+git remote remove gitee
+
+# Create Gitee Release (capture release ID from response)
+curl -s -X POST "https://gitee.com/api/v5/repos/GenePad/GenePad.github.io/releases?access_token=<gitee_token>" \
+  -H "Content-Type: application/json" \
+  -d '{"tag_name":"vx.x.x","name":"Gene Editor vx.x.x","body":"<release notes>","target_commitish":"main"}'
+
+# Upload assets to Gitee Release (replace <release_id> from previous response)
+curl -s -X POST "https://gitee.com/api/v5/repos/GenePad/GenePad.github.io/releases/<release_id>/attach_files?access_token=<gitee_token>" \
+  -F "file=@docs/release/windows/Gene Editor_x.x.x_x64-setup.exe"
+curl -s -X POST "https://gitee.com/api/v5/repos/GenePad/GenePad.github.io/releases/<release_id>/attach_files?access_token=<gitee_token>" \
+  -F "file=@docs/release/linux/Gene Editor_x.x.x_amd64.deb"
+curl -s -X POST "https://gitee.com/api/v5/repos/GenePad/GenePad.github.io/releases/<release_id>/attach_files?access_token=<gitee_token>" \
+  -F "file=@docs/release/linux/Gene Editor-x.x.x-1.x86_64.rpm"
+curl -s -X POST "https://gitee.com/api/v5/repos/GenePad/GenePad.github.io/releases/<release_id>/attach_files?access_token=<gitee_token>" \
+  -F "file=@docs/release/android/app-universal-release.apk"
+```
+
 ## Update Metadata
 
 `docs/update.json` is the stable update manifest fetched by the Gene Editor app from:
