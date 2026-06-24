@@ -695,6 +695,56 @@ body.local-dl-open {
   overflow: hidden;
 }
 
+/* macOS unsigned app warning */
+.dl-mac-warning {
+  margin-top: 4px;
+  border: 1px solid rgba(255, 193, 7, 0.35);
+  border-radius: 10px;
+  background: rgba(255, 193, 7, 0.06);
+  overflow: hidden;
+}
+
+.dl-mac-warning-title {
+  padding: 12px 14px 6px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffc107;
+}
+
+.dl-mac-warning-body {
+  padding: 0 14px 14px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.dl-mac-warning-body p {
+  margin: 0 0 8px;
+}
+
+.dl-mac-warning-body ol {
+  margin: 6px 0 8px;
+  padding-left: 20px;
+}
+
+.dl-mac-warning-body li {
+  margin-bottom: 5px;
+}
+
+.dl-mac-warning-body code {
+  display: inline-block;
+  margin-top: 2px;
+  padding: 4px 8px;
+  border-radius: 5px;
+  background: var(--panel);
+  font-size: 12px;
+  word-break: break-all;
+}
+
+.dl-mac-warning-body strong {
+  color: var(--ink);
+}
+
 .nav-dropdown-wrapper {
   position: relative;
 }
