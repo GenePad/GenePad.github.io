@@ -1,16 +1,16 @@
 {
-  "version": "0.3.6",
-  "pub_date": "2026-06-21T00:00:00+08:00",
-  "notes": "新变化：\n- 序列编辑器交互全面优化（光标、选区、滚动）\n- 新增删除确认对话框与通知复制按钮\n- 引物工具视觉标记与对齐修复\n- 质粒图谱大批量酶切位点处理改进\n- 多项 Bug 修复与稳定性提升",
+  "version": "0.4.0",
+  "pub_date": "2026-06-24T00:00:00+08:00",
+  "notes": "新版本 v0.4.0：\n- 新增 AI 助手功能：内置聊天面板、会话管理、MCP 工具调用，支持 DeepSeek 等大语言模型\n- 新增 MCP 远程控制协议：39 个工具覆盖序列编辑、引物管理、酶切分析、文件操作等全部功能\n- 序列编辑器交互优化：删除确认对话框、Delete/Backspace 光标定位、插入后防跳动滚动\n- 质粒图谱增强：酶切位点超过 200 时显示计数标记并禁用剪切按钮\n- 引物工具：未退火碱基红色高亮、对齐修复、引物可视化交互\n- 多标签模式数据隔离修复\n- macOS 构建支持与窗口透明修复\n- 行尾统一为 LF、i18n 语言导出功能\n- 多项 Bug 修复与稳定性提升",
   "platforms": {
     "windows-x86_64": {
-      "url": "https://genepad.pages.dev/release/windows/Gene Editor_0.3.6_x64-setup.exe"
+      "url": "https://genepad.pages.dev/release/windows/Gene Editor_0.4.0_x64-setup.zip"
     },
     "linux-x86_64-deb": {
-      "url": "https://genepad.pages.dev/release/linux/Gene Editor_0.3.6_amd64.deb"
+      "url": "https://genepad.pages.dev/release/linux/Gene Editor_0.4.0_amd64.deb"
     },
     "linux-x86_64-rpm": {
-      "url": "https://genepad.pages.dev/release/linux/Gene Editor-0.3.6-1.x86_64.rpm"
+      "url": "https://genepad.pages.dev/release/linux/Gene Editor-0.4.0-1.x86_64.rpm"
     },
     "android": {
       "url": "https://genepad.pages.dev/release/android/app-universal-release.apk"

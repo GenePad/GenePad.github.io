@@ -37,13 +37,19 @@ Copy the latest built binaries from the Gene Editor source project into `docs/re
 
 Copy the latest version files to `docs/release/`:
 ```
-docs/release/windows/Gene Editor_x.x.x_x64-setup.exe
+docs/release/windows/Gene Editor_x.x.x_x64-setup.zip   (must zip the exe to avoid browser security warnings)
 docs/release/linux/Gene Editor_x.x.x_amd64.deb
 docs/release/linux/Gene Editor-x.x.x-1.x86_64.rpm
 docs/release/android/app-universal-release.apk   (in-place update, no version in filename)
+docs/release/mac/macos-dmg.zip                    (copied manually by user)
+docs/release/mac/macos-app.zip                    (copied manually by user)
 ```
 
+**Important: Windows exe must be compressed to zip** — use `Compress-Archive` to zip the `.exe` into `.zip` before placing in `docs/release/windows/`. This avoids browser security warnings when downloading.
+
 **Important: Do NOT include AppImage files** — skip any `.AppImage` files found in the Linux bundle directory.
+
+**Note: macOS files are copied manually by the user** — do not attempt to copy them from build output.
 
 ### 2. Delete old release files
 
@@ -76,7 +82,7 @@ git push origin main
 
 # Create GitHub Release with all assets
 gh release create vx.x.x \
-  "docs/release/windows/Gene Editor_x.x.x_x64-setup.exe" \
+  "docs/release/windows/Gene Editor_x.x.x_x64-setup.zip" \
   "docs/release/linux/Gene Editor_x.x.x_amd64.deb" \
   "docs/release/linux/Gene Editor-x.x.x-1.x86_64.rpm" \
   "docs/release/android/app-universal-release.apk" \
@@ -102,7 +108,7 @@ curl -s -X POST "https://gitee.com/api/v5/repos/GenePad/GenePad.github.io/releas
 
 # Upload assets to Gitee Release (replace <release_id> from previous response)
 curl -s -X POST "https://gitee.com/api/v5/repos/GenePad/GenePad.github.io/releases/<release_id>/attach_files?access_token=<gitee_token>" \
-  -F "file=@docs/release/windows/Gene Editor_x.x.x_x64-setup.exe"
+  -F "file=@docs/release/windows/Gene Editor_x.x.x_x64-setup.zip"
 curl -s -X POST "https://gitee.com/api/v5/repos/GenePad/GenePad.github.io/releases/<release_id>/attach_files?access_token=<gitee_token>" \
   -F "file=@docs/release/linux/Gene Editor_x.x.x_amd64.deb"
 curl -s -X POST "https://gitee.com/api/v5/repos/GenePad/GenePad.github.io/releases/<release_id>/attach_files?access_token=<gitee_token>" \
