@@ -93,7 +93,7 @@ gh release create vx.x.x \
 ### 7. Push to Gitee and create Gitee Release
 
 Gitee repo: `https://gitee.com/GenePad/GenePad.github.io`
-Gitee token: stored in 1Password (use `oauth2` as username with token)
+Gitee token: stored in opencode skill config
 
 ```bash
 # Push to Gitee
