@@ -745,6 +745,142 @@ body.local-dl-open {
   color: var(--ink);
 }
 
+/* macOS one-line Terminal install (primary, quarantine-free) */
+.dl-mac-install {
+  border: 1px solid rgba(56, 161, 111, 0.35);
+  border-radius: 10px;
+  background: rgba(56, 161, 111, 0.06);
+  padding: 14px 14px 12px;
+  margin-bottom: 12px;
+}
+
+.dl-mac-install-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #2f855a;
+  margin-bottom: 6px;
+}
+
+.dl-mac-install-desc {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.dl-mac-install-desc strong {
+  color: var(--ink);
+}
+
+.dl-mac-cmd {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.dl-mac-cmd code {
+  flex: 1;
+  display: block;
+  padding: 10px 12px;
+  border-radius: 7px;
+  background: #0f1724;
+  color: #d0d9e8;
+  font-family: "SF Mono", "Fira Code", Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  word-break: break-all;
+  overflow-x: auto;
+  white-space: pre-wrap;
+}
+
+.dl-mac-copy-btn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 14px;
+  border: 1px solid rgba(56, 161, 111, 0.5);
+  border-radius: 7px;
+  background: rgba(56, 161, 111, 0.12);
+  color: #2f855a;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 140ms ease, border-color 140ms ease;
+}
+
+.dl-mac-copy-btn:hover,
+.dl-mac-copy-btn:focus-visible {
+  background: rgba(56, 161, 111, 0.22);
+  border-color: var(--green);
+  outline: none;
+}
+
+.dl-mac-copy-btn.copied {
+  background: rgba(56, 161, 111, 0.25);
+  color: #22543d;
+}
+
+.dl-mac-install-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+/* Collapsed manual download fallback */
+.dl-mac-manual {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--panel-2);
+  overflow: hidden;
+}
+
+.dl-mac-manual summary {
+  display: flex;
+  align-items: center;
+  padding: 13px 14px;
+  cursor: pointer;
+  background: var(--soft);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  list-style: none;
+  transition: background 160ms ease;
+}
+
+.dl-mac-manual summary::-webkit-details-marker {
+  display: none;
+}
+
+.dl-mac-manual[open] summary {
+  border-bottom: 1px solid var(--line);
+}
+
+.dl-mac-manual summary:hover {
+  background: #e9eef6;
+}
+
+.dl-mac-manual-body {
+  padding: 12px 14px 14px;
+}
+
+.dl-mac-manual-body > p {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.dl-mac-manual-body .dl-file-section {
+  margin-bottom: 10px;
+}
+
+.dl-mac-manual-body .dl-mac-warning {
+  margin-top: 6px;
+}
+
 .nav-dropdown-wrapper {
   position: relative;
 }
