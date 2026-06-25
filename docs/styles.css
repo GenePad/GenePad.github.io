@@ -671,6 +671,28 @@ body.local-dl-open .dropdown.open .dropdown-menu {
   pointer-events: none;
 }
 
+/* Spark Store external download link */
+.dl-spark-section .dl-file-header {
+  padding-bottom: 12px;
+}
+
+.dl-spark-icon {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  margin-right: 4px;
+}
+
+.dl-spark-btn {
+  gap: 6px;
+}
+
+.dl-spark-btn:hover,
+.dl-spark-btn:focus-visible {
+  border-color: #FFC344;
+  background: rgba(255, 195, 68, 0.08);
+}
+
 .local-dl-close {
   position: fixed;
   top: 18px;
