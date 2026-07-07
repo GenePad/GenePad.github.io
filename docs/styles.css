@@ -796,32 +796,43 @@ body.local-dl-open {
 
 .dl-mac-cmd {
   display: flex;
-  align-items: stretch;
+  flex-direction: column;
   gap: 8px;
   margin-bottom: 8px;
 }
 
 .dl-mac-cmd code {
-  flex: 1;
   display: block;
-  padding: 10px 12px;
+  padding: 12px 14px;
   border-radius: 7px;
   background: #0f1724;
   color: #d0d9e8;
   font-family: "SF Mono", "Fira Code", Consolas, monospace;
   font-size: 12px;
-  line-height: 1.5;
-  word-break: break-all;
-  overflow-x: auto;
+  line-height: 1.6;
   white-space: pre-wrap;
+  word-break: break-word;
+  overflow: auto;
+  max-height: 340px;
+}
+
+.dl-mac-install-tools {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.dl-mac-install-tools strong {
+  color: var(--ink);
 }
 
 .dl-mac-copy-btn {
-  flex-shrink: 0;
+  align-self: flex-end;
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 0 14px;
+  padding: 7px 16px;
   border: 1px solid rgba(56, 161, 111, 0.5);
   border-radius: 7px;
   background: rgba(56, 161, 111, 0.12);
@@ -1354,7 +1365,7 @@ body.local-dl-open {
 
 .platforms {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 14px;
 }
 
@@ -1389,6 +1400,24 @@ body.local-dl-open {
 
 .platforms span:nth-child(4) {
   background: linear-gradient(135deg, #b45f21, var(--orange));
+}
+
+.platforms span:nth-child(5) {
+  background: linear-gradient(135deg, #2d2d5e, #5b5baa);
+}
+
+.platform-icon-svg {
+  display: block;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 4px;
+}
+
+.platform-coming small {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.55);
+  margin-top: -4px;
 }
 
 .feedback-section {

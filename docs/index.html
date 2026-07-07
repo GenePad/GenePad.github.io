@@ -344,6 +344,11 @@
                         <i class="fa-brands fa-android platform-icon"></i>
                         Android
                     </span>
+                    <span class="platform-coming">
+                        <svg class="platform-icon-svg" width="48" height="48" viewBox="28.852 29.598 71.923 78.473" aria-hidden="true"><rect height="129.383" ry="27.97" width="129.17"/><g fill="#fff"><path d="m31.656 29.598h5.662v11.602h12.624v-11.602h5.662v29.045h-5.662v-12.25h-12.624v12.25h-5.662zm39.214 0h5.579l9.185 15.374h.336l9.185-15.374h5.62v29.045h-5.62v-14.32l.335-4.868h-.335l-7.635 13.022h-3.397l-7.673-13.022h-.336l.336 4.868v14.32h-5.578z" stroke-width="3.437"/><path d="m86.244 100.378q-1.973 0-3.774-.527-1.8-.527-3.302-1.582-1.5-1.055-2.615-2.556-1.115-1.541-1.758-3.57l5.445-2.028q.6 2.19 2.102 3.651 1.5 1.42 3.944 1.42.9 0 1.716-.203.857-.243 1.5-.649.686-.446 1.072-1.095.386-.65.386-1.501 0-.811-.3-1.46-.3-.65-1.029-1.218-.686-.567-1.844-1.095-1.115-.527-2.787-1.095l-1.887-.65q-1.243-.405-2.53-1.094-1.243-.69-2.272-1.664-1.03-.973-1.715-2.271-.644-1.34-.644-3.002 0-1.704.687-3.164.729-1.501 2.015-2.597 1.33-1.136 3.13-1.744 1.844-.65 4.074-.65 2.315 0 3.987.61 1.716.567 2.873 1.5 1.2.893 1.93 1.988.729 1.095 1.072 2.069l-5.103 2.028q-.429-1.217-1.586-2.19-1.115-.974-3.088-.974-1.886 0-3.13.852-1.243.811-1.243 2.15 0 1.298 1.2 2.231 1.2.893 3.817 1.744l1.93.609q1.843.608 3.344 1.42 1.543.77 2.615 1.866 1.115 1.095 1.673 2.515.6 1.38.6 3.205 0 2.271-.986 3.935-.944 1.622-2.444 2.677-1.501 1.055-3.388 1.582-1.887.527-3.687.527z" stroke-width="3.476"/><path d="m43.646 100.378q-3.165 0-5.894-1.176-2.69-1.176-4.668-3.205-1.978-2.069-3.125-4.827-1.107-2.8-1.107-5.963 0-3.164 1.107-5.923 1.147-2.8 3.125-4.827 1.978-2.07 4.668-3.246 2.73-1.176 5.894-1.176 3.165 0 5.854 1.176 2.73 1.177 4.708 3.246 1.978 2.028 3.085 4.827 1.147 2.759 1.147 5.923t-1.147 5.963q-1.107 2.758-3.085 4.827-1.978 2.029-4.708 3.205-2.69 1.176-5.854 1.176zm0-5.192q1.978 0 3.679-.73 1.74-.73 3.006-2.029 1.306-1.298 2.018-3.123.751-1.866.751-4.097 0-2.231-.751-4.057-.712-1.866-2.018-3.164-1.266-1.298-3.006-2.028-1.701-.73-3.679-.73-1.978 0-3.718.73-1.701.73-3.007 2.028-1.266 1.298-2.017 3.164-.712 1.826-.712 4.057 0 2.23.712 4.097.751 1.825 2.017 3.123 1.306 1.299 3.007 2.029 1.74.73 3.718.73z" stroke-width="3.338"/></g><path d="m32.868 103.126h21.247v4.945h-21.247z" fill="#5b8aee"/></svg>
+                        HarmonyOS
+                        <small>coming soon</small>
+                    </span>
                 </div>
                 <p class="platform-note" data-i18n="platforms.note">
                     无论是在实验室电脑、个人笔记本，还是移动设备上，都可以快速打开和检查序列文件。
@@ -544,11 +549,13 @@
                     "gallery.cap6": "多语言支持",
                     "localDl.macWarning.title": "⚠️ macOS 未签名说明",
                     "localDl.macWarning.body": "<p>GenePad 的 macOS 版本目前<strong>未经过 Apple 开发者证书签名</strong>，因此 macOS Gatekeeper 会将其标记为「来自身份不明开发者」的应用并阻止打开。</p><p><strong>解决方法（DMG 和 APP 均适用）：</strong></p><ol><li>下载并解压/挂载后，<strong>不要直接双击</strong> App 图标</li><li><strong>右键点击</strong>（或按住 Control 键点击）App → 选择「<strong>打开</strong>」</li><li>在弹出的对话框中再次点击「<strong>打开</strong>」即可运行</li><li>如果上述方法无效，进入 <strong>系统设置 → 隐私与安全性</strong>，在底部找到被拦截的应用记录，点击「<strong>仍要打开</strong>」</li><li>也可以使用终端命令移除隔离标记：<br><code>xattr -cr /Applications/Gene\\ Editor.app</code></li></ol><p>签名需要 Apple Developer Program（$99/年），后续版本会考虑加入 Apple 公证流程。</p>",
-                    "localDl.macInstall.title": "🚀 推荐方式：终端一键安装（无需手动处理签名）",
-                    "localDl.macInstall.desc": "在「终端」App 中粘贴以下命令并回车。脚本会自动下载、校验、解压到「应用程序」并在本地完成重新签名——浏览器下载会附带的隔离标记，这种方式完全不会出现，因此不会提示「已损坏」。",
-                    "localDl.macInstall.copy": "复制命令",
+                    "localDl.macInstall.title": "🤖 推荐方式：让 AI 帮你安装（自动绕过未签名限制）",
+                    "localDl.macInstall.desc": "Gene Editor 的 macOS 版本未签名——开发者买不起 Apple 开发者证书（$99/年），浏览器下载会被 Gatekeeper 标记为「已损坏」。最省事的做法是把下面这段提示词复制给一个能执行终端命令的 AI 编程助手，让它帮你下载、解压并绕过签名限制完成安装。",
+                    "localDl.macInstall.tools": "推荐使用：<strong>OpenAI Codex</strong>、<strong>opencode</strong>、<strong>腾讯 Workbody</strong> 等能在 macOS 上执行终端命令的 AI 编程助手。打开任一工具，把提示词粘贴给它即可。",
+                    "localDl.macInstall.prompt": "请帮我在 macOS 上安装一款叫「Gene Editor」的应用。它的开发者买不起 Apple 开发者证书（$99/年），所以这款应用没有官方签名，浏览器下载会被 Gatekeeper 标记成「已损坏」。请按下面的步骤操作：\n\n1. 用 curl 下载压缩包（curl 下载不会带隔离标记）：\n   curl -L -o /tmp/gene-editor-app.zip \"https://genepad.pages.dev/release/mac/macos-app.zip\"\n2. 解压：\n   unzip -o /tmp/gene-editor-app.zip -d /tmp/gene-editor-extract\n3. 把应用移动到「应用程序」：\n   mv \"/tmp/gene-editor-extract/Gene Editor.app\" /Applications/\n4. 移除隔离标记并做本地临时签名，让它能正常打开：\n   xattr -cr \"/Applications/Gene Editor.app\"\n   codesign --force --deep --sign - \"/Applications/Gene Editor.app\"\n5. 打开它：\n   open \"/Applications/Gene Editor.app\"\n\n如果上面的链接或步骤有问题，可以先打开官网 https://genepad.pages.dev 查看最新的 macOS 安装说明，再决定怎么做。",
+                    "localDl.macInstall.copy": "复制 AI 提示词",
                     "localDl.macInstall.copied": "已复制！",
-                    "localDl.macInstall.note": "需要 macOS 11 或更高版本（仅支持 Apple Silicon / arm64）。脚本会请求一次「应用程序」目录的写入权限。",
+                    "localDl.macInstall.note": "需要 macOS 11 或更高版本（仅支持 Apple Silicon / arm64）。AI 助手会请求「应用程序」目录的写入权限。",
                     "localDl.macManual.title": "其它下载方式（DMG / APP 压缩包）",
                     "localDl.macManual.summary": "▸ 手动下载 .dmg 或 .app 压缩包（需自行处理签名/隔离）",
                     "localDl.macManual.desc": "如不方便使用终端，可手动下载。但浏览器下载的文件会被 Gatekeeper 标记为「已损坏」，需按下方说明解除限制。"
@@ -640,11 +647,13 @@
                     "gallery.cap6": "Multi-language Support",
                     "localDl.macWarning.title": "⚠️ macOS Unsigned App Notice",
                     "localDl.macWarning.body": "<p>The macOS version of GenePad is currently <strong>not signed with an Apple Developer certificate</strong>, so macOS Gatekeeper will flag it as an app from an unidentified developer and block it from opening.</p><p><strong>Workaround (works for both DMG and APP):</strong></p><ol><li>After downloading and extracting/mounting, <strong>do NOT double-click</strong> the app icon</li><li><strong>Right-click</strong> (or Control-click) the app → select &quot;<strong>Open</strong>&quot;</li><li>In the dialog that appears, click &quot;<strong>Open</strong>&quot; again to run</li><li>If the above doesn&apos;t work, go to <strong>System Settings → Privacy &amp; Security</strong>, find the blocked app at the bottom, and click &quot;<strong>Open Anyway</strong>&quot;</li><li>Alternatively, remove the quarantine flag via Terminal:<br><code>xattr -cr /Applications/Gene\\ Editor.app</code></li></ol><p>Code signing requires the Apple Developer Program ($99/year). We plan to add Apple notarization in a future release.</p>",
-                    "localDl.macInstall.title": "🚀 Recommended: one-line Terminal install (no signing hassle)",
-                    "localDl.macInstall.desc": "Paste this command into the <strong>Terminal</strong> app and press Enter. The script downloads, verifies and extracts the app into <strong>Applications</strong> and re-signs it locally — no quarantine flag is ever attached, so it will never show as &quot;damaged&quot;.",
-                    "localDl.macInstall.copy": "Copy command",
+                    "localDl.macInstall.title": "🤖 Recommended: let an AI install it for you (auto-bypasses the unsigned-app block)",
+                    "localDl.macInstall.desc": "Gene Editor's macOS build is unsigned — the developer can't afford an Apple Developer certificate ($99/year), so a browser download gets flagged &quot;damaged&quot; by Gatekeeper. The easiest fix is to copy the prompt below into an AI coding agent that can run terminal commands; it will download, extract and clear the signing/quarantine block for you.",
+                    "localDl.macInstall.tools": "Recommended: <strong>OpenAI Codex</strong>, <strong>opencode</strong>, <strong>Tencent Workbody</strong> — any AI coding assistant that can run terminal commands on macOS. Open one and paste the prompt to it.",
+                    "localDl.macInstall.prompt": "Please install an app called \"Gene Editor\" on macOS for me. Its developer can't afford an Apple Developer certificate ($99/year), so the app is unsigned and a browser download gets flagged \"damaged\" by Gatekeeper. Follow these steps:\n\n1. Download the archive with curl (curl downloads never get the quarantine flag):\n   curl -L -o /tmp/gene-editor-app.zip \"https://genepad.pages.dev/release/mac/macos-app.zip\"\n2. Unzip it:\n   unzip -o /tmp/gene-editor-app.zip -d /tmp/gene-editor-extract\n3. Move the app to Applications:\n   mv \"/tmp/gene-editor-extract/Gene Editor.app\" /Applications/\n4. Strip the quarantine flag and ad-hoc re-sign it so it opens normally:\n   xattr -cr \"/Applications/Gene Editor.app\"\n   codesign --force --deep --sign - \"/Applications/Gene Editor.app\"\n5. Open it:\n   open \"/Applications/Gene Editor.app\"\n\nIf the link or any step fails, first open the official site https://genepad.pages.dev for the latest macOS install notes, then decide what to do.",
+                    "localDl.macInstall.copy": "Copy AI prompt",
                     "localDl.macInstall.copied": "Copied!",
-                    "localDl.macInstall.note": "Requires macOS 11 or later (Apple Silicon / arm64 only). It asks once for write access to the Applications folder.",
+                    "localDl.macInstall.note": "Requires macOS 11 or later (Apple Silicon / arm64 only). The AI agent will ask for write access to the Applications folder.",
                     "localDl.macManual.title": "Other download options (DMG / APP archive)",
                     "localDl.macManual.summary": "▸ Manually download a .dmg or .app archive (you handle signing/quarantine)",
                     "localDl.macManual.desc": "If the Terminal isn't convenient, you can download manually. Files downloaded via a browser are flagged &quot;damaged&quot; by Gatekeeper — follow the steps below to clear it."
@@ -736,11 +745,13 @@
                     "gallery.cap6": "Mehrsprachige Unterstützung",
                     "localDl.macWarning.title": "⚠️ macOS Hinweis: Nicht signierte App",
                     "localDl.macWarning.body": "<p>Die macOS-Version von GenePad ist derzeit <strong>nicht mit einem Apple-Entwicklerzertifikat signiert</strong>, daher wird macOS Gatekeeper die App als von einem nicht verifizierten Entwickler blockieren.</p><p><strong>Lösung (funktioniert für DMG und APP):</strong></p><ol><li>Nach dem Herunterladen und Entpacken/Mounten <strong>NICHT doppelklicken</strong></li><li><strong>Rechtsklick</strong> (oder Control-Klick) auf die App → &quot;<strong>Öffnen</strong>&quot; wählen</li><li>Im erscheinenden Dialog erneut &quot;<strong>Öffnen</strong>&quot; klicken</li><li>Falls das nicht funktioniert: <strong>Systemeinstellungen → Datenschutz &amp; Sicherheit</strong>, die blockierte App unten finden und &quot;<strong>Trotzdem öffnen</strong>&quot; klicken</li><li>Alternativ das Quarantäne-Flag per Terminal entfernen:<br><code>xattr -cr /Applications/Gene\\ Editor.app</code></li></ol><p>Code-Signierung erfordert das Apple Developer Program ($99/Jahr). Wir planen, die Apple-Notarisierung in einer zukünftigen Version hinzuzufügen.</p>",
-                    "localDl.macInstall.title": "🚀 Empfohlen: Einzeilige Terminal-Installation (ohne Signatur-Probleme)",
-                    "localDl.macInstall.desc": "Fügen Sie diesen Befehl in die App <strong>Terminal</strong> ein und drücken Sie Enter. Das Skript lädt die App herunter, verifiziert und entpackt sie in <strong>Programme</strong> und signiert sie lokal neu — es wird kein Quarantäne-Flag gesetzt, daher erscheint nie die Meldung &quot;beschädigt&quot;.",
-                    "localDl.macInstall.copy": "Befehl kopieren",
+                    "localDl.macInstall.title": "🤖 Empfohlen: von einer KI installieren lassen (umgeht automatisch die Signatur-Sperre)",
+                    "localDl.macInstall.desc": "Der macOS-Build von Gene Editor ist unsigniert — der Entwickler kann sich kein Apple-Entwicklerzertifikat ($99/Jahr) leisten, daher wird ein Browser-Download von Gatekeeper als &quot;beschädigt&quot; markiert. Am einfachsten kopierst du den Prompt unten in einen KI-Coding-Agent, der Terminalbefehle ausführen kann; er lädt die App herunter, entpackt sie und entfernt die Signatur-/Quarantäne-Sperre für dich.",
+                    "localDl.macInstall.tools": "Empfohlen: <strong>OpenAI Codex</strong>, <strong>opencode</strong>, <strong>Tencent Workbody</strong> — jeder KI-Coding-Assistent, der Terminalbefehle unter macOS ausführen kann. Öffne eines und füge den Prompt ein.",
+                    "localDl.macInstall.prompt": "Bitte installiere eine App namens \"Gene Editor\" unter macOS für mich. Deren Entwickler kann sich kein Apple-Entwicklerzertifikat ($99/Jahr) leisten, deshalb ist die App unsigniert und ein Browser-Download wird von Gatekeeper als \"beschädigt\" markiert. Gehe so vor:\n\n1. Lade das Archiv mit curl herunter (curl-Downloads erhalten nie das Quarantäne-Flag):\n   curl -L -o /tmp/gene-editor-app.zip \"https://genepad.pages.dev/release/mac/macos-app.zip\"\n2. Entpacke es:\n   unzip -o /tmp/gene-editor-app.zip -d /tmp/gene-editor-extract\n3. Verschiebe die App in Programme:\n   mv \"/tmp/gene-editor-extract/Gene Editor.app\" /Applications/\n4. Entferne das Quarantäne-Flag und signiere sie lokal neu (ad-hoc), damit sie sich normal öffnen lässt:\n   xattr -cr \"/Applications/Gene Editor.app\"\n   codesign --force --deep --sign - \"/Applications/Gene Editor.app\"\n5. Öffne sie:\n   open \"/Applications/Gene Editor.app\"\n\nFalls der Link oder ein Schritt nicht funktioniert, öffne zuerst die offizielle Seite https://genepad.pages.dev für die neuesten macOS-Installationshinweise und entscheide dann weiter.",
+                    "localDl.macInstall.copy": "KI-Prompt kopieren",
                     "localDl.macInstall.copied": "Kopiert!",
-                    "localDl.macInstall.note": "Erfordert macOS 11 oder neuer (nur Apple Silicon / arm64). Es fragt einmalig nach Schreibzugriff auf den Programme-Ordner.",
+                    "localDl.macInstall.note": "Erfordert macOS 11 oder neuer (nur Apple Silicon / arm64). Der KI-Agent fragt nach Schreibzugriff auf den Programme-Ordner.",
                     "localDl.macManual.title": "Weitere Download-Optionen (DMG / APP-Archiv)",
                     "localDl.macManual.summary": "▸ .dmg- oder .app-Archiv manuell herunterladen (Signatur/Quarantäne selbst behandeln)",
                     "localDl.macManual.desc": "Wenn das Terminal unpraktisch ist, können Sie manuell herunterladen. Per Browser heruntergeladene Dateien werden von Gatekeeper als &quot;beschädigt&quot; markiert — folgen Sie den Schritten unten, um dies zu beheben."
@@ -832,11 +843,13 @@
                     "gallery.cap6": "Support multilingue",
                     "localDl.macWarning.title": "⚠️ macOS Avis : Application non signée",
                     "localDl.macWarning.body": "<p>La version macOS de GenePad n&apos;est actuellement <strong>pas signée avec un certificat de développeur Apple</strong>, donc Gatekeeper la bloquera en tant qu&apos;application provenant d&apos;un développeur non identifié.</p><p><strong>Solution (fonctionne pour DMG et APP) :</strong></p><ol><li>Après avoir téléchargé et extrait/monté, <strong>NE PAS double-cliquer</strong> sur l&apos;icône de l&apos;application</li><li><strong>Clic droit</strong> (ou Contrôle-clic) sur l&apos;application → sélectionner &quot;<strong>Ouvrir</strong>&quot;</li><li>Dans la boîte de dialogue, cliquer à nouveau sur &quot;<strong>Ouvrir</strong>&quot;</li><li>Si cela ne fonctionne pas, aller dans <strong>Réglages Système → Confidentialité et sécurité</strong>, trouver l&apos;application bloquée en bas, et cliquer sur &quot;<strong>Ouvrir quand même</strong>&quot;</li><li>Alternativement, supprimer le drapeau de quarantaine via le Terminal :<br><code>xattr -cr /Applications/Gene\\ Editor.app</code></li></ol><p>La signature de code nécessite le programme développeur Apple (99 $/an). Nous prévoyons d&apos;ajouter la notarisation Apple dans une prochaine version.</p>",
-                    "localDl.macInstall.title": "🚀 Recommandé : installation en une ligne via le Terminal (sans souci de signature)",
-                    "localDl.macInstall.desc": "Collez cette commande dans l&apos;application <strong>Terminal</strong> et appuyez sur Entrée. Le script télécharge, vérifie et extrait l&apos;application dans <strong>Applications</strong> et la signe localement — aucun marqueur de quarantaine n&apos;est jamais ajouté, donc aucun message &quot;endommagé&quot;.",
-                    "localDl.macInstall.copy": "Copier la commande",
+                    "localDl.macInstall.title": "🤖 Recommandé : laisser une IA l'installer pour vous (contourne automatiquement le blocage des apps non signées)",
+                    "localDl.macInstall.desc": "La version macOS de Gene Editor n'est pas signée — le développeur ne peut pas se payer de certificat Apple (99 $/an), donc un téléchargement via navigateur est marqué &quot;endommagé&quot; par Gatekeeper. Le plus simple est de copier l'invite ci-dessous dans un agent de codage IA capable d'exécuter des commandes terminal ; il téléchargera, décompressera et lèvera le blocage signature/quarantaine pour vous.",
+                    "localDl.macInstall.tools": "Recommandé : <strong>OpenAI Codex</strong>, <strong>opencode</strong>, <strong>Tencent Workbody</strong> — tout assistant de codage IA pouvant exécuter des commandes terminal sous macOS. Ouvrez-en un et collez-y l'invite.",
+                    "localDl.macInstall.prompt": "Installe une application nommée \"Gene Editor\" sur macOS pour moi. Son développeur ne peut pas se payer de certificat Apple (99 $/an), donc l'application n'est pas signée et un téléchargement via navigateur est marqué \"endommagé\" par Gatekeeper. Procède ainsi :\n\n1. Télécharge l'archive avec curl (les téléchargements curl ne reçoivent jamais le marqueur de quarantaine) :\n   curl -L -o /tmp/gene-editor-app.zip \"https://genepad.pages.dev/release/mac/macos-app.zip\"\n2. Décompresse-la :\n   unzip -o /tmp/gene-editor-app.zip -d /tmp/gene-editor-extract\n3. Déplace l'application vers Applications :\n   mv \"/tmp/gene-editor-extract/Gene Editor.app\" /Applications/\n4. Retire le marqueur de quarantaine et re-signe-la en local (ad hoc) pour qu'elle s'ouvre normalement :\n   xattr -cr \"/Applications/Gene Editor.app\"\n   codesign --force --deep --sign - \"/Applications/Gene Editor.app\"\n5. Ouvre-la :\n   open \"/Applications/Gene Editor.app\"\n\nSi le lien ou une étape échoue, ouvre d'abord le site officiel https://genepad.pages.dev pour les dernières notes d'installation macOS, puis décide de la suite.",
+                    "localDl.macInstall.copy": "Copier l'invite IA",
                     "localDl.macInstall.copied": "Copié !",
-                    "localDl.macInstall.note": "Nécessite macOS 11 ou ultérieur (Apple Silicon / arm64 uniquement). Il demandera une fois l&apos;accès en écriture au dossier Applications.",
+                    "localDl.macInstall.note": "Nécessite macOS 11 ou ultérieur (Apple Silicon / arm64 uniquement). L'agent IA demandera l'accès en écriture au dossier Applications.",
                     "localDl.macManual.title": "Autres options de téléchargement (DMG / archive APP)",
                     "localDl.macManual.summary": "▸ Télécharger manuellement une archive .dmg ou .app (vous gérez la signature/quarantaine)",
                     "localDl.macManual.desc": "Si le Terminal n&apos;est pas pratique, vous pouvez télécharger manuellement. Les fichiers téléchargés via un navigateur sont marqués &quot;endommagés&quot; par Gatekeeper — suivez les étapes ci-dessous pour y remédier."
@@ -1061,12 +1074,12 @@
                     icon: "fa-brands fa-windows",
                     files: [
                         {
-                            name: "Gene Editor_0.4.0_x64-setup.zip",
+                            name: "Gene Editor_0.5.0_x64-setup.zip",
                             size: "6.9 MB",
                             sources: {
-                                direct: "release/windows/Gene Editor_0.4.0_x64-setup.zip",
-                                github: "https://github.com/GenePad/GenePad.github.io/releases/latest/download/Gene.Editor_0.4.0_x64-setup.zip",
-                                gitee: "https://gitee.com/GenePad/GenePad.github.io/releases/download/v0.4.0/Gene Editor_0.4.0_x64-setup.zip"
+                                direct: "release/windows/Gene Editor_0.5.0_x64-setup.zip",
+                                github: "https://github.com/GenePad/GenePad.github.io/releases/latest/download/Gene.Editor_0.5.0_x64-setup.zip",
+                                gitee: "https://gitee.com/GenePad/GenePad.github.io/releases/download/v0.5.0/Gene Editor_0.5.0_x64-setup.zip"
                             }
                         }
                     ]
@@ -1078,20 +1091,20 @@
                     files: [
                         {
                             name: "macos-dmg.zip",
-                            size: "9.9 MB",
+                            size: "10.0 MB",
                             sources: {
                                 direct: "release/mac/macos-dmg.zip",
                                 github: "https://github.com/GenePad/GenePad.github.io/releases/latest/download/macos-dmg.zip",
-                                gitee: "https://gitee.com/GenePad/GenePad.github.io/releases/download/v0.4.0/macos-dmg.zip"
+                                gitee: "https://gitee.com/GenePad/GenePad.github.io/releases/download/v0.5.0/macos-dmg.zip"
                             }
                         },
                         {
                             name: "macos-app.zip",
-                            size: "8.9 MB",
+                            size: "8.8 MB",
                             sources: {
                                 direct: "release/mac/macos-app.zip",
                                 github: "https://github.com/GenePad/GenePad.github.io/releases/latest/download/macos-app.zip",
-                                gitee: "https://gitee.com/GenePad/GenePad.github.io/releases/download/v0.4.0/macos-app.zip"
+                                gitee: "https://gitee.com/GenePad/GenePad.github.io/releases/download/v0.5.0/macos-app.zip"
                             }
                         }
                     ]
@@ -1102,21 +1115,21 @@
                     icon: "fa-brands fa-linux",
                     files: [
                         {
-                            name: "Gene Editor_0.4.0_amd64.deb",
-                            size: "8.7 MB",
+                            name: "Gene Editor_0.5.0_amd64.deb",
+                            size: "9.0 MB",
                             sources: {
-                                direct: "release/linux/Gene Editor_0.4.0_amd64.deb",
-                                github: "https://github.com/GenePad/GenePad.github.io/releases/latest/download/Gene.Editor_0.4.0_amd64.deb",
-                                gitee: "https://gitee.com/GenePad/GenePad.github.io/releases/download/v0.4.0/Gene Editor_0.4.0_amd64.deb"
+                                direct: "release/linux/Gene Editor_0.5.0_amd64.deb",
+                                github: "https://github.com/GenePad/GenePad.github.io/releases/latest/download/Gene.Editor_0.5.0_amd64.deb",
+                                gitee: "https://gitee.com/GenePad/GenePad.github.io/releases/download/v0.5.0/Gene Editor_0.5.0_amd64.deb"
                             }
                         },
                         {
-                            name: "Gene Editor-0.4.0-1.x86_64.rpm",
-                            size: "8.7 MB",
+                            name: "Gene Editor-0.5.0-1.x86_64.rpm",
+                            size: "9.0 MB",
                             sources: {
-                                direct: "release/linux/Gene Editor-0.4.0-1.x86_64.rpm",
-                                github: "https://github.com/GenePad/GenePad.github.io/releases/latest/download/Gene.Editor-0.4.0-1.x86_64.rpm",
-                                gitee: "https://gitee.com/GenePad/GenePad.github.io/releases/download/v0.4.0/Gene Editor-0.4.0-1.x86_64.rpm"
+                                direct: "release/linux/Gene Editor-0.5.0-1.x86_64.rpm",
+                                github: "https://github.com/GenePad/GenePad.github.io/releases/latest/download/Gene.Editor-0.5.0-1.x86_64.rpm",
+                                gitee: "https://gitee.com/GenePad/GenePad.github.io/releases/download/v0.5.0/Gene Editor-0.5.0-1.x86_64.rpm"
                             }
                         }
                     ],
@@ -1131,11 +1144,11 @@
                     files: [
                         {
                             name: "app-universal-release.apk",
-                            size: "14.5 MB",
+                            size: "62.3 MB",
                             sources: {
                                 direct: "release/android/app-universal-release.apk",
                                 github: "https://github.com/GenePad/GenePad.github.io/releases/latest/download/app-universal-release.apk",
-                                gitee: "https://gitee.com/GenePad/GenePad.github.io/releases/download/v0.4.0/app-universal-release.apk"
+                                gitee: "https://gitee.com/GenePad/GenePad.github.io/releases/download/v0.5.0/app-universal-release.apk"
                             }
                         }
                     ]
@@ -1176,13 +1189,13 @@
                 });
             }
 
-            // macOS one-click Terminal install uses the self-hosted script.
-            // curl (piped to bash) never attaches com.apple.quarantine, so the
-            // app is never flagged "damaged". The tarball URL must be passed as
-            // an argument because $0 is "bash" when piped.
-            var MAC_INSTALL_SCRIPT = "https://genepad.pages.dev/release/mac/install-macos.sh";
-            var MAC_TARBALL_URL = "https://genepad.pages.dev/release/mac/Gene%20Editor-macos-arm64.tar.gz";
-            var MAC_INSTALL_CMD = 'curl -fsSL ' + MAC_INSTALL_SCRIPT + ' | bash -s -- ' + MAC_TARBALL_URL;
+            // macOS: the app has no Apple Developer signature (the developer
+            // can't afford the $99/year certificate). The recommended path is
+            // to hand a copyable prompt to an AI coding agent (Codex / Tencent
+            // Workbody / opencode ...) which downloads the .app.zip via curl
+            // (curl never attaches the com.apple.quarantine xattr) and clears
+            // signing/quarantine locally. The prompt text itself is localized
+            // (see localDl.macInstall.prompt) and copied verbatim.
 
             var SPARK_STORE_URL = "https://www.spark-app.store/";
             var SPARK_ICON_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="40 40 200 200" aria-hidden="true">' +
@@ -1244,12 +1257,15 @@
                 var html = "";
 
                 if (platformId === "mac") {
-                    // Primary: one-line Terminal install (quarantine-free).
+                    // Primary: copyable AI prompt that an agent runs to install
+                    // the unsigned app and bypass Gatekeeper.
+                    var macPrompt = t("localDl.macInstall.prompt");
                     html += '<div class="dl-mac-install">' +
                         '<div class="dl-mac-install-title">' + t("localDl.macInstall.title") + '</div>' +
                         '<p class="dl-mac-install-desc">' + t("localDl.macInstall.desc") + '</p>' +
-                        '<div class="dl-mac-cmd" id="dlMacCmd"><code>' + MAC_INSTALL_CMD + '</code>' +
-                        '<button class="dl-mac-copy-btn" id="dlMacCopyBtn" type="button" data-cmd="' + MAC_INSTALL_CMD.replace(/"/g, '&quot;') + '">' +
+                        '<p class="dl-mac-install-tools">' + t("localDl.macInstall.tools") + '</p>' +
+                        '<div class="dl-mac-cmd" id="dlMacCmd"><code>' + macPrompt + '</code>' +
+                        '<button class="dl-mac-copy-btn" id="dlMacCopyBtn" type="button">' +
                         '<i class="fa-solid fa-copy"></i><span>' + t("localDl.macInstall.copy") + '</span>' +
                         '</button></div>' +
                         '<p class="dl-mac-install-note">' + t("localDl.macInstall.note") + '</p>' +
@@ -1279,7 +1295,7 @@
                     var copyBtn = document.getElementById("dlMacCopyBtn");
                     if (copyBtn) {
                         copyBtn.addEventListener("click", function() {
-                            var cmd = copyBtn.getAttribute("data-cmd") || MAC_INSTALL_CMD;
+                            var cmd = t("localDl.macInstall.prompt");
                             var done = function() {
                                 var label = copyBtn.querySelector("span");
                                 var icon = copyBtn.querySelector("i");
