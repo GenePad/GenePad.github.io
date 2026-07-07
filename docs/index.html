@@ -1113,24 +1113,70 @@
                     id: "linux",
                     name: "Linux",
                     icon: "fa-brands fa-linux",
-                    files: [
+                    archGroups: [
                         {
-                            name: "Gene Editor_0.5.0_amd64.deb",
-                            size: "9.0 MB",
-                            sources: {
-                                direct: "release/linux/Gene Editor_0.5.0_amd64.deb",
-                                github: "https://github.com/GenePad/GenePad.github.io/releases/latest/download/Gene.Editor_0.5.0_amd64.deb",
-                                gitee: "https://gitee.com/GenePad/GenePad.github.io/releases/download/v0.5.0/Gene Editor_0.5.0_amd64.deb"
-                            }
+                            id: "x86_64",
+                            files: [
+                                {
+                                    name: "Gene Editor_0.5.0_amd64.deb",
+                                    size: "9.0 MB",
+                                    sources: {
+                                        direct: "release/linux/Gene Editor_0.5.0_amd64.deb",
+                                        github: "https://github.com/GenePad/GenePad.github.io/releases/latest/download/Gene.Editor_0.5.0_amd64.deb",
+                                        gitee: "https://gitee.com/GenePad/GenePad.github.io/releases/download/v0.5.0/Gene Editor_0.5.0_amd64.deb"
+                                    }
+                                },
+                                {
+                                    name: "Gene Editor-0.5.0-1.x86_64.rpm",
+                                    size: "9.0 MB",
+                                    sources: {
+                                        direct: "release/linux/Gene Editor-0.5.0-1.x86_64.rpm",
+                                        github: "https://github.com/GenePad/GenePad.github.io/releases/latest/download/Gene.Editor-0.5.0-1.x86_64.rpm",
+                                        gitee: "https://gitee.com/GenePad/GenePad.github.io/releases/download/v0.5.0/Gene Editor-0.5.0-1.x86_64.rpm"
+                                    }
+                                },
+                                {
+                                    name: "Gene Editor_0.5.0_amd64.tar.gz",
+                                    size: "8.5 MB",
+                                    sources: {
+                                        direct: "release/linux/Gene Editor_0.5.0_amd64.tar.gz",
+                                        github: "https://github.com/GenePad/GenePad.github.io/releases/latest/download/Gene.Editor_0.5.0_amd64.tar.gz",
+                                        gitee: "https://gitee.com/GenePad/GenePad.github.io/releases/download/v0.5.0/Gene Editor_0.5.0_amd64.tar.gz"
+                                    }
+                                }
+                            ]
                         },
                         {
-                            name: "Gene Editor-0.5.0-1.x86_64.rpm",
-                            size: "9.0 MB",
-                            sources: {
-                                direct: "release/linux/Gene Editor-0.5.0-1.x86_64.rpm",
-                                github: "https://github.com/GenePad/GenePad.github.io/releases/latest/download/Gene.Editor-0.5.0-1.x86_64.rpm",
-                                gitee: "https://gitee.com/GenePad/GenePad.github.io/releases/download/v0.5.0/Gene Editor-0.5.0-1.x86_64.rpm"
-                            }
+                            id: "arm64",
+                            files: [
+                                {
+                                    name: "Gene Editor_0.5.0_arm64.deb",
+                                    size: "8.8 MB",
+                                    sources: {
+                                        direct: "release/linux/Gene Editor_0.5.0_arm64.deb",
+                                        github: "https://github.com/GenePad/GenePad.github.io/releases/latest/download/Gene.Editor_0.5.0_arm64.deb",
+                                        gitee: "https://gitee.com/GenePad/GenePad.github.io/releases/download/v0.5.0/Gene Editor_0.5.0_arm64.deb"
+                                    }
+                                },
+                                {
+                                    name: "Gene Editor-0.5.0-1.aarch64.rpm",
+                                    size: "8.8 MB",
+                                    sources: {
+                                        direct: "release/linux/Gene Editor-0.5.0-1.aarch64.rpm",
+                                        github: "https://github.com/GenePad/GenePad.github.io/releases/latest/download/Gene.Editor-0.5.0-1.aarch64.rpm",
+                                        gitee: "https://gitee.com/GenePad/GenePad.github.io/releases/download/v0.5.0/Gene Editor-0.5.0-1.aarch64.rpm"
+                                    }
+                                },
+                                {
+                                    name: "Gene Editor_0.5.0_arm64.tar.gz",
+                                    size: "8.2 MB",
+                                    sources: {
+                                        direct: "release/linux/Gene Editor_0.5.0_arm64.tar.gz",
+                                        github: "https://github.com/GenePad/GenePad.github.io/releases/latest/download/Gene.Editor_0.5.0_arm64.tar.gz",
+                                        gitee: "https://gitee.com/GenePad/GenePad.github.io/releases/download/v0.5.0/Gene Editor_0.5.0_arm64.tar.gz"
+                                    }
+                                }
+                            ]
                         }
                     ],
                     sparkStore: {
@@ -1198,6 +1244,12 @@
             // (see localDl.macInstall.prompt) and copied verbatim.
 
             var SPARK_STORE_URL = "https://www.spark-app.store/";
+            // Linux packages are grouped by CPU architecture. The labels are
+            // universal architecture identifiers (no translation needed).
+            var LINUX_ARCH_LABELS = {
+                "x86_64": "x86_64 / amd64",
+                "arm64": "arm64 / aarch64"
+            };
             var SPARK_ICON_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="40 40 200 200" aria-hidden="true">' +
                 '<defs><style>.s-c1{fill:#FFC344}.s-c2{fill:#F06767}.s-c3{fill:#3F62EB}.s-c4{fill:#FCE102}.s-c5{fill:#5ED938}.s-c6{fill:#8FDBE9}.s-c7{fill:#FD7AFF}</style></defs>' +
                 '<g transform="translate(-371 -278)">' +
@@ -1282,11 +1334,19 @@
                         '<div class="dl-mac-warning-body">' + t("localDl.macWarning.body") + '</div>' +
                         '</div>' +
                         '</div></details>';
-                } else {
-                    platform.files.forEach(function(file) { html += renderFileSection(file); });
-                    if (platformId === "linux" && platform.sparkStore) {
+                } else if (platformId === "linux") {
+                    var archGroups = platform.archGroups || [];
+                    archGroups.forEach(function(group) {
+                        html += '<div class="dl-arch-group"><div class="dl-arch-title">' +
+                            (LINUX_ARCH_LABELS[group.id] || group.id) + '</div>';
+                        group.files.forEach(function(file) { html += renderFileSection(file); });
+                        html += '</div>';
+                    });
+                    if (platform.sparkStore) {
                         html += renderSparkStoreSection();
                     }
+                } else {
+                    platform.files.forEach(function(file) { html += renderFileSection(file); });
                 }
 
                 dlSourcesList.innerHTML = html;

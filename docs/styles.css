@@ -768,6 +768,24 @@ body.local-dl-open {
 }
 
 /* macOS one-line Terminal install (primary, quarantine-free) */
+.dl-arch-group {
+  margin-bottom: 16px;
+}
+
+.dl-arch-group:last-child {
+  margin-bottom: 0;
+}
+
+.dl-arch-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+  margin: 0 0 8px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--line);
+}
+
 .dl-mac-install {
   border: 1px solid rgba(56, 161, 111, 0.35);
   border-radius: 10px;
