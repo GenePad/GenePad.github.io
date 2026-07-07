@@ -578,21 +578,29 @@ body.local-dl-open .dropdown.open .dropdown-menu {
 .dl-sources-list {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
 }
 
 .dl-file-section {
   border: 1px solid var(--line);
-  border-radius: 10px;
+  border-radius: 12px;
   background: var(--panel-2);
   overflow: hidden;
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.dl-file-section:hover {
+  border-color: rgba(56, 161, 111, 0.42);
+  box-shadow: 0 10px 26px rgba(16, 30, 54, 0.09);
+  transform: translateY(-1px);
 }
 
 .dl-file-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 14px 8px;
+  gap: 10px;
+  padding: 15px 16px 13px;
 }
 
 .dl-file-name {
@@ -610,19 +618,22 @@ body.local-dl-open .dropdown.open .dropdown-menu {
 
 .dl-source-buttons {
   display: flex;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px 14px;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 14px 16px;
   border-top: 1px solid var(--line);
 }
 
 .dl-source-btn {
+  flex: 1 1 0;
+  min-width: 0;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  padding: 7px 14px;
+  justify-content: center;
+  gap: 6px;
+  padding: 11px 12px;
   border: 1px solid var(--line);
-  border-radius: 7px;
+  border-radius: 9px;
   background: var(--panel);
   color: var(--ink);
   font-size: 13px;
@@ -658,15 +669,16 @@ body.local-dl-open .dropdown.open .dropdown-menu {
 
 .dl-source-badge {
   position: absolute;
-  top: -8px;
-  right: -4px;
-  padding: 1px 6px;
-  border-radius: 3px;
+  top: -9px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 2px 7px;
+  border-radius: 999px;
   background: #ffc107;
   color: #333;
   font-size: 10px;
   font-weight: 700;
-  line-height: 1.6;
+  line-height: 1.5;
   white-space: nowrap;
   pointer-events: none;
 }
@@ -769,7 +781,7 @@ body.local-dl-open {
 
 /* macOS one-line Terminal install (primary, quarantine-free) */
 .dl-arch-group {
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .dl-arch-group:last-child {
@@ -777,13 +789,21 @@ body.local-dl-open {
 }
 
 .dl-arch-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0 0 12px;
+  padding: 5px 13px 5px 11px;
+  border-radius: 999px;
+  background: rgba(56, 161, 111, 0.1);
+  color: #2f855a;
   font-size: 12px;
   font-weight: 700;
-  color: var(--ink);
   letter-spacing: 0.02em;
-  margin: 0 0 8px;
-  padding-bottom: 5px;
-  border-bottom: 1px solid var(--line);
+}
+
+.dl-arch-title i {
+  font-size: 11px;
 }
 
 .dl-mac-install {

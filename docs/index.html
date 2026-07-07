@@ -1338,7 +1338,7 @@
                     var archGroups = platform.archGroups || [];
                     archGroups.forEach(function(group) {
                         html += '<div class="dl-arch-group"><div class="dl-arch-title">' +
-                            (LINUX_ARCH_LABELS[group.id] || group.id) + '</div>';
+                            '<i class="fa-solid fa-microchip"></i>' + (LINUX_ARCH_LABELS[group.id] || group.id) + '</div>';
                         group.files.forEach(function(file) { html += renderFileSection(file); });
                         html += '</div>';
                     });
