@@ -37,7 +37,7 @@
                     <h1>.dna 转换方案</h1>
                     <p class="lead">
                         `.dna` 是 SnapGene 二进制格式。GenePad 读取和写出时仅使用 SnapGene 兼容 packet：
-                        主序列、拓扑、features、primers、notes、碱基颜色，以及可解析的 chromatogram / ZTR 读段；比对读段等 GenePad 专有数据请保存到 `.gen` 或 `.gjson`，不会写入 `.dna` 私有包。
+                        主序列、拓扑、features、primers、notes、碱基颜色，以及可解析的 chromatogram / ZTR 读段；比对读段等 GenePad 专有数据请保存到 `.gen` 或 `.gjson`。
                     </p>
                     <div class="hero-actions">
                         <a class="button primary" href="#pipeline">查看转换流程</a>
@@ -95,6 +95,7 @@
                                     <tr><td><code>payload[1..]</code></td><td>ASCII 主序列</td></tr>
                                 </tbody>
                             </table>
+                            <p class="schema-note">flags 位：<code>0x01</code>=circular，<code>0x04</code>=double-stranded，<code>0x08</code>=Dam 甲基化，<code>0x10</code>=Dcm 甲基化。payload[0] 为 flags 字节，payload[1..] 为 ASCII 序列。</p>
                         </div>
                     </details>
 
@@ -135,7 +136,7 @@
                     <details class="schema-item">
                         <summary><strong>Primers / StrandColors</strong><span>坐标转换</span></summary>
                         <div class="schema-body">
-                            <p class="schema-note">SnapGene primer binding site 的 <code>location</code> 是 0-based，读入 GenePad 时需要加 1；写回 `.dna` 时再减 1。StrandColors 的 range 同样按 0-based 处理。</p>
+                            <p class="schema-note">SnapGene 坐标是 0-based，GenePad 是 1-based inclusive。<strong>读入 +1，写出 -1</strong>，对称转换。primer <code>location</code> 与 StrandColors <code>range</code> 均如此。range 分隔符接受 <code>..</code> 或 <code>-</code>。</p>
                             <table>
                                 <thead><tr><th>SnapGene</th><th>GenePad</th></tr></thead>
                                 <tbody>
@@ -189,12 +190,12 @@
                         <tbody>
                             <tr><td>主序列、拓扑、甲基化 flags</td><td>写入标准 <code>0x00</code> DNA packet</td></tr>
                             <tr><td>features、qualifiers、primers、notes、strand colors</td><td>写入 SnapGene 兼容 XML packet</td></tr>
-                            <tr><td>alignmentEntries / GenePad 专有读段</td><td>不写入 `.dna` 私有 packet；需要完整保留时使用 `.gen` 或 `.gjson`</td></tr>
-                            <tr><td>未知或旧版私有 packet</td><td>读取时忽略，不作为 GenePad 数据恢复来源</td></tr>
+                            <tr><td>alignmentEntries / GenePad 专有读段</td><td>不写入 `.dna`；需要完整保留时使用 `.gen` 或 `.gjson`</td></tr>
+                            <tr><td>未知或无法识别的 packet</td><td>读取时忽略，不作为 GenePad 数据恢复来源</td></tr>
                         </tbody>
                     </table>
                 </div>
-                <p class="schema-note">为保证与 SnapGene 和第三方工具互通，`.dna` 输出不得新增 GenePad 私有/custom packet（包括旧的 <code>0x7f</code> JSON 包）。无法映射到 SnapGene 标准结构的数据应保存到 GenePad 自有格式。</p>
+                <p class="schema-note">为保证与 SnapGene 和第三方工具互通，`.dna` 输出只使用 SnapGene 标准 packet。无法映射到 SnapGene 标准结构的数据应保存到 GenePad 自有格式（`.gen` 或 `.gjson`）。</p>
             </section>
         </main>
 
