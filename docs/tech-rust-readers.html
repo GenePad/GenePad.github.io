@@ -61,7 +61,7 @@ anyhow = "1"
 rusqlite = { version = "0.32", features = ["bundled"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"</code></pre>
-                <p class="schema-note"><code>bundled</code> 会编译内置 SQLite，便于跨平台分发 CLI 工具。</p>
+                <p class="schema-note"><code>bundled</code> 会编译内置 SQLite，无需目标机预装 SQLite，便于跨平台分发 CLI 工具。版本参考：<code>rusqlite 0.32</code>、<code>serde 1</code>、<code>serde_json 1</code>、<code>anyhow 1</code>。</p>
             </section>
 
             <section class="section schema-band" id="gen-reader">
@@ -215,6 +215,10 @@ fn main() -&gt; Result&lt;()&gt; {
     Ok(())
 }</code></pre>
                 <p class="schema-note">如果需要读取 primers、base_color_ranges、alignment_entries，可按同样方式查询对应表。坐标已经是 1-based inclusive，无需转换。</p>
+                <p class="schema-note"><strong>预期输出</strong>（对一个含若干 feature 的 example.gen）：</p>
+                <pre class="code-block"><code>name: Some("pUC19")
+length: 2686
+features: 12</code></pre>
             </section>
 
             <section class="section schema-band" id="gjson-reader">
@@ -301,6 +305,10 @@ fn main() -&gt; Result&lt;()&gt; {
     Ok(())
 }</code></pre>
                 <p class="schema-note">`.gjson` 中的 <code>length</code> 只是写出时的辅助值，读取程序应以 <code>sequence.len()</code> 为准。</p>
+                <p class="schema-note"><strong>预期输出</strong>（对一个有效 example.gjson）：</p>
+                <pre class="code-block"><code>version: 1.9
+length: 8
+features: 1</code></pre>
             </section>
         </main>
 
