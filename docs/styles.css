@@ -29,6 +29,38 @@
   --cyan: #4fb7c4;
   --violet: #6b5cff;
   --shadow: 0 24px 70px rgba(16, 30, 54, 0.16);
+  /* —— 语义别名（为将来换主色留口）—— */
+  --accent: var(--blue);
+  --success: var(--green);
+  --warn: var(--orange);
+  --green-dark: #1d6e58;
+  /* —— 圆角令牌（统一当前 8/12/14/18 混用）—— */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  /* —— 间距令牌 —— */
+  --space-card: 24px;
+  /* —— 平台渐变对 —— */
+  --platform-win: linear-gradient(135deg, #244b8f, #2f6fed);
+  --platform-mac: linear-gradient(135deg, #1d6e58, #38a16f);
+  --platform-linux: linear-gradient(135deg, #b45f21, #f29a45);
+  --platform-android: linear-gradient(135deg, #2d2d5e, #5b5baa);
+  /* —— 赞助品牌粉 —— */
+  --sponsor-1: #ff6a9a;
+  --sponsor-2: #c44cd6;
+  /* —— 深色色带亮色文字 —— */
+  --dark-accent-green: #86d7c0;
+  --dark-accent-cyan: #90e1cb;
+  --dark-accent-violet: #a8b4ff;
+  --dark-accent-blue: #b8c8ff;
+  /* —— 质粒图谱特征色（与 index.html 轮播一致）—— */
+  --feature-1: #ffc344;
+  --feature-2: #f06767;
+  --feature-3: #3f62eb;
+  --feature-4: #fce102;
+  --feature-5: #5ed938;
+  --feature-6: #8fdbe9;
+  --feature-7: #fd7aff;
 }
 
 * {
