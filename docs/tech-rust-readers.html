@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="GenePad .gen 和 .gjson 文件的 Rust 读取示例，包含 rusqlite 与 serde_json 最小实现。" />
+        <title>Rust 读取示例 - GenePad 开发者文档</title>
+        <link rel="canonical" href="https://genepad.pages.dev/tech-rust-readers.html" />
+        <link rel="icon" href="icon.png" type="image/png" />
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <header class="site-header">
+            <a class="brand" href="index.html" aria-label="GenePad 首页">
+                <span class="brand-mark"><img src="icon.png" alt="" /></span>
+                <span><strong>基因工坊</strong><small>GenePad</small></span>
+            </a>
+            <button class="nav-toggle" type="button" aria-controls="site-nav" aria-expanded="false">
+                <span></span><span></span><span></span><span class="sr-only">打开导航</span>
+            </button>
+            <nav class="nav" id="site-nav" aria-label="主导航">
+                <a href="tech-support.html">文档首页</a>
+                <a href="#dependencies">依赖</a>
+                <a href="#gen-reader">读取 .gen</a>
+                <a href="#gjson-reader">读取 .gjson</a>
+                <a href="tech-dna-conversion.html">.dna 转换</a>
+            </nav>
+        </header>
+
+        <main id="top">
+            <section class="hero tech-hero">
+                <div class="hero-copy">
+                    <p class="eyebrow">Rust Recipes</p>
+                    <h1>Rust 读取示例</h1>
+                    <p class="lead">
+                        下面示例面向第三方工具开发者：快速把 `.gen` 或 `.gjson`
+                        读成一个轻量的序列对象。生产环境可以在这些代码基础上补充错误类型、schema 迁移和字段校验。
+                    </p>
+                    <div class="hero-actions">
+                        <a class="button primary" href="#gen-reader">读取 .gen</a>
+                        <a class="button secondary" href="#gjson-reader">读取 .gjson</a>
+                    </div>
+                </div>
+                <div class="hero-card-stack" aria-hidden="true">
+                    <div class="card-float card-float-1"><span class="card-label">rusqlite</span><span class="card-detail">SQLite .gen</span></div>
+                    <div class="card-float card-float-2"><span class="card-label">serde</span><span class="card-detail">结构体反序列化</span></div>
+                    <div class="card-float card-float-3"><span class="card-label">serde_json</span><span class="card-detail">JSON 字段解析</span></div>
+                    <div class="card-float card-float-4"><span class="card-label">1-based</span><span class="card-detail">坐标保持不变</span></div>
+                </div>
+            </section>
+
+            <section class="section" id="dependencies">
+                <div class="section-heading">
+                    <p class="eyebrow">Cargo</p>
+                    <h2>依赖配置</h2>
+                </div>
+                <pre class="code-block"><code>[dependencies]
+anyhow = "1"
+rusqlite = { version = "0.32", features = ["bundled"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"</code></pre>
+                <p class="schema-note"><code>bundled</code> 会编译内置 SQLite，便于跨平台分发 CLI 工具。</p>
+            </section>
+
+            <section class="section schema-band" id="gen-reader">
+                <div class="section-heading">
+                    <p class="eyebrow">SQLite</p>
+                    <h2>读取 .gen</h2>
+                </div>
+                <pre class="code-block"><code>use anyhow::Result;
+use rusqlite::{Connection, OptionalExtension};
+use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
+use std::fs::File;
+use std::io::Read;
+use std::path::Path;
+
+#[derive(Debug, Serialize, Deserialize)]
+struct FeatureSegment {
+    start: i64,
+    end: i64,
+    strand: Option&lt;String&gt;,
+    name: Option&lt;String&gt;,
+    color: Option&lt;String&gt;,
+}
+
+#[derive(Debug)]
+struct Feature {
+    id: String,
+    name: String,
+    feature_type: String,
+    start: i64,
+    end: i64,
+    strand: String,
+    color: Option&lt;String&gt;,
+    label: Option&lt;String&gt;,
+    note: Option&lt;String&gt;,
+    frame: Option&lt;i64&gt;,
+    visible: bool,
+    segments: Vec&lt;FeatureSegment&gt;,
+    qualifiers: HashMap&lt;String, Vec&lt;String&gt;&gt;,
+}
+
+#[derive(Debug)]
+struct GeneProject {
+    metadata: HashMap&lt;String, String&gt;,
+    sequence: String,
+    features: Vec&lt;Feature&gt;,
+}
+
+fn validate_sqlite_header(path: &Path) -&gt; Result&lt;()&gt; {
+    let mut file = File::open(path)?;
+    let mut header = [0_u8; 16];
+    file.read_exact(&mut header)?;
+    anyhow::ensure!(&header == b"SQLite format 3\0", "not a .gen SQLite file");
+    Ok(())
+}
+
+fn read_metadata(conn: &Connection) -&gt; Result&lt;HashMap&lt;String, String&gt;&gt; {
+    let mut stmt = conn.prepare("SELECT key, value FROM project_meta")?;
+    let rows = stmt.query_map([], |row| {
+        Ok((row.get::&lt;_, String&gt;(0)?, row.get::&lt;_, String&gt;(1)?))
+    })?;
+
+    let mut metadata = HashMap::new();
+    for row in rows {
+        let (key, value) = row?;
+        metadata.insert(key, value);
+    }
+    Ok(metadata)
+}
+
+fn read_sequence(conn: &Connection) -&gt; Result&lt;String&gt; {
+    let mut stmt = conn.prepare(
+        "SELECT bases FROM sequence_blocks ORDER BY block_index"
+    )?;
+    let rows = stmt.query_map([], |row| row.get::&lt;_, String&gt;(0))?;
+
+    let mut sequence = String::new();
+    for row in rows {
+        sequence.push_str(&row?);
+    }
+    Ok(sequence)
+}
+
+fn parse_json_or_default&lt;T&gt;(raw: Option&lt;String&gt;) -&gt; Result&lt;T&gt;
+where
+    T: serde::de::DeserializeOwned + Default,
+{
+    match raw {
+        Some(value) if !value.trim().is_empty() =&gt; Ok(serde_json::from_str(&value)?),
+        _ =&gt; Ok(T::default()),
+    }
+}
+
+fn read_features(conn: &Connection) -&gt; Result&lt;Vec&lt;Feature&gt;&gt; {
+    let mut stmt = conn.prepare(
+        "SELECT id, name, type, start_pos, end_pos, strand, color, label, note,
+                frame, visible, segments, qualifiers
+         FROM features
+         ORDER BY start_pos"
+    )?;
+
+    let rows = stmt.query_map([], |row| {
+        let segments_raw: Option&lt;String&gt; = row.get(11)?;
+        let qualifiers_raw: Option&lt;String&gt; = row.get(12)?;
+        let segments = parse_json_or_default(segments_raw)
+            .map_err(|e| rusqlite::Error::ToSqlConversionFailure(e.into()))?;
+        let qualifiers = parse_json_or_default(qualifiers_raw)
+            .map_err(|e| rusqlite::Error::ToSqlConversionFailure(e.into()))?;
+
+        Ok(Feature {
+            id: row.get(0)?,
+            name: row.get(1)?,
+            feature_type: row.get(2)?,
+            start: row.get(3)?,
+            end: row.get(4)?,
+            strand: row.get(5)?,
+            color: row.get(6)?,
+            label: row.get(7)?,
+            note: row.get(8)?,
+            frame: row.get(9)?,
+            visible: row.get::&lt;_, i64&gt;(10)? != 0,
+            segments,
+            qualifiers,
+        })
+    })?;
+
+    let mut features = Vec::new();
+    for row in rows {
+        features.push(row?);
+    }
+    Ok(features)
+}
+
+fn read_gen(path: impl AsRef&lt;Path&gt;) -&gt; Result&lt;GeneProject&gt; {
+    let path = path.as_ref();
+    validate_sqlite_header(path)?;
+    let conn = Connection::open(path)?;
+
+    Ok(GeneProject {
+        metadata: read_metadata(&conn)?,
+        sequence: read_sequence(&conn)?,
+        features: read_features(&conn)?,
+    })
+}
+
+fn main() -&gt; Result&lt;()&gt; {
+    let project = read_gen("example.gen")?;
+    println!("name: {:?}", project.metadata.get("name"));
+    println!("length: {}", project.sequence.len());
+    println!("features: {}", project.features.len());
+    Ok(())
+}</code></pre>
+                <p class="schema-note">如果需要读取 primers、base_color_ranges、alignment_entries，可按同样方式查询对应表。坐标已经是 1-based inclusive，无需转换。</p>
+            </section>
+
+            <section class="section schema-band" id="gjson-reader">
+                <div class="section-heading">
+                    <p class="eyebrow">JSON</p>
+                    <h2>读取 .gjson</h2>
+                </div>
+                <pre class="code-block"><code>use anyhow::Result;
+use serde::Deserialize;
+use std::collections::HashMap;
+use std::fs;
+
+#[derive(Debug, Deserialize, Default)]
+struct GjsonFeatureSegment {
+    start: i64,
+    end: i64,
+    strand: Option&lt;String&gt;,
+    name: Option&lt;String&gt;,
+    color: Option&lt;String&gt;,
+}
+
+#[derive(Debug, Deserialize)]
+struct GjsonFeature {
+    id: String,
+    name: String,
+    #[serde(rename = "type")]
+    feature_type: String,
+    start: i64,
+    end: i64,
+    strand: String,
+    color: Option&lt;String&gt;,
+    label: Option&lt;String&gt;,
+    note: Option&lt;String&gt;,
+    frame: Option&lt;i64&gt;,
+    #[serde(default = "default_true")]
+    visible: bool,
+    #[serde(default)]
+    segments: Vec&lt;GjsonFeatureSegment&gt;,
+    #[serde(default)]
+    qualifiers: HashMap&lt;String, Vec&lt;String&gt;&gt;,
+}
+
+#[derive(Debug, Deserialize)]
+struct GjsonFile {
+    version: String,
+    sequence: String,
+    #[serde(default)]
+    custom_name: String,
+    #[serde(default)]
+    description: String,
+    #[serde(default)]
+    isCircular: bool,
+    isDoubleStranded: Option&lt;bool&gt;,
+    accession: Option&lt;String&gt;,
+    organism: Option&lt;String&gt;,
+    date: Option&lt;String&gt;,
+    moleculeType: Option&lt;String&gt;,
+    division: Option&lt;String&gt;,
+    gbVersion: Option&lt;String&gt;,
+    keywords: Option&lt;String&gt;,
+    source: Option&lt;String&gt;,
+    comments: Option&lt;String&gt;,
+    #[serde(default)]
+    features: Vec&lt;GjsonFeature&gt;,
+}
+
+fn default_true() -&gt; bool {
+    true
+}
+
+fn read_gjson(path: &str) -&gt; Result&lt;GjsonFile&gt; {
+    let text = fs::read_to_string(path)?;
+    let file: GjsonFile = serde_json::from_str(&text)?;
+    anyhow::ensure!(!file.version.is_empty(), "missing gjson version");
+    anyhow::ensure!(!file.sequence.is_empty(), "missing sequence");
+    Ok(file)
+}
+
+fn main() -&gt; Result&lt;()&gt; {
+    let file = read_gjson("example.gjson")?;
+    println!("version: {}", file.version);
+    println!("length: {}", file.sequence.len());
+    println!("features: {}", file.features.len());
+    Ok(())
+}</code></pre>
+                <p class="schema-note">`.gjson` 中的 <code>length</code> 只是写出时的辅助值，读取程序应以 <code>sequence.len()</code> 为准。</p>
+            </section>
+        </main>
+
+        <footer class="footer"><p><a href="tech-support.html">返回开发者文档</a></p></footer>
+        <script>
+            var navToggle = document.querySelector(".nav-toggle");
+            var siteHeader = document.querySelector(".site-header");
+            if (navToggle && siteHeader) navToggle.addEventListener("click", function() {
+                var isOpen = siteHeader.classList.toggle("nav-open");
+                navToggle.setAttribute("aria-expanded", String(isOpen));
+            });
+        </script>
+    </body>
+</html>
