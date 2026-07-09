@@ -17,92 +17,55 @@
                 <span class="brand-mark"><img src="icon.png" alt="" /></span>
                 <span><strong>基因工坊</strong><small>GenePad</small></span>
             </a>
-            <button class="nav-toggle" type="button" aria-controls="site-nav" aria-expanded="false">
-                <span></span><span></span><span></span><span class="sr-only">打开导航</span>
-            </button>
-            <nav class="nav" id="site-nav" aria-label="主导航">
-                <a href="tech-support.html">文档首页</a>
-                <a href="#schema">表结构</a>
-                <a href="#mapping">字段映射</a>
-                <a href="tech-rust-readers.html">Rust 示例</a>
-                <a href="tech-dna-conversion.html">.dna 转换</a>
-            </nav>
         </header>
 
         <main id="top">
-            <section class="hero tech-hero">
-                <div class="hero-copy">
-                    <p class="eyebrow">.gen Format</p>
+         <div class="doc-layout">
+            <aside class="doc-toc" id="doc-toc">
+                <button class="doc-toc-toggle" type="button">目录</button>
+                <a class="doc-toc-home" href="tech-support.html">文档首页</a>
+                <p class="doc-toc-group">文件格式</p>
+                <a class="current" href="tech-gen-format.html">.gen 定义</a>
+                <a href="tech-gjson-format.html">.gjson 定义</a>
+                <a href="tech-dna-conversion.html">.dna 转换</a>
+                <p class="doc-toc-group">代码示例</p>
+                <a href="tech-rust-readers.html">Rust 读取</a>
+            </aside>
+            <div class="doc-content doc-prose">
+                <nav class="doc-breadcrumb"><a href="tech-support.html">文档首页</a> › 文件格式 › .gen 定义</nav>
+                <div class="doc-head">
                     <h1>.gen 文件定义</h1>
                     <p class="lead">
                         `.gen` 是 GenePad / Gene Editor 的完整项目文件，文件本质是 SQLite 3 数据库。
                         它比 `.gjson` 更完整，适合保存工程状态、测序图谱、比对条目、撤销历史和附件。
                     </p>
-                    <div class="hero-actions">
-                        <a class="button primary" href="#schema">查看表结构</a>
-                        <a class="button secondary" href="tech-rust-readers.html#gen-reader">Rust 读取代码</a>
+                    <div class="doc-tags">
+                        <span class="doc-tag">SQLite format 3</span>
+                        <span class="doc-tag">1-based inclusive</span>
+                        <span class="doc-tag">BLOCK_SIZE = 10000</span>
+                        <span class="doc-tag">SCHEMA_VERSION = 5</span>
                     </div>
-                    <dl class="hero-stats" aria-label=".gen 摘要">
-                        <div>
-                            <dt>SQLite format 3</dt>
-                            <dd>前 16 字节为标准 SQLite 文件头</dd>
-                        </div>
-                        <div>
-                            <dt>1-based inclusive</dt>
-                            <dd>序列坐标与应用内部一致</dd>
-                        </div>
-                        <div>
-                            <dt>BLOCK_SIZE = 10000</dt>
-                            <dd>主序列按 10,000 bases 分块</dd>
-                        </div>
-                        <div>
-                            <dt>SCHEMA_VERSION = 5</dt>
-                            <dd>常量已定义；schema_version 表存在但通常为空，勿依赖其做版本判断</dd>
-                        </div>
-                        </dl>
                 </div>
-                <div class="hero-card-stack" aria-hidden="true">
-                    <div class="card-float card-float-1"><span class="card-label">project_meta</span><span class="card-detail">项目元信息</span></div>
-                    <div class="card-float card-float-2"><span class="card-label">sequence_blocks</span><span class="card-detail">主序列分块</span></div>
-                    <div class="card-float card-float-3"><span class="card-label">features</span><span class="card-detail">注释与 qualifiers</span></div>
-                    <div class="card-float card-float-4"><span class="card-label">primers</span><span class="card-detail">引物与结合位点</span></div>
-                </div>
-            </section>
 
-            <section class="section tech-overview" id="overview">
-                <div class="section-heading">
-                    <p class="eyebrow">Overview</p>
-                    <h2>读取原则</h2>
-                </div>
-                <div class="overview-grid">
-                    <article class="overview-card">
-                        <span class="icon">01</span>
-                        <h3>先按 SQLite 打开</h3>
-                        <p>无需自定义二进制 parser。用任意 SQLite 驱动打开 `.gen`，再按下方表结构查询。</p>
-                    </article>
-                    <article class="overview-card">
-                        <span class="icon">02</span>
-                        <h3>序列按块拼接</h3>
-                        <p>`sequence_blocks` 需要按 `block_index` 升序拼接，不能依赖数据库默认返回顺序。</p>
-                    </article>
-                    <article class="overview-card">
-                        <span class="icon">03</span>
-                        <h3>JSON 列延迟解析</h3>
-                        <p>`segments`、`qualifiers`、`components`、`alignment`、`references` 等字段是 JSON 字符串。</p>
-                    </article>
-                    <article class="overview-card">
-                        <span class="icon">04</span>
-                        <h3>限制性酶切位点可重算</h3>
-                        <p>`.gen` 不需要持久化 `restrictionSites`，通常由读取程序根据主序列重新检测。</p>
-                    </article>
-                </div>
-            </section>
+                <section class="doc-section">
+                    <div class="section-heading">
+                        <p class="eyebrow">Overview</p>
+                        <h2>读取原则</h2>
+                    </div>
+                    <ul style="color:var(--lead);line-height:1.9;padding-left:1.3em">
+                        <li>无需自定义二进制 parser——用任意 SQLite 驱动打开 `.gen`，再按下方表结构查询。</li>
+                        <li>`sequence_blocks` 需按 `block_index` 升序拼接，不能依赖数据库默认返回顺序。</li>
+                        <li>`segments`、`qualifiers`、`components`、`alignment`、`references` 等字段是 JSON 字符串，需延迟解析。</li>
+                        <li>`.gen` 不持久化 `restrictionSites`，通常由读取程序根据主序列重新检测。</li>
+                    </ul>
+                </section>
 
-            <section class="section schema-band" id="schema">
+            <section class="schema-band">
                 <div class="section-heading">
                     <p class="eyebrow">Schema</p>
                     <h2>核心表结构</h2>
                 </div>
+
 
                 <div class="schema-list">
                     <details class="schema-item" open>
@@ -216,40 +179,36 @@
                 </div>
             </section>
 
-            <section class="section" id="mapping">
+            <section class="doc-section" id="mapping">
                 <div class="section-heading">
                     <p class="eyebrow">Mapping</p>
                     <h2>与内存模型的对应</h2>
                 </div>
-                <div class="schema-body">
-                    <table>
-                        <thead><tr><th>DNASequence 字段</th><th>.gen 来源</th><th>备注</th></tr></thead>
-                        <tbody>
-                            <tr><td><code>sequence</code></td><td><code>sequence_blocks</code></td><td>按 block_index 拼接</td></tr>
-                            <tr><td><code>features</code></td><td><code>features</code></td><td>segments / qualifiers 需要 JSON 解析</td></tr>
-                            <tr><td><code>primers</code></td><td><code>primers</code> + <code>primer_binding_sites</code></td><td>按 primer_id 关联</td></tr>
-                            <tr><td><code>baseColorRanges</code></td><td><code>base_color_ranges</code></td><td>strand 仅 forward / reverse</td></tr>
-                            <tr><td><code>alignmentEntries</code></td><td><code>alignment_entries</code></td><td>chromatogram_json 可选</td></tr>
-                            <tr><td><code>chromatogram</code></td><td><code>chromatogram_data</code></td><td>id 固定为 primary</td></tr>
-                            <tr><td><code>accession, organism, date...</code></td><td><code>project_meta</code></td><td>全部为字符串值</td></tr>
-                        </tbody>
-                    </table>
-                </div>
+                <table class="doc-table">
+                    <thead><tr><th>DNASequence 字段</th><th>.gen 来源</th><th>备注</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>sequence</code></td><td><code>sequence_blocks</code></td><td>按 block_index 拼接</td></tr>
+                        <tr><td><code>features</code></td><td><code>features</code></td><td>segments / qualifiers 需要 JSON 解析</td></tr>
+                        <tr><td><code>primers</code></td><td><code>primers</code> + <code>primer_binding_sites</code></td><td>按 primer_id 关联</td></tr>
+                        <tr><td><code>baseColorRanges</code></td><td><code>base_color_ranges</code></td><td>strand 仅 forward / reverse</td></tr>
+                        <tr><td><code>alignmentEntries</code></td><td><code>alignment_entries</code></td><td>chromatogram_json 可选</td></tr>
+                        <tr><td><code>chromatogram</code></td><td><code>chromatogram_data</code></td><td>id 固定为 primary</td></tr>
+                        <tr><td><code>accession, organism, date...</code></td><td><code>project_meta</code></td><td>全部为字符串值</td></tr>
+                    </tbody>
+                </table>
             </section>
 
-            <section class="section" id="conventions">
+            <section class="doc-section" id="conventions">
                 <div class="section-heading">
                     <p class="eyebrow">Conventions</p>
                     <h2>坐标与环形序列</h2>
                 </div>
-                <div class="schema-body">
-                    <p>feature / primer / base_color_ranges 的 <code>start_pos</code> / <code>end_pos</code> 均为 <strong>1-based inclusive</strong>。例如 <code>start=1, end=10</code> 表示第 1 到第 10 个碱基（共 10 个）。</p>
-                    <p>环形序列跨越原点时 <code>start &gt; end</code>：长度 = <code>seqLength - start + end + 1</code>（从 start 走到序列末尾，再从 1 绕回到 end）。多段 feature 还可用 <code>segments</code> JSON 数组，每段独立 <code>{start, end, strand?, name?, color?}</code>。</p>
-                    <p class="schema-note">注意：<code>sequence_blocks.block_index</code> 是 0-based，与上述 1-based 特征坐标是两套体系。</p>
-                </div>
+                <p>feature / primer / base_color_ranges 的 <code>start_pos</code> / <code>end_pos</code> 均为 <strong>1-based inclusive</strong>。例如 <code>start=1, end=10</code> 表示第 1 到第 10 个碱基（共 10 个）。</p>
+                <p>环形序列跨越原点时 <code>start &gt; end</code>：长度 = <code>seqLength - start + end + 1</code>（从 start 走到序列末尾，再从 1 绕回到 end）。多段 feature 还可用 <code>segments</code> JSON 数组，每段独立 <code>{start, end, strand?, name?, color?}</code>。</p>
+                <p class="doc-note">注意：<code>sequence_blocks.block_index</code> 是 0-based，与上述 1-based 特征坐标是两套体系。</p>
             </section>
 
-            <section class="section" id="quick-look">
+            <section class="doc-section" id="quick-look">
                 <div class="section-heading">
                     <p class="eyebrow">Quick Look</p>
                     <h2>用 sqlite3 打开看一眼</h2>
@@ -269,15 +228,19 @@ SELECT group_concat(bases, '') FROM (SELECT bases FROM sequence_blocks ORDER BY 
 # 查看前几个 feature
 SELECT name, type, start_pos, end_pos, strand FROM features LIMIT 5;</code></pre>
             </section>
+            </div>
+         </div>
         </main>
 
         <footer class="site-footer"><p><a href="tech-support.html">返回开发者文档</a></p></footer>
         <script>
-            var navToggle = document.querySelector(".nav-toggle");
-            var siteHeader = document.querySelector(".site-header");
-            if (navToggle && siteHeader) navToggle.addEventListener("click", function() {
-                var isOpen = siteHeader.classList.toggle("nav-open");
-                navToggle.setAttribute("aria-expanded", String(isOpen));
+            var tocToggle = document.querySelector(".doc-toc-toggle");
+            var docToc = document.querySelector(".doc-toc");
+            if (tocToggle && docToc) tocToggle.addEventListener("click", function() {
+                docToc.classList.toggle("open");
+            });
+            document.querySelectorAll(".doc-toc a:not(.doc-toc-toggle)").forEach(function(link) {
+                link.addEventListener("click", function() { docToc.classList.remove("open"); });
             });
         </script>
     </body>
