@@ -63,8 +63,28 @@
                 </div>
                 <pre class="code-block"><code>{
   "version": "1.9",
-  "sequence": "ATGC",
-  "features": []
+  "id": "gjson-1752000000000",
+  "type_of_display": "file_name",
+  "custom_name": "",
+  "description": "示例序列",
+  "sequence": "ATGCGTAC",
+  "length": 8,
+  "isCircular": false,
+  "isDoubleStranded": true,
+  "features": [
+    {
+      "id": "feature-0",
+      "name": "示例 CDS",
+      "type": "CDS",
+      "start": 1,
+      "end": 6,
+      "strand": "forward",
+      "color": "#38a16f",
+      "visible": true
+    }
+  ],
+  "baseColorRanges": [],
+  "primers": []
 }</code></pre>
                 <p class="schema-note">读取时至少需要 <code>version</code> 和 <code>sequence</code>。其他字段缺失时会走默认值。</p>
             </section>
@@ -104,7 +124,7 @@
                         </tbody>
                     </table>
                 </div>
-                <p class="schema-note">当前 `.gjson` 不保存顶层 chromatogram，也不保存 <code>alignmentEntries[].chromatogram</code>。完整项目快照请使用 `.gen`。</p>
+                <p class="schema-note"><strong>.gjson 不存储（与 .gen 的保真差异）：</strong>撤销/编辑历史（undo_entries / edit_history）、附件（attachments）、顶层 chromatogram、<code>alignmentEntries[].chromatogram</code>、Dam/Dcm 甲基化（<code>isDamMethylated</code> / <code>isDcmMethylated</code>）。需要完整保真快照请使用 <code>.gen</code>。</p>
             </section>
 
             <section class="section" id="objects">
@@ -136,7 +156,7 @@
     "translation": ["M..."]
   }
 }</code></pre>
-                            <p class="schema-note"><code>start</code> / <code>end</code> 是 1-based inclusive。<code>segments</code> 仅多片段 feature 通常需要。<code>qualifiers</code> 用于保留 GenBank qualifier。</p>
+                            <p class="schema-note"><code>start</code>/<code>end</code> 为 1-based inclusive。<code>segments</code> 仅在段数 &gt; 1 时写出（单段 feature 只用顶层 start/end）；环形跨原点时 start &gt; end。<code>qualifiers</code> 类型为 <code>Record&lt;string, string[]&gt;</code>，保留 GenBank qualifier（如 <code>/translation</code>、<code>/codon_start</code>）。</p>
                         </div>
                     </details>
 
@@ -161,6 +181,7 @@
     }
   ]
 }</code></pre>
+                            <p class="schema-note"><code>bindingSites[]</code> 字段：<code>start</code>/<code>end</code> 1-based inclusive，<code>boundStrand</code> 为 forward/reverse，<code>meltingTemperature</code> 为 Tm(℃)，<code>components</code> 是 <code>{hybridizedRange?, bases}</code> 数组，<code>alignment</code> 是 <code>AlignmentSegment[]</code>（写出时默认空数组，<code>visible</code> 缺省为 true）。</p>
                         </div>
                     </details>
 
@@ -187,6 +208,7 @@
   "sequence": "ATGC...",
   "visible": true
 }</code></pre>
+                            <p class="schema-note">.gjson 中比对条目仅保留 <code>id, name, sequence, visible</code> 四个字段；运行时的 chromatogram 不写入 .gjson。</p>
                         </div>
                     </details>
                 </div>
