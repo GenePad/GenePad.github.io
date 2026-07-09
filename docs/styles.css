@@ -875,8 +875,8 @@ body.local-dl-open {
   display: block;
   padding: 12px 14px;
   border-radius: 7px;
-  background: #0f1724;
-  color: #d0d9e8;
+  background: #161e2e;
+  color: #e8edf5;
   font-family: "SF Mono", "Fira Code", Consolas, monospace;
   font-size: 12px;
   line-height: 1.6;
@@ -1857,7 +1857,16 @@ body.local-dl-open {
 }
 
 .schema-band .eyebrow {
-  color: #a8b4ff;
+  color: #c0caff;
+}
+
+.schema-band h2 {
+  color: #f0f4fa;
+}
+
+.schema-band .schema-body p,
+.schema-band .schema-body li {
+  color: #c8d3e0;
 }
 
 .schema-list {
@@ -1906,11 +1915,11 @@ body.local-dl-open {
 .schema-item summary strong {
   font-family: "SF Mono", "Fira Code", Consolas, monospace;
   font-weight: 700;
-  color: #e3e9f2;
+  color: #f0f4fa;
 }
 
 .schema-item summary span {
-  color: #8b9ab5;
+  color: #a8b8cc;
   font-size: 13px;
 }
 
@@ -1927,8 +1936,8 @@ body.local-dl-open {
 .schema-body thead th {
   text-align: left;
   padding: 8px 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-  color: #8b9ab5;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  color: #c4d2e8;
   font-weight: 700;
   font-size: 12px;
   text-transform: uppercase;
@@ -1937,8 +1946,8 @@ body.local-dl-open {
 
 .schema-body tbody td {
   padding: 8px 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  color: #d0d9e8;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: #e8edf5;
 }
 
 .schema-body tbody tr:last-child td {
@@ -1948,25 +1957,26 @@ body.local-dl-open {
 .schema-body code {
   padding: 2px 6px;
   border-radius: 4px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(79, 183, 196, 0.18);
   font-family: "SF Mono", "Fira Code", Consolas, monospace;
   font-size: 12px;
-  color: #b8c8ff;
+  color: #7fd4e0;
 }
 
 .schema-note {
   margin: 12px 0 0;
   padding: 12px 16px;
-  border-left: 3px solid var(--cyan);
+  border-left: 3px solid var(--blue);
   border-radius: 0 6px 6px 0;
-  background: rgba(79, 183, 196, 0.08);
-  color: #a0b8c8;
+  background: rgba(47, 111, 237, 0.12);
+  color: #c8d3e0;
   font-size: 13px;
   line-height: 1.6;
 }
 
 .schema-note code {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(79, 183, 196, 0.18);
+  color: #7fd4e0;
 }
 
 .encoding-grid {
@@ -2113,15 +2123,17 @@ code {
 
 .code-block {
   margin: 0;
-  padding: 20px;
+  padding: 20px 22px;
   max-height: 600px;
   overflow: auto;
-  background: #0f1724;
-  color: #d0d9e8;
+  background: #161e2e;
+  color: #e8edf5;
   font-family: "SF Mono", "Fira Code", Consolas, monospace;
   font-size: 13px;
-  line-height: 1.6;
+  line-height: 1.65;
   tab-size: 2;
+  border-left: 3px solid var(--blue);
+  border-radius: 0 8px 8px 0;
   -webkit-overflow-scrolling: touch;
 }
 
