@@ -24,87 +24,60 @@
                     <small>GenePad</small>
                 </span>
             </a>
-            <button class="nav-toggle" type="button" aria-controls="site-nav" aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span class="sr-only">打开导航</span>
-            </button>
-            <nav class="nav" id="site-nav" aria-label="主导航">
-                <a href="index.html">首页</a>
-                <a href="tech-gen-format.html">.gen</a>
-                <a href="tech-gjson-format.html">.gjson</a>
-                <a href="tech-rust-readers.html">Rust 读取</a>
-                <a href="tech-dna-conversion.html">.dna 转换</a>
-            </nav>
         </header>
 
         <main id="top">
-            <section class="hero tech-hero">
-                <div class="hero-copy">
-                    <p class="eyebrow">Developer Docs</p>
+         <div class="doc-layout">
+            <aside class="doc-toc" id="doc-toc">
+                <button class="doc-toc-toggle" type="button">目录</button>
+                <a class="doc-toc-home current" href="tech-support.html">文档首页</a>
+                <p class="doc-toc-group">文件格式</p>
+                <a href="tech-gen-format.html">.gen 定义</a>
+                <a href="tech-gjson-format.html">.gjson 定义</a>
+                <a href="tech-dna-conversion.html">.dna 转换</a>
+                <p class="doc-toc-group">代码示例</p>
+                <a href="tech-rust-readers.html">Rust 读取</a>
+            </aside>
+            <div class="doc-content doc-prose">
+                <div class="doc-head">
                     <h1>文件格式开发文档</h1>
                     <p class="lead">
                         面向需要自行开发读取、转换或导入程序的开发者。这里把 GenePad / Gene Editor
                         当前使用的 `.gen`、`.gjson`、SnapGene `.dna` 相关格式拆成独立页面，便于快速定位实现细节。
                     </p>
-                    <div class="hero-actions">
-                        <a class="button primary" href="tech-gen-format.html">查看 .gen 定义</a>
-                        <a class="button secondary" href="tech-rust-readers.html">查看 Rust 示例</a>
-                    </div>
                 </div>
-                <div class="hero-card-stack" aria-hidden="true">
-                    <div class="card-float card-float-1">
-                        <span class="card-label">.gen</span>
-                        <span class="card-detail">SQLite 项目文件</span>
-                    </div>
-                    <div class="card-float card-float-2">
-                        <span class="card-label">.gjson</span>
-                        <span class="card-detail">JSON 交换格式</span>
-                    </div>
-                    <div class="card-float card-float-3">
-                        <span class="card-label">Rust</span>
-                        <span class="card-detail">读取示例代码</span>
-                    </div>
-                    <div class="card-float card-float-4">
-                        <span class="card-label">.dna</span>
-                        <span class="card-detail">SnapGene 转换方案</span>
-                    </div>
-                </div>
-            </section>
 
-            <section class="section tech-overview" id="docs">
-                <div class="section-heading">
-                    <p class="eyebrow">Sections</p>
-                    <h2>独立页面</h2>
-                </div>
-                <div class="overview-grid">
-                    <article class="overview-card">
-                        <span class="icon">01</span>
-                        <h3>.gen 文件定义</h3>
-                        <p>SQLite 3 项目文件：12 张表定义、字段语义、坐标规则、分块与撤销机制。读完后能独立读写 .gen。</p>
-                        <a class="button secondary" href="tech-gen-format.html">打开页面</a>
-                    </article>
-                    <article class="overview-card">
-                        <span class="icon">02</span>
-                        <h3>.gjson 文件定义</h3>
-                        <p>JSON 交换格式：顶层字段、各对象定义、与 .gen 的保真差异。读完后能解析 .gjson。</p>
-                        <a class="button secondary" href="tech-gjson-format.html">打开页面</a>
-                    </article>
-                    <article class="overview-card">
-                        <span class="icon">03</span>
-                        <h3>Rust 读取示例</h3>
-                        <p>rusqlite 读 .gen + serde_json 读 .gjson 的最小可运行实现，含依赖与预期输出。</p>
-                        <a class="button secondary" href="tech-rust-readers.html">打开页面</a>
-                    </article>
-                    <article class="overview-card">
-                        <span class="icon">04</span>
-                        <h3>.dna 转换方案</h3>
-                        <p>SnapGene .dna 二进制包结构、flags 位、字段映射、0-based↔1-based 坐标转换。</p>
-                        <a class="button secondary" href="tech-dna-conversion.html">打开页面</a>
-                    </article>
-                </div>
-            </section>
+                <section class="doc-section">
+                    <div class="section-heading">
+                        <p class="eyebrow">文件格式</p>
+                        <h2>序列文件定义</h2>
+                    </div>
+                    <a class="doc-entry" href="tech-gen-format.html">
+                        <strong>.gen 文件定义</strong>
+                        <span>SQLite 3 项目文件：12 张表定义、字段语义、坐标规则、分块与撤销机制。读完后能独立读写 .gen。</span>
+                    </a>
+                    <a class="doc-entry" href="tech-gjson-format.html">
+                        <strong>.gjson 文件定义</strong>
+                        <span>JSON 交换格式：顶层字段、各对象定义、与 .gen 的保真差异。读完后能解析 .gjson。</span>
+                    </a>
+                    <a class="doc-entry" href="tech-dna-conversion.html">
+                        <strong>.dna 转换方案</strong>
+                        <span>SnapGene .dna 二进制包结构、flags 位、字段映射、0-based↔1-based 坐标转换。</span>
+                    </a>
+                </section>
+
+                <section class="doc-section">
+                    <div class="section-heading">
+                        <p class="eyebrow">代码示例</p>
+                        <h2>读取实现</h2>
+                    </div>
+                    <a class="doc-entry" href="tech-rust-readers.html">
+                        <strong>Rust 读取示例</strong>
+                        <span>rusqlite 读 .gen + serde_json 读 .gjson 的最小可运行实现，含依赖与预期输出。</span>
+                    </a>
+                </section>
+            </div>
+         </div>
         </main>
 
         <footer class="site-footer">
@@ -112,20 +85,14 @@
         </footer>
 
         <script>
-            var navToggle = document.querySelector(".nav-toggle");
-            var siteHeader = document.querySelector(".site-header");
-            if (navToggle && siteHeader) {
-                navToggle.addEventListener("click", function() {
-                    var isOpen = siteHeader.classList.toggle("nav-open");
-                    navToggle.setAttribute("aria-expanded", String(isOpen));
-                });
-                document.querySelectorAll(".nav a").forEach(function(link) {
-                    link.addEventListener("click", function() {
-                        siteHeader.classList.remove("nav-open");
-                        navToggle.setAttribute("aria-expanded", "false");
-                    });
-                });
-            }
+            var tocToggle = document.querySelector(".doc-toc-toggle");
+            var docToc = document.querySelector(".doc-toc");
+            if (tocToggle && docToc) tocToggle.addEventListener("click", function() {
+                docToc.classList.toggle("open");
+            });
+            document.querySelectorAll(".doc-toc a:not(.doc-toc-toggle)").forEach(function(link) {
+                link.addEventListener("click", function() { docToc.classList.remove("open"); });
+            });
         </script>
     </body>
 </html>

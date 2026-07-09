@@ -2597,6 +2597,36 @@ code {
   font-weight: 600;
 }
 
+/* —— Hub 目录条目 —— */
+.doc-entry {
+  display: block;
+  padding: 14px 18px;
+  margin-bottom: 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--panel);
+  transition: border-color 140ms ease, box-shadow 140ms ease, transform 140ms ease;
+}
+
+.doc-entry:hover {
+  border-color: var(--blue);
+  box-shadow: 0 8px 22px rgba(16, 30, 54, 0.08);
+  transform: translateY(-1px);
+}
+
+.doc-entry strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--ink);
+  font-size: 15px;
+}
+
+.doc-entry span {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
 /* —— 正文区段落（替代原 .section 大间距）—— */
 .doc-content .doc-section {
   margin: 0 0 40px;
