@@ -55,7 +55,11 @@
                             <dt>BLOCK_SIZE = 10000</dt>
                             <dd>主序列按 10,000 bases 分块</dd>
                         </div>
-                    </dl>
+                        <div>
+                            <dt>SCHEMA_VERSION = 5</dt>
+                            <dd>常量已定义；schema_version 表存在但通常为空，勿依赖其做版本判断</dd>
+                        </div>
+                        </dl>
                 </div>
                 <div class="hero-card-stack" aria-hidden="true">
                     <div class="card-float card-float-1"><span class="card-label">project_meta</span><span class="card-detail">项目元信息</span></div>
@@ -111,7 +115,7 @@
                                     <tr><td><code>value</code></td><td>TEXT</td><td>元信息值，布尔值也以字符串保存</td></tr>
                                 </tbody>
                             </table>
-                            <p class="schema-note">常见 key：<code>name</code>, <code>description</code>, <code>isCircular</code>, <code>isDoubleStranded</code>, <code>accession</code>, <code>organism</code>, <code>date</code>, <code>moleculeType</code>, <code>division</code>, <code>version</code>, <code>keywords</code>, <code>source</code>, <code>comments</code>, <code>references</code>, <code>typeOfDisplay</code>, <code>customName</code>, <code>fileName</code>。</p>
+                            <p class="schema-note">布尔值以字符串 <code>'true'</code>/<code>'false'</code> 保存；未设置时键可能缺失（读为 undefined）。已知 key：<code>name</code>, <code>description</code>, <code>isCircular</code>, <code>isDoubleStranded</code>, <code>isDamMethylated</code>, <code>isDcmMethylated</code>, <code>accession</code>, <code>organism</code>, <code>date</code>, <code>moleculeType</code>, <code>division</code>, <code>version</code>, <code>keywords</code>, <code>source</code>, <code>comments</code>, <code>references</code>(JSON 数组字符串), <code>typeOfDisplay</code>, <code>customName</code>, <code>fileName</code>, <code>isDirty</code>。拓扑由 <code>isCircular</code> 表示，无独立 topology 列。</p>
                         </div>
                     </details>
 
@@ -126,6 +130,7 @@
                                 </tbody>
                             </table>
                             <pre class="code-block"><code>SELECT bases FROM sequence_blocks ORDER BY block_index;</code></pre>
+                            <p class="schema-note">分块规则：每块 <code>BLOCK_SIZE = 10000</code> bp。<code>block_index = floor(position / 10000)</code>，即块 0 存 0–9999，块 1 存 10000–19999。<code>block_index</code> 本身是 0-based（与下方 feature 的 1-based 坐标不同）。无 start_pos 列，起始位置 = block_index × 10000。写入时全删全写（非增量更新）。</p>
                         </div>
                     </details>
 
@@ -202,7 +207,7 @@
                                 <thead><tr><th>表</th><th>说明</th></tr></thead>
                                 <tbody>
                                     <tr><td><code>attachments</code></td><td>附件：id, name, mime_type, data</td></tr>
-                                    <tr><td><code>undo_entries</code></td><td>撤销/重做栈，before_diff / after_diff 为 JSON</td></tr>
+                                    <tr><td><code>undo_entries</code></td><td>撤销/重做栈（<code>stack_type</code> 为 <code>undo</code>/<code>redo</code>）；undo 栈上限 <strong>200</strong> 条，超出删最旧；before_diff / after_diff 为 JSON</td></tr>
                                     <tr><td><code>edit_history</code></td><td>编辑审计日志，before_snapshot / after_snapshot 为 JSON</td></tr>
                                 </tbody>
                             </table>
@@ -230,6 +235,39 @@
                         </tbody>
                     </table>
                 </div>
+            </section>
+
+            <section class="section" id="conventions">
+                <div class="section-heading">
+                    <p class="eyebrow">Conventions</p>
+                    <h2>坐标与环形序列</h2>
+                </div>
+                <div class="schema-body">
+                    <p>feature / primer / base_color_ranges 的 <code>start_pos</code> / <code>end_pos</code> 均为 <strong>1-based inclusive</strong>。例如 <code>start=1, end=10</code> 表示第 1 到第 10 个碱基（共 10 个）。</p>
+                    <p>环形序列跨越原点时 <code>start &gt; end</code>：长度 = <code>seqLength - start + end + 1</code>（从 start 走到序列末尾，再从 1 绕回到 end）。多段 feature 还可用 <code>segments</code> JSON 数组，每段独立 <code>{start, end, strand?, name?, color?}</code>。</p>
+                    <p class="schema-note">注意：<code>sequence_blocks.block_index</code> 是 0-based，与上述 1-based 特征坐标是两套体系。</p>
+                </div>
+            </section>
+
+            <section class="section" id="quick-look">
+                <div class="section-heading">
+                    <p class="eyebrow">Quick Look</p>
+                    <h2>用 sqlite3 打开看一眼</h2>
+                </div>
+                <pre class="code-block"><code># 打开 .gen（本质就是 SQLite）
+sqlite3 example.gen
+
+# 列出所有表
+.tables
+
+# 读取项目名 / 拓扑
+SELECT key, value FROM project_meta WHERE key IN ('name','isCircular');
+
+# 拼接完整序列（注意按 block_index 排序）
+SELECT group_concat(bases, '') FROM (SELECT bases FROM sequence_blocks ORDER BY block_index);
+
+# 查看前几个 feature
+SELECT name, type, start_pos, end_pos, strand FROM features LIMIT 5;</code></pre>
             </section>
         </main>
 
