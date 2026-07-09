@@ -2406,6 +2406,9 @@ code {
     --lead: #a0b4cc;
     --code-bg: #1a2a40;
     --shadow: 0 24px 70px rgba(0, 0, 0, 0.4);
+    --green-dark: #2f855a;
+    --sponsor-1: #ff8ab5;
+    --sponsor-2: #d76be8;
   }
 
   .hero-shot {
