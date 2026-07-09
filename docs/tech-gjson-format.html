@@ -17,50 +17,40 @@
                 <span class="brand-mark"><img src="icon.png" alt="" /></span>
                 <span><strong>基因工坊</strong><small>GenePad</small></span>
             </a>
-            <button class="nav-toggle" type="button" aria-controls="site-nav" aria-expanded="false">
-                <span></span><span></span><span></span><span class="sr-only">打开导航</span>
-            </button>
-            <nav class="nav" id="site-nav" aria-label="主导航">
-                <a href="tech-support.html">文档首页</a>
-                <a href="#top-level">顶层字段</a>
-                <a href="#objects">对象定义</a>
-                <a href="tech-rust-readers.html#gjson-reader">Rust 示例</a>
-                <a href="tech-gen-format.html">.gen</a>
-            </nav>
         </header>
 
         <main id="top">
-            <section class="hero tech-hero">
-                <div class="hero-copy">
-                    <p class="eyebrow">.gjson Format</p>
+         <div class="doc-layout">
+            <aside class="doc-toc" id="doc-toc">
+                <button class="doc-toc-toggle" type="button">目录</button>
+                <a class="doc-toc-home" href="tech-support.html">文档首页</a>
+                <p class="doc-toc-group">文件格式</p>
+                <a href="tech-gen-format.html">.gen 定义</a>
+                <a class="current" href="tech-gjson-format.html">.gjson 定义</a>
+                <a href="tech-dna-conversion.html">.dna 转换</a>
+                <p class="doc-toc-group">代码示例</p>
+                <a href="tech-rust-readers.html">Rust 读取</a>
+            </aside>
+            <div class="doc-content doc-prose">
+                <nav class="doc-breadcrumb"><a href="tech-support.html">文档首页</a> › 文件格式 › .gjson 定义</nav>
+                <div class="doc-head">
                     <h1>.gjson 文件定义</h1>
                     <p class="lead">
                         `.gjson` 是 GenePad 的文本 JSON 交换格式，当前写出版本为 `1.9`。
                         它适合人工查看、版本 diff、Web 导入导出和跨语言快速读取。
                     </p>
-                    <div class="hero-actions">
-                        <a class="button primary" href="#example">查看示例</a>
-                        <a class="button secondary" href="tech-rust-readers.html#gjson-reader">Rust 读取代码</a>
+                    <div class="doc-tags">
+                        <span class="doc-tag">version = 1.9</span>
+                        <span class="doc-tag">JSON text</span>
+                        <span class="doc-tag">1-based inclusive</span>
                     </div>
-                    <dl class="hero-stats" aria-label=".gjson 摘要">
-                        <div><dt>version = 1.9</dt><dd>当前写出版本</dd></div>
-                        <div><dt>JSON text</dt><dd>UTF-8 文本格式</dd></div>
-                        <div><dt>1-based inclusive</dt><dd>坐标与应用内部一致</dd></div>
-                    </dl>
                 </div>
-                <div class="hero-card-stack" aria-hidden="true">
-                    <div class="card-float card-float-1"><span class="card-label">features[]</span><span class="card-detail">注释与 qualifiers</span></div>
-                    <div class="card-float card-float-2"><span class="card-label">primers[]</span><span class="card-detail">引物与结合位点</span></div>
-                    <div class="card-float card-float-3"><span class="card-label">baseColorRanges[]</span><span class="card-detail">碱基颜色</span></div>
-                    <div class="card-float card-float-4"><span class="card-label">alignmentEntries[]</span><span class="card-detail">比对条目基本字段</span></div>
-                </div>
-            </section>
 
-            <section class="section" id="example">
-                <div class="section-heading">
-                    <p class="eyebrow">Example</p>
-                    <h2>最小有效结构</h2>
-                </div>
+                <section class="doc-section" id="example">
+                    <div class="section-heading">
+                        <p class="eyebrow">Example</p>
+                        <h2>最小有效结构</h2>
+                    </div>
                 <pre class="code-block"><code>{
   "version": "1.9",
   "id": "gjson-1752000000000",
@@ -127,7 +117,7 @@
                 <p class="schema-note"><strong>.gjson 不存储（与 .gen 的保真差异）：</strong>撤销/编辑历史（undo_entries / edit_history）、附件（attachments）、顶层 chromatogram、<code>alignmentEntries[].chromatogram</code>、Dam/Dcm 甲基化（<code>isDamMethylated</code> / <code>isDcmMethylated</code>）。需要完整保真快照请使用 <code>.gen</code>。</p>
             </section>
 
-            <section class="section" id="objects">
+            <section class="schema-band" id="objects">
                 <div class="section-heading">
                     <p class="eyebrow">Objects</p>
                     <h2>对象定义</h2>
@@ -213,15 +203,19 @@
                     </details>
                 </div>
             </section>
+            </div>
+         </div>
         </main>
 
         <footer class="site-footer"><p><a href="tech-support.html">返回开发者文档</a></p></footer>
         <script>
-            var navToggle = document.querySelector(".nav-toggle");
-            var siteHeader = document.querySelector(".site-header");
-            if (navToggle && siteHeader) navToggle.addEventListener("click", function() {
-                var isOpen = siteHeader.classList.toggle("nav-open");
-                navToggle.setAttribute("aria-expanded", String(isOpen));
+            var tocToggle = document.querySelector(".doc-toc-toggle");
+            var docToc = document.querySelector(".doc-toc");
+            if (tocToggle && docToc) tocToggle.addEventListener("click", function() {
+                docToc.classList.toggle("open");
+            });
+            document.querySelectorAll(".doc-toc a:not(.doc-toc-toggle)").forEach(function(link) {
+                link.addEventListener("click", function() { docToc.classList.remove("open"); });
             });
         </script>
     </body>

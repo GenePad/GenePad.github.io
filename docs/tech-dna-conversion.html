@@ -17,51 +17,44 @@
                 <span class="brand-mark"><img src="icon.png" alt="" /></span>
                 <span><strong>基因工坊</strong><small>GenePad</small></span>
             </a>
-            <button class="nav-toggle" type="button" aria-controls="site-nav" aria-expanded="false">
-                <span></span><span></span><span></span><span class="sr-only">打开导航</span>
-            </button>
-            <nav class="nav" id="site-nav" aria-label="主导航">
-                <a href="tech-support.html">文档首页</a>
-                <a href="#packets">Packet</a>
-                <a href="#mapping">映射</a>
-                <a href="#pipeline">流程</a>
-                <a href="tech-gen-format.html">.gen</a>
-                <a href="tech-gjson-format.html">.gjson</a>
-            </nav>
         </header>
 
         <main id="top">
-            <section class="hero tech-hero">
-                <div class="hero-copy">
-                    <p class="eyebrow">SnapGene DNA</p>
+         <div class="doc-layout">
+            <aside class="doc-toc" id="doc-toc">
+                <button class="doc-toc-toggle" type="button">目录</button>
+                <a class="doc-toc-home" href="tech-support.html">文档首页</a>
+                <p class="doc-toc-group">文件格式</p>
+                <a href="tech-gen-format.html">.gen 定义</a>
+                <a href="tech-gjson-format.html">.gjson 定义</a>
+                <a class="current" href="tech-dna-conversion.html">.dna 转换</a>
+                <p class="doc-toc-group">代码示例</p>
+                <a href="tech-rust-readers.html">Rust 读取</a>
+            </aside>
+            <div class="doc-content doc-prose">
+                <nav class="doc-breadcrumb"><a href="tech-support.html">文档首页</a> › 文件格式 › .dna 转换</nav>
+                <div class="doc-head">
                     <h1>.dna 转换方案</h1>
                     <p class="lead">
                         `.dna` 是 SnapGene 二进制格式。GenePad 读取和写出时仅使用 SnapGene 兼容 packet：
                         主序列、拓扑、features、primers、notes、碱基颜色，以及可解析的 chromatogram / ZTR 读段；比对读段等 GenePad 专有数据请保存到 `.gen` 或 `.gjson`。
                     </p>
-                    <div class="hero-actions">
-                        <a class="button primary" href="#pipeline">查看转换流程</a>
-                        <a class="button secondary" href="tech-rust-readers.html">先看 Rust 读取</a>
+                    <div class="doc-tags">
+                        <span class="doc-tag">SnapGene binary</span>
+                        <span class="doc-tag">big-endian</span>
+                        <span class="doc-tag">0-based → 1-based</span>
                     </div>
                 </div>
-                <div class="hero-card-stack" aria-hidden="true">
-                    <div class="card-float card-float-1"><span class="card-label">0x09</span><span class="card-detail">SnapGene cookie</span></div>
-                    <div class="card-float card-float-2"><span class="card-label">0x00</span><span class="card-detail">DNA sequence</span></div>
-                    <div class="card-float card-float-3"><span class="card-label">0x0a</span><span class="card-detail">Features XML</span></div>
-                    <div class="card-float card-float-4"><span class="card-label">0x0b</span><span class="card-detail">ZTR reads</span></div>
-                </div>
-            </section>
 
-            <section class="section" id="packets">
-                <div class="section-heading">
-                    <p class="eyebrow">Packet Model</p>
-                    <h2>二进制包结构</h2>
-                </div>
-                <pre class="code-block"><code>packet = packet_type: u8
+                <section class="doc-section" id="packets">
+                    <div class="section-heading">
+                        <p class="eyebrow">Packet Model</p>
+                        <h2>二进制包结构</h2>
+                    </div>
+                    <pre class="code-block"><code>packet = packet_type: u8
        + payload_length: u32_be
        + payload: [u8; payload_length]</code></pre>
-                <div class="schema-body">
-                    <table>
+                    <table class="doc-table">
                         <thead><tr><th>Packet</th><th>名称</th><th>读取</th><th>写出</th></tr></thead>
                         <tbody>
                             <tr><td><code>0x09</code></td><td>Cookie</td><td>验证 payload 前 8 字节为 <code>SnapGene</code></td><td>必须写出</td></tr>
@@ -73,10 +66,9 @@
                             <tr><td><code>0x0b</code></td><td>ZTR read</td><td>尝试提取内嵌测序读段</td><td>当前不写出</td></tr>
                         </tbody>
                     </table>
-                </div>
             </section>
 
-            <section class="section schema-band" id="mapping">
+            <section class="schema-band" id="mapping">
                 <div class="section-heading">
                     <p class="eyebrow">Mapping</p>
                     <h2>字段映射</h2>
@@ -150,62 +142,48 @@
                 </div>
             </section>
 
-            <section class="section" id="pipeline">
+            <section class="doc-section" id="pipeline">
                 <div class="section-heading">
                     <p class="eyebrow">Pipeline</p>
                     <h2>推荐转换流程</h2>
                 </div>
-                <div class="overview-grid">
-                    <article class="overview-card">
-                        <span class="icon">01</span>
-                        <h3>解析 packet 流</h3>
-                        <p>从头读取 type 和 big-endian length；第一个 packet 必须是 <code>0x09</code> cookie。</p>
-                    </article>
-                    <article class="overview-card">
-                        <span class="icon">02</span>
-                        <h3>构造中间模型</h3>
-                        <p>先构造类似 <code>DNASequence</code> 的结构，统一使用 1-based inclusive 坐标。</p>
-                    </article>
-                    <article class="overview-card">
-                        <span class="icon">03</span>
-                        <h3>导出 .gjson</h3>
-                        <p>把中间模型写成 JSON：主序列、metadata、features、baseColorRanges、primers 和 alignmentEntries。</p>
-                    </article>
-                    <article class="overview-card">
-                        <span class="icon">04</span>
-                        <h3>导出 .gen</h3>
-                        <p>创建 SQLite 表，把序列写入 <code>sequence_blocks</code>，features / primers 写入对应表，JSON 字段序列化。</p>
-                    </article>
-                </div>
+                <ol style="color:var(--lead);line-height:1.9;padding-left:1.4em">
+                    <li>解析 packet 流——从头读取 type 和 big-endian length；第一个 packet 必须是 <code>0x09</code> cookie。</li>
+                    <li>构造中间模型——先构造类似 <code>DNASequence</code> 的结构，统一使用 1-based inclusive 坐标。</li>
+                    <li>导出 .gjson——把中间模型写成 JSON：主序列、metadata、features、baseColorRanges、primers 和 alignmentEntries。</li>
+                    <li>导出 .gen——创建 SQLite 表，把序列写入 <code>sequence_blocks</code>，features / primers 写入对应表，JSON 字段序列化。</li>
+                </ol>
             </section>
 
-            <section class="section">
+            <section class="doc-section">
                 <div class="section-heading">
                     <p class="eyebrow">Compatibility</p>
                     <h2>SnapGene .dna 兼容性原则</h2>
                 </div>
-                <div class="schema-body">
-                    <table>
-                        <thead><tr><th>数据</th><th>.dna 写出策略</th></tr></thead>
-                        <tbody>
-                            <tr><td>主序列、拓扑、甲基化 flags</td><td>写入标准 <code>0x00</code> DNA packet</td></tr>
-                            <tr><td>features、qualifiers、primers、notes、strand colors</td><td>写入 SnapGene 兼容 XML packet</td></tr>
-                            <tr><td>alignmentEntries / GenePad 专有读段</td><td>不写入 `.dna`；需要完整保留时使用 `.gen` 或 `.gjson`</td></tr>
-                            <tr><td>未知或无法识别的 packet</td><td>读取时忽略，不作为 GenePad 数据恢复来源</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-                <p class="schema-note">为保证与 SnapGene 和第三方工具互通，`.dna` 输出只使用 SnapGene 标准 packet。无法映射到 SnapGene 标准结构的数据应保存到 GenePad 自有格式（`.gen` 或 `.gjson`）。</p>
+                <table class="doc-table">
+                    <thead><tr><th>数据</th><th>.dna 写出策略</th></tr></thead>
+                    <tbody>
+                        <tr><td>主序列、拓扑、甲基化 flags</td><td>写入标准 <code>0x00</code> DNA packet</td></tr>
+                        <tr><td>features、qualifiers、primers、notes、strand colors</td><td>写入 SnapGene 兼容 XML packet</td></tr>
+                        <tr><td>alignmentEntries / GenePad 专有读段</td><td>不写入 `.dna`；需要完整保留时使用 `.gen` 或 `.gjson`</td></tr>
+                        <tr><td>未知或无法识别的 packet</td><td>读取时忽略，不作为 GenePad 数据恢复来源</td></tr>
+                    </tbody>
+                </table>
+                <p class="doc-note">为保证与 SnapGene 和第三方工具互通，`.dna` 输出只使用 SnapGene 标准 packet。无法映射到 SnapGene 标准结构的数据应保存到 GenePad 自有格式（`.gen` 或 `.gjson`）。</p>
             </section>
+            </div>
+         </div>
         </main>
 
         <footer class="site-footer"><p><a href="tech-support.html">返回开发者文档</a></p></footer>
         <script>
-            var navToggle = document.querySelector(".nav-toggle");
-            var siteHeader = document.querySelector(".site-header");
-            if (navToggle && siteHeader) navToggle.addEventListener("click", function() {
-                var isOpen = siteHeader.classList.toggle("nav-open");
-                navToggle.setAttribute("aria-expanded", String(isOpen));
+            var tocToggle = document.querySelector(".doc-toc-toggle");
+            var docToc = document.querySelector(".doc-toc");
+            if (tocToggle && docToc) tocToggle.addEventListener("click", function() {
+                docToc.classList.toggle("open");
+            });
+            document.querySelectorAll(".doc-toc a:not(.doc-toc-toggle)").forEach(function(link) {
+                link.addEventListener("click", function() { docToc.classList.remove("open"); });
             });
         </script>
     </body>
