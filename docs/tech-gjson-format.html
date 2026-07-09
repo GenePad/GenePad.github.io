@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="GenePad .gjson 文件格式定义：JSON 顶层字段、Feature、Primer、BaseColorRange 和 AlignmentEntry 结构。" />
+        <title>.gjson 文件定义 - GenePad 开发者文档</title>
+        <link rel="canonical" href="https://genepad.pages.dev/tech-gjson-format.html" />
+        <link rel="icon" href="icon.png" type="image/png" />
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <header class="site-header">
+            <a class="brand" href="index.html" aria-label="GenePad 首页">
+                <span class="brand-mark"><img src="icon.png" alt="" /></span>
+                <span><strong>基因工坊</strong><small>GenePad</small></span>
+            </a>
+            <button class="nav-toggle" type="button" aria-controls="site-nav" aria-expanded="false">
+                <span></span><span></span><span></span><span class="sr-only">打开导航</span>
+            </button>
+            <nav class="nav" id="site-nav" aria-label="主导航">
+                <a href="tech-support.html">文档首页</a>
+                <a href="#top-level">顶层字段</a>
+                <a href="#objects">对象定义</a>
+                <a href="tech-rust-readers.html#gjson-reader">Rust 示例</a>
+                <a href="tech-gen-format.html">.gen</a>
+            </nav>
+        </header>
+
+        <main id="top">
+            <section class="hero tech-hero">
+                <div class="hero-copy">
+                    <p class="eyebrow">.gjson Format</p>
+                    <h1>.gjson 文件定义</h1>
+                    <p class="lead">
+                        `.gjson` 是 GenePad 的文本 JSON 交换格式，当前写出版本为 `1.9`。
+                        它适合人工查看、版本 diff、Web 导入导出和跨语言快速读取。
+                    </p>
+                    <div class="hero-actions">
+                        <a class="button primary" href="#example">查看示例</a>
+                        <a class="button secondary" href="tech-rust-readers.html#gjson-reader">Rust 读取代码</a>
+                    </div>
+                    <dl class="hero-stats" aria-label=".gjson 摘要">
+                        <div><dt>version = 1.9</dt><dd>当前写出版本</dd></div>
+                        <div><dt>JSON text</dt><dd>UTF-8 文本格式</dd></div>
+                        <div><dt>1-based inclusive</dt><dd>坐标与应用内部一致</dd></div>
+                    </dl>
+                </div>
+                <div class="hero-card-stack" aria-hidden="true">
+                    <div class="card-float card-float-1"><span class="card-label">features[]</span><span class="card-detail">注释与 qualifiers</span></div>
+                    <div class="card-float card-float-2"><span class="card-label">primers[]</span><span class="card-detail">引物与结合位点</span></div>
+                    <div class="card-float card-float-3"><span class="card-label">baseColorRanges[]</span><span class="card-detail">碱基颜色</span></div>
+                    <div class="card-float card-float-4"><span class="card-label">alignmentEntries[]</span><span class="card-detail">比对条目基本字段</span></div>
+                </div>
+            </section>
+
+            <section class="section" id="example">
+                <div class="section-heading">
+                    <p class="eyebrow">Example</p>
+                    <h2>最小有效结构</h2>
+                </div>
+                <pre class="code-block"><code>{
+  "version": "1.9",
+  "sequence": "ATGC",
+  "features": []
+}</code></pre>
+                <p class="schema-note">读取时至少需要 <code>version</code> 和 <code>sequence</code>。其他字段缺失时会走默认值。</p>
+            </section>
+
+            <section class="section schema-band" id="top-level">
+                <div class="section-heading">
+                    <p class="eyebrow">Top Level</p>
+                    <h2>顶层字段</h2>
+                </div>
+                <div class="schema-body">
+                    <table>
+                        <thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead>
+                        <tbody>
+                            <tr><td><code>version</code></td><td>string</td><td>必须存在，当前写出 <code>"1.9"</code></td></tr>
+                            <tr><td><code>id</code></td><td>string</td><td>写出时生成，当前读取不作为主 id 恢复</td></tr>
+                            <tr><td><code>type_of_display</code></td><td>file_name / custom</td><td>显示名策略；加载时通常由文件名覆盖</td></tr>
+                            <tr><td><code>custom_name</code></td><td>string</td><td>自定义显示名</td></tr>
+                            <tr><td><code>description</code></td><td>string</td><td>序列描述，缺失为空字符串</td></tr>
+                            <tr><td><code>sequence</code></td><td>string</td><td>必须存在，主 DNA 序列</td></tr>
+                            <tr><td><code>length</code></td><td>number</td><td>写出为 <code>sequence.length</code>；读取时以实际序列长度为准</td></tr>
+                            <tr><td><code>isCircular</code></td><td>boolean</td><td>缺失时为 false</td></tr>
+                            <tr><td><code>isDoubleStranded</code></td><td>boolean</td><td>缺失时 canonical 层默认为 true</td></tr>
+                            <tr><td><code>accession</code></td><td>string</td><td>GenBank accession</td></tr>
+                            <tr><td><code>organism</code></td><td>string</td><td>物种</td></tr>
+                            <tr><td><code>date</code></td><td>string</td><td>日期</td></tr>
+                            <tr><td><code>moleculeType</code></td><td>string</td><td>如 DNA, ss-DNA, ds-DNA</td></tr>
+                            <tr><td><code>division</code></td><td>string</td><td>GenBank division</td></tr>
+                            <tr><td><code>gbVersion</code></td><td>string</td><td>映射到内部 <code>version</code></td></tr>
+                            <tr><td><code>keywords</code></td><td>string</td><td>GenBank KEYWORDS</td></tr>
+                            <tr><td><code>source</code></td><td>string</td><td>GenBank SOURCE</td></tr>
+                            <tr><td><code>comments</code></td><td>string</td><td>GenBank COMMENT</td></tr>
+                            <tr><td><code>references</code></td><td>GenBankRef[]</td><td>结构化 REFERENCE 信息</td></tr>
+                            <tr><td><code>features</code></td><td>GjsonFeature[]</td><td>缺失按空数组处理</td></tr>
+                            <tr><td><code>baseColorRanges</code></td><td>BaseColorRange[]</td><td>缺失按空数组处理</td></tr>
+                            <tr><td><code>primers</code></td><td>GjsonPrimer[]</td><td>缺失按空数组处理</td></tr>
+                            <tr><td><code>alignmentEntries</code></td><td>GjsonAlignmentEntry[]</td><td>缺失按空数组处理</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="schema-note">当前 `.gjson` 不保存顶层 chromatogram，也不保存 <code>alignmentEntries[].chromatogram</code>。完整项目快照请使用 `.gen`。</p>
+            </section>
+
+            <section class="section" id="objects">
+                <div class="section-heading">
+                    <p class="eyebrow">Objects</p>
+                    <h2>对象定义</h2>
+                </div>
+                <div class="schema-list">
+                    <details class="schema-item" open>
+                        <summary><strong>GjsonFeature</strong><span>注释对象</span></summary>
+                        <div class="schema-body">
+                            <pre class="code-block"><code>{
+  "id": "feature-0",
+  "name": "lacZ",
+  "type": "CDS",
+  "start": 120,
+  "end": 980,
+  "strand": "forward",
+  "color": "#4f7bd9",
+  "label": "lacZ",
+  "note": "example",
+  "frame": 1,
+  "visible": true,
+  "segments": [
+    { "start": 120, "end": 240, "strand": "forward" }
+  ],
+  "qualifiers": {
+    "gene": ["lacZ"],
+    "translation": ["M..."]
+  }
+}</code></pre>
+                            <p class="schema-note"><code>start</code> / <code>end</code> 是 1-based inclusive。<code>segments</code> 仅多片段 feature 通常需要。<code>qualifiers</code> 用于保留 GenBank qualifier。</p>
+                        </div>
+                    </details>
+
+                    <details class="schema-item" open>
+                        <summary><strong>GjsonPrimer</strong><span>引物对象</span></summary>
+                        <div class="schema-body">
+                            <pre class="code-block"><code>{
+  "id": "primer-0",
+  "name": "Fwd",
+  "sequence": "ATGCGTAC",
+  "description": "forward primer",
+  "visible": true,
+  "bindingSites": [
+    {
+      "start": 10,
+      "end": 17,
+      "boundStrand": "forward",
+      "annealedBases": "ATGCGTAC",
+      "meltingTemperature": 52.3,
+      "components": [{ "bases": "ATGCGTAC" }],
+      "alignment": []
+    }
+  ]
+}</code></pre>
+                        </div>
+                    </details>
+
+                    <details class="schema-item">
+                        <summary><strong>BaseColorRange</strong><span>碱基颜色</span></summary>
+                        <div class="schema-body">
+                            <pre class="code-block"><code>{
+  "id": "base-color-0",
+  "start": 1,
+  "end": 20,
+  "strand": "forward",
+  "color": "#ffcc00"
+}</code></pre>
+                            <p class="schema-note"><code>strand</code> 只接受 <code>forward</code> 或 <code>reverse</code>；非 reverse 会被归一为 forward。</p>
+                        </div>
+                    </details>
+
+                    <details class="schema-item">
+                        <summary><strong>GjsonAlignmentEntry</strong><span>比对条目</span></summary>
+                        <div class="schema-body">
+                            <pre class="code-block"><code>{
+  "id": "read-1",
+  "name": "Sanger read 1",
+  "sequence": "ATGC...",
+  "visible": true
+}</code></pre>
+                        </div>
+                    </details>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer"><p><a href="tech-support.html">返回开发者文档</a></p></footer>
+        <script>
+            var navToggle = document.querySelector(".nav-toggle");
+            var siteHeader = document.querySelector(".site-header");
+            if (navToggle && siteHeader) navToggle.addEventListener("click", function() {
+                var isOpen = siteHeader.classList.toggle("nav-open");
+                navToggle.setAttribute("aria-expanded", String(isOpen));
+            });
+        </script>
+    </body>
+</html>
