@@ -828,7 +828,7 @@ body.local-dl-open {
   padding: 5px 13px 5px 11px;
   border-radius: 999px;
   background: rgba(56, 161, 111, 0.1);
-  color: #2f855a;
+  color: var(--green-dark);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.02em;
@@ -849,7 +849,7 @@ body.local-dl-open {
 .dl-mac-install-title {
   font-size: 14px;
   font-weight: 700;
-  color: #2f855a;
+  color: var(--green-dark);
   margin-bottom: 6px;
 }
 
@@ -906,7 +906,7 @@ body.local-dl-open {
   border: 1px solid rgba(56, 161, 111, 0.5);
   border-radius: 7px;
   background: rgba(56, 161, 111, 0.12);
-  color: #2f855a;
+  color: var(--green-dark);
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
@@ -922,7 +922,7 @@ body.local-dl-open {
 
 .dl-mac-copy-btn.copied {
   background: rgba(56, 161, 111, 0.25);
-  color: #22543d;
+  color: var(--green-dark);
 }
 
 .dl-mac-install-note {
