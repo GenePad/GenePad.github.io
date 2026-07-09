@@ -82,25 +82,25 @@
                     <article class="overview-card">
                         <span class="icon">01</span>
                         <h3>.gen 文件定义</h3>
-                        <p>SQLite 3 项目文件结构、表定义、字段语义、坐标约定和保真范围。</p>
+                        <p>SQLite 3 项目文件：12 张表定义、字段语义、坐标规则、分块与撤销机制。读完后能独立读写 .gen。</p>
                         <a class="button secondary" href="tech-gen-format.html">打开页面</a>
                     </article>
                     <article class="overview-card">
                         <span class="icon">02</span>
                         <h3>.gjson 文件定义</h3>
-                        <p>Gene JSON 顶层字段、feature / primer / alignment 数据结构和默认读取行为。</p>
+                        <p>JSON 交换格式：顶层字段、各对象定义、与 .gen 的保真差异。读完后能解析 .gjson。</p>
                         <a class="button secondary" href="tech-gjson-format.html">打开页面</a>
                     </article>
                     <article class="overview-card">
                         <span class="icon">03</span>
                         <h3>Rust 读取示例</h3>
-                        <p>使用 `rusqlite` 读取 `.gen`，使用 `serde_json` 读取 `.gjson` 的最小可用实现。</p>
+                        <p>rusqlite 读 .gen + serde_json 读 .gjson 的最小可运行实现，含依赖与预期输出。</p>
                         <a class="button secondary" href="tech-rust-readers.html">打开页面</a>
                     </article>
                     <article class="overview-card">
                         <span class="icon">04</span>
                         <h3>.dna 转换方案</h3>
-                        <p>SnapGene packet 读取要点，以及转换到 `.gen` / `.gjson` 的字段映射方案。</p>
+                        <p>SnapGene .dna 二进制包结构、flags 位、字段映射、0-based↔1-based 坐标转换。</p>
                         <a class="button secondary" href="tech-dna-conversion.html">打开页面</a>
                     </article>
                 </div>
