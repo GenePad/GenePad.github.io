@@ -75,7 +75,7 @@ body {
   margin: 0;
   color: var(--ink);
   background: var(--page);
-  font-family: Inter, "Segoe UI", "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+  font-family: "Segoe UI", "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
   line-height: 1.65;
   overflow-x: hidden;
 }
