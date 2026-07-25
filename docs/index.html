@@ -1243,7 +1243,9 @@
             // signing/quarantine locally. The prompt text itself is localized
             // (see localDl.macInstall.prompt) and copied verbatim.
 
-            var SPARK_STORE_URL = "https://www.spark-app.store/";
+            var SPARK_IFRAME_URL = "https://spk-resolv.spark-app.store//?spk=spk://store/development/gene-pad";
+            var SPARK_IFRAME_WIDTH = 500;
+            var SPARK_IFRAME_HEIGHT = 350;
             // Linux packages are grouped by CPU architecture. The labels are
             // universal architecture identifiers (no translation needed).
             var LINUX_ARCH_LABELS = {
@@ -1289,13 +1291,12 @@
             function renderSparkStoreSection() {
                 return '<div class="dl-file-section dl-spark-section">' +
                     '<div class="dl-file-header">' +
-                    '<span class="dl-file-name"><span class="dl-spark-icon">' + SPARK_ICON_SVG + '</span>' + t("localDl.sparkStore") + '</span>' +
+                    '<span class="dl-file-name">' + t("localDl.sparkStore") + '</span>' +
                     '</div>' +
-                    '<div class="dl-source-buttons">' +
-                    '<a class="dl-source-btn dl-spark-btn" href="' + SPARK_STORE_URL + '" target="_blank" rel="noopener">' +
-                    '<span class="dl-spark-icon">' + SPARK_ICON_SVG + '</span>' +
-                    '<span>' + t("localDl.sparkStore") + '</span>' +
-                    '</a>' +
+                    '<div class="dl-spark-iframe-wrapper">' +
+                    '<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" ' +
+                    'width="' + SPARK_IFRAME_WIDTH + '" height="' + SPARK_IFRAME_HEIGHT + '" ' +
+                    'src="' + SPARK_IFRAME_URL + '"></iframe>' +
                     '</div>' +
                     '</div>';
             }
