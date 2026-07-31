@@ -1,16 +1,16 @@
 {
-  "version": "0.5.0",
-  "pub_date": "2026-07-08T00:00:00+08:00",
-  "notes": "Gene Editor v0.5.0 更新内容：\n\n✨ 新功能\n- 全新比对引擎：用原生 Rust 重写了序列比对核心，速度更快、结果更准\n\n⚡ 优化\n- 序列比对与详情渲染更快\n- 比对视图跟随行模式同步显示\n\n🐛 修复\n- 修复反向链 BLAST 比对结果\n- 修复比对命中框定位与导航\n- 修复单行/多行比对布局稳定性与选择交互\n- 比对相似度改为 BLAST 标准",
+  "version": "0.5.1",
+  "pub_date": "2026-08-01T00:00:00+08:00",
+  "notes": "GenePad v0.5.1 更新内容：\n\n⚡ 优化\n- 性能优化",
   "platforms": {
     "windows-x86_64": {
-      "url": "https://genepad.pages.dev/release/windows/Gene Editor_0.5.0_x64-setup.zip"
+      "url": "https://genepad.pages.dev/release/windows/GenePad_0.5.1_Windows_amd64.zip"
     },
     "linux-x86_64-deb": {
-      "url": "https://genepad.pages.dev/release/linux/Gene Editor_0.5.0_amd64.deb"
+      "url": "https://genepad.pages.dev/release/linux/GenePad_0.5.1_Linux_amd64.deb"
     },
     "linux-x86_64-rpm": {
-      "url": "https://genepad.pages.dev/release/linux/Gene Editor-0.5.0-1.x86_64.rpm"
+      "url": "https://genepad.pages.dev/release/linux/GenePad_0.5.1_Linux_amd64.rpm"
     },
     "android": {
       "url": "https://genepad.pages.dev/release/android/app-universal-release.apk"
