@@ -37,7 +37,8 @@
                 <button class="doc-toc-toggle" type="button">目录</button>
                 <a class="doc-toc-home" href="index.html">← 返回首页</a>
                 <p class="doc-toc-group">版本</p>
-                <a class="current" href="#v0-6-1">v0.6.1</a>
+                <a class="current" href="#v0-6-2">v0.6.2</a>
+                <a href="#v0-6-1">v0.6.1</a>
             </aside>
             <div class="doc-content doc-prose">
                 <div class="doc-head">
@@ -46,6 +47,64 @@
                         记录 GenePad 每个版本的新功能、缺陷修复与维护变更。版本按发布时间倒序排列。
                     </p>
                 </div>
+
+                <section class="doc-section" id="v0-6-2">
+                    <div class="section-heading">
+                        <p class="eyebrow">2026-08-12</p>
+                        <h2>v0.6.2</h2>
+                    </div>
+                    <p>本次更新重点重构了质粒图谱（环形 / 线性）的标签布局与高亮联动，AI 助手新增持久记忆与「AI 翻译语言文件」，并完善基因文件库与 Windows 安装体验。</p>
+
+                    <h3>✨ 新功能</h3>
+                    <ul>
+                        <li><strong>质粒图谱（环形 / 线性）</strong>：
+                            <ul>
+                                <li>标签布局全新重构：外环标签排布到最外层并自动避让，Feature 标签沿轨道弧形排列，图谱更清晰</li>
+                                <li>Map / Sequence 标签高亮联动：悬停、Ctrl 多选，统一金色高亮，引物多结合位点同步指示</li>
+                                <li>新增引物显示开关，工具栏改为毛玻璃浮层，引物箭头与限制酶显示优化</li>
+                            </ul>
+                        </li>
+                        <li><strong>AI 助手</strong>：
+                            <ul>
+                                <li>新增持久记忆，AI 可记住你的使用偏好</li>
+                                <li>支持按界面语言生成回复与会话标题，可自定义标签提示词</li>
+                                <li>扫描文件夹后自动携带文件分布上下文，辅助标签生成</li>
+                            </ul>
+                        </li>
+                        <li><strong>AI 翻译语言文件</strong>：
+                            <ul>
+                                <li>新增「AI 翻译语言文件」功能：流式输出，实时显示思维过程与译文</li>
+                                <li>自定义语言导入支持跨窗口与重启记忆</li>
+                            </ul>
+                        </li>
+                        <li><strong>基因文件库</strong>：
+                            <ul>
+                                <li>支持文件存在性检测与一键清理缺失项</li>
+                                <li>列表项支持双击打开</li>
+                            </ul>
+                        </li>
+                        <li><strong>打开方式</strong>：打开成功 / 失败后弹出结果提示（含错误详情），可一键关闭窗口</li>
+                        <li><strong>安装体验</strong>：
+                            <ul>
+                                <li>Windows 安装器支持中英文切换、许可协议与覆盖安装</li>
+                                <li>全平台文件关联；Windows 右键菜单启动时自动注册</li>
+                            </ul>
+                        </li>
+                        <li><strong>其它</strong>：
+                            <ul>
+                                <li>质粒库更名为「基因文件库」，标签云更名为「所有标签」</li>
+                                <li>文件名 / 路径悬停滚动显示</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <h3>🐛 缺陷修复</h3>
+                    <ul>
+                        <li>修复若干 bug（图谱渲染、AI 输出、安装程序等）</li>
+                    </ul>
+
+                    <p><strong>完整变更</strong>：<a href="https://github.com/Masterchiefm/GenePad/compare/v0.6.1...v0.6.2" target="_blank" rel="noopener">v0.6.1...v0.6.2</a></p>
+                </section>
 
                 <section class="doc-section" id="v0-6-1">
                     <div class="section-heading">

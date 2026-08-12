@@ -1,16 +1,16 @@
 {
-  "version": "0.6.1",
-  "pub_date": "2026-08-06T00:00:00+08:00",
-  "notes": "# GenePad v0.6.1\n\n本次发布包含自 v0.6.0 以来的新增功能与修复，重点完善质粒库（Plasmid Library）模块的批量管理与 AI 标签生成、优化引物标签在图谱上的渲染与交互，并将引物 Tm 值计算迁移至 Primer3 引擎。\n\n## ✨ 新功能\n\n- **质粒库全面升级**：\n  - AI 自动标签生成：新增 tag 表、丰富 AI 上下文，并提供 `plasmid.tags` MCP 工具\n  - 质粒库窗口单例、文件信息与标签编辑、扫描仅补缺标签\n  - 多选批量操作、文件名修复、UI 改进与 MCP 提示词优化\n  - MCP 自动开启、冷启动优化、标签芯片编辑器\n- **引物 Tm 值计算迁移至 Primer3**：退火温度计算更准确\n- **引物标签渲染与交互优化**：\n  - 序列图谱上的引物标签显示优化\n  - 环形图谱引物标签布局改进，防止标签重叠\n  - Feature 与引物标签渲染优化，跨序列视图（环形/线性）的引物交互改进\n- **工具箱菜单分类**：顶栏工具箱按功能分类展示\n- **顶栏快捷工具可配置** + 属性按钮激活态\n- **属性面板化** + AI 供应商扩展与思考开关\n- **AI 聊天体验改进**：思考/输出按时间顺序交错显示，复制按钮移至左下角，支持复用空白会话\n- **MCP 新增 `file.open` 与 `file.reveal` 工具**：AI 可打开文件并在文件管理器中显示\n- **主题切换左侧新增打开方式按钮**\n\n## 🐛 缺陷修复\n\n- 质粒库：保存后刷新质粒指纹并暴露标签生成状态\n- 质粒库：重开文件稳定触发标签回填与后台重生成，支持空标签重生成\n- AI：思考图标旋转修正，输出内容可选中并支持右键复制\n- 打开方式：外部打开前先关闭文件，并增加 isDirty 安全保护\n- Android：更新下载改为在浏览器中打开\n- 电泳模拟器：细化 ladder 控件交互\n\n## 🔧 维护\n\n- 引物 Tm 计算引擎迁移（Primer3）与绑定诊断改进\n\n**完整变更**：https://github.com/Masterchiefm/GenePad/compare/v0.6.0...v0.6.1",
+  "version": "0.6.2",
+  "pub_date": "2026-08-12T00:00:00+08:00",
+  "notes": "# GenePad v0.6.2\n\n本次更新重点重构了质粒图谱（环形 / 线性）的标签布局与高亮联动，AI 助手新增持久记忆与「AI 翻译语言文件」，并完善基因文件库与 Windows 安装体验。\n\n## ✨ 新功能\n\n**质粒图谱（环形 / 线性）**\n- 标签布局全新重构：外环标签排布到最外层并自动避让，Feature 标签沿轨道弧形排列，图谱更清晰\n- Map / Sequence 标签高亮联动：悬停、Ctrl 多选，统一金色高亮，引物多结合位点同步指示\n- 新增引物显示开关，工具栏改为毛玻璃浮层，引物箭头与限制酶显示优化\n\n**AI 助手**\n- 新增持久记忆，AI 可记住你的使用偏好\n- 支持按界面语言生成回复与会话标题，可自定义标签提示词\n- 扫描文件夹后自动携带文件分布上下文，辅助标签生成\n\n**AI 翻译语言文件**\n- 新增「AI 翻译语言文件」功能：流式输出，实时显示思维过程与译文\n- 自定义语言导入支持跨窗口与重启记忆\n\n**基因文件库**\n- 支持文件存在性检测与一键清理缺失项\n- 列表项支持双击打开\n\n**打开方式**\n- 打开成功 / 失败后弹出结果提示（含错误详情），可一键关闭窗口\n\n**安装体验**\n- Windows 安装器支持中英文切换、许可协议与覆盖安装\n- 全平台文件关联；Windows 右键菜单启动时自动注册\n\n**其它**\n- 质粒库更名为「基因文件库」，标签云更名为「所有标签」\n- 文件名 / 路径悬停滚动显示\n\n## 🐛 缺陷修复\n\n- 修复若干 bug（图谱渲染、AI 输出、安装程序等）\n\n**完整变更**：https://github.com/Masterchiefm/GenePad/compare/v0.6.1...v0.6.2",
   "platforms": {
     "windows-x86_64": {
-      "url": "https://genepad.pages.dev/release/windows/GenePad_0.6.1_Windows_amd64.zip"
+      "url": "https://genepad.pages.dev/release/windows/GenePad_0.6.2_Windows_amd64.zip"
     },
     "linux-x86_64-deb": {
-      "url": "https://genepad.pages.dev/release/linux/GenePad_0.6.1_Linux_amd64.deb"
+      "url": "https://genepad.pages.dev/release/linux/GenePad_0.6.2_Linux_amd64.deb"
     },
     "linux-x86_64-rpm": {
-      "url": "https://genepad.pages.dev/release/linux/GenePad_0.6.1_Linux_amd64.rpm"
+      "url": "https://genepad.pages.dev/release/linux/GenePad_0.6.2_Linux_amd64.rpm"
     },
     "android": {
       "url": "https://genepad.pages.dev/release/android/app-universal-release.apk"
