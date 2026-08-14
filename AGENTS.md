@@ -7,50 +7,68 @@ The public site is served from `docs/` through `wrangler.jsonc` / Cloudflare Pag
 
 ## Project Structure
 
+The site is a React + Vite app; its **build output is committed to `docs/`**.
+
 ```
-docs/
-  index.html                 # Main product/download page
-  tech-support.html          # Technical support page
-  styles.css                 # Site styles
+app/                         # Website source (React 19 + Vite + Tailwind, TypeScript)
+  index.html                 # Home page entry (SEO meta lives here)
+  tech-support.html          # Tech-support page entry (multi-page build)
+  src/
+    i18n.tsx                 # zh/en dictionary + LangProvider + useLang() — ALL site copy lives here
+    download-data.ts         # VERSION + per-platform installer files & sizes (edit on every release)
+    sections/                # Nav / Hero / Workbench / DayNight / Sanger / Toolbox / Download / Footer
+    pages/                   # Home.tsx, TechSupport.tsx
+  public/shots/              # Screenshots (webp, converted from docs/screenshot/)
+  vite.config.ts             # build.outDir = ../docs, emptyOutDir: false, two html inputs
+docs/                        # SERVED ROOT — do not hand-edit index.html / tech-support.html / assets/ / shots/
+  index.html                 # BUILD OUTPUT (overwritten by `npm run build`)
+  tech-support.html          # BUILD OUTPUT
+  assets/                    # BUILD OUTPUT (hashed js/css; safe to delete before rebuild)
+  shots/                     # BUILD OUTPUT (copied from app/public/)
+  styles.css                 # Hand-maintained: styles for the legacy tech-*.html / changelog pages
+  changelog.html             # Hand-maintained changelog page
+  tech-gen-format.html etc.  # Hand-maintained developer doc pages (legacy style)
   update.json                # App update metadata consumed by Gene Editor
-  release/
-    windows/                 # Windows installer downloads
-    linux/                   # Linux package downloads
-    android/                 # Android APK downloads
-    mac/                     # macOS downloads (tar.gz installer + dmg/app fallback)
-  screenshot/                # Website screenshots/assets
-wrangler.jsonc               # Cloudflare Pages configuration
+  release/                   # Installer downloads (windows/linux/android/mac)
+  screenshot/                # Original PNG screenshots (source material for app/public/shots/)
+wrangler.jsonc               # Cloudflare Pages configuration (serves docs/)
 ```
 
-## macOS Distribution Model
+## Build & Deploy
 
-The macOS app is **unsigned** (no Apple Developer ID), so any `.app`/`.dmg`
-downloaded through a browser gets the `com.apple.quarantine` xattr and is
-flagged "damaged" by Gatekeeper on Sequoia. The site's macOS download panel
-works around this with two paths (see `showSources()` in `index.html`):
+```bash
+cd app
+npm install        # first time only
+npm run build      # tsc + vite build → writes into ../docs
+```
 
-1. **Primary — one-line Terminal installer (quarantine-free):** `curl` never
-   attaches the quarantine xattr, so piping a self-hosted install script to
-   `bash` produces a clean `.app`. The panel shows a copy-to-clipboard
-   command and serves three files from `docs/release/mac/`:
-   - `install-macos.sh` — the installer (sourced from the Gene Editor repo at
-     `scripts/install-macos.sh`)
-   - `Gene Editor-macos-arm64.tar.gz` — the app bundle, tarred (preserves
-     symlinks/perms that a zip would corrupt)
-   - `Gene Editor-macos-arm64.tar.gz.sha256` — its SHA-256 (hex-only)
+Then commit `docs/` and push — both hosts serve `docs/` as-is, no CI build step:
 
-   The install command is hardcoded in `index.html` as `MAC_INSTALL_SCRIPT`
-   and `MAC_TARBALL_URL` (both point at `https://genepad.pages.dev/release/mac/`).
-   The tarball URL is passed as an argument (`bash -s -- <url>`) because `$0`
-   is `"bash"` when piped, so the script cannot auto-detect its own URL.
+- **Cloudflare Pages**: serves `docs/` per `wrangler.jsonc` (`assets.directory`). No build command needed.
+- **GitHub Pages**: repo `GenePad/GenePad.github.io` serves from the `docs/` folder on `main`.
 
-2. **Fallback — manual DMG / APP download (collapsed by default):** a
-   `<details>` block hidden under "▸ 其他下载方式" exposes the `.dmg`/`.app`
-   direct links plus the old Gatekeeper warning (right-click → Open, or
-   `xattr -cr`).
+The build uses relative asset paths (`base: './'`), so it works from any mount point.
+`docs/assets/` accumulates stale hashed files across builds (`emptyOutDir: false`
+protects `release/` etc.) — it is safe to `rm -rf docs/assets` before a build.
 
-The `macos-dmg.zip` and `macos-app.zip` fallbacks are copied manually by the
-user; the tarball + installer are the recommended path.
+## i18n
+
+The site is bilingual (zh/en). All copy lives in `app/src/i18n.tsx`; components
+call `t("key")` from `useLang()`. The toggle sits in the Nav; the choice is
+persisted to `localStorage` (`genepad-lang`), defaulting to the browser
+language. When adding UI text, add BOTH `zh` and `en` entries.
+
+## Download Panel
+
+`app/src/sections/Download.tsx` renders per-platform installer rows from
+`app/src/download-data.ts`, each with three sources:
+
+- **本站直链 (Direct)** — `docs/release/...` served by the site itself
+- **Gitee** — `https://gitee.com/GenePad/GenePad.github.io/releases/download/v<VERSION>/<file>`
+- **GitHub** — `https://github.com/GenePad/GenePad.github.io/releases/latest/download/<file>`
+
+It also shows command-line installs (`brew install genepad/tap/genepad`,
+`npm i -g @genepad/app`) and a Spark Store note for Linux.
 
 ## Release Checklist
 
@@ -66,40 +84,28 @@ Copy the latest built binaries from the Gene Editor source project into `docs/re
 | Linux | `\\wsl.localhost\Ubuntu-24.04\home\chief\Gene_Editor\src-tauri\target\release\bundle` |
 | Android | `C:\Users\moqiq\PycharmProjects\Gene_Editor-master\src-tauri\gen\android\app\build\outputs\apk\universal\release` |
 
-Copy the latest version files to `docs/release/`:
+Copy the latest version files to `docs/release/` (current naming, e.g. v0.6.2):
 ```
-docs/release/windows/Gene Editor_x.x.x_x64-setup.zip   (must zip the exe to avoid browser security warnings)
-docs/release/linux/Gene Editor_x.x.x_amd64.deb
-docs/release/linux/Gene Editor-x.x.x-1.x86_64.rpm
+docs/release/windows/GenePad_x.x.x_Windows_amd64.zip   (zip the NSIS exe to avoid browser security warnings)
+docs/release/linux/GenePad_x.x.x_Linux_amd64.deb
+docs/release/linux/GenePad_x.x.x_Linux_amd64.rpm
+docs/release/linux/GenePad_x.x.x_Linux_amd64.tar.gz
+docs/release/linux/GenePad_x.x.x_Linux_arm64.deb
+docs/release/linux/GenePad_x.x.x_Linux_arm64.rpm
+docs/release/linux/GenePad_x.x.x_Linux_arm64.tar.gz
 docs/release/android/app-universal-release.apk   (in-place update, no version in filename)
-docs/release/mac/Gene Editor-macos-arm64.tar.gz            (recommended installer path)
-docs/release/mac/Gene Editor-macos-arm64.tar.gz.sha256     (hex-only SHA-256, matching the tarball)
-docs/release/mac/install-macos.sh                          (the one-line installer script)
-docs/release/mac/macos-dmg.zip                             (fallback, copied manually by user)
-docs/release/mac/macos-app.zip                             (fallback, copied manually by user)
+docs/release/mac/macos-dmg.zip                   (copied manually by user)
+docs/release/mac/macos-app.zip                   (copied manually by user)
 ```
 
 **Important: Windows exe must be compressed to zip** — use `Compress-Archive` to zip the `.exe` into `.zip` before placing in `docs/release/windows/`. This avoids browser security warnings when downloading.
 
 **Important: Do NOT include AppImage files** — skip any `.AppImage` files found in the Linux bundle directory.
 
-**macOS release files come from two sources:**
-- `Gene Editor-macos-arm64.tar.gz`, `*.tar.gz.sha256`, and `install-macos.sh`
-  are produced by the Gene Editor repo's `Build macOS` GitHub Actions workflow
-  (download the `macos-tarball` artifact and unzip it; copy `install-macos.sh`
-  from `scripts/install-macos.sh`). These are the **recommended installer** path.
-- `macos-dmg.zip` and `macos-app.zip` are the **fallback** path and are copied
-  manually by the user — do not attempt to copy them from build output.
-
-**After replacing macOS files, regenerate the sha256** if the tarball changed —
-the installer verifies it at runtime. On the build machine (or any Mac/WSL with
-the file):
-```bash
-cd docs/release/mac
-shasum -a 256 "Gene Editor-macos-arm64.tar.gz" | awk '{print $1}' > "Gene Editor-macos-arm64.tar.gz.sha256"
-```
-The `.sha256` file must contain the hex digest only (the installer strips
-whitespace before comparing).
+**macOS notes:** the app is unsigned, so browser downloads get flagged by
+Gatekeeper — the site steers macOS users to `brew install genepad/tap/genepad`
+(recommended) or `npm i -g @genepad/app`; `macos-dmg.zip` / `macos-app.zip`
+are the manual fallback and are copied by hand, not from CI.
 
 ### 2. Delete old release files
 
@@ -113,16 +119,25 @@ Remove the previous version's binaries from `docs/release/`.
 - `platforms.*.url` — point to the new version filenames under `https://genepad.pages.dev/release/...`.
 - Preserve platform keys: `windows-x86_64`, `linux-x86_64-deb`, `linux-x86_64-rpm`, `android`.
 
-### 4. Update `docs/index.html`
+### 4. Update the download data and rebuild the site
 
-Edit the `downloadData` array (around line 1021) — update version numbers in `name` and `path` for Windows/Linux entries, and update `size` fields to match actual file sizes (check with `dir`).
+Edit `app/src/download-data.ts`:
 
-The macOS entry does **not** carry a version in its filenames (the tarball is
-always `Gene Editor-macos-arm64.tar.gz`, `install-macos.sh` is versionless), so
-the macOS `downloadData` entries only need updating if the bundle layout
-changes. The one-line install command is built from the `MAC_INSTALL_SCRIPT`
-and `MAC_TARBALL_URL` constants near `showSources()` — update those only if the
-canonical download host changes (default `https://genepad.pages.dev`).
+- `VERSION` — bump to the new version (it drives all versioned filenames and
+  the Gitee tag URL).
+- `size` fields — match actual file sizes (check with `dir` / `ls -l`).
+- The macOS entries (`macos-dmg.zip`, `macos-app.zip`) are versionless and
+  only need touching if the bundle layout changes.
+
+Then rebuild so `docs/` picks up the change:
+
+```bash
+rm -rf docs/assets   # optional: drop stale hashed bundles
+cd app && npm run build
+```
+
+(`docs/index.html` and `docs/tech-support.html` are build output — never edit
+them by hand.)
 
 ### 5. Validate
 
@@ -133,20 +148,23 @@ Get-Content -Raw docs/update.json | ConvertFrom-Json | Out-Null
 ### 6. Commit, push to GitHub, and create GitHub Release
 
 ```bash
-git add docs/update.json docs/index.html docs/release/
+git add app docs/update.json docs/index.html docs/tech-support.html docs/assets docs/shots docs/release/
 git commit -m "release: bump to x.x.x"
 git push origin main
 
-# Create GitHub Release with all assets
+# Create GitHub Release with all assets (filenames per step 1)
 gh release create vx.x.x \
-  "docs/release/windows/Gene Editor_x.x.x_x64-setup.zip" \
-  "docs/release/linux/Gene Editor_x.x.x_amd64.deb" \
-  "docs/release/linux/Gene Editor-x.x.x-1.x86_64.rpm" \
+  "docs/release/windows/GenePad_x.x.x_Windows_amd64.zip" \
+  "docs/release/linux/GenePad_x.x.x_Linux_amd64.deb" \
+  "docs/release/linux/GenePad_x.x.x_Linux_amd64.rpm" \
+  "docs/release/linux/GenePad_x.x.x_Linux_amd64.tar.gz" \
+  "docs/release/linux/GenePad_x.x.x_Linux_arm64.deb" \
+  "docs/release/linux/GenePad_x.x.x_Linux_arm64.rpm" \
+  "docs/release/linux/GenePad_x.x.x_Linux_arm64.tar.gz" \
   "docs/release/android/app-universal-release.apk" \
-  "docs/release/mac/Gene Editor-macos-arm64.tar.gz" \
-  "docs/release/mac/Gene Editor-macos-arm64.tar.gz.sha256" \
-  "docs/release/mac/install-macos.sh" \
-  --title "Gene Editor vx.x.x" \
+  "docs/release/mac/macos-dmg.zip" \
+  "docs/release/mac/macos-app.zip" \
+  --title "GenePad vx.x.x" \
   --notes "<same Chinese release notes from update.json>"
 ```
 
@@ -164,23 +182,24 @@ git remote remove gitee
 # Create Gitee Release (capture release ID from response)
 curl -s -X POST "https://gitee.com/api/v5/repos/GenePad/GenePad.github.io/releases?access_token=<gitee_token>" \
   -H "Content-Type: application/json" \
-  -d '{"tag_name":"vx.x.x","name":"Gene Editor vx.x.x","body":"<release notes>","target_commitish":"main"}'
+  -d '{"tag_name":"vx.x.x","name":"GenePad vx.x.x","body":"<release notes>","target_commitish":"main"}'
 
 # Upload assets to Gitee Release (replace <release_id> from previous response)
-curl -s -X POST "https://gitee.com/api/v5/repos/GenePad/GenePad.github.io/releases/<release_id>/attach_files?access_token=<gitee_token>" \
-  -F "file=@docs/release/windows/Gene Editor_x.x.x_x64-setup.zip"
-curl -s -X POST "https://gitee.com/api/v5/repos/GenePad/GenePad.github.io/releases/<release_id>/attach_files?access_token=<gitee_token>" \
-  -F "file=@docs/release/linux/Gene Editor_x.x.x_amd64.deb"
-curl -s -X POST "https://gitee.com/api/v5/repos/GenePad/GenePad.github.io/releases/<release_id>/attach_files?access_token=<gitee_token>" \
-  -F "file=@docs/release/linux/Gene Editor-x.x.x-1.x86_64.rpm"
-curl -s -X POST "https://gitee.com/api/v5/repos/GenePad/GenePad.github.io/releases/<release_id>/attach_files?access_token=<gitee_token>" \
-  -F "file=@docs/release/android/app-universal-release.apk"
-curl -s -X POST "https://gitee.com/api/v5/repos/GenePad/GenePad.github.io/releases/<release_id>/attach_files?access_token=<gitee_token>" \
-  -F "file=@docs/release/mac/Gene Editor-macos-arm64.tar.gz"
-curl -s -X POST "https://gitee.com/api/v5/repos/GenePad/GenePad.github.io/releases/<release_id>/attach_files?access_token=<gitee_token>" \
-  -F "file=@docs/release/mac/Gene Editor-macos-arm64.tar.gz.sha256"
-curl -s -X POST "https://gitee.com/api/v5/repos/GenePad/GenePad.github.io/releases/<release_id>/attach_files?access_token=<gitee_token>" \
-  -F "file=@docs/release/mac/install-macos.sh"
+# The download panel's Gitee URLs expect tag v<x.x.x> and the exact filenames from step 1.
+for f in \
+  "docs/release/windows/GenePad_x.x.x_Windows_amd64.zip" \
+  "docs/release/linux/GenePad_x.x.x_Linux_amd64.deb" \
+  "docs/release/linux/GenePad_x.x.x_Linux_amd64.rpm" \
+  "docs/release/linux/GenePad_x.x.x_Linux_amd64.tar.gz" \
+  "docs/release/linux/GenePad_x.x.x_Linux_arm64.deb" \
+  "docs/release/linux/GenePad_x.x.x_Linux_arm64.rpm" \
+  "docs/release/linux/GenePad_x.x.x_Linux_arm64.tar.gz" \
+  "docs/release/android/app-universal-release.apk" \
+  "docs/release/mac/macos-dmg.zip" \
+  "docs/release/mac/macos-app.zip"; do
+  curl -s -X POST "https://gitee.com/api/v5/repos/GenePad/GenePad.github.io/releases/<release_id>/attach_files?access_token=<gitee_token>" \
+    -F "file=@$f"
+done
 ```
 
 ## Update Metadata
@@ -197,14 +216,14 @@ Required shape:
 
 ```json
 {
-  "version": "0.3.3",
-  "pub_date": "2026-06-01T00:00:00+08:00",
+  "version": "0.6.2",
+  "pub_date": "2026-08-12T00:00:00+08:00",
   "notes": "Release notes shown in the app update dialog",
   "platforms": {
-    "windows-x86_64": { "url": "https://genepad.pages.dev/release/windows/...exe" },
-    "linux-x86_64-deb": { "url": "https://genepad.pages.dev/release/linux/...deb" },
-    "linux-x86_64-rpm": { "url": "https://genepad.pages.dev/release/linux/...rpm" },
-    "android": { "url": "https://genepad.pages.dev/release/android/...apk" }
+    "windows-x86_64": { "url": "https://genepad.pages.dev/release/windows/GenePad_0.6.2_Windows_amd64.zip" },
+    "linux-x86_64-deb": { "url": "https://genepad.pages.dev/release/linux/GenePad_0.6.2_Linux_amd64.deb" },
+    "linux-x86_64-rpm": { "url": "https://genepad.pages.dev/release/linux/GenePad_0.6.2_Linux_amd64.rpm" },
+    "android": { "url": "https://genepad.pages.dev/release/android/app-universal-release.apk" }
   }
 }
 ```

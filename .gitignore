@@ -7,3 +7,10 @@
 
 # Visual companion mockups
 .superpowers/
+
+# Website app (React + Vite source, builds into docs/)
+app/node_modules/
+app/dist/
+
+# zcode tooling
+.zcode/
