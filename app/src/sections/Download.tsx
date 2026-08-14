@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { Reveal, SectionHead, ArrowRight } from "./shared";
 import { useLang } from "../i18n";
-import { PLATFORMS, RELEASES_URL, GITEE_RELEASES_URL } from "../download-data";
+import {
+  PLATFORMS,
+  RELEASES_URL,
+  GITEE_RELEASES_URL,
+  type PlatformId,
+} from "../download-data";
 
 function WindowsIcon({ className = "h-6 w-6" }: { className?: string }) {
   return (
@@ -27,7 +32,7 @@ function LinuxIcon({ className = "h-6 w-6" }: { className?: string }) {
 function AndroidIcon({ className = "h-6 w-6" }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
-      <path d="M6.3 9.5c.5 0 .9.4.9.9v5.2c0 .5-.4.9-.9.9s-.9-.4-.9-.9v-5.2c0-.5.4-.9.9-.9Zm11.4 0c.5 0 .9.4.9.9v5.2c0 .5-.4.9-.9.9s-.9-.4-.9-.9v-5.2c0-.5.4-.9.9-.9ZM7.6 9.5v7.3c0 .5.4.9.9.9h1v2.6c0 .5.4.9.9.9s.9-.4.9-.9v-2.6h1.4v2.6c0 .5.4.9.9.9s.9-.4.9-.9v-2.6h1c.5 0 .9-.4.9-.9V9.5H7.6Zm8.7-2.4.9-1.5c.1-.2 0-.5-.2-.6s-.5 0-.6.2l-.9 1.6c-1-.5-2.2-.8-3.5-.8s-2.5.3-3.5.8l-.9-1.6c-.1-.2-.4-.3-.6-.2s-.3.4-.2.6l.9 1.5C6.6 8 6 9.1 6 10.3v.2h12v-.2c0-1.2-.6-2.3-1.7-3.2Zm-6.8 2c-.3 0-.6-.3-.6-.6s.3-.6.6-.6.6.3.6.6-.3.6-.6.6Zm5 0c-.3 0-.6-.3-.6-.6s.3-.6.6-.6.6.3.6.6-.3.6-.6.6Z" />
+      <path d="M6.3 9.5c.5 0 .9.4.9.9v5.2c0 .5-.4.9-.9.9s-.9-.4-.9-.9v-5.2c0-.5.4-.9.9-.9ZM7.6 9.5v7.3c0 .5.4.9.9.9h1v2.6c0 .5.4.9.9.9s.9-.4.9-.9v-2.6h1.4v2.6c0 .5.4.9.9.9s.9-.4.9-.9v-2.6h1c.5 0 .9-.4.9-.9V9.5H7.6Zm8.7-2.4.9-1.5c.1-.2 0-.5-.2-.6s-.5 0-.6.2l-.9 1.6c-1-.5-2.2-.8-3.5-.8s-2.5.3-3.5.8l-.9-1.6c-.1-.2-.4-.3-.6-.2s-.3.4-.2.6l.9 1.5C6.6 8 6 9.1 6 10.3v.2h12v-.2c0-1.2-.6-2.3-1.7-3.2Zm-6.8 2c-.3 0-.6-.3-.6-.6s.3-.6.6-.6.6.3.6.6-.3.6-.6.6Zm5 0c-.3 0-.6-.3-.6-.6s.3-.6.6-.6.6.3.6.6-.3.6-.6.6Z" />
     </svg>
   );
 }
@@ -40,34 +45,40 @@ function HarmonyIcon({ className = "h-6 w-6" }: { className?: string }) {
   );
 }
 
-const ICONS = {
+type CardId = PlatformId | "harmony";
+
+const ICONS: Record<CardId, (p: { className?: string }) => React.JSX.Element> = {
   windows: WindowsIcon,
   mac: AppleIcon,
-  linux: LinuxIcon,
+  "linux-x64": LinuxIcon,
+  "linux-arm64": LinuxIcon,
   android: AndroidIcon,
   harmony: HarmonyIcon,
-} as const;
+};
 
-type PlatformId = keyof typeof ICONS;
-
-function CopyCmd({ label, cmd, note }: { label: string; cmd: string; note?: string }) {
-  const { t } = useLang();
+function useCopy(timeout = 1600) {
   const [copied, setCopied] = useState(false);
-  const copy = async () => {
+  const copy = async (text: string) => {
     try {
-      await navigator.clipboard.writeText(cmd);
+      await navigator.clipboard.writeText(text);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1600);
+      setTimeout(() => setCopied(false), timeout);
     } catch {
       /* 剪贴板不可用时静默 */
     }
   };
+  return { copied, copy };
+}
+
+function CopyCmd({ label, cmd, note }: { label: string; cmd: string; note?: string }) {
+  const { t } = useLang();
+  const { copied, copy } = useCopy();
   return (
     <div className="border border-lined bg-[#152b0e]">
       <div className="flex items-center justify-between border-b border-lined px-4 py-2.5">
         <span className="font-mono text-[10px] tracking-[0.2em] text-paper/50">{label}</span>
         <button
-          onClick={copy}
+          onClick={() => copy(cmd)}
           className="font-mono text-[10px] tracking-[0.2em] text-gfp transition-colors hover:text-paper"
         >
           {copied ? t("dl.copied") : t("dl.copy")}
@@ -84,28 +95,110 @@ function CopyCmd({ label, cmd, note }: { label: string; cmd: string; note?: stri
   );
 }
 
+/* AI 辅助安装提示词（macOS 未签名包） */
+function AiPromptBox() {
+  const { t } = useLang();
+  const { copied, copy } = useCopy(2000);
+  const prompt = t("dl.ai.prompt") as string;
+  return (
+    <div className="border border-lined">
+      <div className="flex items-center justify-between border-b border-lined px-4 py-2.5">
+        <span className="font-mono text-[10px] tracking-[0.2em] text-paper/50">
+          {t("dl.ai.title")}
+        </span>
+        <button
+          onClick={() => copy(prompt)}
+          className="font-mono text-[10px] tracking-[0.2em] text-gfp transition-colors hover:text-paper"
+        >
+          {copied ? t("dl.copied") : t("dl.copy")}
+        </button>
+      </div>
+      <div className="px-4 py-4">
+        <p className="text-[12.5px] leading-6 text-paper/60">{t("dl.ai.desc")}</p>
+        <pre className="mt-3 max-h-36 overflow-y-auto whitespace-pre-wrap border border-lined bg-[#152b0e] p-3 font-mono text-[11.5px] leading-6 text-paper/70">
+          {prompt}
+        </pre>
+      </div>
+    </div>
+  );
+}
+
+type FileEntry = (typeof PLATFORMS)[number]["files"][number];
+
+/* 安装包列表：每行 = 文件名 + 大小 + 三个下载源 */
+function FileBox({ files }: { files: FileEntry[] }) {
+  const { t } = useLang();
+  return (
+    <div className="border border-lined">
+      <div className="flex items-center justify-between border-b border-lined px-5 py-3">
+        <span className="font-mono text-[10px] tracking-[0.24em] uppercase text-paper/50">
+          {t("dl.filesTitle")}
+        </span>
+        <span className="hidden gap-5 font-mono text-[10px] tracking-[0.18em] text-paper/40 sm:flex">
+          <span>{t("dl.source.direct")}</span>
+          <span>
+            {t("dl.source.gitee")} · {t("dl.giteeBadge")}
+          </span>
+          <span>{t("dl.source.github")}</span>
+        </span>
+      </div>
+      <ul className="divide-y divide-lined">
+        {files.map((f) => (
+          <li
+            key={f.name}
+            className="flex flex-col gap-3 px-5 py-4 md:flex-row md:items-center md:justify-between"
+          >
+            <div className="min-w-0">
+              <p className="truncate font-mono text-[13px] text-paper">{f.name}</p>
+              <p className="mt-1 font-mono text-[10px] tracking-[0.18em] text-paper/45">
+                {f.size}
+              </p>
+            </div>
+            <div className="flex shrink-0 flex-wrap gap-2 font-mono text-[11px] tracking-[0.1em]">
+              <a
+                href={f.sources.direct}
+                download
+                className="border border-gfp/60 px-3.5 py-2 text-gfp transition-colors hover:bg-gfp hover:text-ink"
+              >
+                {t("dl.source.direct")}
+              </a>
+              <a
+                href={f.sources.gitee}
+                className="border border-lined px-3.5 py-2 text-paper/80 transition-colors hover:border-gfp hover:text-gfp"
+              >
+                {t("dl.source.gitee")}
+                <span className="ml-2 text-[9px] text-gfp/80">{t("dl.giteeBadge")}</span>
+              </a>
+              <a
+                href={f.sources.github}
+                className="border border-lined px-3.5 py-2 text-paper/80 transition-colors hover:border-gfp hover:text-gfp"
+              >
+                {t("dl.source.github")}
+              </a>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 export default function Download() {
   const { t } = useLang();
-  const [selected, setSelected] = useState<PlatformId>("windows");
+  const [selected, setSelected] = useState<CardId>("windows");
 
-  const platformCards: { id: PlatformId; name: string; note: string; soon?: boolean }[] = [
+  const platformCards: { id: CardId; name: string; note: string; soon?: boolean }[] = [
     { id: "windows", name: "Windows", note: t("dl.note.desktop") as string },
     { id: "mac", name: "macOS", note: t("dl.note.desktop") as string },
-    { id: "linux", name: "Linux", note: t("dl.note.desktop") as string },
+    { id: "linux-x64", name: "Linux", note: t("dl.note.linuxX64") as string },
+    { id: "linux-arm64", name: "Linux", note: t("dl.note.linuxArm64") as string },
     { id: "android", name: "Android", note: t("dl.note.mobile") as string },
     { id: "harmony", name: "HarmonyOS", note: t("dl.note.soon") as string, soon: true },
   ];
 
-  const CMDS = [
-    { label: "macOS · Homebrew", cmd: "brew install genepad/tap/genepad" },
-    {
-      label: "Windows / Linux / macOS · npm",
-      cmd: "npm i -g @genepad/app",
-      note: t("dl.cmd.npmNote") as string,
-    },
-  ];
-
   const active = PLATFORMS.find((p) => p.id === selected);
+  const isMac = selected === "mac";
+  const isLinux = selected === "linux-x64" || selected === "linux-arm64";
 
   return (
     <section id="download" className="bg-ink text-paper">
@@ -114,9 +207,9 @@ export default function Download() {
           {t("dl.lead")}
         </SectionHead>
 
-        {/* 平台格：点击切换下方安装包列表 */}
+        {/* 平台格：点击切换下方内容（Linux 分 x86_64 / ARM64） */}
         <Reveal>
-          <ul className="grid grid-cols-2 gap-px border border-lined bg-lined sm:grid-cols-3 lg:grid-cols-5">
+          <ul className="grid grid-cols-2 gap-px border border-lined bg-lined sm:grid-cols-3 lg:grid-cols-6">
             {platformCards.map((p) => {
               const Icon = ICONS[p.id];
               const on = selected === p.id;
@@ -146,59 +239,57 @@ export default function Download() {
           </ul>
         </Reveal>
 
-        {/* 选中平台的安装包列表：本站直链 / Gitee / GitHub 三源 */}
+        {/* 选中平台的安装方式 */}
         {active && (
           <Reveal delay={120}>
-            <div className="mt-8 border border-lined">
-              <div className="flex items-center justify-between border-b border-lined px-5 py-3">
-                <span className="font-mono text-[10px] tracking-[0.24em] uppercase text-paper/50">
-                  {t("dl.filesTitle")}
-                </span>
-                <span className="flex gap-5 font-mono text-[10px] tracking-[0.18em] text-paper/40">
-                  <span className="hidden sm:inline">{t("dl.source.direct")}</span>
-                  <span className="hidden sm:inline">{t("dl.source.gitee")} · {t("dl.giteeBadge")}</span>
-                  <span className="hidden sm:inline">{t("dl.source.github")}</span>
-                </span>
-              </div>
-              <ul className="divide-y divide-lined">
-                {active.files.map((f) => (
-                  <li
-                    key={f.name}
-                    className="flex flex-col gap-3 px-5 py-4 md:flex-row md:items-center md:justify-between"
-                  >
-                    <div className="min-w-0">
-                      <p className="truncate font-mono text-[13px] text-paper">{f.name}</p>
-                      <p className="mt-1 font-mono text-[10px] tracking-[0.18em] text-paper/45">
-                        {f.arch ? `${f.arch} · ` : ""}{f.size}
-                      </p>
+            <div className="mt-8 space-y-4">
+              {/* 命令行安装：仅 macOS / Linux */}
+              {(isMac || isLinux) && (
+                <>
+                  <p className="font-mono text-[11px] tracking-[0.24em] uppercase text-paper/50">
+                    {t(isMac ? "dl.cmdTitle.recommended" : "dl.cmdTitle.plain")}
+                  </p>
+                  {isMac && (
+                    <CopyCmd
+                      label={t("dl.cmd.brewLabel") as string}
+                      cmd="brew install genepad/tap/genepad"
+                    />
+                  )}
+                  <CopyCmd
+                    label={t("dl.cmd.npmLabel") as string}
+                    cmd="npm i -g @genepad/app"
+                    note={t("dl.cmd.npmNote") as string}
+                  />
+                </>
+              )}
+
+              {/* macOS：AI 辅助安装提示词 */}
+              {isMac && <AiPromptBox />}
+
+              {/* 安装包直链：macOS 折叠并提示未签名 */}
+              {isMac ? (
+                <details className="group border border-lined">
+                  <summary className="flex cursor-pointer list-none items-center gap-3 px-5 py-4 transition-colors hover:bg-ink-2 [&::-webkit-details-marker]:hidden">
+                    <span className="inline-block text-gfp transition-transform group-open:rotate-90">
+                      ▸
+                    </span>
+                    <span className="text-[14px] font-bold">{t("dl.mac.other")}</span>
+                  </summary>
+                  <div className="border-t border-lined px-5 py-4">
+                    <p className="border-l-2 border-amber-400/70 bg-amber-400/[0.06] px-4 py-3 text-[12.5px] leading-6 text-amber-200/90">
+                      {t("dl.mac.unsigned")}
+                    </p>
+                    <div className="mt-4">
+                      <FileBox files={active.files} />
                     </div>
-                    <div className="flex shrink-0 flex-wrap gap-2 font-mono text-[11px] tracking-[0.1em]">
-                      <a
-                        href={f.sources.direct}
-                        download
-                        className="border border-gfp/60 px-3.5 py-2 text-gfp transition-colors hover:bg-gfp hover:text-ink"
-                      >
-                        {t("dl.source.direct")}
-                      </a>
-                      <a
-                        href={f.sources.gitee}
-                        className="border border-lined px-3.5 py-2 text-paper/80 transition-colors hover:border-gfp hover:text-gfp"
-                      >
-                        {t("dl.source.gitee")}
-                        <span className="ml-2 text-[9px] text-gfp/80">{t("dl.giteeBadge")}</span>
-                      </a>
-                      <a
-                        href={f.sources.github}
-                        className="border border-lined px-3.5 py-2 text-paper/80 transition-colors hover:border-gfp hover:text-gfp"
-                      >
-                        {t("dl.source.github")}
-                      </a>
-                    </div>
-                  </li>
-                ))}
-              </ul>
+                  </div>
+                </details>
+              ) : (
+                <FileBox files={active.files} />
+              )}
+
               {active.sparkStore && (
-                <p className="border-t border-lined px-5 py-3 text-[12px] leading-6 text-paper/50">
+                <p className="border border-lined px-5 py-3 text-[12px] leading-6 text-paper/50">
                   <a
                     href="https://www.spark-app.store/"
                     target="_blank"
@@ -216,20 +307,8 @@ export default function Download() {
         )}
 
         <div className="mt-12 grid gap-10 lg:grid-cols-2 lg:gap-14">
-          {/* 命令行安装 */}
+          {/* 全部版本 */}
           <Reveal delay={120}>
-            <p className="mb-4 font-mono text-[11px] tracking-[0.24em] uppercase text-paper/50">
-              {t("dl.cmdTitle")}
-            </p>
-            <div className="space-y-4">
-              {CMDS.map((c) => (
-                <CopyCmd key={c.cmd} {...c} />
-              ))}
-            </div>
-          </Reveal>
-
-          {/* 全部版本 + 授权 */}
-          <Reveal delay={220}>
             <div className="space-y-3">
               <a
                 href={RELEASES_URL}
@@ -250,8 +329,11 @@ export default function Download() {
                 <ArrowRight className="h-4 w-4 text-gfp transition-transform group-hover:translate-x-1" />
               </a>
             </div>
+          </Reveal>
 
-            <div className="mt-8 border-l-2 border-gfp bg-paper/[0.04] px-5 py-4">
+          {/* 授权 */}
+          <Reveal delay={220}>
+            <div className="border-l-2 border-gfp bg-paper/[0.04] px-5 py-4">
               <p className="font-mono text-[10px] tracking-[0.22em] text-gfp">{t("dl.licenseTag")}</p>
               <p className="mt-2.5 text-[13px] leading-7 text-paper/70">{t("dl.license")}</p>
             </div>

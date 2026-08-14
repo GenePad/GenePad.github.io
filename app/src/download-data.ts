@@ -10,11 +10,17 @@ const GITEE_TAG = `https://gitee.com/GenePad/GenePad.github.io/releases/download
 export interface DownloadFile {
   name: string;
   size: string;
-  arch?: "x86_64" | "arm64";
 }
 
+export type PlatformId =
+  | "windows"
+  | "mac"
+  | "linux-x64"
+  | "linux-arm64"
+  | "android";
+
 export interface PlatformDownloads {
-  id: "windows" | "mac" | "linux" | "android";
+  id: PlatformId;
   files: DownloadFile[];
   sparkStore?: boolean;
 }
@@ -47,17 +53,21 @@ export const PLATFORMS: (Omit<PlatformDownloads, "files"> & {
     ].map(withSources),
   },
   {
-    id: "linux",
-    files: (
-      [
-        { name: `GenePad_${VERSION}_Linux_amd64.deb`, size: "9.2 MB", arch: "x86_64" },
-        { name: `GenePad_${VERSION}_Linux_amd64.rpm`, size: "9.2 MB", arch: "x86_64" },
-        { name: `GenePad_${VERSION}_Linux_amd64.tar.gz`, size: "8.7 MB", arch: "x86_64" },
-        { name: `GenePad_${VERSION}_Linux_arm64.deb`, size: "8.9 MB", arch: "arm64" },
-        { name: `GenePad_${VERSION}_Linux_arm64.rpm`, size: "8.9 MB", arch: "arm64" },
-        { name: `GenePad_${VERSION}_Linux_arm64.tar.gz`, size: "8.4 MB", arch: "arm64" },
-      ] as DownloadFile[]
-    ).map(withSources),
+    id: "linux-x64",
+    files: [
+      { name: `GenePad_${VERSION}_Linux_amd64.deb`, size: "9.2 MB" },
+      { name: `GenePad_${VERSION}_Linux_amd64.rpm`, size: "9.2 MB" },
+      { name: `GenePad_${VERSION}_Linux_amd64.tar.gz`, size: "8.7 MB" },
+    ].map(withSources),
+    sparkStore: true,
+  },
+  {
+    id: "linux-arm64",
+    files: [
+      { name: `GenePad_${VERSION}_Linux_arm64.deb`, size: "8.9 MB" },
+      { name: `GenePad_${VERSION}_Linux_arm64.rpm`, size: "8.9 MB" },
+      { name: `GenePad_${VERSION}_Linux_arm64.tar.gz`, size: "8.4 MB" },
+    ].map(withSources),
     sparkStore: true,
   },
   {

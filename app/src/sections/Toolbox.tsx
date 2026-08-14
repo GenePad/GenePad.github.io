@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Reveal, SectionHead } from "./shared";
 import { useLang, type TKey } from "../i18n";
+import { useLightboxImage } from "../lightbox";
 
 /* 右键菜单工具 */
 const CONTEXT_TOOLS = [
@@ -73,6 +74,10 @@ type Tool = {
 
 function ToolCard({ tool, delay = 0 }: { tool: Tool; delay?: number }) {
   const { t } = useLang();
+  const zoom = useLightboxImage({
+    src: tool.src,
+    caption: `${t(tool.name)} · ${tool.en}`,
+  });
   return (
     <Reveal delay={delay} className="group bg-paper">
       <div className="flex h-full flex-col">
@@ -80,7 +85,8 @@ function ToolCard({ tool, delay = 0 }: { tool: Tool; delay?: number }) {
           <img
             src={tool.src}
             alt={t(tool.name) as string}
-            className="aspect-[16/8.6] w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.025]"
+            onClick={zoom}
+            className="aspect-[16/8.6] w-full cursor-zoom-in object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.025]"
           />
         </div>
         <div className="flex flex-1 flex-col p-6 md:p-7">

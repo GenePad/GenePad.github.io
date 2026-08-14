@@ -115,7 +115,7 @@ export default function Hero() {
         <Reveal delay={520}>
           <div className="tick-x mt-16 border-t border-line pb-3 pt-4 md:mt-20">
             <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-3 font-mono text-[11px] tracking-[0.18em] text-ink/55">
-              <span>GENBANK / FASTA / DNA / AB1</span>
+              <span>GEN / GENBANK / FASTA / DNA / AB1 / GJSON</span>
               <span className="hidden md:inline">{t("hero.features")}</span>
               <span>WIN / MAC / LINUX / ANDROID</span>
             </div>

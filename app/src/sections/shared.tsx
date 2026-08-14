@@ -1,4 +1,5 @@
 import { useEffect, useRef, type ReactNode, type CSSProperties } from "react";
+import { useLightboxImage } from "../lightbox";
 
 /* ── 滚动显现容器：进入视口时给自身与子级加 .rv-in ── */
 export function Reveal({
@@ -106,12 +107,20 @@ export function Shot({
   className?: string;
   dark?: boolean;
 }) {
+  const zoom = useLightboxImage({ src, caption });
   return (
     <figure className={`shot-frame ${dark ? "text-paper/70" : "text-ink/60"} ${className}`}>
       <div
-        className={`border bg-white p-2 md:p-2.5 ${
+        className={`cursor-zoom-in border bg-white p-2 md:p-2.5 ${
           dark ? "border-lined" : "border-line-strong"
         } shadow-[0_24px_60px_-28px_rgba(28,58,19,0.45)]`}
+        onClick={zoom}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") zoom();
+        }}
+        aria-label={caption}
       >
         <img src={src} alt={caption} className="block w-full" />
       </div>

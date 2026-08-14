@@ -67,8 +67,16 @@ language. When adding UI text, add BOTH `zh` and `en` entries.
 - **Gitee** — `https://gitee.com/GenePad/GenePad.github.io/releases/download/v<VERSION>/<file>`
 - **GitHub** — `https://github.com/GenePad/GenePad.github.io/releases/latest/download/<file>`
 
-It also shows command-line installs (`brew install genepad/tap/genepad`,
-`npm i -g @genepad/app`) and a Spark Store note for Linux.
+It also shows, per platform:
+
+- **macOS** — command-line install first (`brew install genepad/tap/genepad`
+  primary, `npm i -g @genepad/app` secondary), then a copyable AI-assistant
+  install prompt (`dl.ai.prompt` in i18n.tsx, zh/en), then the unsigned
+  `macos-dmg.zip` / `macos-app.zip` direct links inside a collapsed
+  `<details>` with a Gatekeeper "unsigned" warning.
+- **Linux** — split into two cards (x86_64 / ARM64); `npm i -g @genepad/app`
+  plus the three packages per arch, and a Spark Store note.
+- **Windows / Android** — direct installer rows only.
 
 ## Release Checklist
 

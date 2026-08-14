@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Reveal, SectionHead } from "./shared";
 import { useLang, type TKey } from "../i18n";
+import { useLightboxImage } from "../lightbox";
 
 const MODES = {
   night: {
@@ -23,6 +24,28 @@ const MODES = {
 >;
 
 type ModeKey = keyof typeof MODES;
+
+/* 只注册当前可见的那张图（避免灯箱里出现被隐藏的昼/夜另一张） */
+function ModeImg({ mode, active }: { mode: ModeKey; active: boolean }) {
+  const { t } = useLang();
+  const m = MODES[mode];
+  const zoom = useLightboxImage(
+    { src: m.src, caption: t(m.caption) as string },
+    active
+  );
+  return (
+    <img
+      src={m.src}
+      alt={t(m.alt) as string}
+      onClick={active ? zoom : undefined}
+      className={`w-full transition-opacity duration-700 ${
+        active
+          ? "relative block cursor-zoom-in opacity-100"
+          : "pointer-events-none absolute inset-2 opacity-0 md:inset-2.5"
+      }`}
+    />
+  );
+}
 
 export default function DayNight() {
   const { t } = useLang();
@@ -81,15 +104,8 @@ export default function DayNight() {
                   ["night", MODES.night],
                   ["day", MODES.day],
                 ] as const
-              ).map(([k, m]) => (
-                <img
-                  key={k}
-                  src={m.src}
-                  alt={t(m.alt) as string}
-                  className={`w-full transition-opacity duration-700 ${
-                    mode === k ? "relative block opacity-100" : "pointer-events-none absolute inset-2 opacity-0 md:inset-2.5"
-                  }`}
-                />
+              ).map(([k]) => (
+                <ModeImg key={k} mode={k} active={mode === k} />
               ))}
             </div>
             <figcaption className="mt-4 flex items-center gap-3 font-mono text-[11px] tracking-[0.14em] text-paper/55">

@@ -27,7 +27,7 @@ const dict = {
     "hero.titleCn": "基因工坊",
     "hero.titleEn": "Gene Map Editor",
     "hero.desc":
-      "每天的质粒工作，一个顺手的编辑器——打开质粒图谱、编辑序列、管理标注、检查酶切位点、比对 Sanger 测序峰图。日常克隆的设计与核对，不必再在五个软件之间来回切换。",
+      "每天的质粒工作，一个顺手的编辑器——打开质粒图谱、编辑序列、管理标注、检查酶切位点、比对 Sanger 测序峰图。日常克隆的设计与核对，一个软件囊括所有。",
     "hero.download": "免费下载 GenePad",
     "hero.tour": "先看看界面",
     "hero.features": "图谱 · 标注 · 酶切 · 引物 · 峰图",
@@ -52,7 +52,7 @@ const dict = {
 
     // DayNight
     "dn.eyebrow": "Light & Dark · 昼夜模式",
-    "dn.title": <>实验室的灯，想开到几点都行</>,
+    "dn.title": <>实验室的灯虽然能开到很晚，但是不要忘了你还有更重要的生活</>,
     "dn.lead":
       "同一套高密度研究界面，两套完整配色。白天对着投影讲图谱，深夜对着屏幕改序列——都不刺眼。",
     "dn.day": "白天 DAY",
@@ -95,10 +95,10 @@ const dict = {
     "tb.groupC": "开放性",
     "tb.c1.name": "DNA 电泳模拟",
     "tb.c1.desc":
-      "选中序列或酶切产物，直接预览琼脂糖胶条带。内置 Trans2K® 等主流 ladder，跑胶之前，先看条带。",
+      "选中序列，右键菜单直接选择电泳模拟，直接预览琼脂糖胶条带。内置 Trans2K® 等主流 ladder，跑胶之前，先看条带。",
     "tb.c2.name": "蛋白电泳模拟",
     "tb.c2.desc":
-      "SDS-PAGE 模拟：从 CDS 翻译上下文一键上样，PageRuler 等预染 ladder 对照分子量，条带位置即算即得。",
+      "SDS-PAGE 模拟：选中 CDS 或者选中一段氨基酸，从右键菜单电泳模拟直接上样，PageRuler 等预染 ladder 对照分子量，条带位置即算即得。",
     "tb.c3.name": "CRISPR sgRNA 设计",
     "tb.c3.desc":
       "SpCas9、xCas9、Cas12a/b、TnpB 等 12 种识别布局，PAM 方向、种子区长度、脱靶过滤一应俱全，候选一键标回图谱。",
@@ -107,7 +107,7 @@ const dict = {
       "直接读写当前文件的序列、标注与引物：加 feature、算 Tm、翻译蛋白、预测 ORF，用一句话吩咐它去做。",
     "tb.t2.name": "基因文件库",
     "tb.t2.desc":
-      "打开过的载体自动入库，AI 批量生成标签，支持文件夹监听。只存索引，绝不动你的原始文件。",
+      "打开过的载体自动入库，AI 批量生成标签，支持文件夹监听。方便你根据质粒信息直接定位文件，不需要再记冗长的文件名，还能从 AI 助手里让 AI 帮忙查找文件。只存索引，绝不动你的原始文件。",
     "tb.o1.name": "多语言",
     "tb.o1.desc":
       "中、英、日、法、德、俄界面内置。导出语言包、AI 辅助翻译，自己的语言也能装进来。",
@@ -125,16 +125,48 @@ const dict = {
       </>
     ),
     "dl.lead":
-      "实验室的台式机、自己的笔记本、口袋里的手机——同一个 GenePad，随时打开载体文件看一眼。",
+      "实验室的台式机、自己的笔记本、平板电脑、口袋里的手机——同一个 GenePad，随时打开载体文件看一眼。",
     "dl.note.desktop": "桌面端",
+    "dl.note.linuxX64": "桌面端 · x86_64",
+    "dl.note.linuxArm64": "桌面端 · ARM64",
     "dl.note.mobile": "移动端",
     "dl.note.soon": "敬请期待",
-    "dl.cmdTitle": "命令行安装（推荐）",
+    "dl.cmdTitle.recommended": "命令行安装（推荐）",
+    "dl.cmdTitle.plain": "命令行安装",
+    "dl.cmd.brewLabel": "macOS · Homebrew",
+    "dl.cmd.npmLabel": "Linux / macOS · npm",
     "dl.cmd.npmNote":
       "npm 版仅从命令行启动（运行 genepad），不会出现在应用程序列表。",
+    "dl.ai.title": "AI 辅助安装",
+    "dl.ai.desc":
+      "macOS 安装包未签名，手动安装步骤较多。可以复制这段提示词发给 AI 助手（Kimi、ChatGPT 等），让它带着你一步步完成安装。",
+    "dl.ai.prompt": `请帮我在 macOS 上安装一款叫「GenePad」的应用。请按顺序尝试以下方法，任意一种成功即可：
+1. 首选（最省事）：用 Homebrew 安装（会自动放入「应用程序」）：
+   brew install genepad/tap/genepad
+   装好后运行 open -a GenePad 即可。若系统未安装 Homebrew，先装：
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+2. 次选：用 npm 安装（命令行启动）。如果可能，顺便把它复制到 ~/Applications，这样能在「应用程序」/启动台里找到：
+   npm install -g @genepad/app
+   mkdir -p ~/Applications && cp -R "$(npm root -g)/@genepad/darwin-arm64/GenePad.app" ~/Applications/
+   然后用 open -a GenePad 打开（或命令行运行 genepad）
+3. 兜底（手动）：该应用未签名，浏览器下载会被 Gatekeeper 标记成「已损坏」，所以用 curl 下载并本地签名：
+   curl -L -o /tmp/gene-pad-app.zip "https://genepad.pages.dev/release/mac/macos-app.zip"
+   unzip -o /tmp/gene-pad-app.zip -d /tmp/gene-pad-extract
+   mv "/tmp/gene-pad-extract/GenePad.app" /Applications/
+   xattr -cr "/Applications/GenePad.app"
+   codesign --force --deep --sign - "/Applications/GenePad.app"
+   open "/Applications/GenePad.app"
+
+⚠️ 注意：上面的方法可能失效或已过时。如果某个步骤行不通，请自行尝试其它可行的解决办法（例如换一种绕过 Gatekeeper 的方式，或用其它工具来解压、签名）。只有当上面的下载链接本身打不开时，才访问官网 https://genepad.pages.dev——官网只用来寻找其它的下载链接，不提供任何安装帮助。`,
+    "dl.mac.other": "其他下载方式（DMG / APP 直链）",
+    "dl.mac.unsigned":
+      "未签名提示：浏览器直接下载的 .dmg / .app 会被 Gatekeeper 标记为「已损坏」。需要右键 →「打开」，或运行 xattr -cr 移除隔离属性。建议优先使用上面的命令行安装。",
     "dl.copy": "复制",
     "dl.copied": "已复制 ✓",
     "dl.filesTitle": "直接下载安装包",
+    "lb.close": "关闭",
+    "lb.prev": "上一张",
+    "lb.next": "下一张",
     "dl.source.direct": "本站直链",
     "dl.source.gitee": "Gitee",
     "dl.source.github": "GitHub",
@@ -204,7 +236,7 @@ const dict = {
     "hero.titleCn": "Gene Map Editor",
     "hero.titleEn": "Cross-platform",
     "hero.desc":
-      "An editor that feels right for everyday plasmid work — open plasmid maps, edit sequences, manage annotations, check restriction sites, and align Sanger traces. Design and verify routine cloning without bouncing between five different tools.",
+      "An editor that feels right for everyday plasmid work — open plasmid maps, edit sequences, manage annotations, check restriction sites, and align Sanger traces. Design and verify routine cloning — one tool covers it all.",
     "hero.download": "Download GenePad Free",
     "hero.tour": "Take a Look First",
     "hero.features": "MAP · ANNOTATION · ENZYME · PRIMER · TRACE",
@@ -229,7 +261,7 @@ const dict = {
 
     // DayNight
     "dn.eyebrow": "Light & Dark",
-    "dn.title": <>Keep the lab lights on as late as you like</>,
+    "dn.title": <>The lab lights can stay on late — but don't forget you have a life that matters more</>,
     "dn.lead":
       "The same high-density research interface in two complete palettes. Present maps on a projector by day, edit sequences deep into the night — neither strains your eyes.",
     "dn.day": "DAY",
@@ -272,10 +304,10 @@ const dict = {
     "tb.groupC": "Openness",
     "tb.c1.name": "DNA Gel Simulation",
     "tb.c1.desc":
-      "Preview agarose gel bands straight from a selected sequence or digest product. Mainstream ladders like Trans2K® are built in — see the bands before you run the gel.",
+      "Select a sequence, pick gel simulation straight from the right-click menu, and preview agarose gel bands right away. Mainstream ladders like Trans2K® are built in — see the bands before you run the gel.",
     "tb.c2.name": "Protein Gel Simulation",
     "tb.c2.desc":
-      "SDS-PAGE simulation: load directly from a CDS translation context, with prestained ladders like PageRuler as molecular-weight references. Band positions computed on the spot.",
+      "SDS-PAGE simulation: select a CDS or a stretch of amino acids and load directly via gel simulation in the right-click menu, with prestained ladders like PageRuler as molecular-weight references. Band positions computed on the spot.",
     "tb.c3.name": "CRISPR sgRNA Design",
     "tb.c3.desc":
       "Twelve recognition layouts including SpCas9, xCas9, Cas12a/b and TnpB, with PAM orientation, seed-region length and off-target filtering. Send candidates back to the map in one click.",
@@ -284,7 +316,7 @@ const dict = {
       "Reads and writes the current file's sequence, features and primers directly: add features, compute Tm, translate proteins, predict ORFs — just tell it what to do in one sentence.",
     "tb.t2.name": "Gene File Library",
     "tb.t2.desc":
-      "Opened vectors are indexed automatically, with AI-generated batch tags and folder watching. It stores indexes only — your original files are never touched.",
+      "Opened vectors are indexed automatically, with AI-generated batch tags and folder watching. Locate a file directly by its plasmid info — no more memorizing long filenames — and you can even ask the AI assistant to find files for you. It stores indexes only; your original files are never touched.",
     "tb.o1.name": "i18n",
     "tb.o1.desc":
       "Chinese, English, Japanese, French, German and Russian interfaces built in. Export language packs and translate with AI assistance — bring your own language too.",
@@ -302,16 +334,48 @@ const dict = {
       </>
     ),
     "dl.lead":
-      "The lab desktop, your own laptop, the phone in your pocket — the same GenePad, ready to open a vector file whenever you are.",
+      "The lab desktop, your own laptop, your tablet, the phone in your pocket — the same GenePad, ready to open a vector file whenever you are.",
     "dl.note.desktop": "Desktop",
+    "dl.note.linuxX64": "Desktop · x86_64",
+    "dl.note.linuxArm64": "Desktop · ARM64",
     "dl.note.mobile": "Mobile",
     "dl.note.soon": "Coming soon",
-    "dl.cmdTitle": "Install via command line (recommended)",
+    "dl.cmdTitle.recommended": "Command-line install (recommended)",
+    "dl.cmdTitle.plain": "Command-line install",
+    "dl.cmd.brewLabel": "macOS · Homebrew",
+    "dl.cmd.npmLabel": "Linux / macOS · npm",
     "dl.cmd.npmNote":
       "The npm build launches from the command line only (run genepad); it won't appear in the applications list.",
+    "dl.ai.title": "AI-assisted install",
+    "dl.ai.desc":
+      "The macOS packages are unsigned, so a manual install takes a few extra steps. You can copy this prompt to an AI assistant (Kimi, ChatGPT, etc.) and let it walk you through the installation.",
+    "dl.ai.prompt": `Please install an app called "GenePad" on macOS for me. Try these methods in order — stop at the first one that works:
+1. Preferred (easiest): install with Homebrew (puts it in Applications automatically):
+   brew install genepad/tap/genepad
+   Then run: open -a GenePad. If Homebrew isn't installed, install it first:
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+2. Alternative: install with npm (command-line launcher). If possible, also copy it into ~/Applications so it shows up in Applications/Launchpad:
+   npm install -g @genepad/app
+   mkdir -p ~/Applications && cp -R "$(npm root -g)/@genepad/darwin-arm64/GenePad.app" ~/Applications/
+   Then open it with: open -a GenePad (or run: genepad)
+3. Fallback (manual): the app is unsigned and a browser download gets flagged "damaged" by Gatekeeper, so download with curl and re-sign locally:
+   curl -L -o /tmp/gene-pad-app.zip "https://genepad.pages.dev/release/mac/macos-app.zip"
+   unzip -o /tmp/gene-pad-app.zip -d /tmp/gene-pad-extract
+   mv "/tmp/gene-pad-extract/GenePad.app" /Applications/
+   xattr -cr "/Applications/GenePad.app"
+   codesign --force --deep --sign - "/Applications/GenePad.app"
+   open "/Applications/GenePad.app"
+
+⚠️ Note: some steps may fail or be outdated; if one doesn't work, find another viable approach yourself (e.g. a different way to bypass Gatekeeper, or other tools to extract/sign the app). Only visit the official site https://genepad.pages.dev if the download link itself is dead — it only lists alternative download links and provides no install help.`,
+    "dl.mac.other": "Other download options (DMG / APP direct links)",
+    "dl.mac.unsigned":
+      "Unsigned warning: .dmg / .app files downloaded through a browser are flagged as \"damaged\" by Gatekeeper. You'll need to right-click → Open, or run xattr -cr to strip the quarantine attribute. Prefer the command-line install above.",
     "dl.copy": "Copy",
     "dl.copied": "Copied ✓",
     "dl.filesTitle": "Download installers directly",
+    "lb.close": "Close",
+    "lb.prev": "Previous",
+    "lb.next": "Next",
     "dl.source.direct": "Direct",
     "dl.source.gitee": "Gitee",
     "dl.source.github": "GitHub",
@@ -385,7 +449,12 @@ function detectLang(): Lang {
   } catch {
     /* localStorage 不可用时忽略 */
   }
-  return navigator.language?.toLowerCase().startsWith("zh") ? "zh" : "en";
+  // 按系统/浏览器首选语言判断：首选是中文（zh-CN/zh-TW/zh-HK…）就用中文，否则一律英文
+  const primary =
+    typeof navigator !== "undefined"
+      ? navigator.language || navigator.languages?.[0] || ""
+      : "";
+  return primary.toLowerCase().startsWith("zh") ? "zh" : "en";
 }
 
 export function LangProvider({ children }: { children: ReactNode }) {

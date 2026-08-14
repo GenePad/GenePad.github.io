@@ -7,33 +7,36 @@ import Sanger from "../sections/Sanger";
 import Toolbox from "../sections/Toolbox";
 import Download from "../sections/Download";
 import Footer from "../sections/Footer";
+import { LightboxProvider } from "../lightbox";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-paper font-sans text-ink">
-      <Nav />
-      <main>
-        <Hero />
-        <Marquee
-          items={[
-            "PLASMID MAP",
-            "RESTRICTION SITES",
-            "PRIMER DESIGN",
-            "SANGER TRACE",
-            "CRISPR SGRNA",
-            "ELECTROPHORESIS",
-            "CODON OPTIMIZATION",
-            "AI ASSISTANT",
-            "GENE FILE LIBRARY",
-          ]}
-        />
-        <Workbench />
-        <DayNight />
-        <Sanger />
-        <Toolbox />
-        <Download />
-        <Footer />
-      </main>
+      <LightboxProvider>
+        <Nav />
+        <main>
+          <Hero />
+          <Marquee
+            items={[
+              "PLASMID MAP",
+              "RESTRICTION SITES",
+              "PRIMER DESIGN",
+              "SANGER TRACE",
+              "CRISPR SGRNA",
+              "ELECTROPHORESIS",
+              "CODON OPTIMIZATION",
+              "AI ASSISTANT",
+              "GENE FILE LIBRARY",
+            ]}
+          />
+          <Workbench />
+          <DayNight />
+          <Sanger />
+          <Toolbox />
+          <Download />
+          <Footer />
+        </main>
+      </LightboxProvider>
     </div>
   );
 }

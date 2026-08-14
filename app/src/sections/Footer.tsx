@@ -112,7 +112,7 @@ export default function Footer() {
 
           <div className="mt-14 flex flex-col gap-3 border-t border-lined pt-6 font-mono text-[10.5px] tracking-[0.18em] text-paper/40 md:flex-row md:items-center md:justify-between">
             <span>{t("ft.copyright")}</span>
-            <span>GENBANK · FASTA · DNA · AB1</span>
+            <span>GEN · GENBANK · FASTA · DNA · AB1 · GJSON</span>
           </div>
         </div>
       </div>
