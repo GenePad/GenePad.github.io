@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://genepad.pages.dev/sitemap.xml
+Sitemap: https://genepad.cn/sitemap.xml

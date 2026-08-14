@@ -150,14 +150,14 @@ const dict = {
    mkdir -p ~/Applications && cp -R "$(npm root -g)/@genepad/darwin-arm64/GenePad.app" ~/Applications/
    然后用 open -a GenePad 打开（或命令行运行 genepad）
 3. 兜底（手动）：该应用未签名，浏览器下载会被 Gatekeeper 标记成「已损坏」，所以用 curl 下载并本地签名：
-   curl -L -o /tmp/gene-pad-app.zip "https://genepad.pages.dev/release/mac/macos-app.zip"
+   curl -L -o /tmp/gene-pad-app.zip "https://genepad.cn/release/mac/macos-app.zip"
    unzip -o /tmp/gene-pad-app.zip -d /tmp/gene-pad-extract
    mv "/tmp/gene-pad-extract/GenePad.app" /Applications/
    xattr -cr "/Applications/GenePad.app"
    codesign --force --deep --sign - "/Applications/GenePad.app"
    open "/Applications/GenePad.app"
 
-⚠️ 注意：上面的方法可能失效或已过时。如果某个步骤行不通，请自行尝试其它可行的解决办法（例如换一种绕过 Gatekeeper 的方式，或用其它工具来解压、签名）。只有当上面的下载链接本身打不开时，才访问官网 https://genepad.pages.dev——官网只用来寻找其它的下载链接，不提供任何安装帮助。`,
+⚠️ 注意：上面的方法可能失效或已过时。如果某个步骤行不通，请自行尝试其它可行的解决办法（例如换一种绕过 Gatekeeper 的方式，或用其它工具来解压、签名）。只有当上面的下载链接本身打不开时，才访问官网 https://genepad.cn——官网只用来寻找其它的下载链接，不提供任何安装帮助。`,
     "dl.mac.other": "其他下载方式（DMG / APP 直链）",
     "dl.mac.unsigned":
       "未签名提示：浏览器直接下载的 .dmg / .app 会被 Gatekeeper 标记为「已损坏」。需要右键 →「打开」，或运行 xattr -cr 移除隔离属性。建议优先使用上面的命令行安装。",
@@ -359,14 +359,14 @@ const dict = {
    mkdir -p ~/Applications && cp -R "$(npm root -g)/@genepad/darwin-arm64/GenePad.app" ~/Applications/
    Then open it with: open -a GenePad (or run: genepad)
 3. Fallback (manual): the app is unsigned and a browser download gets flagged "damaged" by Gatekeeper, so download with curl and re-sign locally:
-   curl -L -o /tmp/gene-pad-app.zip "https://genepad.pages.dev/release/mac/macos-app.zip"
+   curl -L -o /tmp/gene-pad-app.zip "https://genepad.cn/release/mac/macos-app.zip"
    unzip -o /tmp/gene-pad-app.zip -d /tmp/gene-pad-extract
    mv "/tmp/gene-pad-extract/GenePad.app" /Applications/
    xattr -cr "/Applications/GenePad.app"
    codesign --force --deep --sign - "/Applications/GenePad.app"
    open "/Applications/GenePad.app"
 
-⚠️ Note: some steps may fail or be outdated; if one doesn't work, find another viable approach yourself (e.g. a different way to bypass Gatekeeper, or other tools to extract/sign the app). Only visit the official site https://genepad.pages.dev if the download link itself is dead — it only lists alternative download links and provides no install help.`,
+⚠️ Note: some steps may fail or be outdated; if one doesn't work, find another viable approach yourself (e.g. a different way to bypass Gatekeeper, or other tools to extract/sign the app). Only visit the official site https://genepad.cn if the download link itself is dead — it only lists alternative download links and provides no install help.`,
     "dl.mac.other": "Other download options (DMG / APP direct links)",
     "dl.mac.unsigned":
       "Unsigned warning: .dmg / .app files downloaded through a browser are flagged as \"damaged\" by Gatekeeper. You'll need to right-click → Open, or run xattr -cr to strip the quarantine attribute. Prefer the command-line install above.",
