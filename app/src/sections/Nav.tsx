@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { PlasmidGlyph } from "./shared";
 import { useLang } from "../i18n";
+import { VERSION } from "../download-data";
 
 export default function Nav() {
   const { t, lang, setLang } = useLang();
@@ -33,7 +34,7 @@ export default function Nav() {
           <PlasmidGlyph className="h-5 w-5 text-ink" />
           <span className="font-display text-[17px] font-bold tracking-tight">GenePad</span>
           <span className="mt-0.5 hidden font-mono text-[10px] tracking-[0.2em] text-ink/50 sm:inline">
-            v0.6.2 BETA
+            v{VERSION} BETA
           </span>
         </a>
 

@@ -145,13 +145,17 @@ export function ArrowRight({ className = "h-4 w-4" }: { className?: string }) {
   );
 }
 
-/* ── 质粒环 glyph ── */
+/* ── 品牌标识（原手绘质粒环 SVG 已停用，换用应用图标） ── */
 export function PlasmidGlyph({ className = "h-5 w-5" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
-      <circle cx="12" cy="12" r="8.5" stroke="currentColor" strokeWidth="1.6" />
-      <path d="M12 3.5a8.5 8.5 0 0 1 7.4 4.4" stroke="#45c51f" strokeWidth="2.6" strokeLinecap="round" />
-      <path d="M20.5 12 23 12M12 20.5 12 23M3.5 12 1 12M12 3.5 12 1" stroke="currentColor" strokeWidth="1.2" />
-    </svg>
+    <>
+      {/* 手绘质粒环，暂不启用：
+      <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
+        <circle cx="12" cy="12" r="8.5" stroke="currentColor" strokeWidth="1.6" />
+        <path d="M12 3.5a8.5 8.5 0 0 1 7.4 4.4" stroke="#45c51f" strokeWidth="2.6" strokeLinecap="round" />
+        <path d="M20.5 12 23 12M12 20.5 12 23M3.5 12 1 12M12 3.5 12 1" stroke="currentColor" strokeWidth="1.2" />
+      </svg> */}
+      <img src="icon.png" alt="" className={className} />
+    </>
   );
 }
