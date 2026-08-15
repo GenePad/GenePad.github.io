@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Reveal, Shot, ArrowRight } from "./shared";
+import { Reveal, Shot, ArrowRight, PlasmidGlyph } from "./shared";
 import { useLang } from "../i18n";
 
 /* 真实 superfolder GFP 起始区序列 */
@@ -48,12 +48,15 @@ export default function Hero() {
             </Reveal>
 
             <Reveal delay={110}>
-              <h1 className="mt-7 font-display font-bold leading-none tracking-tight">
-                <span className="block text-[clamp(3.4rem,8.5vw,7.2rem)]">GenePad</span>
-                <span className="mt-3 flex items-baseline gap-4 text-[clamp(1.4rem,3vw,2.4rem)]">
-                  <span className="text-gfp-deep">{t("hero.titleCn")}</span>
-                  <span className="font-mono text-[11px] font-normal tracking-[0.3em] text-ink/40 uppercase">
-                    {t("hero.titleEn")}
+              <h1 className="mt-7 flex items-center gap-5 font-display font-bold leading-none tracking-tight">
+                <PlasmidGlyph className="h-[clamp(3.4rem,8.5vw,7.2rem)] w-[clamp(3.4rem,8.5vw,7.2rem)] shrink-0" />
+                <span>
+                  <span className="block text-[clamp(3.4rem,8.5vw,7.2rem)]">GenePad</span>
+                  <span className="mt-3 flex items-baseline gap-4 text-[clamp(1.4rem,3vw,2.4rem)]">
+                    <span className="text-gfp-deep">{t("hero.titleCn")}</span>
+                    <span className="font-mono text-[11px] font-normal tracking-[0.3em] text-ink/40 uppercase">
+                      {t("hero.titleEn")}
+                    </span>
                   </span>
                 </span>
               </h1>
