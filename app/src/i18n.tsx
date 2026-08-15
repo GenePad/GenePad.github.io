@@ -136,6 +136,15 @@ const dict = {
     "dl.cmd.npmLabel": "Linux / macOS · npm",
     "dl.cmd.npmNote":
       "npm 版仅从命令行启动（运行 genepad），不会出现在应用程序列表。",
+    "dl.cmd.scriptLabel": "Linux · 一键安装脚本",
+    "dl.cmd.scriptNote":
+      "自动识别架构（x86_64 / ARM64）与包管理器（apt / dnf / yum / zypper，其余环境自动改用 tar.gz）。下载带进度显示、失败自动换源重试，下载完成后自动调用 sudo 安装。",
+    "dl.cmdTab.brew": "Homebrew",
+    "dl.cmdTab.script": "一键脚本",
+    "dl.cmdTab.npm": "npm",
+    "dl.cmd.recommendedTag": "推荐",
+    "dl.or.mac": "或者，使用下面的方式安装",
+    "dl.or.linux": "或者，直接下载安装包",
     "dl.ai.title": "AI 辅助安装",
     "dl.ai.desc":
       "macOS 安装包未签名，手动安装步骤较多。可以复制这段提示词发给 AI 助手（Kimi、ChatGPT 等），让它带着你一步步完成安装。",
@@ -345,6 +354,15 @@ const dict = {
     "dl.cmd.npmLabel": "Linux / macOS · npm",
     "dl.cmd.npmNote":
       "The npm build launches from the command line only (run genepad); it won't appear in the applications list.",
+    "dl.cmd.scriptLabel": "Linux · Install script",
+    "dl.cmd.scriptNote":
+      "Auto-detects architecture (x86_64 / ARM64) and package manager (apt / dnf / yum / zypper; anything else falls back to tar.gz). Downloads with a progress bar and mirror retries on failure, then installs with sudo automatically.",
+    "dl.cmdTab.brew": "Homebrew",
+    "dl.cmdTab.script": "Install script",
+    "dl.cmdTab.npm": "npm",
+    "dl.cmd.recommendedTag": "Recommended",
+    "dl.or.mac": "Or use one of the options below",
+    "dl.or.linux": "Or download the installers directly",
     "dl.ai.title": "AI-assisted install",
     "dl.ai.desc":
       "The macOS packages are unsigned, so a manual install takes a few extra steps. You can copy this prompt to an AI assistant (Kimi, ChatGPT, etc.) and let it walk you through the installation.",

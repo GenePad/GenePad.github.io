@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { Reveal, SectionHead, ArrowRight } from "./shared";
 import { useLang } from "../i18n";
 import {
@@ -95,6 +95,63 @@ function CopyCmd({ label, cmd, note }: { label: string; cmd: string; note?: stri
   );
 }
 
+/* 命令行安装方式互斥切换 */
+function CmdTabs({
+  tabs,
+  value,
+  onChange,
+}: {
+  tabs: { id: string; label: string; recommended?: boolean }[];
+  value: string;
+  onChange: (id: string) => void;
+}) {
+  const { t } = useLang();
+  return (
+    <div className="flex divide-x divide-lined border border-lined">
+      {tabs.map((tb) => {
+        const on = tb.id === value;
+        return (
+          <button
+            key={tb.id}
+            type="button"
+            onClick={() => onChange(tb.id)}
+            aria-pressed={on}
+            className={`flex flex-1 items-center justify-center gap-2.5 px-4 py-3 font-mono text-[11.5px] tracking-[0.14em] transition-colors ${
+              on
+                ? "bg-gfp font-bold text-ink"
+                : "text-paper/60 hover:bg-ink-2 hover:text-paper"
+            }`}
+          >
+            {tb.label}
+            {tb.recommended && (
+              <span
+                className={`border px-1.5 py-0.5 text-[9px] tracking-[0.18em] ${
+                  on ? "border-ink/40" : "border-gfp/50 text-gfp"
+                }`}
+              >
+                {t("dl.cmd.recommendedTag")}
+              </span>
+            )}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+/* “或者使用 xx 方式”分隔提示 */
+function OrDivider({ children }: { children: ReactNode }) {
+  return (
+    <div className="flex items-center gap-4 pt-2">
+      <span className="h-px flex-1 bg-lined" aria-hidden />
+      <span className="font-mono text-[10.5px] tracking-[0.22em] uppercase text-paper/45">
+        {children}
+      </span>
+      <span className="h-px flex-1 bg-lined" aria-hidden />
+    </div>
+  );
+}
+
 /* AI 辅助安装提示词（macOS 未签名包） */
 function AiPromptBox() {
   const { t } = useLang();
@@ -186,6 +243,8 @@ function FileBox({ files }: { files: FileEntry[] }) {
 export default function Download() {
   const { t } = useLang();
   const [selected, setSelected] = useState<CardId>("windows");
+  const [macCmd, setMacCmd] = useState<"brew" | "npm">("brew");
+  const [linuxCmd, setLinuxCmd] = useState<"script" | "npm">("script");
 
   const platformCards: { id: CardId; name: string; note: string; soon?: boolean }[] = [
     { id: "windows", name: "Windows", note: t("dl.note.desktop") as string },
@@ -243,23 +302,62 @@ export default function Download() {
         {active && (
           <Reveal delay={120}>
             <div className="mt-8 space-y-4">
-              {/* 命令行安装：仅 macOS / Linux */}
+              {/* 命令行安装：仅 macOS / Linux，多方式互斥切换 */}
               {(isMac || isLinux) && (
                 <>
                   <p className="font-mono text-[11px] tracking-[0.24em] uppercase text-paper/50">
                     {t(isMac ? "dl.cmdTitle.recommended" : "dl.cmdTitle.plain")}
                   </p>
-                  {isMac && (
-                    <CopyCmd
-                      label={t("dl.cmd.brewLabel") as string}
-                      cmd="brew install genepad/tap/genepad"
-                    />
+                  {isMac ? (
+                    <>
+                      <CmdTabs
+                        tabs={[
+                          { id: "brew", label: t("dl.cmdTab.brew") as string, recommended: true },
+                          { id: "npm", label: t("dl.cmdTab.npm") as string },
+                        ]}
+                        value={macCmd}
+                        onChange={(id) => setMacCmd(id as "brew" | "npm")}
+                      />
+                      {macCmd === "brew" ? (
+                        <CopyCmd
+                          label={t("dl.cmd.brewLabel") as string}
+                          cmd="brew install genepad/tap/genepad"
+                        />
+                      ) : (
+                        <CopyCmd
+                          label={t("dl.cmd.npmLabel") as string}
+                          cmd="npm i -g @genepad/app"
+                          note={t("dl.cmd.npmNote") as string}
+                        />
+                      )}
+                      <OrDivider>{t("dl.or.mac")}</OrDivider>
+                    </>
+                  ) : (
+                    <>
+                      <CmdTabs
+                        tabs={[
+                          { id: "script", label: t("dl.cmdTab.script") as string, recommended: true },
+                          { id: "npm", label: t("dl.cmdTab.npm") as string },
+                        ]}
+                        value={linuxCmd}
+                        onChange={(id) => setLinuxCmd(id as "script" | "npm")}
+                      />
+                      {linuxCmd === "script" ? (
+                        <CopyCmd
+                          label={t("dl.cmd.scriptLabel") as string}
+                          cmd="curl -fsSL https://genepad.cn/release/linux/install.sh | bash"
+                          note={t("dl.cmd.scriptNote") as string}
+                        />
+                      ) : (
+                        <CopyCmd
+                          label={t("dl.cmd.npmLabel") as string}
+                          cmd="npm i -g @genepad/app"
+                          note={t("dl.cmd.npmNote") as string}
+                        />
+                      )}
+                      <OrDivider>{t("dl.or.linux")}</OrDivider>
+                    </>
                   )}
-                  <CopyCmd
-                    label={t("dl.cmd.npmLabel") as string}
-                    cmd="npm i -g @genepad/app"
-                    note={t("dl.cmd.npmNote") as string}
-                  />
                 </>
               )}
 

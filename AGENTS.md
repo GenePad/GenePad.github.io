@@ -119,6 +119,11 @@ are the manual fallback and are copied by hand, not from CI.
 
 Remove the previous version's binaries from `docs/release/`.
 
+**Keep `docs/release/linux/install.sh`** — it is the version-agnostic
+one-click install script linked from the download panel (it reads the latest
+version from `update.json` at runtime); do not delete it when clearing old
+binaries.
+
 ### 3. Update `docs/update.json`
 
 - `version` — match the new app package version.

@@ -1,0 +1,2 @@
+# bash 脚本必须保持 LF，避免 CRLF 破坏 curl | bash
+*.sh text eol=lf
