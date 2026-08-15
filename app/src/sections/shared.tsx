@@ -1,5 +1,6 @@
 import { useEffect, useRef, type ReactNode, type CSSProperties } from "react";
 import { useLightboxImage } from "../lightbox";
+import { useLang } from "../i18n";
 
 /* ── 滚动显现容器：进入视口时给自身与子级加 .rv-in ── */
 export function Reveal({
@@ -50,14 +51,17 @@ export function SectionHead({
   eyebrow,
   title,
   dark = false,
+  titleTag = "h2",
   children,
 }: {
   index: string;
   eyebrow: string;
   title: ReactNode;
   dark?: boolean;
+  titleTag?: "h1" | "h2";
   children?: ReactNode;
 }) {
+  const Title = titleTag;
   return (
     <div className="mb-12 md:mb-16">
       <Reveal>
@@ -72,13 +76,13 @@ export function SectionHead({
         </div>
       </Reveal>
       <Reveal delay={90}>
-        <h2
+        <Title
           className={`mt-6 font-display font-bold leading-[1.12] tracking-tight text-[clamp(1.9rem,4.4vw,3.4rem)] ${
             dark ? "text-paper" : "text-ink"
           }`}
         >
           {title}
-        </h2>
+        </Title>
       </Reveal>
       {children && (
         <Reveal delay={170}>
@@ -157,5 +161,38 @@ export function PlasmidGlyph({ className = "h-5 w-5" }: { className?: string }) 
       </svg> */}
       <img src="icon.png" alt="" className={className} />
     </>
+  );
+}
+
+/* ── 子页面共用导航头：logo 返回首页 + 语言切换 + 返回首页 CTA ── */
+export function SubpageNav({ tag }: { tag: string }) {
+  const { t, lang, setLang } = useLang();
+  return (
+    <header className="sticky top-0 z-50 border-b border-line bg-paper/90 backdrop-blur-md">
+      <div className="mx-auto flex h-14 max-w-[1400px] items-center justify-between px-5 md:px-8">
+        <a href="index.html" className="flex items-center gap-2.5">
+          <PlasmidGlyph className="h-5 w-5 text-ink" />
+          <span className="font-display text-[17px] font-bold tracking-tight">GenePad</span>
+          <span className="mt-0.5 hidden font-mono text-[10px] tracking-[0.2em] text-ink/50 sm:inline">
+            {tag}
+          </span>
+        </a>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => setLang(lang === "zh" ? "en" : "zh")}
+            aria-label="Switch language"
+            className="border border-line-strong px-3 py-2 font-mono text-[12px] tracking-[0.12em] text-ink/70 transition-colors hover:border-gfp-deep hover:text-gfp-deep"
+          >
+            {t("nav.lang")}
+          </button>
+          <a
+            href="index.html"
+            className="group flex items-center gap-2 bg-ink px-4 py-2 font-mono text-[12px] tracking-[0.12em] text-paper transition-colors hover:bg-gfp-deep"
+          >
+            {t("sub.back")}
+          </a>
+        </div>
+      </div>
+    </header>
   );
 }

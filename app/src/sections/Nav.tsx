@@ -54,6 +54,12 @@ export default function Nav() {
           >
             {t("nav.docs")}
           </a>
+          <a
+            href="projects.html"
+            className="font-mono text-[12px] tracking-[0.12em] text-ink/70 transition-colors hover:text-gfp-deep"
+          >
+            {t("nav.projects")}
+          </a>
         </nav>
 
         <div className="flex items-center gap-3">

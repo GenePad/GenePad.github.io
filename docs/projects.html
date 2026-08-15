@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f6f6f4" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1c3a13" media="(prefers-color-scheme: dark)" />
+    <meta
+      name="description"
+      content="GenePad 组织的生态项目：质粒构建通用元件序列库（266 个元件、20 个分类、NCBI 可溯源、MIT 协议）与基于 GTEx/GENCODE 的人类组织特异性密码子使用图谱（源码公开），为科研工作者与开发者提供便利。"
+    />
+    <title>生态项目 - GenePad | 质粒元件库与密码子图谱</title>
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://genepad.cn/projects.html" />
+    <!-- Open Graph / Twitter 卡片 -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="GenePad" />
+    <meta property="og:title" content="生态项目 - GenePad | 质粒元件库与密码子图谱" />
+    <meta
+      property="og:description"
+      content="质粒构建通用元件序列库（266 元件、NCBI 可溯源、MIT）与人类组织特异性密码子使用图谱（GTEx/GENCODE，源码公开）——GenePad 组织为科研工作者与开发者维护的生态小项目。"
+    />
+    <meta property="og:url" content="https://genepad.cn/projects.html" />
+    <meta property="og:image" content="https://genepad.cn/icon.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="生态项目 - GenePad | 质粒元件库与密码子图谱" />
+    <meta
+      name="twitter:description"
+      content="质粒构建通用元件序列库与人类组织特异性密码子使用图谱——GenePad 组织的生态小项目。"
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "GenePad 生态项目",
+        "description": "GenePad 组织围绕分子克隆工具链维护的生态项目集合，为科研工作者与开发者提供便利。",
+        "url": "https://genepad.cn/projects.html",
+        "isPartOf": { "@type": "WebSite", "name": "GenePad", "url": "https://genepad.cn/" },
+        "mainEntity": {
+          "@type": "ItemList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@type": "Dataset",
+                "name": "genepad-commonfeatures",
+                "alternateName": "质粒构建通用元件序列库",
+                "description": "266 个质粒构建通用元件、20 个分类，每条序列可溯源至 NCBI 登录号与参考质粒。输出 GenBank 与 FASTA 双格式，可导入 SnapGene、Benchling 作为 common features 库，FASTA 可用于 BLAST。",
+                "url": "https://github.com/GenePad/genepad-commonfeatures/",
+                "license": "https://opensource.org/licenses/MIT",
+                "keywords": ["plasmid", "common features", "SnapGene", "Benchling", "GenBank", "分子克隆", "质粒元件"],
+                "creator": { "@type": "Organization", "name": "GenePad", "url": "https://github.com/GenePad" }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "item": {
+                "@type": "SoftwareSourceCode",
+                "name": "GenePadCodonAtlas",
+                "alternateName": "人类组织特异性密码子图谱",
+                "description": "源码公开的人类组织特异性密码子使用统计构建管线：基于 GTEx v8 基因中位 TPM 与 GENCODE release 50 注释，按组织表达加权计数密码子，输出 Frequency/1000、同义分数、RSCU、CAI 权重与偏好密码子。",
+                "url": "https://github.com/GenePad/GenePadCodonAtlas",
+                "programmingLanguage": "Python",
+                "license": "https://github.com/GenePad/GenePadCodonAtlas/blob/main/LICENSE",
+                "keywords": ["codon usage", "GTEx", "GENCODE", "RSCU", "CAI", "密码子优化", "组织特异性"],
+                "creator": { "@type": "Organization", "name": "GenePad", "url": "https://github.com/GenePad" }
+              }
+            }
+          ]
+        }
+      }
+    </script>
+    <!-- 手绘 SVG 导出图，暂不启用 <link rel="icon" type="image/png" href="/icon.png" /> -->
+    <link rel="icon" href="./icon.ico" sizes="any" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <script type="module" crossorigin src="./assets/projects-CUD35Uwq.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/Footer-Ck-MBBYS.js">
+    <link rel="stylesheet" crossorigin href="./assets/Footer-OBkCECWv.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

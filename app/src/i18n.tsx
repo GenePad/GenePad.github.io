@@ -18,6 +18,7 @@ const dict = {
     "nav.toolbox": "工具箱",
     "nav.download": "下载",
     "nav.docs": "技术文档",
+    "nav.projects": "生态项目",
     "nav.cta": "免费下载",
     "nav.lang": "EN",
 
@@ -198,11 +199,14 @@ const dict = {
     "ft.giteeMirror": "Gitee 镜像",
     "ft.changelog": "更新日志",
     "ft.docs": "技术文档",
+    "ft.projects": "生态项目",
     "ft.sponsor": "赞助开发者",
     "ft.copyright": "© 2026 GENEPAD — MADE FOR THE BENCH",
 
+    // 子页面共用
+    "sub.back": "返回首页",
+
     // Tech support page
-    "ts.back": "返回首页",
     "ts.eyebrow": "Developer Docs · 技术文档",
     "ts.title": "文件格式开发文档",
     "ts.lead":
@@ -226,6 +230,29 @@ const dict = {
     "ts.readDoc": "阅读文档",
     "ts.feedback":
       "文档没有覆盖到你需要的部分？到 GitHub 或 Gitee 提 Issue，我们会补充。",
+
+    // Projects page
+    "pr.eyebrow": "Ecosystem Projects · 生态项目",
+    "pr.title": "GenePad 生态项目",
+    "pr.lead":
+      "围绕分子克隆工具链，GenePad 组织还在 GitHub 上维护着一些独立的小项目：从可溯源的质粒通用元件库，到组织特异性密码子统计管线。它们与主程序相互独立、随取随用，希望能为科研工作者和开发者省去一些重复劳动。",
+    "pr.specs": "数据规格",
+    "pr.cf.head": "质粒通用元件库",
+    "pr.cf.title": "质粒构建通用元件序列库",
+    "pr.cf.desc":
+      "从 NCBI 源参考质粒中逐条整理、核对的可复用元件序列库。每条元件都记录 NCBI 登录号与参考质粒名——序列出处可逐条回溯，而不是“网上抄来的保守序列”。导入质粒软件后，打开图谱即可自动识别这些常见元件。",
+    "pr.cf.catsTitle": "20 个覆盖分类",
+    "pr.cf.usage":
+      "将 genbank/ 下的 .gb 导入 SnapGene 或 Benchling 的 common features 库，打开任意质粒图即可自动识别这些元件；fasta/ 下的 .fa 可直接用于 BLAST 比对。",
+    "pr.ca.head": "组织特异性密码子图谱",
+    "pr.ca.title": "人类组织特异性密码子图谱",
+    "pr.ca.desc":
+      "一条独立实现的统计管线：以公开的 GTEx 基因表达与 GENCODE 注释为上游，按组织表达量加权，为人体每个组织重建密码子使用表。为密码子优化与异源表达设计提供可复现、可审查的组织特异性参考，而不必依赖授权受限的第三方成品表。",
+    "pr.ca.metricsTitle": "输出指标",
+    "pr.ca.usage":
+      "python scripts/build_atlas.py 按 GTEx / GENCODE 输入重建全部组织表；check_release.py 与 package_release.py 负责发布前校验与打包。",
+    "pr.org.text":
+      "这些小项目由 GenePad 主项目孵化、按同一标准维护。更多源码与进展请移步 GitHub 组织主页，欢迎提 Issue 反馈。",
   },
   en: {
     // Nav
@@ -235,6 +262,7 @@ const dict = {
     "nav.toolbox": "Toolbox",
     "nav.download": "Download",
     "nav.docs": "Dev Docs",
+    "nav.projects": "Projects",
     "nav.cta": "Free Download",
     "nav.lang": "中",
 
@@ -416,11 +444,14 @@ const dict = {
     "ft.giteeMirror": "Gitee Mirror",
     "ft.changelog": "Changelog",
     "ft.docs": "Dev Docs",
+    "ft.projects": "Projects",
     "ft.sponsor": "Sponsor the Developer",
     "ft.copyright": "© 2026 GENEPAD — MADE FOR THE BENCH",
 
+    // 子页面共用
+    "sub.back": "Back to Home",
+
     // Tech support page
-    "ts.back": "Back to Home",
     "ts.eyebrow": "Developer Docs",
     "ts.title": "File Format Documentation",
     "ts.lead":
@@ -444,6 +475,29 @@ const dict = {
     "ts.readDoc": "Read the doc",
     "ts.feedback":
       "Missing something you need? Open an issue on GitHub or Gitee and we'll fill the gap.",
+
+    // Projects page
+    "pr.eyebrow": "Ecosystem Projects",
+    "pr.title": "GenePad Ecosystem Projects",
+    "pr.lead":
+      "Beyond the editor itself, the GenePad organization maintains a set of small independent projects on GitHub — from a traceable plasmid common-features library to a tissue-specific codon usage pipeline. Free to pick up and use, they aim to save researchers and developers some repeated work.",
+    "pr.specs": "Specifications",
+    "pr.cf.head": "Plasmid Common Features",
+    "pr.cf.title": "Common feature sequence library for plasmid construction",
+    "pr.cf.desc":
+      "A reusable element library assembled and cross-checked entry by entry from NCBI source reference plasmids. Every element records its NCBI accession and reference plasmid, so each sequence can be traced back to its origin — not just another unattributed consensus. After importing it into your plasmid software, these common elements are recognized automatically on any map you open.",
+    "pr.cf.catsTitle": "20 categories covered",
+    "pr.cf.usage":
+      "Import the .gb files under genbank/ into the common features library of SnapGene or Benchling, and these elements are auto-annotated on any plasmid map you open; the .fa files under fasta/ can be used directly for BLAST.",
+    "pr.ca.head": "Tissue-specific Codon Atlas",
+    "pr.ca.title": "Human Tissue-Specific Codon Atlas",
+    "pr.ca.desc":
+      "An independently implemented pipeline that rebuilds per-tissue codon usage tables from public GTEx expression and GENCODE annotations, weighted by tissue expression. It provides a reproducible, auditable tissue-specific reference for codon optimization and heterologous expression design — without depending on third-party tables under restrictive licensing.",
+    "pr.ca.metricsTitle": "Output metrics",
+    "pr.ca.usage":
+      "python scripts/build_atlas.py rebuilds every tissue table from GTEx / GENCODE inputs; check_release.py and package_release.py handle pre-release validation and packaging.",
+    "pr.org.text":
+      "These small projects are incubated by GenePad and maintained to the same standard. For more source code and progress, visit our GitHub organization — issues and feedback are welcome.",
   },
 } as const;
 

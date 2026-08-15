@@ -1,40 +1,8 @@
-import { Reveal, SectionHead, ArrowRight, PlasmidGlyph } from "../sections/shared";
+import { Reveal, SectionHead, ArrowRight, SubpageNav } from "../sections/shared";
 import Footer from "../sections/Footer";
 import { useLang } from "../i18n";
 
 /* 技术支持 / 开发者文档首页：.gen、.gjson、.dna、Rust 示例四个入口 */
-
-function DocNav() {
-  const { t, lang, setLang } = useLang();
-  return (
-    <header className="sticky top-0 z-50 border-b border-line bg-paper/90 backdrop-blur-md">
-      <div className="mx-auto flex h-14 max-w-[1400px] items-center justify-between px-5 md:px-8">
-        <a href="index.html" className="flex items-center gap-2.5">
-          <PlasmidGlyph className="h-5 w-5 text-ink" />
-          <span className="font-display text-[17px] font-bold tracking-tight">GenePad</span>
-          <span className="mt-0.5 hidden font-mono text-[10px] tracking-[0.2em] text-ink/50 sm:inline">
-            DEV DOCS
-          </span>
-        </a>
-        <div className="flex items-center gap-3">
-          <button
-            onClick={() => setLang(lang === "zh" ? "en" : "zh")}
-            aria-label="Switch language"
-            className="border border-line-strong px-3 py-2 font-mono text-[12px] tracking-[0.12em] text-ink/70 transition-colors hover:border-gfp-deep hover:text-gfp-deep"
-          >
-            {t("nav.lang")}
-          </button>
-          <a
-            href="index.html"
-            className="group flex items-center gap-2 bg-ink px-4 py-2 font-mono text-[12px] tracking-[0.12em] text-paper transition-colors hover:bg-gfp-deep"
-          >
-            {t("ts.back")}
-          </a>
-        </div>
-      </div>
-    </header>
-  );
-}
 
 export default function TechSupport() {
   const { t } = useLang();
@@ -82,7 +50,7 @@ export default function TechSupport() {
 
   return (
     <div className="min-h-screen bg-paper font-sans text-ink">
-      <DocNav />
+      <SubpageNav tag="DEV DOCS" />
       <main className="mx-auto max-w-[1400px] px-5 py-16 md:px-8 md:py-24">
         <SectionHead index="D" eyebrow={t("ts.eyebrow") as string} title={t("ts.title")}>
           {t("ts.lead")}
