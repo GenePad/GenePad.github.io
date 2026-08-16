@@ -149,18 +149,21 @@ export function ArrowRight({ className = "h-4 w-4" }: { className?: string }) {
   );
 }
 
-/* ── 品牌标识（原手绘质粒环 SVG 已停用，换用应用图标） ── */
+/* ── 品牌标识：墨绿手绘图标（fill 跟随 text-* 类；原质粒环/应用图标 PNG 已停用） ── */
 export function PlasmidGlyph({ className = "h-5 w-5" }: { className?: string }) {
   return (
-    <>
+    <svg viewBox="0 0 810 682" fill="none" className={className} aria-hidden>
       {/* 手绘质粒环，暂不启用：
-      <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
-        <circle cx="12" cy="12" r="8.5" stroke="currentColor" strokeWidth="1.6" />
-        <path d="M12 3.5a8.5 8.5 0 0 1 7.4 4.4" stroke="#45c51f" strokeWidth="2.6" strokeLinecap="round" />
-        <path d="M20.5 12 23 12M12 20.5 12 23M3.5 12 1 12M12 3.5 12 1" stroke="currentColor" strokeWidth="1.2" />
-      </svg> */}
-      <img src="icon.png" alt="" className={className} />
-    </>
+      <circle cx="12" cy="12" r="8.5" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M12 3.5a8.5 8.5 0 0 1 7.4 4.4" stroke="#45c51f" strokeWidth="2.6" strokeLinecap="round" />
+      <path d="M20.5 12 23 12M12 20.5 12 23M3.5 12 1 12M12 3.5 12 1" stroke="currentColor" strokeWidth="1.2" /> */}
+      <path
+        fill="currentColor"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M309 601 300 613 286 640 286 653 289 659 296 666 304 669 312 669 322 665 327 660 331 650 330 638ZM345 490 307 581 308 583 360 500ZM522 411 516 416 516 449 526 453 528 450 528 415ZM689 327 652 323 627 326 603 333 559 355 494 403 477 410 460 410 476 419 487 420 496 418 519 406 563 376 564 459 566 463 572 464 576 461 576 369 607 354 614 354 614 438 620 442 626 436 626 350 639 346 665 345 664 374 657 407 645 440 628 472 622 478 588 486 560 486 533 480 507 468 490 457 435 410 426 427 469 464 506 487 526 495 561 501 587 499 613 490 615 491 600 510 569 540 539 561 510 576 474 589 432 597 382 597 343 590 342 595 351 616 389 622 424 622 476 614 508 604 537 591 588 557 617 529 637 504 653 479 668 449 679 418 686 388 689 364ZM423 305 415 322 419 346 347 477 348 480 368 491 372 487 440 361 463 352 475 336ZM221 291 193 300 160 321 144 337 132 353 121 373 119 384 127 419 137 447 151 476 171 507 189 529 217 556 249 579 275 592 279 567 251 551 224 529 196 499 177 472 170 458 203 462 232 462 271 455 304 440 324 426 353 401 369 396 357 390 345 392 301 421 300 349 293 345 288 350 289 427 270 437 251 442 251 334 249 331 241 331 239 333 239 439 244 443 238 446 217 449 202 448 201 352 195 349 190 353 190 448 188 450 166 450 155 427 142 379 159 352 182 330 205 317 234 309 271 311 306 325 333 344 377 384 386 366 340 325 319 310 298 299 276 292 257 289ZM524 174 517 176 479 244 480 249 497 259 502 259 506 255 542 190 540 183ZM631 163 618 185 636 213 649 240 658 266 664 296 687 300 679 255 667 222 648 186ZM490 69 460 60 423 54 384 53 361 55 333 60 300 70 261 88 237 103 215 120 191 143 169 170 153 195 138 226 125 265 119 298 117 325 142 301 147 273 158 240 183 193 210 159 249 125 295 99 332 86 373 79 408 78 443 82 479 91ZM541 47 529 46 521 51 522 56 538 66 538 73 417 286 418 290 490 331 493 331 604 132 613 126 635 130 641 125 641 117 636 108 613 85 572 59ZM566 80 594 96 601 104 601 111 513 269 507 274 498 274 468 257 464 253 463 244 551 88 557 81ZM592 32 581 53 607 68 618 47ZM585 5 584 14 591 20 633 45 639 45 643 42 645 35 642 27 627 12 614 5 600 1 593 1Z"
+      />
+    </svg>
   );
 }
 
@@ -171,7 +174,7 @@ export function SubpageNav({ tag }: { tag: string }) {
     <header className="sticky top-0 z-50 border-b border-line bg-paper/90 backdrop-blur-md">
       <div className="mx-auto flex h-14 max-w-[1400px] items-center justify-between px-5 md:px-8">
         <a href="index.html" className="flex items-center gap-2.5">
-          <PlasmidGlyph className="h-5 w-5 text-ink" />
+          <PlasmidGlyph className="h-5 w-5 text-pine" />
           <span className="font-display text-[17px] font-bold tracking-tight">GenePad</span>
           <span className="mt-0.5 hidden font-mono text-[10px] tracking-[0.2em] text-ink/50 sm:inline">
             {tag}

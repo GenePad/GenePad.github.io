@@ -8,6 +8,7 @@ module.exports = {
         paper: "#f6f6f4",
         ink: "#1c3a13",
         "ink-2": "#2a4a1e",
+        pine: "#2a5b45",
         sage: "#d2d8d0",
         gfp: "#45c51f",
         "gfp-deep": "#2f9a10",

@@ -72,7 +72,7 @@ export default function Footer() {
             <div>
               <Reveal>
                 <div className="flex items-center gap-3">
-                  <PlasmidGlyph className="h-6 w-6 text-paper" />
+                  <PlasmidGlyph className="h-6 w-6 text-gfp" />
                   <span className="font-display text-[22px] font-bold tracking-tight">GenePad</span>
                 </div>
                 <p className="mt-4 max-w-md text-[13.5px] leading-7 text-paper/60">

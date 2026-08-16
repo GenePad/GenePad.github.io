@@ -31,7 +31,7 @@ export default function Nav() {
     >
       <div className="mx-auto flex h-14 max-w-[1400px] items-center justify-between px-5 md:px-8">
         <a href="#top" className="flex items-center gap-2.5">
-          <PlasmidGlyph className="h-5 w-5 text-ink" />
+          <PlasmidGlyph className="h-5 w-5 text-pine" />
           <span className="font-display text-[17px] font-bold tracking-tight">GenePad</span>
           <span className="mt-0.5 hidden font-mono text-[10px] tracking-[0.2em] text-ink/50 sm:inline">
             v{VERSION} BETA
