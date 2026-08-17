@@ -38,7 +38,9 @@
                 <button class="doc-toc-toggle" type="button">目录</button>
                 <a class="doc-toc-home" href="index.html">← 返回首页</a>
                 <p class="doc-toc-group">版本</p>
-                <a class="current" href="#v0-6-2">v0.6.2</a>
+                <a class="current" href="#v0-6-5">v0.6.5</a>
+                <a href="#v0-6-4">v0.6.4</a>
+                <a href="#v0-6-2">v0.6.2</a>
                 <a href="#v0-6-1">v0.6.1</a>
             </aside>
             <div class="doc-content doc-prose">
@@ -48,6 +50,118 @@
                         记录 GenePad 每个版本的新功能、缺陷修复与维护变更。版本按发布时间倒序排列。
                     </p>
                 </div>
+
+                <section class="doc-section" id="v0-6-5">
+                    <div class="section-heading">
+                        <p class="eyebrow">2026-08-17</p>
+                        <h2>v0.6.5</h2>
+                    </div>
+                    <p>本次发布包含自 v0.6.4 以来的 55 项提交，重点新增通用元件自动标注（内置 1591 条参考库，检测提速约 10 倍）、基因文件库桌面快捷方式，并全面换用矢量源生成的藏青螺旋新图标。</p>
+
+                    <h3>✨ 新功能</h3>
+                    <ul>
+                        <li><strong>通用元件自动标注（新增）</strong>：
+                            <ul>
+                                <li>内置 1591 个常见质粒元件参考库（启动子 / 抗性 / 复制子 / CDS / 荧光蛋白 / 2A 肽 / CAR·抗体元件等 22 类），一键自动标注全序列或选中区段</li>
+                                <li>核酸 / 肽段 / 蛋白三级检索：blastn 容错比对、肽段级精确匹配（密码子优化后的短标签也能识别）、blastp 蛋白流水线</li>
+                                <li>严格度预设与蛋白级检索开关；命中结果勾选预览后批量入库，note 写入中英双语说明与相似度 / 覆盖率</li>
+                                <li>相似度低于 95% 的命中自动加「like sequence / like protein」后缀；多段元件按参考段边界切分为分段标注</li>
+                                <li>检测全程可取消并显示真实进度；整体提速约 10 倍，CDS 蛋白路径另提速 2.4–5 倍</li>
+                                <li>MCP 新增 <code>common_feature.*</code> 工具；「添加标注」菜单升级为添加标注 / 自动标注全序列 / 自动标注选定序列三项</li>
+                            </ul>
+                        </li>
+                        <li><strong>基因文件库</strong>：
+                            <ul>
+                                <li>新增独立桌面快捷方式，一键直达基因文件库（Windows .lnk / Linux 应用入口 / macOS 迷你启动器）</li>
+                                <li>右侧详情与标签云面板支持一键折叠，状态持久记忆；标题栏新增「设置」快捷入口</li>
+                                <li>AI 未配置时常驻琥珀色提示条，一键直达配置页；AI 助手按钮自动拉起 MCP server</li>
+                            </ul>
+                        </li>
+                        <li><strong>图标体系</strong>：
+                            <ul>
+                                <li>全面换用藏青螺旋新图标，全部由矢量母版生成，修复 Windows 任务栏图标模糊</li>
+                                <li>深色模式下应用内 logo 自动切换为亮蓝螺旋；macOS / Linux 关联文件接入专属文档图标</li>
+                            </ul>
+                        </li>
+                        <li><strong>其他</strong>：
+                            <ul>
+                                <li>AI 助手窗口改为单例，再次打开置顶已有窗口；AI 配置面板重排，操作更顺手</li>
+                                <li>Windows 安装器：语言自动跟随系统、覆盖安装前确认、完成页整合快捷方式与「立即运行」</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <h3>🐛 缺陷修复</h3>
+                    <ul>
+                        <li>修复通用元件检测停止按钮无响应，以及关闭窗口后自动标注永久失效</li>
+                        <li>修复 AAV 类文件蛋白检测报错（带状行边界溢出）与小写 GenBank 序列导致检索全部失效</li>
+                        <li>扫描 .gen 文件不再在原目录留下 -shm / -wal 伴生文件</li>
+                        <li>CDS 延伸段标签改为「XX阅读框延伸区」格式，语义更清晰</li>
+                    </ul>
+
+                    <p><strong>完整变更</strong>：<a href="https://github.com/Masterchiefm/GenePad/compare/v0.6.4...v0.6.5" target="_blank" rel="noopener">v0.6.4...v0.6.5</a></p>
+                </section>
+
+                <section class="doc-section" id="v0-6-4">
+                    <div class="section-heading">
+                        <p class="eyebrow">2026-08-15</p>
+                        <h2>v0.6.4</h2>
+                    </div>
+                    <p>本次发布包含自 v0.6.2 以来的 70 项提交，重点新增 CDS 阅读框延伸可视化、按文件记忆视图布局、基因文件库「文件管理」与项目分类，并带来 npm 与 Homebrew 两大全新分发渠道。</p>
+
+                    <h3>✨ 新功能</h3>
+                    <ul>
+                        <li><strong>CDS 阅读框延伸（序列视图）</strong>：
+                            <ul>
+                                <li>CDS 标注末尾缺少终止密码子时，沿翻译方向以虚线延伸并续显氨基酸，直至终止密码子（*）</li>
+                                <li>延伸虚线标注所属阅读框，与实心 Feature 同色背景，悬停 / 选中特效一致</li>
+                                <li>延伸区氨基酸可连续选中，点击虚线同时选中实心 + 虚线范围</li>
+                                <li>双击虚线延伸区，确认后一键把 Feature 标注范围扩展到完整阅读框</li>
+                                <li>跨行密码子只在起始行显示一次，交界氨基酸按真实三碱基居中</li>
+                            </ul>
+                        </li>
+                        <li><strong>视图布局记忆</strong>：重新打开同一质粒文件时，恢复上次的 Map / 序列面板布局与序列视图滚动位置</li>
+                        <li><strong>基因文件库</strong>：
+                            <ul>
+                                <li>新增「文件管理」列：按项目分类（支持嵌套子项目）与原始路径两种树视图，点击文件夹筛选，表格行可拖拽到项目归类</li>
+                                <li>新增「未分类」虚拟项目，自动收纳未归属任何项目的文件</li>
+                                <li>监视文件夹后台自动扫描新增 / 移除文件；扫描改为增量，未变化文件不再重复解析</li>
+                                <li>AI 项目工具：通过 MCP 按项目 id 或完整路径管理文件归类</li>
+                            </ul>
+                        </li>
+                        <li><strong>环形图谱</strong>：地图卡片底部新增横轴，拖拽两端手柄可调节外层标签椭圆环宽度（隐藏序列视图时显示）</li>
+                        <li><strong>AI 助手</strong>：
+                            <ul>
+                                <li>对话支持随时停止生成，输出不再限制长度</li>
+                                <li>AI 翻译支持停止 / 重新翻译</li>
+                            </ul>
+                        </li>
+                        <li><strong>编辑标注对话框</strong>：新增「显示氨基酸」勾选框；操作按钮固定底部；添加标注时自动生成初始名称</li>
+                        <li><strong>其他</strong>：
+                            <ul>
+                                <li>ORF 预测按钮图标改为「ORF」文字标识</li>
+                                <li>属性视图拓扑结构拨杆改为两段式样式</li>
+                                <li>选中悬浮面板背景改为半透明</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <h3>🐛 缺陷修复</h3>
+                    <ul>
+                        <li>修复 .gen 格式保存崩溃与克隆模拟窗口无限循环</li>
+                        <li>修复序列视图滚动位置恢复失效（挂载时的 {0,0} 上报把已存位置清零）</li>
+                        <li>修复单行模式 CDS 虚线标签滚动时的跳动</li>
+                        <li>修复基因文件库文件管理器标签页与标签云筛选范围</li>
+                    </ul>
+
+                    <h3>📦 分发</h3>
+                    <ul>
+                        <li>新增 npm 分发渠道：<code>npm i -g @genepad/app</code></li>
+                        <li>新增 macOS Homebrew cask：<code>brew install genepad/tap/genepad</code></li>
+                    </ul>
+
+                    <p><strong>完整变更</strong>：<a href="https://github.com/Masterchiefm/GenePad/compare/v0.6.2...v0.6.4" target="_blank" rel="noopener">v0.6.2...v0.6.4</a></p>
+                </section>
 
                 <section class="doc-section" id="v0-6-2">
                     <div class="section-heading">
