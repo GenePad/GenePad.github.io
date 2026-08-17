@@ -1,16 +1,16 @@
 {
-  "version": "0.6.4",
-  "pub_date": "2026-08-15T08:36:19+08:00",
-  "notes": "# GenePad v0.6.4\n\n本次发布包含自 v0.6.2 以来的 70 项提交，重点新增 CDS 阅读框延伸可视化、按文件记忆视图布局、基因文件库「文件管理」与项目分类，并带来 npm 与 Homebrew 两大全新分发渠道。\n\n## ✨ 新功能\n\n**CDS 阅读框延伸（序列视图）**\n- CDS 标注末尾缺少终止密码子时，沿翻译方向以虚线延伸并续显氨基酸，直至终止密码子（*）\n- 延伸虚线标注所属阅读框，与实心 Feature 同色背景，悬停 / 选中特效一致\n- 延伸区氨基酸可连续选中，点击虚线同时选中实心 + 虚线范围\n- 双击虚线延伸区，确认后一键把 Feature 标注范围扩展到完整阅读框\n- 跨行密码子只在起始行显示一次，交界氨基酸按真实三碱基居中\n\n**视图布局记忆**\n- 重新打开同一质粒文件时，恢复上次的 Map / 序列面板布局与序列视图滚动位置\n\n**基因文件库**\n- 新增「文件管理」列：按项目分类（支持嵌套子项目）与原始路径两种树视图，点击文件夹筛选，表格行可拖拽到项目归类\n- 新增「未分类」虚拟项目，自动收纳未归属任何项目的文件\n- 监视文件夹后台自动扫描新增 / 移除文件；扫描改为增量，未变化文件不再重复解析\n- AI 项目工具：通过 MCP 按项目 id 或完整路径管理文件归类\n\n**环形图谱**\n- 地图卡片底部新增横轴，拖拽两端手柄可调节外层标签椭圆环宽度（隐藏序列视图时显示）\n\n**AI 助手**\n- 对话支持随时停止生成，输出不再限制长度\n- AI 翻译支持停止 / 重新翻译\n\n**编辑标注对话框**\n- 新增「显示氨基酸」勾选框；操作按钮固定底部；添加标注时自动生成初始名称\n\n**其他**\n- ORF 预测按钮图标改为「ORF」文字标识\n- 属性视图拓扑结构拨杆改为两段式样式\n- 选中悬浮面板背景改为半透明\n\n## 🐛 修复\n\n- 修复 .gen 格式保存崩溃与克隆模拟窗口无限循环\n- 修复序列视图滚动位置恢复失效（挂载时的 {0,0} 上报把已存位置清零）\n- 修复单行模式 CDS 虚线标签滚动时的跳动\n- 修复基因文件库文件管理器标签页与标签云筛选范围\n\n## 📦 分发\n\n- 新增 npm 分发渠道：npm i -g @genepad/app\n- 新增 macOS Homebrew cask：brew install genepad/tap/genepad\n\n**完整变更**：https://github.com/Masterchiefm/GenePad/compare/v0.6.2...v0.6.4",
+  "version": "0.6.5",
+  "pub_date": "2026-08-17T15:00:00+08:00",
+  "notes": "# GenePad v0.6.5\n\n更新说明整理中,稍后补充。",
   "platforms": {
     "windows-x86_64": {
-      "url": "https://genepad.pages.dev/release/windows/GenePad_0.6.4_Windows_amd64.zip"
+      "url": "https://genepad.pages.dev/release/windows/GenePad_0.6.5_Windows_amd64.zip"
     },
     "linux-x86_64-deb": {
-      "url": "https://genepad.pages.dev/release/linux/GenePad_0.6.4_Linux_amd64.deb"
+      "url": "https://genepad.pages.dev/release/linux/GenePad_0.6.5_Linux_amd64.deb"
     },
     "linux-x86_64-rpm": {
-      "url": "https://genepad.pages.dev/release/linux/GenePad_0.6.4_Linux_amd64.rpm"
+      "url": "https://genepad.pages.dev/release/linux/GenePad_0.6.5_Linux_amd64.rpm"
     },
     "android": {
       "url": "https://genepad.pages.dev/release/android/app-universal-release.apk"
