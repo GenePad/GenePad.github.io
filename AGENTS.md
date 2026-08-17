@@ -69,8 +69,7 @@ language. When adding UI text, add BOTH `zh` and `en` entries.
 
 It also shows, per platform:
 
-- **macOS** — command-line install first (`brew install genepad/tap/genepad`
-  primary, `npm i -g @genepad/app` secondary), then a copyable AI-assistant
+- **macOS** — one-click install script first (`curl -fsSL https://genepad.cn/release/linux/install.sh | bash` — same script as Linux; on macOS it installs via Homebrew, auto-installing Homebrew with a USTC mirror when GitHub is unreachable — any failed step aborts with an error, no fallback), then `brew install genepad/tap/genepad`, then `npm i -g @genepad/app`, then a copyable AI-assistant
   install prompt (`dl.ai.prompt` in i18n.tsx, zh/en), then the unsigned
   `macos-dmg.zip` / `macos-app.zip` direct links inside a collapsed
   `<details>` with a Gatekeeper "unsigned" warning.
@@ -141,9 +140,10 @@ convention — browsers flag a bare `.dmg` harder than a `.zip` name).
 Remove the previous version's binaries from `docs/release/`.
 
 **Keep `docs/release/linux/install.sh`** — it is the version-agnostic
-one-click install script linked from the download panel (it reads the latest
-version from `update.json` at runtime); do not delete it when clearing old
-binaries.
+one-click install script linked from the download panel for **both Linux and
+macOS** (macOS goes through Homebrew with automatic mirror detection; it reads
+the latest version from `update.json` at runtime); do not delete it when
+clearing old binaries.
 
 ### 3. Update `docs/update.json`
 

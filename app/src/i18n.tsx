@@ -140,6 +140,9 @@ const dict = {
     "dl.cmd.scriptLabel": "Linux · 一键安装脚本",
     "dl.cmd.scriptNote":
       "自动识别架构（x86_64 / ARM64）与包管理器（apt / dnf / yum / zypper，其余环境自动改用 tar.gz）。下载带进度显示、失败自动换源重试，下载完成后自动调用 sudo 安装。",
+    "dl.cmd.scriptLabelMac": "macOS · 一键安装脚本",
+    "dl.cmd.scriptNoteMac":
+      "自动检测 Homebrew：已安装则直接用 brew 安装；未安装则先自动安装 Homebrew（按网络环境自动选择官方源或国内 USTC 镜像）再安装，任一步失败会直接报错提示。",
     "dl.cmdTab.brew": "Homebrew",
     "dl.cmdTab.script": "一键脚本",
     "dl.cmdTab.npm": "npm",
@@ -150,15 +153,18 @@ const dict = {
     "dl.ai.desc":
       "macOS 安装包未签名，手动安装步骤较多。可以复制这段提示词发给 AI 助手（Kimi、ChatGPT 等），让它带着你一步步完成安装。",
     "dl.ai.prompt": `请帮我在 macOS 上安装一款叫「GenePad」的应用。请按顺序尝试以下方法，任意一种成功即可：
-1. 首选（最省事）：用 Homebrew 安装（会自动放入「应用程序」）：
+1. 首选（最省事）：运行官方一键脚本——它会自动检测/安装 Homebrew（按网络自动切换国内镜像）：
+   curl -fsSL https://genepad.cn/release/linux/install.sh | bash
+   装好后运行 open -a GenePad 即可。
+2. 次选：用 Homebrew 安装（会自动放入「应用程序」）：
    brew install genepad/tap/genepad
-   装好后运行 open -a GenePad 即可。若系统未安装 Homebrew，先装：
+   装好后运行 open -a GenePad。若系统未安装 Homebrew，先装：
    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-2. 次选：用 npm 安装（命令行启动）。如果可能，顺便把它复制到 ~/Applications，这样能在「应用程序」/启动台里找到：
+3. 再次：用 npm 安装（命令行启动）。如果可能，顺便把它复制到 ~/Applications，这样能在「应用程序」/启动台里找到：
    npm install -g @genepad/app
    mkdir -p ~/Applications && cp -R "$(npm root -g)/@genepad/darwin-arm64/GenePad.app" ~/Applications/
    然后用 open -a GenePad 打开（或命令行运行 genepad）
-3. 兜底（手动）：该应用未签名，浏览器下载会被 Gatekeeper 标记成「已损坏」，所以用 curl 下载并本地签名：
+4. 兜底（手动）：该应用未签名，浏览器下载会被 Gatekeeper 标记成「已损坏」，所以用 curl 下载并本地签名：
    curl -L -o /tmp/gene-pad-app.zip "https://genepad.cn/release/mac/macos-app.zip"
    unzip -o /tmp/gene-pad-app.zip -d /tmp/gene-pad-extract
    mv "/tmp/gene-pad-extract/GenePad.app" /Applications/
@@ -385,6 +391,9 @@ const dict = {
     "dl.cmd.scriptLabel": "Linux · Install script",
     "dl.cmd.scriptNote":
       "Auto-detects architecture (x86_64 / ARM64) and package manager (apt / dnf / yum / zypper; anything else falls back to tar.gz). Downloads with a progress bar and mirror retries on failure, then installs with sudo automatically.",
+    "dl.cmd.scriptLabelMac": "macOS · Install script",
+    "dl.cmd.scriptNoteMac":
+      "Auto-detects Homebrew: installs GenePad with brew if present; otherwise installs Homebrew first — official source or the USTC mirror based on your network — then installs GenePad. Any failed step aborts with a clear error.",
     "dl.cmdTab.brew": "Homebrew",
     "dl.cmdTab.script": "Install script",
     "dl.cmdTab.npm": "npm",
@@ -395,15 +404,18 @@ const dict = {
     "dl.ai.desc":
       "The macOS packages are unsigned, so a manual install takes a few extra steps. You can copy this prompt to an AI assistant (Kimi, ChatGPT, etc.) and let it walk you through the installation.",
     "dl.ai.prompt": `Please install an app called "GenePad" on macOS for me. Try these methods in order — stop at the first one that works:
-1. Preferred (easiest): install with Homebrew (puts it in Applications automatically):
+1. Preferred (easiest): run the official one-click script — it auto-detects/installs Homebrew (switching to a CN mirror when needed):
+   curl -fsSL https://genepad.cn/release/linux/install.sh | bash
+   Then run: open -a GenePad.
+2. Alternative: install with Homebrew (puts it in Applications automatically):
    brew install genepad/tap/genepad
    Then run: open -a GenePad. If Homebrew isn't installed, install it first:
    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-2. Alternative: install with npm (command-line launcher). If possible, also copy it into ~/Applications so it shows up in Applications/Launchpad:
+3. Next: install with npm (command-line launcher). If possible, also copy it into ~/Applications so it shows up in Applications/Launchpad:
    npm install -g @genepad/app
    mkdir -p ~/Applications && cp -R "$(npm root -g)/@genepad/darwin-arm64/GenePad.app" ~/Applications/
    Then open it with: open -a GenePad (or run: genepad)
-3. Fallback (manual): the app is unsigned and a browser download gets flagged "damaged" by Gatekeeper, so download with curl and re-sign locally:
+4. Fallback (manual): the app is unsigned and a browser download gets flagged "damaged" by Gatekeeper, so download with curl and re-sign locally:
    curl -L -o /tmp/gene-pad-app.zip "https://genepad.cn/release/mac/macos-app.zip"
    unzip -o /tmp/gene-pad-app.zip -d /tmp/gene-pad-extract
    mv "/tmp/gene-pad-extract/GenePad.app" /Applications/

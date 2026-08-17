@@ -254,7 +254,7 @@ function FileBox({ files }: { files: FileEntry[] }) {
 export default function Download() {
   const { t } = useLang();
   const [selected, setSelected] = useState<CardId>(detectPlatform);
-  const [macCmd, setMacCmd] = useState<"brew" | "npm">("brew");
+  const [macCmd, setMacCmd] = useState<"script" | "brew" | "npm">("script");
   const [linuxCmd, setLinuxCmd] = useState<"script" | "npm">("script");
   const stripRef = useRef<HTMLUListElement>(null);
 
@@ -340,13 +340,20 @@ export default function Download() {
                     <>
                       <CmdTabs
                         tabs={[
-                          { id: "brew", label: t("dl.cmdTab.brew") as string, recommended: true },
+                          { id: "script", label: t("dl.cmdTab.script") as string, recommended: true },
+                          { id: "brew", label: t("dl.cmdTab.brew") as string },
                           { id: "npm", label: t("dl.cmdTab.npm") as string },
                         ]}
                         value={macCmd}
-                        onChange={(id) => setMacCmd(id as "brew" | "npm")}
+                        onChange={(id) => setMacCmd(id as "script" | "brew" | "npm")}
                       />
-                      {macCmd === "brew" ? (
+                      {macCmd === "script" ? (
+                        <CopyCmd
+                          label={t("dl.cmd.scriptLabelMac") as string}
+                          cmd="curl -fsSL https://genepad.cn/release/linux/install.sh | bash"
+                          note={t("dl.cmd.scriptNoteMac") as string}
+                        />
+                      ) : macCmd === "brew" ? (
                         <CopyCmd
                           label={t("dl.cmd.brewLabel") as string}
                           cmd="brew install genepad/tap/genepad"
