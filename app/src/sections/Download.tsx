@@ -182,6 +182,17 @@ function AiPromptBox() {
 
 type FileEntry = (typeof PLATFORMS)[number]["files"][number];
 
+/* 初始平台按 UA 预选；iPhone/iPad（iPadOS 伪装成 Macintosh）暂无安装包，回退 Windows */
+function detectPlatform(): CardId {
+  if (typeof navigator === "undefined") return "windows";
+  const ua = navigator.userAgent;
+  if (/Android/i.test(ua)) return "android";
+  if (/iPhone|iPad|iPod/i.test(ua)) return "windows";
+  if (/Mac/i.test(ua)) return (navigator.maxTouchPoints ?? 0) > 1 ? "windows" : "mac";
+  if (/Linux/i.test(ua)) return /aarch64|arm64/i.test(ua) ? "linux-arm64" : "linux-x64";
+  return "windows";
+}
+
 /* 安装包列表：每行 = 文件名 + 大小 + 三个下载源 */
 function FileBox({ files }: { files: FileEntry[] }) {
   const { t } = useLang();
@@ -242,7 +253,7 @@ function FileBox({ files }: { files: FileEntry[] }) {
 
 export default function Download() {
   const { t } = useLang();
-  const [selected, setSelected] = useState<CardId>("windows");
+  const [selected, setSelected] = useState<CardId>(detectPlatform);
   const [macCmd, setMacCmd] = useState<"brew" | "npm">("brew");
   const [linuxCmd, setLinuxCmd] = useState<"script" | "npm">("script");
 
@@ -266,14 +277,14 @@ export default function Download() {
           {t("dl.lead")}
         </SectionHead>
 
-        {/* 平台格：点击切换下方内容（Linux 分 x86_64 / ARM64） */}
+        {/* 平台格：手机端单行横向滑动，避免图标占满首屏；sm+ 恢复网格（Linux 分 x86_64 / ARM64） */}
         <Reveal>
-          <ul className="grid grid-cols-2 gap-px border border-lined bg-lined sm:grid-cols-3 lg:grid-cols-6">
+          <ul className="flex gap-px overflow-x-auto border border-lined bg-lined sm:grid sm:grid-cols-3 lg:grid-cols-6">
             {platformCards.map((p) => {
               const Icon = ICONS[p.id];
               const on = selected === p.id;
               return (
-                <li key={p.id} className="bg-ink">
+                <li key={p.id} className="w-[44%] shrink-0 bg-ink sm:w-auto sm:shrink">
                   <button
                     type="button"
                     disabled={p.soon}

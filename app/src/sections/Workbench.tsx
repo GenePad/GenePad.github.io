@@ -91,9 +91,13 @@ export default function Workbench() {
                       }`}
                     >
                       <div className="overflow-hidden">
-                        <p className="px-1 pb-6 pl-10 text-[13.5px] leading-7 text-ink/70">
+                        <p className="px-1 pb-6 pl-10 text-[13.5px] leading-7 text-ink/70 max-lg:pb-4">
                           {t(it.desc)}
                         </p>
+                        {/* 手机端截图跟在条目正下方，宽屏仍用右侧大图 */}
+                        <div className="px-1 pb-7 pl-10 lg:hidden">
+                          <Shot src={it.src} caption={it.caption} />
+                        </div>
                       </div>
                     </div>
                   </li>
@@ -102,8 +106,8 @@ export default function Workbench() {
             </ul>
           </Reveal>
 
-          {/* 右侧大图：交叉淡化切换 */}
-          <Reveal clip delay={140}>
+          {/* 右侧大图：交叉淡化切换（仅宽屏；手机端改为条目内嵌） */}
+          <Reveal clip delay={140} className="hidden lg:block">
             <div className="relative">
               {ITEMS.map((it, i) => (
                 <div
