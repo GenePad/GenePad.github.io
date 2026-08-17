@@ -48,8 +48,8 @@ export const PLATFORMS: (Omit<PlatformDownloads, "files"> & {
   {
     id: "mac",
     files: [
-      { name: "macos-dmg.zip", size: "9.9 MB" },
-      { name: "macos-app.zip", size: "9.4 MB" },
+      { name: "macos-dmg.zip", size: "10.1 MB" },
+      { name: "macos-app.zip", size: "9.5 MB" },
     ].map(withSources),
   },
   {
