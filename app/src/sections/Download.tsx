@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Reveal, SectionHead, ArrowRight } from "./shared";
 import { useLang } from "../i18n";
 import {
@@ -256,6 +256,23 @@ export default function Download() {
   const [selected, setSelected] = useState<CardId>(detectPlatform);
   const [macCmd, setMacCmd] = useState<"brew" | "npm">("brew");
   const [linuxCmd, setLinuxCmd] = useState<"script" | "npm">("script");
+  const stripRef = useRef<HTMLUListElement>(null);
+
+  /* 选中平台变化（含 UA 预选）时，手机端横滑条自动把选中卡滚到可视区中央 */
+  useEffect(() => {
+    const ul = stripRef.current;
+    const li = ul?.querySelector<HTMLLIElement>(`li[data-card="${selected}"]`);
+    if (!ul || !li) return;
+    const left = li.offsetLeft;
+    const right = left + li.offsetWidth;
+    const viewLeft = ul.scrollLeft;
+    const viewRight = viewLeft + ul.clientWidth;
+    if (left >= viewLeft && right <= viewRight) return;
+    ul.scrollTo({
+      left: left - (ul.clientWidth - li.offsetWidth) / 2,
+      behavior: "smooth",
+    });
+  }, [selected]);
 
   const platformCards: { id: CardId; name: string; note: string; soon?: boolean }[] = [
     { id: "windows", name: "Windows", note: t("dl.note.desktop") as string },
@@ -279,12 +296,12 @@ export default function Download() {
 
         {/* 平台格：手机端单行横向滑动，避免图标占满首屏；sm+ 恢复网格（Linux 分 x86_64 / ARM64） */}
         <Reveal>
-          <ul className="flex gap-px overflow-x-auto border border-lined bg-lined sm:grid sm:grid-cols-3 lg:grid-cols-6">
+          <ul ref={stripRef} className="flex gap-px overflow-x-auto border border-lined bg-lined sm:grid sm:grid-cols-3 lg:grid-cols-6">
             {platformCards.map((p) => {
               const Icon = ICONS[p.id];
               const on = selected === p.id;
               return (
-                <li key={p.id} className="w-[44%] shrink-0 bg-ink sm:w-auto sm:shrink">
+                <li key={p.id} data-card={p.id} className="w-[44%] shrink-0 bg-ink sm:w-auto sm:shrink">
                   <button
                     type="button"
                     disabled={p.soon}
