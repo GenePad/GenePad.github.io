@@ -254,7 +254,6 @@ function FileBox({ files }: { files: FileEntry[] }) {
 export default function Download() {
   const { t } = useLang();
   const [selected, setSelected] = useState<CardId>(detectPlatform);
-  const [macCmd, setMacCmd] = useState<"script" | "brew" | "npm">("script");
   const [linuxCmd, setLinuxCmd] = useState<"script" | "npm">("script");
   const stripRef = useRef<HTMLUListElement>(null);
 
@@ -338,34 +337,22 @@ export default function Download() {
                   </p>
                   {isMac ? (
                     <>
-                      <CmdTabs
-                        tabs={[
-                          { id: "script", label: t("dl.cmdTab.script") as string, recommended: true },
-                          { id: "brew", label: t("dl.cmdTab.brew") as string },
-                          { id: "npm", label: t("dl.cmdTab.npm") as string },
-                        ]}
-                        value={macCmd}
-                        onChange={(id) => setMacCmd(id as "script" | "brew" | "npm")}
+                      <CopyCmd
+                        label={t("dl.cmd.scriptLabelMac") as string}
+                        cmd="curl -fsSL https://genepad.cn/release/linux/install.sh | bash"
+                        note={t("dl.cmd.note") as string}
                       />
-                      {macCmd === "script" ? (
-                        <CopyCmd
-                          label={t("dl.cmd.scriptLabelMac") as string}
-                          cmd="curl -fsSL https://genepad.cn/release/linux/install.sh | bash"
-                          note={t("dl.cmd.scriptNoteMac") as string}
-                        />
-                      ) : macCmd === "brew" ? (
-                        <CopyCmd
-                          label={t("dl.cmd.brewLabel") as string}
-                          cmd="brew install genepad/tap/genepad"
-                        />
-                      ) : (
-                        <CopyCmd
-                          label={t("dl.cmd.npmLabel") as string}
-                          cmd="npm i -g @genepad/app"
-                          note={t("dl.cmd.npmNote") as string}
-                        />
-                      )}
                       <OrDivider>{t("dl.or.mac")}</OrDivider>
+                      <CopyCmd
+                        label={t("dl.cmd.brewLabel") as string}
+                        cmd="brew install genepad/tap/genepad"
+                        note={t("dl.cmd.note") as string}
+                      />
+                      <CopyCmd
+                        label={t("dl.cmd.npmLabelMac") as string}
+                        cmd="npm i -g @genepad/app"
+                        note={t("dl.cmd.note") as string}
+                      />
                     </>
                   ) : (
                     <>
@@ -381,13 +368,13 @@ export default function Download() {
                         <CopyCmd
                           label={t("dl.cmd.scriptLabel") as string}
                           cmd="curl -fsSL https://genepad.cn/release/linux/install.sh | bash"
-                          note={t("dl.cmd.scriptNote") as string}
+                          note={t("dl.cmd.note") as string}
                         />
                       ) : (
                         <CopyCmd
                           label={t("dl.cmd.npmLabel") as string}
                           cmd="npm i -g @genepad/app"
-                          note={t("dl.cmd.npmNote") as string}
+                          note={t("dl.cmd.note") as string}
                         />
                       )}
                       <OrDivider>{t("dl.or.linux")}</OrDivider>

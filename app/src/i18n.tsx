@@ -134,16 +134,11 @@ const dict = {
     "dl.cmdTitle.recommended": "命令行安装（推荐）",
     "dl.cmdTitle.plain": "命令行安装",
     "dl.cmd.brewLabel": "macOS · Homebrew",
-    "dl.cmd.npmLabel": "Linux / macOS · npm",
-    "dl.cmd.npmNote":
-      "npm 版仅从命令行启动（运行 genepad），不会出现在应用程序列表。",
+    "dl.cmd.npmLabel": "Linux · npm",
+    "dl.cmd.npmLabelMac": "macOS · npm",
+    "dl.cmd.note": "复制这段命令，去终端里粘贴运行即可。",
     "dl.cmd.scriptLabel": "Linux · 一键安装脚本",
-    "dl.cmd.scriptNote":
-      "自动识别架构（x86_64 / ARM64）与包管理器（apt / dnf / yum / zypper，其余环境自动改用 tar.gz）。下载带进度显示、失败自动换源重试，下载完成后自动调用 sudo 安装。",
     "dl.cmd.scriptLabelMac": "macOS · 一键安装脚本",
-    "dl.cmd.scriptNoteMac":
-      "自动检测 Homebrew：已安装则直接用 brew 安装；未安装则先自动安装 Homebrew（按网络环境自动选择官方源或国内 USTC 镜像）再安装，任一步失败会直接报错提示。",
-    "dl.cmdTab.brew": "Homebrew",
     "dl.cmdTab.script": "一键脚本",
     "dl.cmdTab.npm": "npm",
     "dl.cmd.recommendedTag": "推荐",
@@ -385,16 +380,11 @@ const dict = {
     "dl.cmdTitle.recommended": "Command-line install (recommended)",
     "dl.cmdTitle.plain": "Command-line install",
     "dl.cmd.brewLabel": "macOS · Homebrew",
-    "dl.cmd.npmLabel": "Linux / macOS · npm",
-    "dl.cmd.npmNote":
-      "The npm build launches from the command line only (run genepad); it won't appear in the applications list.",
+    "dl.cmd.npmLabel": "Linux · npm",
+    "dl.cmd.npmLabelMac": "macOS · npm",
+    "dl.cmd.note": "Copy this command, paste it into your terminal, and run it.",
     "dl.cmd.scriptLabel": "Linux · Install script",
-    "dl.cmd.scriptNote":
-      "Auto-detects architecture (x86_64 / ARM64) and package manager (apt / dnf / yum / zypper; anything else falls back to tar.gz). Downloads with a progress bar and mirror retries on failure, then installs with sudo automatically.",
     "dl.cmd.scriptLabelMac": "macOS · Install script",
-    "dl.cmd.scriptNoteMac":
-      "Auto-detects Homebrew: installs GenePad with brew if present; otherwise installs Homebrew first — official source or the USTC mirror based on your network — then installs GenePad. Any failed step aborts with a clear error.",
-    "dl.cmdTab.brew": "Homebrew",
     "dl.cmdTab.script": "Install script",
     "dl.cmdTab.npm": "npm",
     "dl.cmd.recommendedTag": "Recommended",

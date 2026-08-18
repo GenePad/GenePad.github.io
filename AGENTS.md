@@ -69,10 +69,11 @@ language. When adding UI text, add BOTH `zh` and `en` entries.
 
 It also shows, per platform:
 
-- **macOS** — one-click install script first (`curl -fsSL https://genepad.cn/release/linux/install.sh | bash` — same script as Linux; on macOS it installs via Homebrew, auto-installing Homebrew with a USTC mirror when GitHub is unreachable — any failed step aborts with an error, no fallback), then `brew install genepad/tap/genepad`, then `npm i -g @genepad/app`, then a copyable AI-assistant
-  install prompt (`dl.ai.prompt` in i18n.tsx, zh/en), then the unsigned
+- **macOS** — one-click install script first (`curl -fsSL https://genepad.cn/release/linux/install.sh | bash` — same script as Linux; on macOS it installs via Homebrew, auto-installing Homebrew with a USTC mirror when GitHub is unreachable — any failed step aborts with an error, no fallback), then — under an "Or use one of the options below" divider — `brew install genepad/tap/genepad`, `npm i -g @genepad/app`, a copyable AI-assistant
+  install prompt (`dl.ai.prompt` in i18n.tsx, zh/en), and the unsigned
   `macos-dmg.zip` / `macos-app.zip` direct links inside a collapsed
-  `<details>` with a Gatekeeper "unsigned" warning.
+  `<details>` with a Gatekeeper "unsigned" warning. Every command box
+  carries the same one-liner note (`dl.cmd.note`).
 - **Linux** — split into two cards (x86_64 / ARM64); `npm i -g @genepad/app`
   plus the three packages per arch, and a Spark Store note.
 - **Windows / Android** — direct installer rows only.
