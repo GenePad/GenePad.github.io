@@ -57,7 +57,7 @@ export default function DayNight() {
       <div className="mx-auto max-w-[1400px] px-5 py-16 md:px-8 md:py-24">
         <div className="max-w-3xl">
           <SectionHead
-            index="02"
+            index="03"
             eyebrow={t("dn.eyebrow") as string}
             dark
             title={t("dn.title")}

@@ -116,6 +116,16 @@ const dict = {
       "内置「打开方式」：一键把文件交给 SnapGene、VS Code 或任何你顺手的工具，配合现有工作流，不绑架你的文件。",
     "tb.more": "详细介绍",
 
+    // 首页基因文件库推荐节
+    "lp.lead":
+      "质粒越攒越多，记不得放哪、想不起名字——基因文件库把散落各处的质粒收进一个可检索的库，按项目、按路径、按 AI 生成的标签管理。不需要记住名字和路径，凭一两点模糊的属性，AI 就能帮你把质粒从文件堆里翻出来。",
+    "lp.c1": "项目 · 路径 · 标签",
+    "lp.c2": "AI 自动打标签",
+    "lp.c3": "一句话让 AI 找",
+    "lp.c4": "监视文件夹自动入库",
+    "lp.safe": "只存索引，绝不动你的原始文件",
+    "lp.cta": "了解更多",
+
     // Download
     "dl.eyebrow": "Download · 下载安装",
     "dl.title": (
@@ -462,6 +472,16 @@ const dict = {
     "tb.o2.desc":
       "Built-in \"Open with\": hand a file to SnapGene, VS Code or any tool you like in one click. Works with your existing workflow — it never holds your files hostage.",
     "tb.more": "Learn more",
+
+    // Homepage library promo section
+    "lp.lead":
+      "Plasmids pile up, and both where they live and what they're called fade fast. The Gene File Library gathers them into one searchable index — organized by project, by path, or by AI-generated tags. You never need to remember a name or a location: one or two fuzzy attributes are enough for the AI to pull the plasmid out of the pile.",
+    "lp.c1": "Projects · Paths · Tags",
+    "lp.c2": "AI auto-tagging",
+    "lp.c3": "Ask, and it finds",
+    "lp.c4": "Watched folders sync",
+    "lp.safe": "Indexes only — your original files are never touched",
+    "lp.cta": "Learn more",
 
     // Download
     "dl.eyebrow": "Download",

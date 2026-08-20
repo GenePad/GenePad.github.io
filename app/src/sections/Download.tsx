@@ -289,7 +289,7 @@ export default function Download() {
   return (
     <section id="download" className="bg-ink text-paper">
       <div className="mx-auto max-w-[1400px] px-5 py-20 md:px-8 md:py-28">
-        <SectionHead index="05" eyebrow={t("dl.eyebrow") as string} dark title={t("dl.title")}>
+        <SectionHead index="06" eyebrow={t("dl.eyebrow") as string} dark title={t("dl.title")}>
           {t("dl.lead")}
         </SectionHead>
 

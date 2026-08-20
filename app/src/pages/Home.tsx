@@ -2,6 +2,7 @@ import Nav from "../sections/Nav";
 import Hero from "../sections/Hero";
 import Marquee from "../sections/Marquee";
 import Workbench from "../sections/Workbench";
+import LibraryPromo from "../sections/LibraryPromo";
 import DayNight from "../sections/DayNight";
 import Sanger from "../sections/Sanger";
 import Toolbox from "../sections/Toolbox";
@@ -30,6 +31,7 @@ export default function Home() {
             ]}
           />
           <Workbench />
+          <LibraryPromo />
           <DayNight />
           <Sanger />
           <Toolbox />
