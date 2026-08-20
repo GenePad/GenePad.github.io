@@ -43,6 +43,7 @@ const GLOBAL_TOOLS = [
     en: "FILE LIBRARY",
     src: "shots/file-library.webp",
     desc: "tb.t2.desc",
+    href: "library.html",
   },
 ] as const;
 
@@ -70,6 +71,7 @@ type Tool = {
   en: string;
   src: string;
   desc: TKey;
+  href?: string;
 };
 
 function ToolCard({ tool, delay = 0 }: { tool: Tool; delay?: number }) {
@@ -97,6 +99,15 @@ function ToolCard({ tool, delay = 0 }: { tool: Tool; delay?: number }) {
             </span>
           </div>
           <p className="mt-3 text-[13.5px] leading-7 text-ink/70">{t(tool.desc)}</p>
+          {tool.href && (
+            <a
+              href={tool.href}
+              className="group/link mt-4 inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.16em] text-gfp-deep hover:underline"
+            >
+              {t("tb.more")}
+              <span className="inline-block transition-transform group-hover/link:translate-x-0.5">→</span>
+            </a>
+          )}
         </div>
       </div>
     </Reveal>

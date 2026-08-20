@@ -114,6 +114,7 @@ const dict = {
     "tb.o2.name": "开放协作",
     "tb.o2.desc":
       "内置「打开方式」：一键把文件交给 SnapGene、VS Code 或任何你顺手的工具，配合现有工作流，不绑架你的文件。",
+    "tb.more": "详细介绍",
 
     // Download
     "dl.eyebrow": "Download · 下载安装",
@@ -201,6 +202,7 @@ const dict = {
     "ft.changelog": "更新日志",
     "ft.docs": "技术文档",
     "ft.projects": "生态项目",
+    "ft.library": "基因文件库",
     "ft.sponsor": "赞助开发者",
     "ft.copyright": "© 2026 GENEPAD — MADE FOR THE BENCH",
 
@@ -254,6 +256,105 @@ const dict = {
       "python scripts/build_atlas.py 按 GTEx / GENCODE 输入重建全部组织表；check_release.py 与 package_release.py 负责发布前校验与打包。",
     "pr.org.text":
       "这些小项目由 GenePad 主项目孵化、按同一标准维护。更多源码与进展请移步 GitHub 组织主页，欢迎提 Issue 反馈。",
+
+    // Library page（基因文件库宣传页）
+    "lib.eyebrow": "Gene File Library · 基因文件库",
+    "lib.title": (
+      <>
+        找质粒这件事，
+        <br />
+        不该靠记性
+      </>
+    ),
+    "lib.lead":
+      "课题做久了，质粒越攒越多：这个载体存哪了？那个带 xx 基因的质粒叫什么来着？基因文件库就是为终结这种日常抓狂而生——把散落各处的质粒文件收进一个可检索的库，按项目、按路径、按 AI 生成的标签三种方式管理。你不需要记住任何质粒的具体名字和路径，只要记得它的一两点模糊属性，就能让 AI 帮你把它从浩如烟海的文件库里翻出来。",
+    "lib.hero.shot": "LIBRARY — 331 份质粒入库，右侧是整个文库的标签云",
+
+    "lib.pain.head": "先说痛点",
+    "lib.pain.headEn": "PAIN POINTS",
+    "lib.pain.title": "这些场景，做克隆的人都懂",
+    "lib.pain.1.name": "越攒越多",
+    "lib.pain.1.desc":
+      "课题一个接一个，质粒从几十份涨到几百份，文件夹套着文件夹，找起来全靠缘分。",
+    "lib.pain.2.name": "记不得放哪",
+    "lib.pain.2.desc":
+      "“这个质粒我明明存过”——可在哪个文件夹、哪块磁盘、哪台电脑上？完全想不起来。",
+    "lib.pain.3.name": "记不得名字",
+    "lib.pain.3.desc":
+      "只想找“带 xx 基因的那个载体”，可它叫 pLH-sgRNA1-Muc4-11 还是 pLH-psp-Muc4-54？名字和性质从来对不上号。",
+
+    "lib.ways.head": "三种管理方式",
+    "lib.ways.headEn": "THREE WAYS TO ORGANIZE",
+    "lib.ways.title": "项目、路径、标签——总有一把钥匙能开门",
+    "lib.ways.1.name": "按项目分类",
+    "lib.ways.1.desc":
+      "新建项目，把质粒拖进去归类。一个课题一个项目——打开项目，这个课题的家当都在。",
+    "lib.ways.2.name": "按存储路径",
+    "lib.ways.2.desc":
+      "不移动、不复制你的任何文件，按它们实际存放的文件夹原样浏览。库只是索引，绝不动你的原始文件。",
+    "lib.ways.3.name": "按质粒标签",
+    "lib.ways.3.desc":
+      "让 AI 读取每个质粒的序列与标注，自动总结出 lentiviral、sgRNA、ampicillin 这类性质标签。点一个标签，相关质粒全部列队——按性质定位，而不是按名字。",
+
+    "lib.tags.head": "AI 标签",
+    "lib.tags.headEn": "AI TAGS",
+    "lib.tags.title": "让 AI 替你记住每个质粒是什么",
+    "lib.tags.desc":
+      "配置好 AI 后，扫描或打开质粒时，程序会自动读取序列与元件，为每个文件生成一串性质标签；也可以在表头一键批量刷新——只补没标签的，或者全部重新生成。右侧的标签云就是整个文库的“成分表”：凭一两点模糊的印象点几下，目标就筛出来了。",
+    "lib.tags.shot": "表头批量刷新 — 只补无标签的，或全部重新生成",
+
+    "lib.ai.head": "AI 助手",
+    "lib.ai.headEn": "AI ASSISTANT",
+    "lib.ai.title": "甚至，连找都可以不动手",
+    "lib.ai.desc":
+      "标签都懒得翻？直接吩咐 AI 助手：“帮我找个 Type I CRISPR 质粒。”它会翻遍整个文库，列出候选、写明每个质粒的性质，连推荐组合都替你想好。你也可以说“帮我整理我的质粒文库”——它会先摸清现状，再给出整理方案。",
+    "lib.ai.shot1": "AI ASSISTANT — “帮我整理我的质粒文库”，先摸底再给方案",
+    "lib.ai.shot2": "AI ASSISTANT — “帮我找个 Type I CRISPR 质粒”，候选与性质一并列出",
+
+    "lib.setup.head": "上手",
+    "lib.setup.headEn": "GETTING STARTED",
+    "lib.setup.title": "从零到入库，只要几分钟",
+    "lib.setup.lead":
+      "基因文件库就在 GenePad 的工具箱里。打开它之后，按下面几步走：",
+    "lib.setup.1.name": "打开配置入口",
+    "lib.setup.1.desc":
+      "首次打开基因文件库，在顶部横幅点「配置 AI」；以后也可以随时从右上角 AI 图标进入设置。",
+    "lib.setup.1.shot": "首次打开 — 点顶部横幅里的「配置 AI」",
+    "lib.setup.2.name": "新建 DeepSeek 配置",
+    "lib.setup.2.desc":
+      "点「新建配置」，起个名字；提供商选 DeepSeek、模型选 deepseek-v4-flash，然后点 API Key 旁边的「获取」。",
+    "lib.setup.2.shot": "AI 设置 — 新建配置，选 DeepSeek，点「获取」",
+    "lib.setup.3.name": "去 DeepSeek 官网拿密钥",
+    "lib.setup.3.desc":
+      "浏览器会打开 DeepSeek 开放平台：注册账号、充值一点额度，然后「创建 API key」——起个名字，创建后立刻复制（它只显示这一次）。",
+    "lib.setup.3.shot": "DEEPSEEK 开放平台 — 创建并立刻复制 API key",
+    "lib.setup.4.name": "粘贴密钥并保存",
+    "lib.setup.4.desc":
+      "回到软件粘贴密钥，点「测试连接」，看到“连接成功”后点「保存当前配置」。AI 就绪。",
+    "lib.setup.4.shot": "测试连接成功 — 保存当前配置",
+    "lib.setup.5.name": "监视你的质粒文件夹",
+    "lib.setup.5.desc":
+      "点「监视文件夹」，把你存质粒的文件夹加进来。以后每次启动都会自动扫描：新增的质粒自动入库，消失的自动移除——什么都不用管。",
+    "lib.setup.5.shot": "监视文件夹 — 新增入库、消失移除，自动同步",
+    "lib.setup.note":
+      "配置好 AI 之后，扫描入库的质粒会自动生成标签；暂时不配置也不影响入库，只是少了标签和 AI 助手。",
+
+    "lib.daily.head": "融入日常",
+    "lib.daily.headEn": "DAILY WORKFLOW",
+    "lib.daily.title": "找到之后，顺手就打开了",
+    "lib.daily.1.name": "用你顺手的工具打开",
+    "lib.daily.1.desc":
+      "右键任意质粒 →「使用其它打开方式」：SnapGene 看图谱、VS Code 看序列，一键交过去，配合你已有的工作流。",
+    "lib.daily.2.name": "标签由你做主",
+    "lib.daily.2.desc":
+      "详情面板里随时可以编辑标签：删掉 AI 贴错的，加上你自己的自定义标签——比如“已验证”“送人过”。",
+    "lib.daily.shot":
+      "右键菜单 — 打开、打开所在目录、交给 SnapGene / VS Code；右侧详情面板可直接增删标签",
+
+    "lib.final.title": "它不是独立软件——它是 GenePad 的一部分",
+    "lib.final.desc":
+      "基因文件库内置在 GenePad 基因图谱编辑器里：下载安装 GenePad，打开工具箱就能用它。免费公测中，全平台可用。",
+    "lib.final.cta": "去下载 GenePad",
   },
   en: {
     // Nav
@@ -360,6 +461,7 @@ const dict = {
     "tb.o2.name": "Open With",
     "tb.o2.desc":
       "Built-in \"Open with\": hand a file to SnapGene, VS Code or any tool you like in one click. Works with your existing workflow — it never holds your files hostage.",
+    "tb.more": "Learn more",
 
     // Download
     "dl.eyebrow": "Download",
@@ -447,6 +549,7 @@ const dict = {
     "ft.changelog": "Changelog",
     "ft.docs": "Dev Docs",
     "ft.projects": "Projects",
+    "ft.library": "Gene File Library",
     "ft.sponsor": "Sponsor the Developer",
     "ft.copyright": "© 2026 GENEPAD — MADE FOR THE BENCH",
 
@@ -500,6 +603,105 @@ const dict = {
       "python scripts/build_atlas.py rebuilds every tissue table from GTEx / GENCODE inputs; check_release.py and package_release.py handle pre-release validation and packaging.",
     "pr.org.text":
       "These small projects are incubated by GenePad and maintained to the same standard. For more source code and progress, visit our GitHub organization — issues and feedback are welcome.",
+
+    // Library page
+    "lib.eyebrow": "Gene File Library",
+    "lib.title": (
+      <>
+        Finding a plasmid
+        <br />
+        shouldn't rely on memory
+      </>
+    ),
+    "lib.lead":
+      "After a few projects, plasmids pile up: where did this vector go? What was the one with gene xx called again? The Gene File Library exists to end that daily frustration — it gathers plasmid files scattered across your disks into one searchable library, organized three ways: by project, by storage path, and by AI-generated tags. You never need to remember a plasmid's exact name or path — one or two fuzzy attributes are enough for the AI to pull it out of the haystack.",
+    "lib.hero.shot": "LIBRARY — 331 plasmids indexed, tag cloud of the whole library on the right",
+
+    "lib.pain.head": "The pain",
+    "lib.pain.headEn": "PAIN POINTS",
+    "lib.pain.title": "If you do cloning, you know these moments",
+    "lib.pain.1.name": "They pile up",
+    "lib.pain.1.desc":
+      "Project after project, a few dozen plasmids turn into a few hundred, folders inside folders — finding one becomes pure luck.",
+    "lib.pain.2.name": "Where did it go",
+    "lib.pain.2.desc":
+      "\u201cI definitely saved that plasmid\u201d — but in which folder, on which disk, on which machine? No idea.",
+    "lib.pain.3.name": "What's it called",
+    "lib.pain.3.desc":
+      "You just want \u201cthe vector with gene xx\u201d — but is it pLH-sgRNA1-Muc4-11 or pLH-psp-Muc4-54? Names never match properties.",
+
+    "lib.ways.head": "Three ways to organize",
+    "lib.ways.headEn": "THREE WAYS TO ORGANIZE",
+    "lib.ways.title": "Projects, paths, tags — one of the keys always fits",
+    "lib.ways.1.name": "By project",
+    "lib.ways.1.desc":
+      "Create a project and drag plasmids in. One project per study — open it and everything for that study is there.",
+    "lib.ways.2.name": "By storage path",
+    "lib.ways.2.desc":
+      "Nothing is moved or copied. Browse files exactly where they actually live — the library is only an index and never touches your originals.",
+    "lib.ways.3.name": "By plasmid tags",
+    "lib.ways.3.desc":
+      "Let the AI read each plasmid's sequence and features, then summarize property tags like lentiviral, sgRNA, ampicillin. Click a tag and every matching plasmid lines up — located by properties, not by name.",
+
+    "lib.tags.head": "AI Tags",
+    "lib.tags.headEn": "AI TAGS",
+    "lib.tags.title": "Let the AI remember what each plasmid is",
+    "lib.tags.desc":
+      "Once AI is configured, scanning or opening a plasmid makes the program read its sequence and features and generate a set of property tags; you can also batch-refresh from the table header — fill only the untagged ones, or regenerate everything. The tag cloud on the right is the ingredient list of your whole library: a fuzzy impression or two and a few clicks are enough to narrow down the target.",
+    "lib.tags.shot": "Batch refresh from the table header — fill untagged, or regenerate all",
+
+    "lib.ai.head": "AI Assistant",
+    "lib.ai.headEn": "AI ASSISTANT",
+    "lib.ai.title": "Or don't even search yourself",
+    "lib.ai.desc":
+      "Can't be bothered with tags? Just tell the AI assistant: \u201cFind me a Type I CRISPR plasmid.\u201d It digs through the entire library, lists the candidates with a property summary for each, and even suggests the combination to use. Or say \u201chelp me organize my plasmid library\u201d — it surveys the current state first, then proposes a plan.",
+    "lib.ai.shot1": "AI ASSISTANT — \u201cHelp me organize my plasmid library\u201d: survey first, then a plan",
+    "lib.ai.shot2": "AI ASSISTANT — \u201cFind me a Type I CRISPR plasmid\u201d: candidates listed with properties",
+
+    "lib.setup.head": "Getting started",
+    "lib.setup.headEn": "GETTING STARTED",
+    "lib.setup.title": "From zero to indexed in minutes",
+    "lib.setup.lead":
+      "The Gene File Library lives in GenePad's toolbox. Open it, then follow these steps:",
+    "lib.setup.1.name": "Open the AI settings",
+    "lib.setup.1.desc":
+      "On first launch, click \u201cConfigure AI\u201d in the top banner; later you can always reopen the settings via the AI icon in the title bar.",
+    "lib.setup.1.shot": "First launch — click \u201cConfigure AI\u201d in the banner",
+    "lib.setup.2.name": "Create a DeepSeek profile",
+    "lib.setup.2.desc":
+      "Click \u201cNew profile\u201d and give it a name; pick DeepSeek as provider, deepseek-v4-flash as model, then click \u201cGet\u201d next to the API Key field.",
+    "lib.setup.2.shot": "AI settings — new profile, pick DeepSeek, click \u201cGet\u201d",
+    "lib.setup.3.name": "Grab a key from DeepSeek",
+    "lib.setup.3.desc":
+      "Your browser opens the DeepSeek platform: sign up, top up a little credit, then \u201cCreate API key\u201d — name it, create it, and copy it immediately (it is shown only once).",
+    "lib.setup.3.shot": "DeepSeek platform — create an API key and copy it right away",
+    "lib.setup.4.name": "Paste the key and save",
+    "lib.setup.4.desc":
+      "Back in the app, paste the key, click \u201cTest connection\u201d, and once you see \u201cConnected\u201d, hit \u201cSave current profile\u201d. The AI is ready.",
+    "lib.setup.4.shot": "Connection OK — save the profile",
+    "lib.setup.5.name": "Watch your plasmid folders",
+    "lib.setup.5.desc":
+      "Click \u201cWatch folders\u201d and add the folders where you keep plasmids. Every launch auto-scans them: new plasmids are indexed automatically, vanished ones removed — zero maintenance.",
+    "lib.setup.5.shot": "Watched folders — new files indexed, missing ones removed, always in sync",
+    "lib.setup.note":
+      "With AI configured, plasmids scanned into the library get tags generated automatically. Skipping the AI setup doesn't stop indexing — you just lose tags and the AI assistant.",
+
+    "lib.daily.head": "Daily workflow",
+    "lib.daily.headEn": "DAILY WORKFLOW",
+    "lib.daily.title": "Found it — now open it right away",
+    "lib.daily.1.name": "Open with your favorite tools",
+    "lib.daily.1.desc":
+      "Right-click any plasmid \u2192 \u201cOpen with\u201d: SnapGene for the map, VS Code for the sequence — hand it off in one click, straight into your existing workflow.",
+    "lib.daily.2.name": "Tags are yours",
+    "lib.daily.2.desc":
+      "Edit tags anytime in the details panel: drop the ones the AI got wrong, add your own — like \u201cverified\u201d or \u201calready shared\u201d.",
+    "lib.daily.shot":
+      "Context menu — open, reveal in folder, hand off to SnapGene / VS Code; edit tags in the details panel on the right",
+
+    "lib.final.title": "It's not a standalone app — it's part of GenePad",
+    "lib.final.desc":
+      "The Gene File Library is built into the GenePad gene map editor: install GenePad and it's right there in the toolbox. Free in public beta, on every platform.",
+    "lib.final.cta": "Download GenePad",
   },
 } as const;
 
