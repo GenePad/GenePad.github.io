@@ -1,16 +1,16 @@
 {
-  "version": "0.6.5",
-  "pub_date": "2026-08-17T15:00:00+08:00",
-  "notes": "# GenePad v0.6.5\n\n本次发布包含自 v0.6.4 以来的 55 项提交，重点新增通用元件自动标注（内置 1591 条参考库，检测提速约 10 倍）、基因文件库桌面快捷方式，并全面换用矢量源生成的藏青螺旋新图标。\n\n## ✨ 新功能\n\n**通用元件自动标注（新增）**\n- 内置 1591 个常见质粒元件参考库（启动子 / 抗性 / 复制子 / CDS / 荧光蛋白 / 2A 肽 / CAR·抗体元件等 22 类），一键自动标注全序列或选中区段\n- 核酸 / 肽段 / 蛋白三级检索：blastn 容错比对、肽段级精确匹配（密码子优化后的短标签也能识别）、blastp 蛋白流水线\n- 严格度预设与蛋白级检索开关；命中结果勾选预览后批量入库，note 写入中英双语说明与相似度 / 覆盖率\n- 相似度低于 95% 的命中自动加「like sequence / like protein」后缀；多段元件按参考段边界切分为分段标注\n- 检测全程可取消并显示真实进度；整体提速约 10 倍，CDS 蛋白路径另提速 2.4–5 倍\n- MCP 新增 common_feature.* 工具；「添加标注」菜单升级为添加标注 / 自动标注全序列 / 自动标注选定序列三项\n\n**基因文件库**\n- 新增独立桌面快捷方式，一键直达基因文件库（Windows .lnk / Linux 应用入口 / macOS 迷你启动器）\n- 右侧详情与标签云面板支持一键折叠，状态持久记忆；标题栏新增「设置」快捷入口\n- AI 未配置时常驻琥珀色提示条，一键直达配置页；AI 助手按钮自动拉起 MCP server\n\n**图标体系**\n- 全面换用藏青螺旋新图标，全部由矢量母版生成，修复 Windows 任务栏图标模糊\n- 深色模式下应用内 logo 自动切换为亮蓝螺旋；macOS / Linux 关联文件接入专属文档图标\n\n**其他**\n- AI 助手窗口改为单例，再次打开置顶已有窗口；AI 配置面板重排，操作更顺手\n- Windows 安装器：语言自动跟随系统、覆盖安装前确认、完成页整合快捷方式与「立即运行」\n\n## 🐛 修复\n\n- 修复通用元件检测停止按钮无响应，以及关闭窗口后自动标注永久失效\n- 修复 AAV 类文件蛋白检测报错（带状行边界溢出）与小写 GenBank 序列导致检索全部失效\n- 扫描 .gen 文件不再在原目录留下 -shm / -wal 伴生文件\n- CDS 延伸段标签改为「XX阅读框延伸区」格式，语义更清晰\n\n**完整变更**：https://github.com/Masterchiefm/GenePad/compare/v0.6.4...v0.6.5",
+  "version": "0.6.6",
+  "pub_date": "2026-08-21T00:00:00+08:00",
+  "notes": "# GenePad v0.6.6\n\n本次发布包含自 v0.6.5 以来的 22 项提交，重点消除启动白屏与空窗闪现、增强基因文件库交互（行右键菜单、窗口内 AI 设置），并换用全新多色描边图标，附一批 Linux / macOS 细节修复。\n\n## ✨ 新功能\n\n**启动与窗口体验**\n- 所有窗口改为隐藏创建、首帧绘制完成后再显示，彻底消除启动白屏与空窗闪现\n- 窗口显示前将背景预设为主题色，去掉显示到首帧之间的白底；移除启动页 logo\n\n**基因文件库**\n- 表格新增行右键菜单：打开 / 打开所在目录 / 使用其它打开方式 / 移出文件库，右键同时选中该行\n- 设置入口改为窗口内「AI 设置」专用弹窗，内嵌与主设置窗相同的完整 AI 配置面板，不再跳回主窗口\n\n**图标与安装包**\n- 应用图标换用 v2 多色描边设计，基因文件库图标换为「冷藏样品盒 + 离心管」造型，全平台产物重新生成，并修复旧图标在部分渲染器下的暗色晕影\n- Android 自适应图标改为底色背景层 + 螺旋前景层，圆形 / 圆角方等任意遮罩下满幅无裁切\n- Windows 安装器完成页新增「添加到开始菜单」勾选（默认全选）；修复「立即运行」勾选不生效；升级安装提示文案简化\n\n**AI**\n- 默认质粒标签提示词扩充免标注清单（T7 启动子 / 终止子、polyA），减少 AI 冗余标注\n\n## 🐛 修复\n\n- 基因文件库窗口开着时，双击桌面图标现在会显示主窗口（此前只聚焦库窗口，无法回到欢迎页）\n- 每文件缓存与工具窗数据改为上限 100 条，不再无限增长；移除从不读取却写入完整序列 JSON 的缓存项\n- Linux：补齐 16–256px 全尺寸图标（修复 48–96px 放大发虚）；桌面入口显示中文名「基因文件库」；窗口阴影改为 1px 描边，显示更清爽；标题栏按钮改为圆形；deb/rpm 系统安装不再写用户级残留文件，卸载更干净\n- macOS：修复主窗口不显示的问题，应用图标恢复圆角\n\n**完整变更**：https://github.com/Masterchiefm/GenePad/compare/v0.6.5...v0.6.6",
   "platforms": {
     "windows-x86_64": {
-      "url": "https://genepad.pages.dev/release/windows/GenePad_0.6.5_Windows_amd64.zip"
+      "url": "https://genepad.pages.dev/release/windows/GenePad_0.6.6_Windows_amd64.zip"
     },
     "linux-x86_64-deb": {
-      "url": "https://genepad.pages.dev/release/linux/GenePad_0.6.5_Linux_amd64.deb"
+      "url": "https://genepad.pages.dev/release/linux/GenePad_0.6.6_Linux_amd64.deb"
     },
     "linux-x86_64-rpm": {
-      "url": "https://genepad.pages.dev/release/linux/GenePad_0.6.5_Linux_amd64.rpm"
+      "url": "https://genepad.pages.dev/release/linux/GenePad_0.6.6_Linux_amd64.rpm"
     },
     "android": {
       "url": "https://genepad.pages.dev/release/android/app-universal-release.apk"

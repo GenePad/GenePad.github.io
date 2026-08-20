@@ -38,7 +38,8 @@
                 <button class="doc-toc-toggle" type="button">目录</button>
                 <a class="doc-toc-home" href="index.html">← 返回首页</a>
                 <p class="doc-toc-group">版本</p>
-                <a class="current" href="#v0-6-5">v0.6.5</a>
+                <a class="current" href="#v0-6-6">v0.6.6</a>
+                <a href="#v0-6-5">v0.6.5</a>
                 <a href="#v0-6-4">v0.6.4</a>
                 <a href="#v0-6-2">v0.6.2</a>
                 <a href="#v0-6-1">v0.6.1</a>
@@ -50,6 +51,52 @@
                         记录 GenePad 每个版本的新功能、缺陷修复与维护变更。版本按发布时间倒序排列。
                     </p>
                 </div>
+
+                <section class="doc-section" id="v0-6-6">
+                    <div class="section-heading">
+                        <p class="eyebrow">2026-08-21</p>
+                        <h2>v0.6.6</h2>
+                    </div>
+                    <p>本次发布包含自 v0.6.5 以来的 22 项提交，重点消除启动白屏与空窗闪现、增强基因文件库交互（行右键菜单、窗口内 AI 设置），并换用全新多色描边图标，附一批 Linux / macOS 细节修复。</p>
+
+                    <h3>✨ 新功能</h3>
+                    <ul>
+                        <li><strong>启动与窗口体验</strong>：
+                            <ul>
+                                <li>所有窗口改为隐藏创建、首帧绘制完成后再显示，彻底消除启动白屏与空窗闪现</li>
+                                <li>窗口显示前将背景预设为主题色，去掉显示到首帧之间的白底；移除启动页 logo</li>
+                            </ul>
+                        </li>
+                        <li><strong>基因文件库</strong>：
+                            <ul>
+                                <li>表格新增行右键菜单：打开 / 打开所在目录 / 使用其它打开方式 / 移出文件库，右键同时选中该行</li>
+                                <li>设置入口改为窗口内「AI 设置」专用弹窗，内嵌与主设置窗相同的完整 AI 配置面板，不再跳回主窗口</li>
+                            </ul>
+                        </li>
+                        <li><strong>图标与安装包</strong>：
+                            <ul>
+                                <li>应用图标换用 v2 多色描边设计，基因文件库图标换为「冷藏样品盒 + 离心管」造型，全平台产物重新生成，并修复旧图标在部分渲染器下的暗色晕影</li>
+                                <li>Android 自适应图标改为底色背景层 + 螺旋前景层，圆形 / 圆角方等任意遮罩下满幅无裁切</li>
+                                <li>Windows 安装器完成页新增「添加到开始菜单」勾选（默认全选）；修复「立即运行」勾选不生效；升级安装提示文案简化</li>
+                            </ul>
+                        </li>
+                        <li><strong>AI</strong>：
+                            <ul>
+                                <li>默认质粒标签提示词扩充免标注清单（T7 启动子 / 终止子、polyA），减少 AI 冗余标注</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <h3>🐛 缺陷修复</h3>
+                    <ul>
+                        <li>基因文件库窗口开着时，双击桌面图标现在会显示主窗口（此前只聚焦库窗口，无法回到欢迎页）</li>
+                        <li>每文件缓存与工具窗数据改为上限 100 条，不再无限增长；移除从不读取却写入完整序列 JSON 的缓存项</li>
+                        <li>Linux：补齐 16–256px 全尺寸图标（修复 48–96px 放大发虚）；桌面入口显示中文名「基因文件库」；窗口阴影改为 1px 描边，显示更清爽；标题栏按钮改为圆形；deb/rpm 系统安装不再写用户级残留文件，卸载更干净</li>
+                        <li>macOS：修复主窗口不显示的问题，应用图标恢复圆角</li>
+                    </ul>
+
+                    <p><strong>完整变更</strong>：<a href="https://github.com/Masterchiefm/GenePad/compare/v0.6.5...v0.6.6" target="_blank" rel="noopener">v0.6.5...v0.6.6</a></p>
+                </section>
 
                 <section class="doc-section" id="v0-6-5">
                     <div class="section-heading">
