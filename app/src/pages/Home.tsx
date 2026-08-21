@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Nav from "../sections/Nav";
 import Hero from "../sections/Hero";
 import Marquee from "../sections/Marquee";
@@ -9,8 +10,10 @@ import Toolbox from "../sections/Toolbox";
 import Download from "../sections/Download";
 import Footer from "../sections/Footer";
 import { LightboxProvider } from "../lightbox";
+import { dismissBoot } from "../boot";
 
 export default function Home() {
+  useEffect(() => dismissBoot(), []);
   return (
     <div className="min-h-screen bg-paper font-sans text-ink">
       <LightboxProvider>

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Reveal, SectionHead } from "./shared";
+import { useRef, useState } from "react";
+import { Reveal, SectionHead, ImgSpin, useImgLoaded } from "./shared";
 import { useLang, type TKey } from "../i18n";
 import { useLightboxImage } from "../lightbox";
 
@@ -33,19 +33,31 @@ function ModeImg({ mode, active }: { mode: ModeKey; active: boolean }) {
     { src: m.src, caption: t(m.caption) as string },
     active
   );
+  const imgRef = useRef<HTMLImageElement>(null);
+  const { loaded, onLoad, onError } = useImgLoaded(imgRef);
   return (
-    <img
-      src={m.src}
-      alt={t(m.alt) as string}
-      loading="lazy"
-      decoding="async"
-      onClick={active ? zoom : undefined}
-      className={`w-full transition-opacity duration-700 ${
+    <div
+      className={`transition-opacity duration-700 ${
         active
           ? "relative block cursor-zoom-in opacity-100"
           : "pointer-events-none absolute inset-2 opacity-0 md:inset-2.5"
       }`}
-    />
+      onClick={active ? zoom : undefined}
+    >
+      {active && !loaded && <ImgSpin />}
+      <img
+        ref={imgRef}
+        src={m.src}
+        alt={t(m.alt) as string}
+        width={2101}
+        height={1504}
+        loading="lazy"
+        decoding="async"
+        onLoad={onLoad}
+        onError={onError}
+        className="block h-auto w-full"
+      />
+    </div>
   );
 }
 

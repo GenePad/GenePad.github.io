@@ -1,6 +1,8 @@
+import { useEffect } from "react";
 import { Reveal, SectionHead, ArrowRight, SubpageNav } from "../sections/shared";
 import Footer from "../sections/Footer";
 import { useLang, type Lang } from "../i18n";
+import { dismissBoot } from "../boot";
 
 /* 生态项目页：GenePad 组织的两个独立小项目（commonfeatures / CodonAtlas）
    叙述文案走 i18n（pr.*），规格表与分类 chips 属于结构化数据，按语言记录在本文件内 */
@@ -148,6 +150,7 @@ function SpecTable({ rows, lang }: { rows: { k: L; v: L }[]; lang: Lang }) {
 
 export default function Projects() {
   const { t, lang } = useLang();
+  useEffect(() => dismissBoot(), []);
 
   return (
     <div className="min-h-screen bg-paper font-sans text-ink">

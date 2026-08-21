@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ReactNode, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type ReactNode, type CSSProperties, type RefObject } from "react";
 import { useLightboxImage } from "../lightbox";
 import { useLang } from "../i18n";
 
@@ -99,6 +99,60 @@ export function SectionHead({
   );
 }
 
+/* ── 截图原始尺寸：加载期间用 width/height 预留宽高比，避免白卡塌陷与布局抖动 ── */
+const SHOT_DIMS: Record<string, { w: number; h: number }> = {
+  "shots/light-mode.webp": { w: 2101, h: 1504 },
+  "shots/dark-mode.webp": { w: 2101, h: 1504 },
+  "shots/atlas-overview.webp": { w: 2101, h: 1504 },
+  "shots/protein-gel.webp": { w: 2101, h: 1504 },
+  "shots/ai-assistant.webp": { w: 2101, h: 1504 },
+  "shots/file-library.webp": { w: 2101, h: 1504 },
+  "shots/crispr.webp": { w: 2101, h: 1504 },
+  "shots/dna-gel.webp": { w: 2101, h: 1504 },
+  "shots/sanger-1.webp": { w: 1804, h: 1204 },
+  "shots/sanger-2.webp": { w: 1804, h: 1204 },
+  "shots/map-to-seq.webp": { w: 1804, h: 1204 },
+  "shots/enzyme-sites.webp": { w: 1804, h: 1204 },
+  "shots/protein-props.webp": { w: 1804, h: 1204 },
+  "shots/open-with.webp": { w: 1804, h: 1204 },
+  "shots/i18n.webp": { w: 1804, h: 1204 },
+  "shots/library-01.webp": { w: 1652, h: 952 },
+  "shots/library-02.webp": { w: 1652, h: 952 },
+  "shots/library-05.webp": { w: 1652, h: 952 },
+  "shots/library-06.webp": { w: 1652, h: 952 },
+  "shots/library-07.webp": { w: 1652, h: 952 },
+  "shots/library-03.webp": { w: 1838, h: 736 },
+  "shots/library-09.webp": { w: 1652, h: 928 },
+  "shots/library-10.webp": { w: 1468, h: 921 },
+  "shots/library-04.webp": { w: 855, h: 757 },
+  "shots/library-08.webp": { w: 550, h: 348 },
+};
+const SHOT_DIMS_DEFAULT = { w: 2101, h: 1504 };
+
+/* 图片加载状态：mount 时检查 complete，避免缓存图不触发 onLoad 导致转圈不消失 */
+export function useImgLoaded(ref: RefObject<HTMLImageElement | null>) {
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => {
+    if (ref.current?.complete) setLoaded(true);
+  }, []);
+  return {
+    loaded,
+    onLoad: () => setLoaded(true),
+    onError: () => setLoaded(true),
+  };
+}
+
+/* 图片加载转圈：加载完成前居中占位 */
+export function ImgSpin({ className = "" }: { className?: string }) {
+  return (
+    <div className={`absolute inset-0 z-[1] flex items-center justify-center ${className}`} aria-hidden>
+      <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white/85 shadow-[0_2px_10px_rgba(28,58,19,0.15)]">
+        <span className="h-5 w-5 animate-spin rounded-full border-2 border-ink/20 border-t-gfp-deep" />
+      </span>
+    </div>
+  );
+}
+
 /* ── 截图相框：白卡 + 发丝边框 + 对位十字 + 等宽注脚 ── */
 export function Shot({
   src,
@@ -114,6 +168,9 @@ export function Shot({
   eager?: boolean;
 }) {
   const zoom = useLightboxImage({ src, caption });
+  const imgRef = useRef<HTMLImageElement>(null);
+  const { loaded, onLoad, onError } = useImgLoaded(imgRef);
+  const { w, h } = SHOT_DIMS[src] ?? SHOT_DIMS_DEFAULT;
   return (
     <figure className={`shot-frame ${dark ? "text-paper/70" : "text-ink/60"} ${className}`}>
       <div
@@ -128,14 +185,22 @@ export function Shot({
         }}
         aria-label={caption}
       >
-        <img
-          src={src}
-          alt={caption}
-          loading={eager ? "eager" : "lazy"}
-          decoding="async"
-          fetchPriority={eager ? "high" : undefined}
-          className="block w-full"
-        />
+        <div className="relative">
+          {!loaded && <ImgSpin />}
+          <img
+            ref={imgRef}
+            src={src}
+            alt={caption}
+            width={w}
+            height={h}
+            loading={eager ? "eager" : "lazy"}
+            decoding="async"
+            fetchPriority={eager ? "high" : undefined}
+            onLoad={onLoad}
+            onError={onError}
+            className="block h-auto w-full"
+          />
+        </div>
       </div>
       <figcaption
         className={`mt-4 flex items-center gap-3 font-mono text-[11px] tracking-[0.14em] ${

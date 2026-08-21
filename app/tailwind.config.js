@@ -60,10 +60,11 @@ module.exports = {
           ring: "hsl(var(--sidebar-ring))",
         },
       },
+      /* 全部用本机系统字体，不再请求 Google Fonts（首屏不再被外部样式表阻塞） */
       fontFamily: {
-        display: ["'Space Grotesk'", "'Noto Sans SC'", "-apple-system", "'PingFang SC'", "'Microsoft YaHei'", "sans-serif"],
-        sans: ["'Space Grotesk'", "'Noto Sans SC'", "-apple-system", "'PingFang SC'", "'Microsoft YaHei'", "sans-serif"],
-        mono: ["'IBM Plex Mono'", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+        display: ["-apple-system", "BlinkMacSystemFont", "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", "WenQuanYi Micro Hei", "sans-serif"],
+        sans: ["-apple-system", "BlinkMacSystemFont", "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", "WenQuanYi Micro Hei", "sans-serif"],
+        mono: ["ui-monospace", "SFMono-Regular", "SF Mono", "Menlo", "Consolas", "Liberation Mono", "monospace"],
       },
       borderRadius: {
         xl: "calc(var(--radius) + 4px)",

@@ -1,5 +1,5 @@
-import type { ReactNode } from "react";
-import { Reveal, SectionHead } from "./shared";
+import { useRef, type ReactNode } from "react";
+import { Reveal, SectionHead, ImgSpin, useImgLoaded } from "./shared";
 import { useLang, type TKey } from "../i18n";
 import { useLightboxImage } from "../lightbox";
 
@@ -80,15 +80,21 @@ function ToolCard({ tool, delay = 0 }: { tool: Tool; delay?: number }) {
     src: tool.src,
     caption: `${t(tool.name)} · ${tool.en}`,
   });
+  const imgRef = useRef<HTMLImageElement>(null);
+  const { loaded, onLoad, onError } = useImgLoaded(imgRef);
   return (
     <Reveal delay={delay} className="group bg-paper">
       <div className="flex h-full flex-col">
-        <div className="overflow-hidden border-b border-line">
+        <div className="relative overflow-hidden border-b border-line">
+          {!loaded && <ImgSpin />}
           <img
+            ref={imgRef}
             src={tool.src}
             alt={t(tool.name) as string}
             loading="lazy"
             decoding="async"
+            onLoad={onLoad}
+            onError={onError}
             onClick={zoom}
             className="aspect-[16/8.6] w-full cursor-zoom-in object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.025]"
           />

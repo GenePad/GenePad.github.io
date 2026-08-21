@@ -1,11 +1,14 @@
+import { useEffect } from "react";
 import { Reveal, SectionHead, ArrowRight, SubpageNav } from "../sections/shared";
 import Footer from "../sections/Footer";
 import { useLang } from "../i18n";
+import { dismissBoot } from "../boot";
 
 /* 技术支持 / 开发者文档首页：.gen、.gjson、.dna、Rust 示例四个入口 */
 
 export default function TechSupport() {
   const { t } = useLang();
+  useEffect(() => dismissBoot(), []);
 
   const GROUPS = [
     {

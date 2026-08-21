@@ -25,10 +25,10 @@ function FooterPlasmid() {
           />
         );
       })}
-      <text x="100" y="97" textAnchor="middle" fill="rgba(246,246,244,0.75)" fontSize="13" fontFamily="'IBM Plex Mono',monospace" letterSpacing="1">
+      <text x="100" y="97" textAnchor="middle" fill="rgba(246,246,244,0.75)" fontSize="13" fontFamily="ui-monospace, 'Cascadia Code', Consolas, monospace" letterSpacing="1">
         4,732 bp
       </text>
-      <text x="100" y="114" textAnchor="middle" fill="rgba(69,197,31,0.9)" fontSize="9" fontFamily="'IBM Plex Mono',monospace" letterSpacing="2">
+      <text x="100" y="114" textAnchor="middle" fill="rgba(69,197,31,0.9)" fontSize="9" fontFamily="ui-monospace, 'Cascadia Code', Consolas, monospace" letterSpacing="2">
         CIRCULAR
       </text>
     </svg>
