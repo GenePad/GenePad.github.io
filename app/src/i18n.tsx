@@ -366,6 +366,7 @@ const dict = {
     "lib.final.desc":
       "基因文件库内置于 GenePad 基因图谱编辑器：下载安装 GenePad 后，在工具箱中即可使用。当前为免费公测阶段，覆盖全部平台。",
     "lib.final.cta": "返回主页",
+    "lib.final.cta2": "立即下载",
   },
   en: {
     // Nav
@@ -723,6 +724,7 @@ const dict = {
     "lib.final.desc":
       "The Gene File Library is built into the GenePad gene map editor: install GenePad and it is available in the toolbox. Free during the public beta, on every platform.",
     "lib.final.cta": "Back to Home",
+    "lib.final.cta2": "Download Now",
   },
 } as const;
 

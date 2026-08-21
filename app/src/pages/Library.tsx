@@ -190,13 +190,22 @@ export default function Library() {
               <p className="mt-5 max-w-2xl text-[14px] leading-8 text-paper/70">
                 {t("lib.final.desc")}
               </p>
-              <a
-                href="index.html"
-                className="group mt-8 inline-flex items-center gap-3 bg-gfp px-6 py-3.5 font-mono text-[13px] tracking-[0.12em] text-ink transition-colors hover:bg-paper"
-              >
-                {t("lib.final.cta")}
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </a>
+              <div className="mt-8 flex flex-wrap items-center gap-4">
+                <a
+                  href="index.html"
+                  className="group inline-flex items-center gap-3 bg-gfp px-6 py-3.5 font-mono text-[13px] tracking-[0.12em] text-ink transition-colors hover:bg-paper"
+                >
+                  {t("lib.final.cta")}
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </a>
+                <a
+                  href="#download"
+                  className="group inline-flex items-center gap-3 border border-paper/40 px-6 py-3.5 font-mono text-[13px] tracking-[0.12em] text-paper transition-colors hover:border-gfp hover:text-gfp"
+                >
+                  {t("lib.final.cta2")}
+                  <ArrowRight className="h-4 w-4 rotate-90 transition-transform group-hover:translate-y-1" />
+                </a>
+              </div>
             </div>
           </Reveal>
         </main>
