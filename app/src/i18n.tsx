@@ -88,13 +88,7 @@ const dict = {
 
     // Toolbox
     "tb.eyebrow": "Toolbox · 工具箱",
-    "tb.title": (
-      <>
-        分析工具集成于
-        <br />
-        编辑上下文
-      </>
-    ),
+    "tb.title": <>丰富的工具箱</>,
     "tb.lead":
       "选中序列后，电泳模拟与 sgRNA 设计可直接自右键菜单调用；全局工具箱提供 AI 助手与基因文件库；多语言界面与「打开方式」支持，便于与既有工作流整合。",
     "tb.groupA": "右键菜单",
@@ -451,13 +445,7 @@ const dict = {
 
     // Toolbox
     "tb.eyebrow": "Toolbox",
-    "tb.title": (
-      <>
-        Analysis tools integrated
-        <br />
-        into the editing context
-      </>
-    ),
+    "tb.title": <>A comprehensive toolbox</>,
     "tb.lead":
       "With a sequence selected, gel simulation and sgRNA design are available directly from the context menu; the global toolbox provides the AI assistant and the Gene File Library; multilingual interface and open-with support ease integration with existing workflows.",
     "tb.groupA": "Context Menu",
