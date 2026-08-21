@@ -28,115 +28,122 @@ const dict = {
     "hero.titleCn": "基因工坊",
     "hero.titleEn": "Gene Map Editor",
     "hero.desc":
-      "每天的质粒工作，一个顺手的编辑器——打开质粒图谱、编辑序列、管理标注、检查酶切位点、比对 Sanger 测序峰图。日常克隆的设计与核对，一个软件囊括所有。",
+      "面向日常分子克隆的跨平台基因图谱编辑器：浏览与编辑质粒图谱、管理序列标注、分析酶切位点、比对 Sanger 测序峰图，覆盖克隆设计与结果核验的完整流程。",
     "hero.download": "免费下载 GenePad",
-    "hero.tour": "先看看界面",
+    "hero.tour": "查看界面",
     "hero.features": "图谱 · 标注 · 酶切 · 引物 · 峰图",
 
     // Workbench
     "wb.eyebrow": "Workbench · 图谱工作台",
-    "wb.title": <>图谱不只是用来看的</>,
+    "wb.title": <>图谱、序列与分析的一体化工作台</>,
     "wb.lead":
-      "看图谱、改序列、查位点、算蛋白——GenePad 把这些事放在同一页里，点哪里，就到哪里。",
+      "图谱浏览、序列编辑、酶切位点查询与蛋白属性计算集成于同一界面，各视图按所选对象联动定位。",
     "wb.1.name": "整体图谱",
     "wb.1.desc":
-      "环形与线性图谱一键切换。启动子、CDS、复制起点、poly(A) 信号分层着色，标签自动避让——几十个元件的载体，也能一眼收进一张图。",
+      "支持环形与线性视图一键切换；启动子、CDS、复制起点、poly(A) 信号等元件按类别分层着色，标签自动避让，元件众多的载体仍可保持图谱清晰可读。",
     "wb.2.name": "图谱直达序列",
     "wb.2.desc":
-      "在标注表里点一下，序列视图直接跳到对应碱基区间：选区长度、GC 含量、Tm 值同步给出。图谱和序列，从来不是两个世界。",
+      "在标注表中选定条目，序列视图即定位至对应碱基区间，并同步显示选区长度、GC 含量与 Tm 值；图谱与序列双向联动。",
     "wb.3.name": "酶切位点",
     "wb.3.desc":
-      "位点直接高亮在双链序列上，悬停即见识别序列、链方向与上下切口位置，连 5′ 突出末端都标得清清楚楚。克隆方案对不对，扫一眼就知道。",
+      "酶切位点直接标注于双链序列，悬停即可查看识别序列、链方向与上下切口位置，5′ 突出末端明确标示，便于快速核验克隆方案。",
     "wb.4.name": "蛋白属性",
     "wb.4.desc":
-      "选中 CDS，分子量、等电点、GRAVY、脂肪族指数、消光系数随选随算。等电点内置 19 种算法对照，默认给出文献推荐的最优解。",
+      "选中 CDS 即可实时计算分子量、等电点、GRAVY、脂肪族指数与消光系数；等电点内置 19 种算法供对照，默认输出文献推荐的算法结果。",
 
     // DayNight
     "dn.eyebrow": "Light & Dark · 昼夜模式",
-    "dn.title": <>实验室的灯虽然能开到很晚，但是不要忘了你还有更重要的生活</>,
-    "dn.lead": "同一套高密度研究界面，两套完整配色。",
+    "dn.title": (
+      <>
+        明暗双主题，
+        <br />
+        为长时间工作而设计
+      </>
+    ),
+    "dn.lead":
+      "同一研究界面提供两套完整配色：明亮主题适用于投影、演示与日间环境；深色主题降低夜间长时间使用的视觉负担。",
     "dn.day": "白天 DAY",
     "dn.night": "夜间 NIGHT",
-    "dn.state.day": "▸ LIGHT THEME — 标准实验台模式运行中",
-    "dn.state.night": "▸ DARK THEME — 深夜实验台模式运行中",
-    "dn.caption.day": "DAY MODE — 同一载体，明亮主题下的完整视图",
-    "dn.caption.night": "NIGHT MODE — 图谱、序列、酶切位点全套深色渲染",
-    "dn.alt.day": "GenePad 白天模式",
-    "dn.alt.night": "GenePad 夜间模式",
+    "dn.state.day": "▸ LIGHT THEME — 明亮主题运行中",
+    "dn.state.night": "▸ DARK THEME — 深色主题运行中",
+    "dn.caption.day": "DAY MODE — 同一载体在明亮主题下的完整视图",
+    "dn.caption.night": "NIGHT MODE — 图谱、序列与酶切位点的深色主题渲染",
+    "dn.alt.day": "GenePad 明亮主题",
+    "dn.alt.night": "GenePad 深色主题",
 
     // Sanger
     "sg.eyebrow": "Sanger Trace · 测序比对",
     "sg.title": (
       <>
-        测序结果，贴着
+        测序结果与参考序列
         <br />
-        参考序列看
+        逐碱基比对
       </>
     ),
     "sg.lead":
-      "直接拖入 AB1 文件：峰图、reads 与参考序列逐碱基排在一起，比对 identity 和 E-value 写在结果里。哪一针有效、哪里错配，不用猜。",
+      "导入 AB1 峰图文件，色谱、reads 与参考序列按碱基逐一对齐，结果中直接给出比对一致率与 E-value，可据此判断各测序反应的质量及错配位置。",
     "sg.badge.format": "AB1 峰图",
     "sg.shot1": "2KB-RCA-F — 峰图与参考序列逐碱基对齐",
-    "sg.shot2": "TOP STRAND — 错配位点红底标出，一目了然",
+    "sg.shot2": "TOP STRAND — 错配位点以红色标出",
 
     // Toolbox
     "tb.eyebrow": "Toolbox · 工具箱",
     "tb.title": (
       <>
-        工具，长在
+        分析工具集成于
         <br />
-        该出现的地方
+        编辑上下文
       </>
     ),
     "tb.lead":
-      "选中序列点右键，电泳模拟与 sgRNA 设计即刻就绪；全局工具箱里，AI 助手与文件库随时待命；多语言与开放协作，让它融进你已有的工作流。",
+      "选中序列后，电泳模拟与 sgRNA 设计可直接自右键菜单调用；全局工具箱提供 AI 助手与基因文件库；多语言界面与「打开方式」支持，便于与既有工作流整合。",
     "tb.groupA": "右键菜单",
     "tb.groupB": "全局工具箱",
     "tb.groupC": "开放性",
     "tb.c1.name": "DNA 电泳模拟",
     "tb.c1.desc":
-      "选中序列，右键菜单直接选择电泳模拟，直接预览琼脂糖胶条带。内置 Trans2K® 等主流 ladder，跑胶之前，先看条带。",
+      "选中序列后经右键菜单启动电泳模拟，预览琼脂糖凝胶条带位置；内置 Trans2K® 等主流分子量标准，可在实验前预估电泳结果。",
     "tb.c2.name": "蛋白电泳模拟",
     "tb.c2.desc":
-      "SDS-PAGE 模拟：选中 CDS 或者选中一段氨基酸，从右键菜单电泳模拟直接上样，PageRuler 等预染 ladder 对照分子量，条带位置即算即得。",
+      "SDS-PAGE 模拟：选中 CDS 或氨基酸区段即可上样，以 PageRuler 等预染分子量标准为参照，实时计算条带位置。",
     "tb.c3.name": "CRISPR sgRNA 设计",
     "tb.c3.desc":
-      "SpCas9、xCas9、Cas12a/b、TnpB 等 12 种识别布局，PAM 方向、种子区长度、脱靶过滤一应俱全，候选一键标回图谱。",
+      "支持 SpCas9、xCas9、Cas12a/b、TnpB 等 12 种识别布局，PAM 方向、种子区长度与脱靶过滤均可配置，候选序列可一键标注回图谱。",
     "tb.t1.name": "AI 助手",
     "tb.t1.desc":
-      "直接读写当前文件的序列、标注与引物：加 feature、算 Tm、翻译蛋白、预测 ORF，用一句话吩咐它去做。",
+      "可直接读写当前文件的序列、标注与引物；添加 feature、计算 Tm、翻译蛋白、预测 ORF 等操作均可以自然语言指令完成。",
     "tb.t2.name": "基因文件库",
     "tb.t2.desc":
-      "打开过的载体自动入库，AI 批量生成标签，支持文件夹监听。方便你根据质粒信息直接定位文件，不需要再记冗长的文件名，还能从 AI 助手里让 AI 帮忙查找文件。只存索引，绝不动你的原始文件。",
+      "打开过的载体文件自动建立索引，AI 批量生成性质标签，支持监视文件夹；可依据质粒属性检索定位文件，无需记忆文件名，也可通过 AI 助手检索。仅建立索引，不改动原始文件。",
     "tb.o1.name": "多语言",
     "tb.o1.desc":
-      "中、英、日、法、德、俄界面内置。导出语言包、AI 辅助翻译，自己的语言也能装进来。",
+      "内置中、英、日、法、德、俄六种界面语言；支持导出语言包，并可通过 AI 辅助翻译接入自定义语言。",
     "tb.o2.name": "开放协作",
     "tb.o2.desc":
-      "内置「打开方式」：一键把文件交给 SnapGene、VS Code 或任何你顺手的工具，配合现有工作流，不绑架你的文件。",
+      "内置「打开方式」：可将文件一键交给 SnapGene、VS Code 或其他指定工具处理，与既有工作流协同，不限制文件的使用方式。",
     "tb.more": "详细介绍",
 
     // 首页基因文件库推荐节
     "lp.lead":
-      "质粒越攒越多，记不得放哪、想不起名字——基因文件库把散落各处的质粒收进一个可检索的库，按项目、按路径、按 AI 生成的标签管理。不需要记住名字和路径，凭一两点模糊的属性，AI 就能帮你把质粒从文件堆里翻出来。",
+      "基因文件库将分散存储的质粒文件统一纳入可检索索引，支持按项目、按存储路径、按 AI 生成标签三种方式管理；无需记忆文件名与路径，凭一至两项属性特征即可由 AI 完成检索定位。",
     "lp.c1": "项目 · 路径 · 标签",
     "lp.c2": "AI 自动打标签",
-    "lp.c3": "一句话让 AI 找",
-    "lp.c4": "监视文件夹自动入库",
-    "lp.safe": "只存索引，绝不动你的原始文件",
+    "lp.c3": "自然语言检索",
+    "lp.c4": "监视文件夹自动索引",
+    "lp.safe": "仅建立索引，不改动原始文件",
     "lp.cta": "了解更多",
 
     // Download
     "dl.eyebrow": "Download · 下载安装",
     "dl.title": (
       <>
-        拿走，装在你的
+        覆盖桌面与移动端的
         <br />
-        每台设备上
+        全平台客户端
       </>
     ),
     "dl.lead":
-      "实验室的台式机、自己的笔记本、平板电脑、口袋里的手机——同一个 GenePad，随时打开载体文件看一眼。",
+      "支持 Windows、macOS、Linux 桌面端与 Android 移动端，各平台功能一致，可随时查看与编辑载体文件。",
     "dl.note.desktop": "桌面端",
     "dl.note.linuxX64": "桌面端 · x86_64",
     "dl.note.linuxArm64": "桌面端 · ARM64",
@@ -147,30 +154,30 @@ const dict = {
     "dl.cmd.brewLabel": "macOS · Homebrew",
     "dl.cmd.npmLabel": "Linux · npm",
     "dl.cmd.npmLabelMac": "macOS · npm",
-    "dl.cmd.note": "复制这段命令，去终端里粘贴运行即可。",
+    "dl.cmd.note": "复制以下命令，在终端中粘贴并执行。",
     "dl.cmd.scriptLabel": "Linux · 一键安装脚本",
     "dl.cmd.scriptLabelMac": "macOS · 一键安装脚本",
     "dl.cmdTab.script": "一键脚本",
     "dl.cmdTab.npm": "npm",
     "dl.cmd.recommendedTag": "推荐",
-    "dl.or.mac": "或者，使用下面的方式安装",
-    "dl.or.linux": "或者，直接下载安装包",
+    "dl.or.mac": "其他安装方式",
+    "dl.or.linux": "或直接下载安装包",
     "dl.ai.title": "AI 辅助安装",
     "dl.ai.desc":
-      "macOS 安装包未签名，手动安装步骤较多。可以复制这段提示词发给 AI 助手（Kimi、ChatGPT 等），让它带着你一步步完成安装。",
-    "dl.ai.prompt": `请帮我在 macOS 上安装一款叫「GenePad」的应用。请按顺序尝试以下方法，任意一种成功即可：
-1. 首选（最省事）：运行官方一键脚本——它会自动检测/安装 Homebrew（按网络自动切换国内镜像）：
+      "macOS 安装包未签名，手动安装步骤较多。可将以下提示词复制给 AI 助手（Kimi、ChatGPT 等），在其引导下逐步完成安装。",
+    "dl.ai.prompt": `请协助我在 macOS 上安装名为「GenePad」的应用。请按以下顺序尝试，任一方法成功即可停止：
+1. 首选：运行官方一键安装脚本（自动检测并安装 Homebrew，按网络情况切换国内镜像）：
    curl -fsSL https://genepad.cn/release/linux/install.sh | bash
-   装好后运行 open -a GenePad 即可。
-2. 次选：用 Homebrew 安装（会自动放入「应用程序」）：
+   安装完成后运行 open -a GenePad。
+2. 备选：通过 Homebrew 安装（自动加入「应用程序」）：
    brew install genepad/tap/genepad
-   装好后运行 open -a GenePad。若系统未安装 Homebrew，先装：
+   安装完成后运行 open -a GenePad。若系统未安装 Homebrew，请先安装：
    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-3. 再次：用 npm 安装（命令行启动）。如果可能，顺便把它复制到 ~/Applications，这样能在「应用程序」/启动台里找到：
+3. 第三种方式：通过 npm 安装（命令行启动）。如可行，同时复制到 ~/Applications，使其出现在「应用程序」与启动台中：
    npm install -g @genepad/app
    mkdir -p ~/Applications && cp -R "$(npm root -g)/@genepad/darwin-arm64/GenePad.app" ~/Applications/
-   然后用 open -a GenePad 打开（或命令行运行 genepad）
-4. 兜底（手动）：该应用未签名，浏览器下载会被 Gatekeeper 标记成「已损坏」，所以用 curl 下载并本地签名：
+   之后运行 open -a GenePad（或命令行运行 genepad）
+4. 手动方式（兜底）：该应用未签名，浏览器下载的文件会被 Gatekeeper 标记为「已损坏」，因此使用 curl 下载并本地签名：
    curl -L -o /tmp/gene-pad-app.zip "https://genepad.cn/release/mac/macos-app.zip"
    unzip -o /tmp/gene-pad-app.zip -d /tmp/gene-pad-extract
    mv "/tmp/gene-pad-extract/GenePad.app" /Applications/
@@ -178,10 +185,10 @@ const dict = {
    codesign --force --deep --sign - "/Applications/GenePad.app"
    open "/Applications/GenePad.app"
 
-⚠️ 注意：上面的方法可能失效或已过时。如果某个步骤行不通，请自行尝试其它可行的解决办法（例如换一种绕过 Gatekeeper 的方式，或用其它工具来解压、签名）。只有当上面的下载链接本身打不开时，才访问官网 https://genepad.cn——官网只用来寻找其它的下载链接，不提供任何安装帮助。`,
+⚠️ 注意：以上方法可能失效或已过时。若某一步无法完成，请自行改用其他可行方案（例如换一种绕过 Gatekeeper 的方式，或使用其他解压、签名工具）。仅当上述下载链接无法访问时，再访问官网 https://genepad.cn——官网仅提供其他下载链接，不提供安装支持。`,
     "dl.mac.other": "其他下载方式（DMG / APP 直链）",
     "dl.mac.unsigned":
-      "未签名提示：浏览器直接下载的 .dmg / .app 会被 Gatekeeper 标记为「已损坏」。需要右键 →「打开」，或运行 xattr -cr 移除隔离属性。建议优先使用上面的命令行安装。",
+      "未签名说明：浏览器直接下载的 .dmg / .app 文件会被 Gatekeeper 标记为「已损坏」。请通过右键 →「打开」运行，或执行 xattr -cr 移除隔离属性；建议优先采用上述命令行安装方式。",
     "dl.copy": "复制",
     "dl.copied": "已复制 ✓",
     "dl.filesTitle": "直接下载安装包",
@@ -195,16 +202,16 @@ const dict = {
     "dl.arch.x64": "x86_64",
     "dl.arch.arm64": "ARM64",
     "dl.spark": "星火应用商店",
-    "dl.sparkNote": "国产 Linux 发行版可在星火商店搜索安装",
+    "dl.sparkNote": "使用国产 Linux 发行版的用户，也可通过星火应用商店安装",
     "dl.releases": "全部版本（GitHub Releases）",
     "dl.releasesGitee": "全部版本（Gitee 镜像）",
     "dl.licenseTag": "LICENSE · 授权",
     "dl.license":
-      "GenePad Free 面向个人评估与学习免费，覆盖日常的图谱查看、编辑与保存；商业、机构与长期科研使用，将由即将到来的 GenePad Pro 授权支持。",
+      "GenePad Free 面向个人评估与学习免费，涵盖日常的图谱查看、编辑与保存；商业、机构及长期科研使用，将由后续发布的 GenePad Pro 授权支持。",
 
     // Footer
     "ft.blurb":
-      "轻量、跨平台的基因图谱编辑器。为每天都在做的分子克隆工作而做——感谢每一位反馈问题与建议的用户。",
+      "轻量、跨平台的基因图谱编辑器，服务于日常分子克隆工作。感谢所有提交问题与建议的用户。",
     "ft.col.download": "下载",
     "ft.col.support": "反馈与支持",
     "ft.col.more": "更多",
@@ -223,7 +230,7 @@ const dict = {
     "ts.eyebrow": "Developer Docs · 技术文档",
     "ts.title": "文件格式开发文档",
     "ts.lead":
-      "面向需要自行开发读取、转换或导入程序的开发者。这里把 GenePad 当前使用的 .gen、.gjson、SnapGene .dna 相关格式拆成独立页面，便于快速定位实现细节。",
+      "面向需要自行开发读取、转换或导入程序的开发者：GenePad 使用的 .gen、.gjson 格式及 SnapGene .dna 转换方案已拆分为独立页面，便于快速定位实现细节。",
     "ts.group.formats": "文件格式",
     "ts.group.formatsEn": "FILE FORMATS",
     "ts.group.code": "代码示例",
@@ -242,129 +249,129 @@ const dict = {
       "rusqlite 读 .gen + serde_json 读 .gjson 的最小可运行实现，含依赖与预期输出。",
     "ts.readDoc": "阅读文档",
     "ts.feedback":
-      "文档没有覆盖到你需要的部分？到 GitHub 或 Gitee 提 Issue，我们会补充。",
+      "如文档未覆盖所需内容，可在 GitHub 或 Gitee 提交 Issue，我们将补充完善。",
 
     // Projects page
     "pr.eyebrow": "Ecosystem Projects · 生态项目",
     "pr.title": "GenePad 生态项目",
     "pr.lead":
-      "围绕分子克隆工具链，GenePad 组织还在 GitHub 上维护着一些独立的小项目：从可溯源的质粒通用元件库，到组织特异性密码子统计管线。它们与主程序相互独立、随取随用，希望能为科研工作者和开发者省去一些重复劳动。",
+      "围绕分子克隆工具链，GenePad 组织在 GitHub 上维护若干独立项目：从可溯源的质粒通用元件库，到组织特异性密码子统计管线。各项目与主程序相互独立，可单独取用，旨在为科研工作者与开发者减少重复性工作。",
     "pr.specs": "数据规格",
     "pr.cf.head": "质粒通用元件库",
     "pr.cf.title": "质粒构建通用元件序列库",
     "pr.cf.desc":
-      "从 NCBI 源参考质粒中逐条整理、核对的可复用元件序列库。每条元件都记录 NCBI 登录号与参考质粒名——序列出处可逐条回溯，而不是“网上抄来的保守序列”。导入质粒软件后，打开图谱即可自动识别这些常见元件。",
+      "从 NCBI 源参考质粒中逐条整理与核对的可复用元件序列库。每条元件均记录 NCBI 登录号与参考质粒名，序列来源可逐条回溯。导入质粒软件后，打开图谱即可自动识别这些常见元件。",
     "pr.cf.catsTitle": "20 个覆盖分类",
     "pr.cf.usage":
       "将 genbank/ 下的 .gb 导入 SnapGene 或 Benchling 的 common features 库，打开任意质粒图即可自动识别这些元件；fasta/ 下的 .fa 可直接用于 BLAST 比对。",
     "pr.ca.head": "组织特异性密码子图谱",
     "pr.ca.title": "人类组织特异性密码子图谱",
     "pr.ca.desc":
-      "一条独立实现的统计管线：以公开的 GTEx 基因表达与 GENCODE 注释为上游，按组织表达量加权，为人体每个组织重建密码子使用表。为密码子优化与异源表达设计提供可复现、可审查的组织特异性参考，而不必依赖授权受限的第三方成品表。",
+      "独立实现的统计管线：以公开的 GTEx 基因表达与 GENCODE 注释为上游，按组织表达量加权，为人体每个组织重建密码子使用表，为密码子优化与异源表达设计提供可复现、可审查的组织特异性参考，避免依赖授权受限的第三方成品表。",
     "pr.ca.metricsTitle": "输出指标",
     "pr.ca.usage":
       "python scripts/build_atlas.py 按 GTEx / GENCODE 输入重建全部组织表；check_release.py 与 package_release.py 负责发布前校验与打包。",
     "pr.org.text":
-      "这些小项目由 GenePad 主项目孵化、按同一标准维护。更多源码与进展请移步 GitHub 组织主页，欢迎提 Issue 反馈。",
+      "上述项目由 GenePad 主项目孵化，并按同一标准维护。源码与进展请访问 GitHub 组织主页，欢迎提交 Issue 反馈。",
 
     // Library page（基因文件库宣传页）
     "lib.eyebrow": "Gene File Library · 基因文件库",
     "lib.title": (
       <>
-        找质粒这件事，
+        质粒文件的
         <br />
-        不该靠记性
+        统一检索与管理
       </>
     ),
     "lib.lead":
-      "课题做久了，质粒越攒越多：这个载体存哪了？那个带 xx 基因的质粒叫什么来着？基因文件库就是为终结这种日常抓狂而生——把散落各处的质粒文件收进一个可检索的库，按项目、按路径、按 AI 生成的标签三种方式管理。你不需要记住任何质粒的具体名字和路径，只要记得它的一两点模糊属性，就能让 AI 帮你把它从浩如烟海的文件库里翻出来。",
-    "lib.hero.shot": "LIBRARY — 331 份质粒入库，右侧是整个文库的标签云",
+      "随着课题积累，质粒文件往往分散于多个文件夹、磁盘与设备，文件名与质粒属性之间缺乏对应关系。基因文件库将分散的质粒文件纳入统一的可检索索引，支持按项目、按存储路径、按 AI 生成标签三种管理方式；无需记忆具体名称与路径，凭一至两项属性特征即可由 AI 完成检索定位。",
+    "lib.hero.shot": "LIBRARY — 331 份质粒已建立索引，右侧为文库标签云",
 
-    "lib.pain.head": "先说痛点",
-    "lib.pain.headEn": "PAIN POINTS",
-    "lib.pain.title": "这些场景，做克隆的人都懂",
-    "lib.pain.1.name": "越攒越多",
+    "lib.pain.head": "常见问题",
+    "lib.pain.headEn": "COMMON ISSUES",
+    "lib.pain.title": "质粒文件管理中的常见困境",
+    "lib.pain.1.name": "规模持续增长",
     "lib.pain.1.desc":
-      "课题一个接一个，质粒从几十份涨到几百份，文件夹套着文件夹，找起来全靠缘分。",
-    "lib.pain.2.name": "记不得放哪",
+      "随着课题推进，质粒常由数十份积累至数百份，文件夹层级嵌套日深，仅凭目录结构难以定位目标文件。",
+    "lib.pain.2.name": "存放位置难以回忆",
     "lib.pain.2.desc":
-      "“这个质粒我明明存过”——可在哪个文件夹、哪块磁盘、哪台电脑上？完全想不起来。",
-    "lib.pain.3.name": "记不得名字",
+      "同一质粒可能存于不同文件夹、磁盘或设备；需要使用时，往往无法确定其具体位置。",
+    "lib.pain.3.name": "文件名与属性脱节",
     "lib.pain.3.desc":
-      "只想找“带 xx 基因的那个载体”，可它叫 pLH-sgRNA1-Muc4-11 还是 pLH-psp-Muc4-54？名字和性质从来对不上号。",
+      "检索意图通常以属性描述（如「携带某基因的载体」），而 pLH-sgRNA1-Muc4-11 一类的文件名并不反映质粒性质，二者缺乏对应关系。",
 
     "lib.ways.head": "三种管理方式",
     "lib.ways.headEn": "THREE WAYS TO ORGANIZE",
-    "lib.ways.title": "项目、路径、标签——总有一把钥匙能开门",
+    "lib.ways.title": "项目、路径、标签——三种组织维度",
     "lib.ways.1.name": "按项目分类",
     "lib.ways.1.desc":
-      "新建项目，把质粒拖进去归类。一个课题一个项目——打开项目，这个课题的家当都在。",
+      "新建项目并拖入质粒完成归类，一个课题对应一个项目；打开项目即可查看该课题的全部质粒。",
     "lib.ways.2.name": "按存储路径",
     "lib.ways.2.desc":
-      "不移动、不复制你的任何文件，按它们实际存放的文件夹原样浏览。库只是索引，绝不动你的原始文件。",
+      "不移动、不复制任何文件，按实际存放位置原样浏览；文件库仅为索引，不改动原始文件。",
     "lib.ways.3.name": "按质粒标签",
     "lib.ways.3.desc":
-      "让 AI 读取每个质粒的序列与标注，自动总结出 lentiviral、sgRNA、ampicillin 这类性质标签。点一个标签，相关质粒全部列队——按性质定位，而不是按名字。",
+      "由 AI 读取每个质粒的序列与标注，自动生成 lentiviral、sgRNA、ampicillin 等性质标签；点击标签即可筛选出全部相关质粒，实现按属性而非按名称定位。",
 
     "lib.tags.head": "AI 标签",
     "lib.tags.headEn": "AI TAGS",
-    "lib.tags.title": "让 AI 替你记住每个质粒是什么",
+    "lib.tags.title": "AI 自动生成性质标签",
     "lib.tags.desc":
-      "配置好 AI 后，扫描或打开质粒时，程序会自动读取序列与元件，为每个文件生成一串性质标签；也可以在表头一键批量刷新——只补没标签的，或者全部重新生成。右侧的标签云就是整个文库的“成分表”：凭一两点模糊的印象点几下，目标就筛出来了。",
-    "lib.tags.shot": "表头批量刷新 — 只补无标签的，或全部重新生成",
+      "配置 AI 后，扫描或打开质粒时，程序自动读取序列与元件，为每个文件生成一组性质标签；也可在表头批量刷新——仅补充缺失标签，或全部重新生成。右侧标签云呈现整个文库的属性分布，通过若干属性的组合筛选即可定位目标文件。",
+    "lib.tags.shot": "表头批量刷新 — 仅补充无标签项，或全部重新生成",
 
     "lib.ai.head": "AI 助手",
     "lib.ai.headEn": "AI ASSISTANT",
-    "lib.ai.title": "甚至，连找都可以不动手",
+    "lib.ai.title": "通过 AI 助手直接检索",
     "lib.ai.desc":
-      "标签都懒得翻？直接吩咐 AI 助手：“帮我找个 Type I CRISPR 质粒。”它会翻遍整个文库，列出候选、写明每个质粒的性质，连推荐组合都替你想好。你也可以说“帮我整理我的质粒文库”——它会先摸清现状，再给出整理方案。",
-    "lib.ai.shot1": "AI ASSISTANT — “帮我整理我的质粒文库”，先摸底再给方案",
-    "lib.ai.shot2": "AI ASSISTANT — “帮我找个 Type I CRISPR 质粒”，候选与性质一并列出",
+      "可直接向 AI 助手发出指令，例如「查找一个 Type I CRISPR 质粒」：助手将检索整个文库，列出候选并说明各质粒的性质与推荐用途；也可要求「整理我的质粒文库」，助手会先分析文库现状，再给出整理方案。",
+    "lib.ai.shot1": "AI ASSISTANT — 「整理我的质粒文库」：先分析现状，再给出方案",
+    "lib.ai.shot2": "AI ASSISTANT — 「查找 Type I CRISPR 质粒」：候选与性质一并列出",
 
-    "lib.setup.head": "上手",
+    "lib.setup.head": "快速开始",
     "lib.setup.headEn": "GETTING STARTED",
-    "lib.setup.title": "从零到入库，只要几分钟",
+    "lib.setup.title": "完成初始配置仅需数分钟",
     "lib.setup.lead":
-      "基因文件库就在 GenePad 的工具箱里。打开它之后，按下面几步走：",
+      "基因文件库位于 GenePad 的工具箱中，打开后按以下步骤配置：",
     "lib.setup.1.name": "打开配置入口",
     "lib.setup.1.desc":
-      "首次打开基因文件库，在顶部横幅点「配置 AI」；以后也可以随时从右上角 AI 图标进入设置。",
-    "lib.setup.1.shot": "首次打开 — 点顶部横幅里的「配置 AI」",
+      "首次打开基因文件库时，点击顶部横幅中的「配置 AI」；此后可随时通过右上角 AI 图标进入设置。",
+    "lib.setup.1.shot": "首次打开 — 点击顶部横幅中的「配置 AI」",
     "lib.setup.2.name": "新建 DeepSeek 配置",
     "lib.setup.2.desc":
-      "点「新建配置」，起个名字；提供商选 DeepSeek、模型选 deepseek-v4-flash，然后点 API Key 旁边的「获取」。",
-    "lib.setup.2.shot": "AI 设置 — 新建配置，选 DeepSeek，点「获取」",
-    "lib.setup.3.name": "去 DeepSeek 官网拿密钥",
+      "点击「新建配置」并命名；提供商选择 DeepSeek，模型选择 deepseek-v4-flash，然后点击 API Key 旁的「获取」。",
+    "lib.setup.2.shot": "AI 设置 — 新建配置，选择 DeepSeek，点击「获取」",
+    "lib.setup.3.name": "获取 DeepSeek API 密钥",
     "lib.setup.3.desc":
-      "浏览器会打开 DeepSeek 开放平台：注册账号、充值一点额度，然后「创建 API key」——起个名字，创建后立刻复制（它只显示这一次）。",
-    "lib.setup.3.shot": "DEEPSEEK 开放平台 — 创建并立刻复制 API key",
+      "浏览器将打开 DeepSeek 开放平台：注册账号并充值少量额度后，点击「创建 API key」；密钥仅显示一次，创建后请立即复制。",
+    "lib.setup.3.shot": "DEEPSEEK 开放平台 — 创建并立即复制 API key",
     "lib.setup.4.name": "粘贴密钥并保存",
     "lib.setup.4.desc":
-      "回到软件粘贴密钥，点「测试连接」，看到“连接成功”后点「保存当前配置」。AI 就绪。",
-    "lib.setup.4.shot": "测试连接成功 — 保存当前配置",
-    "lib.setup.5.name": "监视你的质粒文件夹",
+      "返回软件粘贴密钥，点击「测试连接」，确认显示「连接成功」后点击「保存当前配置」，AI 功能即配置完成。",
+    "lib.setup.4.shot": "连接测试成功 — 保存当前配置",
+    "lib.setup.5.name": "设置监视文件夹",
     "lib.setup.5.desc":
-      "点「监视文件夹」，把你存质粒的文件夹加进来。以后每次启动都会自动扫描：新增的质粒自动入库，消失的自动移除——什么都不用管。",
-    "lib.setup.5.shot": "监视文件夹 — 新增入库、消失移除，自动同步",
+      "点击「监视文件夹」，添加存放质粒的文件夹。此后每次启动均自动扫描：新增质粒自动入库，已删除的自动移除，无需手动维护。",
+    "lib.setup.5.shot": "监视文件夹 — 新增入库、删除移除，自动同步",
     "lib.setup.note":
-      "配置好 AI 之后，扫描入库的质粒会自动生成标签；暂时不配置也不影响入库，只是少了标签和 AI 助手。",
+      "配置 AI 后，入库质粒将自动生成标签；暂不配置不影响入库功能，仅无法使用标签与 AI 助手。",
 
-    "lib.daily.head": "融入日常",
+    "lib.daily.head": "日常工作流",
     "lib.daily.headEn": "DAILY WORKFLOW",
-    "lib.daily.title": "找到之后，顺手就打开了",
-    "lib.daily.1.name": "用你顺手的工具打开",
+    "lib.daily.title": "检索结果可直接打开使用",
+    "lib.daily.1.name": "以常用工具打开",
     "lib.daily.1.desc":
-      "右键任意质粒 →「使用其它打开方式」：SnapGene 看图谱、VS Code 看序列，一键交过去，配合你已有的工作流。",
-    "lib.daily.2.name": "标签由你做主",
+      "右键任意质粒 →「使用其它打开方式」，可将文件交给 SnapGene（图谱）、VS Code（序列）等工具处理，与既有工作流整合。",
+    "lib.daily.2.name": "标签支持自定义",
     "lib.daily.2.desc":
-      "详情面板里随时可以编辑标签：删掉 AI 贴错的，加上你自己的自定义标签——比如“已验证”“送人过”。",
+      "可在详情面板中随时编辑标签：删除 AI 生成的错误标签，添加「已验证」等自定义标签。",
     "lib.daily.shot":
-      "右键菜单 — 打开、打开所在目录、交给 SnapGene / VS Code；右侧详情面板可直接增删标签",
+      "右键菜单 — 打开、打开所在目录、交给 SnapGene / VS Code；右侧详情面板可增删标签",
 
-    "lib.final.title": "它不是独立软件——它是 GenePad 的一部分",
+    "lib.final.title": "基因文件库为 GenePad 的内置模块，并非独立软件",
     "lib.final.desc":
-      "基因文件库内置在 GenePad 基因图谱编辑器里：下载安装 GenePad，打开工具箱就能用它。免费公测中，全平台可用。",
-    "lib.final.cta": "去下载 GenePad",
+      "基因文件库内置于 GenePad 基因图谱编辑器：下载安装 GenePad 后，在工具箱中即可使用。当前为免费公测阶段，覆盖全部平台。",
+    "lib.final.cta": "下载 GenePad",
   },
   en: {
     // Nav
@@ -384,116 +391,122 @@ const dict = {
     "hero.titleCn": "Gene Map Editor",
     "hero.titleEn": "Cross-platform",
     "hero.desc":
-      "An editor that feels right for everyday plasmid work — open plasmid maps, edit sequences, manage annotations, check restriction sites, and align Sanger traces. Design and verify routine cloning — one tool covers it all.",
+      "A cross-platform gene map editor for everyday molecular cloning: browse and edit plasmid maps, manage sequence annotations, analyze restriction sites, and align Sanger traces — covering the full workflow from cloning design to result verification.",
     "hero.download": "Download GenePad Free",
-    "hero.tour": "Take a Look First",
+    "hero.tour": "View the interface",
     "hero.features": "MAP · ANNOTATION · ENZYME · PRIMER · TRACE",
 
     // Workbench
     "wb.eyebrow": "Workbench",
-    "wb.title": <>A map is more than something to look at</>,
+    "wb.title": <>A unified workbench for maps, sequences, and analysis</>,
     "wb.lead":
-      "View maps, edit sequences, inspect sites, compute protein properties — GenePad keeps it all in one context. Click anywhere, and you're there.",
+      "Map viewing, sequence editing, restriction-site inspection and protein property computation are integrated in a single interface, with views linked to the selected object.",
     "wb.1.name": "Plasmid Atlas",
     "wb.1.desc":
-      "Switch between circular and linear maps in one click. Promoters, CDS, origins and poly(A) signals are color-coded in layers with collision-free labels — even a vector with dozens of features fits into one readable map.",
+      "Switch between circular and linear maps in one click. Promoters, CDS, origins and poly(A) signals are color-coded by category with automatic label collision avoidance, keeping even feature-dense vectors clearly readable.",
     "wb.2.name": "Map → Sequence",
     "wb.2.desc":
-      "Click a feature in the table and the sequence view jumps straight to that base range, with selection length, GC content and Tm shown alongside. Map and sequence were never two separate worlds.",
+      "Selecting an entry in the feature table positions the sequence view on the corresponding base range, with selection length, GC content and Tm displayed alongside; map and sequence remain linked in both directions.",
     "wb.3.name": "Restriction Sites",
     "wb.3.desc":
-      "Sites are highlighted directly on the double-stranded sequence; hover to see the recognition sequence, strand direction and cut positions — even 5′ overhangs are marked. One glance tells you whether a cloning plan works.",
+      "Restriction sites are annotated directly on the double-stranded sequence; hovering reveals the recognition sequence, strand direction and cut positions, including 5′ overhangs, so cloning schemes can be verified at a glance.",
     "wb.4.name": "Protein Properties",
     "wb.4.desc":
-      "Select a CDS and get molecular weight, pI, GRAVY, aliphatic index and extinction coefficient on the fly. Nineteen pI algorithms are built in for cross-checking, with the literature-recommended one by default.",
+      "Selecting a CDS computes molecular weight, pI, GRAVY, aliphatic index and extinction coefficient in real time; 19 pI algorithms are built in for cross-checking, with the literature-recommended result shown by default.",
 
     // DayNight
     "dn.eyebrow": "Light & Dark",
-    "dn.title": <>The lab lights can stay on late — but don't forget you have a life that matters more</>,
+    "dn.title": (
+      <>
+        Light and dark themes,
+        <br />
+        designed for long working sessions
+      </>
+    ),
     "dn.lead":
-      "The same high-density research interface in two complete palettes. Present maps on a projector by day, edit sequences deep into the night — neither strains your eyes.",
+      "One research interface in two complete palettes: the light theme suits projection, presentation and daytime environments; the dark theme reduces visual fatigue during prolonged night-time use.",
     "dn.day": "DAY",
     "dn.night": "NIGHT",
-    "dn.state.day": "▸ LIGHT THEME — standard bench mode running",
-    "dn.state.night": "▸ DARK THEME — late-night bench mode running",
-    "dn.caption.day": "DAY MODE — the same vector, full view in a bright theme",
-    "dn.caption.night": "NIGHT MODE — maps, sequences and enzyme sites fully dark-rendered",
-    "dn.alt.day": "GenePad day mode",
-    "dn.alt.night": "GenePad night mode",
+    "dn.state.day": "▸ LIGHT THEME — light theme active",
+    "dn.state.night": "▸ DARK THEME — dark theme active",
+    "dn.caption.day": "DAY MODE — the same vector, full view in the light theme",
+    "dn.caption.night": "NIGHT MODE — maps, sequences and enzyme sites rendered in the dark theme",
+    "dn.alt.day": "GenePad light theme",
+    "dn.alt.night": "GenePad dark theme",
 
     // Sanger
     "sg.eyebrow": "Sanger Trace",
     "sg.title": (
       <>
-        Read sequencing results
+        Sequencing results aligned
         <br />
-        against the reference
+        base by base with the reference
       </>
     ),
     "sg.lead":
-      "Drop in an AB1 file: trace, reads and reference line up base by base, with alignment identity and E-value right in the results. Which reaction worked and where the mismatches are — no guessing.",
+      "Import an AB1 file: chromatogram, reads and reference sequence align base by base, with alignment identity and E-value reported in the results — reaction quality and mismatch positions can be read directly.",
     "sg.badge.format": "AB1 trace",
     "sg.shot1": "2KB-RCA-F — trace aligned base-by-base with the reference",
-    "sg.shot2": "TOP STRAND — mismatches highlighted in red, clear at a glance",
+    "sg.shot2": "TOP STRAND — mismatch positions highlighted in red",
 
     // Toolbox
     "tb.eyebrow": "Toolbox",
     "tb.title": (
       <>
-        Tools, right where
+        Analysis tools integrated
         <br />
-        they should appear
+        into the editing context
       </>
     ),
     "tb.lead":
-      "Select a sequence and right-click: gel simulation and sgRNA design are instantly at hand. In the global toolbox, the AI assistant and file library stand by. i18n and open-with support let it blend into your existing workflow.",
+      "With a sequence selected, gel simulation and sgRNA design are available directly from the context menu; the global toolbox provides the AI assistant and the Gene File Library; multilingual interface and open-with support ease integration with existing workflows.",
     "tb.groupA": "Context Menu",
     "tb.groupB": "Global Toolbox",
     "tb.groupC": "Openness",
     "tb.c1.name": "DNA Gel Simulation",
     "tb.c1.desc":
-      "Select a sequence, pick gel simulation straight from the right-click menu, and preview agarose gel bands right away. Mainstream ladders like Trans2K® are built in — see the bands before you run the gel.",
+      "Select a sequence and launch gel simulation from the context menu to preview agarose band positions; mainstream ladders such as Trans2K® are built in, so expected results can be reviewed before running the gel.",
     "tb.c2.name": "Protein Gel Simulation",
     "tb.c2.desc":
-      "SDS-PAGE simulation: select a CDS or a stretch of amino acids and load directly via gel simulation in the right-click menu, with prestained ladders like PageRuler as molecular-weight references. Band positions computed on the spot.",
+      "SDS-PAGE simulation: select a CDS or an amino-acid segment to load the sample, with prestained ladders such as PageRuler as molecular-weight references; band positions are computed in real time.",
     "tb.c3.name": "CRISPR sgRNA Design",
     "tb.c3.desc":
-      "Twelve recognition layouts including SpCas9, xCas9, Cas12a/b and TnpB, with PAM orientation, seed-region length and off-target filtering. Send candidates back to the map in one click.",
+      "Twelve recognition layouts including SpCas9, xCas9, Cas12a/b and TnpB, with configurable PAM orientation, seed-region length and off-target filtering; candidates can be annotated back onto the map in one click.",
     "tb.t1.name": "AI Assistant",
     "tb.t1.desc":
-      "Reads and writes the current file's sequence, features and primers directly: add features, compute Tm, translate proteins, predict ORFs — just tell it what to do in one sentence.",
+      "Reads and writes the current file's sequence, features and primers directly; adding features, computing Tm, translating proteins and predicting ORFs can all be requested in natural language.",
     "tb.t2.name": "Gene File Library",
     "tb.t2.desc":
-      "Opened vectors are indexed automatically, with AI-generated batch tags and folder watching. Locate a file directly by its plasmid info — no more memorizing long filenames — and you can even ask the AI assistant to find files for you. It stores indexes only; your original files are never touched.",
+      "Opened vectors are indexed automatically, with AI-generated batch tags and watched folders; files can be located by plasmid attributes without memorizing filenames, and retrieved through the AI assistant. Indexes only — original files are never modified.",
     "tb.o1.name": "i18n",
     "tb.o1.desc":
-      "Chinese, English, Japanese, French, German and Russian interfaces built in. Export language packs and translate with AI assistance — bring your own language too.",
+      "Chinese, English, Japanese, French, German and Russian interfaces are built in; language packs can be exported and custom languages added through AI-assisted translation.",
     "tb.o2.name": "Open With",
     "tb.o2.desc":
-      "Built-in \"Open with\": hand a file to SnapGene, VS Code or any tool you like in one click. Works with your existing workflow — it never holds your files hostage.",
+      "A built-in \"Open with\" function hands files to SnapGene, VS Code or any other designated tool in one click, working alongside existing workflows without restricting how files are used.",
     "tb.more": "Learn more",
 
     // Homepage library promo section
     "lp.lead":
-      "Plasmids pile up, and both where they live and what they're called fade fast. The Gene File Library gathers them into one searchable index — organized by project, by path, or by AI-generated tags. You never need to remember a name or a location: one or two fuzzy attributes are enough for the AI to pull the plasmid out of the pile.",
+      "The Gene File Library brings plasmid files stored across folders into a single searchable index, organized by project, by storage path, or by AI-generated tags; one or two attribute cues are enough for the AI to locate a plasmid, with no need to remember filenames or paths.",
     "lp.c1": "Projects · Paths · Tags",
     "lp.c2": "AI auto-tagging",
-    "lp.c3": "Ask, and it finds",
-    "lp.c4": "Watched folders sync",
-    "lp.safe": "Indexes only — your original files are never touched",
+    "lp.c3": "Natural-language retrieval",
+    "lp.c4": "Automatic indexing of watched folders",
+    "lp.safe": "Indexes only — original files are never modified",
     "lp.cta": "Learn more",
 
     // Download
     "dl.eyebrow": "Download",
     "dl.title": (
       <>
-        Take it. Install it on
+        Full-platform clients
         <br />
-        every device you own
+        for desktop and mobile
       </>
     ),
     "dl.lead":
-      "The lab desktop, your own laptop, your tablet, the phone in your pocket — the same GenePad, ready to open a vector file whenever you are.",
+      "Available on Windows, macOS and Linux desktops as well as Android, with consistent functionality across platforms for viewing and editing vector files at any time.",
     "dl.note.desktop": "Desktop",
     "dl.note.linuxX64": "Desktop · x86_64",
     "dl.note.linuxArm64": "Desktop · ARM64",
@@ -504,30 +517,30 @@ const dict = {
     "dl.cmd.brewLabel": "macOS · Homebrew",
     "dl.cmd.npmLabel": "Linux · npm",
     "dl.cmd.npmLabelMac": "macOS · npm",
-    "dl.cmd.note": "Copy this command, paste it into your terminal, and run it.",
+    "dl.cmd.note": "Copy the command below, paste it into a terminal, and run it.",
     "dl.cmd.scriptLabel": "Linux · Install script",
     "dl.cmd.scriptLabelMac": "macOS · Install script",
     "dl.cmdTab.script": "Install script",
     "dl.cmdTab.npm": "npm",
     "dl.cmd.recommendedTag": "Recommended",
-    "dl.or.mac": "Or use one of the options below",
+    "dl.or.mac": "Other installation options",
     "dl.or.linux": "Or download the installers directly",
     "dl.ai.title": "AI-assisted install",
     "dl.ai.desc":
-      "The macOS packages are unsigned, so a manual install takes a few extra steps. You can copy this prompt to an AI assistant (Kimi, ChatGPT, etc.) and let it walk you through the installation.",
-    "dl.ai.prompt": `Please install an app called "GenePad" on macOS for me. Try these methods in order — stop at the first one that works:
-1. Preferred (easiest): run the official one-click script — it auto-detects/installs Homebrew (switching to a CN mirror when needed):
+      "The macOS packages are unsigned and involve several manual steps. Copy the prompt below to an AI assistant (Kimi, ChatGPT, etc.) and complete the installation under its step-by-step guidance.",
+    "dl.ai.prompt": `Please help me install an application called "GenePad" on macOS. Try the following methods in order and stop at the first one that succeeds:
+1. Preferred: run the official one-click install script (it detects and installs Homebrew automatically, switching to a CN mirror as network conditions require):
    curl -fsSL https://genepad.cn/release/linux/install.sh | bash
    Then run: open -a GenePad.
-2. Alternative: install with Homebrew (puts it in Applications automatically):
+2. Alternative: install with Homebrew (adds it to Applications automatically):
    brew install genepad/tap/genepad
-   Then run: open -a GenePad. If Homebrew isn't installed, install it first:
+   Then run: open -a GenePad. If Homebrew is not installed, install it first:
    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-3. Next: install with npm (command-line launcher). If possible, also copy it into ~/Applications so it shows up in Applications/Launchpad:
+3. Third option: install with npm (command-line launcher). If possible, also copy it into ~/Applications so it appears in Applications/Launchpad:
    npm install -g @genepad/app
    mkdir -p ~/Applications && cp -R "$(npm root -g)/@genepad/darwin-arm64/GenePad.app" ~/Applications/
    Then open it with: open -a GenePad (or run: genepad)
-4. Fallback (manual): the app is unsigned and a browser download gets flagged "damaged" by Gatekeeper, so download with curl and re-sign locally:
+4. Fallback (manual): the application is unsigned and browser downloads are flagged "damaged" by Gatekeeper, so download with curl and re-sign locally:
    curl -L -o /tmp/gene-pad-app.zip "https://genepad.cn/release/mac/macos-app.zip"
    unzip -o /tmp/gene-pad-app.zip -d /tmp/gene-pad-extract
    mv "/tmp/gene-pad-extract/GenePad.app" /Applications/
@@ -535,10 +548,10 @@ const dict = {
    codesign --force --deep --sign - "/Applications/GenePad.app"
    open "/Applications/GenePad.app"
 
-⚠️ Note: some steps may fail or be outdated; if one doesn't work, find another viable approach yourself (e.g. a different way to bypass Gatekeeper, or other tools to extract/sign the app). Only visit the official site https://genepad.cn if the download link itself is dead — it only lists alternative download links and provides no install help.`,
+⚠️ Note: the methods above may fail or be outdated. If a step does not work, switch to another viable approach on your own (e.g. a different way to bypass Gatekeeper, or other tools to extract and sign the app). Visit the official site https://genepad.cn only if the download links above are unreachable — the site lists alternative download links only and provides no installation support.`,
     "dl.mac.other": "Other download options (DMG / APP direct links)",
     "dl.mac.unsigned":
-      "Unsigned warning: .dmg / .app files downloaded through a browser are flagged as \"damaged\" by Gatekeeper. You'll need to right-click → Open, or run xattr -cr to strip the quarantine attribute. Prefer the command-line install above.",
+      "Unsigned notice: .dmg / .app files downloaded through a browser are flagged as \"damaged\" by Gatekeeper. Open them via right-click → Open, or run xattr -cr to remove the quarantine attribute; the command-line installation above is recommended.",
     "dl.copy": "Copy",
     "dl.copied": "Copied ✓",
     "dl.filesTitle": "Download installers directly",
@@ -552,7 +565,7 @@ const dict = {
     "dl.arch.x64": "x86_64",
     "dl.arch.arm64": "ARM64",
     "dl.spark": "Spark Store",
-    "dl.sparkNote": "Users of Chinese Linux distros can also install from the Spark app store",
+    "dl.sparkNote": "Users of Chinese Linux distributions can also install the application from the Spark app store",
     "dl.releases": "All releases (GitHub Releases)",
     "dl.releasesGitee": "All releases (Gitee mirror)",
     "dl.licenseTag": "LICENSE",
@@ -561,7 +574,7 @@ const dict = {
 
     // Footer
     "ft.blurb":
-      "A lightweight, cross-platform gene map editor, built for the molecular cloning work you do every day — thanks to everyone who reports issues and shares suggestions.",
+      "A lightweight, cross-platform gene map editor built for everyday molecular cloning. Thanks to everyone who reports issues and shares suggestions.",
     "ft.col.download": "Download",
     "ft.col.support": "Feedback & Support",
     "ft.col.more": "More",
@@ -580,7 +593,7 @@ const dict = {
     "ts.eyebrow": "Developer Docs",
     "ts.title": "File Format Documentation",
     "ts.lead":
-      "For developers building their own readers, converters or importers. The .gen and .gjson formats used by GenePad, plus the SnapGene .dna conversion scheme, are split into dedicated pages so you can jump straight to the implementation details.",
+      "For developers building their own readers, converters or importers: the .gen and .gjson formats used by GenePad, together with the SnapGene .dna conversion scheme, are documented on dedicated pages for quick access to implementation details.",
     "ts.group.formats": "File Formats",
     "ts.group.formatsEn": "FILE FORMATS",
     "ts.group.code": "Code Samples",
@@ -599,128 +612,128 @@ const dict = {
       "A minimal runnable implementation reading .gen with rusqlite and .gjson with serde_json, including dependencies and expected output.",
     "ts.readDoc": "Read the doc",
     "ts.feedback":
-      "Missing something you need? Open an issue on GitHub or Gitee and we'll fill the gap.",
+      "If anything you need is not covered, open an issue on GitHub or Gitee and we will follow up.",
 
     // Projects page
     "pr.eyebrow": "Ecosystem Projects",
     "pr.title": "GenePad Ecosystem Projects",
     "pr.lead":
-      "Beyond the editor itself, the GenePad organization maintains a set of small independent projects on GitHub — from a traceable plasmid common-features library to a tissue-specific codon usage pipeline. Free to pick up and use, they aim to save researchers and developers some repeated work.",
+      "Around the molecular cloning toolchain, the GenePad organization maintains a number of independent projects on GitHub — from a traceable plasmid common-features library to a tissue-specific codon usage pipeline. Each project stands alone and can be used separately, aiming to reduce repeated work for researchers and developers.",
     "pr.specs": "Specifications",
     "pr.cf.head": "Plasmid Common Features",
     "pr.cf.title": "Common feature sequence library for plasmid construction",
     "pr.cf.desc":
-      "A reusable element library assembled and cross-checked entry by entry from NCBI source reference plasmids. Every element records its NCBI accession and reference plasmid, so each sequence can be traced back to its origin — not just another unattributed consensus. After importing it into your plasmid software, these common elements are recognized automatically on any map you open.",
+      "A reusable element library assembled and cross-checked entry by entry from NCBI source reference plasmids. Every element records its NCBI accession and reference plasmid, so each sequence can be traced to its origin. Once imported into plasmid software, these common elements are recognized automatically on any map you open.",
     "pr.cf.catsTitle": "20 categories covered",
     "pr.cf.usage":
       "Import the .gb files under genbank/ into the common features library of SnapGene or Benchling, and these elements are auto-annotated on any plasmid map you open; the .fa files under fasta/ can be used directly for BLAST.",
     "pr.ca.head": "Tissue-specific Codon Atlas",
     "pr.ca.title": "Human Tissue-Specific Codon Atlas",
     "pr.ca.desc":
-      "An independently implemented pipeline that rebuilds per-tissue codon usage tables from public GTEx expression and GENCODE annotations, weighted by tissue expression. It provides a reproducible, auditable tissue-specific reference for codon optimization and heterologous expression design — without depending on third-party tables under restrictive licensing.",
+      "An independently implemented statistical pipeline: using public GTEx gene expression and GENCODE annotations as inputs, weighted by tissue expression, it rebuilds a codon usage table for every human tissue — a reproducible, auditable tissue-specific reference for codon optimization and heterologous expression design, without depending on third-party tables under restrictive licensing.",
     "pr.ca.metricsTitle": "Output metrics",
     "pr.ca.usage":
       "python scripts/build_atlas.py rebuilds every tissue table from GTEx / GENCODE inputs; check_release.py and package_release.py handle pre-release validation and packaging.",
     "pr.org.text":
-      "These small projects are incubated by GenePad and maintained to the same standard. For more source code and progress, visit our GitHub organization — issues and feedback are welcome.",
+      "These projects are incubated by the main GenePad project and maintained to the same standard. For source code and progress, visit the GitHub organization; issues and feedback are welcome.",
 
     // Library page
     "lib.eyebrow": "Gene File Library",
     "lib.title": (
       <>
-        Finding a plasmid
+        Unified search and management
         <br />
-        shouldn't rely on memory
+        for plasmid files
       </>
     ),
     "lib.lead":
-      "After a few projects, plasmids pile up: where did this vector go? What was the one with gene xx called again? The Gene File Library exists to end that daily frustration — it gathers plasmid files scattered across your disks into one searchable library, organized three ways: by project, by storage path, and by AI-generated tags. You never need to remember a plasmid's exact name or path — one or two fuzzy attributes are enough for the AI to pull it out of the haystack.",
-    "lib.hero.shot": "LIBRARY — 331 plasmids indexed, tag cloud of the whole library on the right",
+      "As projects accumulate, plasmid files scatter across folders, disks and devices, and filenames rarely reflect plasmid properties. The Gene File Library brings them into one searchable index, organized by project, by storage path and by AI-generated tags; one or two attribute cues are enough for the AI to locate the target plasmid, without remembering names or paths.",
+    "lib.hero.shot": "LIBRARY — 331 plasmids indexed; the library-wide tag cloud on the right",
 
-    "lib.pain.head": "The pain",
-    "lib.pain.headEn": "PAIN POINTS",
-    "lib.pain.title": "If you do cloning, you know these moments",
-    "lib.pain.1.name": "They pile up",
+    "lib.pain.head": "Common issues",
+    "lib.pain.headEn": "COMMON ISSUES",
+    "lib.pain.title": "Familiar difficulties in plasmid file management",
+    "lib.pain.1.name": "Growing collections",
     "lib.pain.1.desc":
-      "Project after project, a few dozen plasmids turn into a few hundred, folders inside folders — finding one becomes pure luck.",
-    "lib.pain.2.name": "Where did it go",
+      "As projects proceed, plasmid collections commonly grow from dozens to hundreds of files with ever-deeper folder nesting; directory structure alone no longer locates them.",
+    "lib.pain.2.name": "Uncertain locations",
     "lib.pain.2.desc":
-      "\u201cI definitely saved that plasmid\u201d — but in which folder, on which disk, on which machine? No idea.",
-    "lib.pain.3.name": "What's it called",
+      "The same plasmid may live in different folders, on different disks or devices; when it is needed, its exact location is often unknown.",
+    "lib.pain.3.name": "Uninformative names",
     "lib.pain.3.desc":
-      "You just want \u201cthe vector with gene xx\u201d — but is it pLH-sgRNA1-Muc4-11 or pLH-psp-Muc4-54? Names never match properties.",
+      "Search intent is usually expressed as an attribute — \"the vector carrying gene xx\" — while filenames such as pLH-sgRNA1-Muc4-11 say nothing about the plasmid's properties.",
 
     "lib.ways.head": "Three ways to organize",
     "lib.ways.headEn": "THREE WAYS TO ORGANIZE",
-    "lib.ways.title": "Projects, paths, tags — one of the keys always fits",
+    "lib.ways.title": "Projects, paths, tags — three organizational dimensions",
     "lib.ways.1.name": "By project",
     "lib.ways.1.desc":
-      "Create a project and drag plasmids in. One project per study — open it and everything for that study is there.",
+      "Create a project and drag plasmids into it, one project per study; opening the project shows every plasmid belonging to that study.",
     "lib.ways.2.name": "By storage path",
     "lib.ways.2.desc":
-      "Nothing is moved or copied. Browse files exactly where they actually live — the library is only an index and never touches your originals.",
+      "Nothing is moved or copied; files are browsed exactly where they are stored. The library is an index only and never modifies the originals.",
     "lib.ways.3.name": "By plasmid tags",
     "lib.ways.3.desc":
-      "Let the AI read each plasmid's sequence and features, then summarize property tags like lentiviral, sgRNA, ampicillin. Click a tag and every matching plasmid lines up — located by properties, not by name.",
+      "The AI reads each plasmid's sequence and features and generates property tags such as lentiviral, sgRNA and ampicillin; clicking a tag filters all matching plasmids — locating by attribute rather than by name.",
 
     "lib.tags.head": "AI Tags",
     "lib.tags.headEn": "AI TAGS",
-    "lib.tags.title": "Let the AI remember what each plasmid is",
+    "lib.tags.title": "Automatic AI-generated property tags",
     "lib.tags.desc":
-      "Once AI is configured, scanning or opening a plasmid makes the program read its sequence and features and generate a set of property tags; you can also batch-refresh from the table header — fill only the untagged ones, or regenerate everything. The tag cloud on the right is the ingredient list of your whole library: a fuzzy impression or two and a few clicks are enough to narrow down the target.",
-    "lib.tags.shot": "Batch refresh from the table header — fill untagged, or regenerate all",
+      "Once AI is configured, scanning or opening a plasmid automatically reads its sequence and features and generates a set of property tags; a batch refresh is available from the table header — filling only untagged entries, or regenerating all. The tag cloud summarizes the attribute distribution of the whole library; combining a few tags narrows down the target file.",
+    "lib.tags.shot": "Batch refresh from the table header — fill untagged entries, or regenerate all",
 
     "lib.ai.head": "AI Assistant",
     "lib.ai.headEn": "AI ASSISTANT",
-    "lib.ai.title": "Or don't even search yourself",
+    "lib.ai.title": "Retrieve directly through the AI assistant",
     "lib.ai.desc":
-      "Can't be bothered with tags? Just tell the AI assistant: \u201cFind me a Type I CRISPR plasmid.\u201d It digs through the entire library, lists the candidates with a property summary for each, and even suggests the combination to use. Or say \u201chelp me organize my plasmid library\u201d — it surveys the current state first, then proposes a plan.",
-    "lib.ai.shot1": "AI ASSISTANT — \u201cHelp me organize my plasmid library\u201d: survey first, then a plan",
-    "lib.ai.shot2": "AI ASSISTANT — \u201cFind me a Type I CRISPR plasmid\u201d: candidates listed with properties",
+      "Instruct the AI assistant directly — for example, \"find a Type I CRISPR plasmid\" — and it searches the entire library, listing candidates with each plasmid's properties and recommended use. Asking it to \"organize my plasmid library\" yields an analysis of the current state followed by a concrete plan.",
+    "lib.ai.shot1": "AI ASSISTANT — \"Organize my plasmid library\": analyze first, then propose a plan",
+    "lib.ai.shot2": "AI ASSISTANT — \"Find a Type I CRISPR plasmid\": candidates listed with properties",
 
     "lib.setup.head": "Getting started",
     "lib.setup.headEn": "GETTING STARTED",
-    "lib.setup.title": "From zero to indexed in minutes",
+    "lib.setup.title": "Initial setup in a few minutes",
     "lib.setup.lead":
-      "The Gene File Library lives in GenePad's toolbox. Open it, then follow these steps:",
-    "lib.setup.1.name": "Open the AI settings",
+      "The Gene File Library is located in GenePad's toolbox. Open it and follow these steps:",
+    "lib.setup.1.name": "Open the configuration entry",
     "lib.setup.1.desc":
-      "On first launch, click \u201cConfigure AI\u201d in the top banner; later you can always reopen the settings via the AI icon in the title bar.",
-    "lib.setup.1.shot": "First launch — click \u201cConfigure AI\u201d in the banner",
+      "On first launch, click \"Configure AI\" in the top banner; afterwards, the settings are always reachable via the AI icon in the title bar.",
+    "lib.setup.1.shot": "First launch — click \"Configure AI\" in the banner",
     "lib.setup.2.name": "Create a DeepSeek profile",
     "lib.setup.2.desc":
-      "Click \u201cNew profile\u201d and give it a name; pick DeepSeek as provider, deepseek-v4-flash as model, then click \u201cGet\u201d next to the API Key field.",
-    "lib.setup.2.shot": "AI settings — new profile, pick DeepSeek, click \u201cGet\u201d",
-    "lib.setup.3.name": "Grab a key from DeepSeek",
+      "Click \"New profile\" and name it; select DeepSeek as the provider and deepseek-v4-flash as the model, then click \"Get\" next to the API Key field.",
+    "lib.setup.2.shot": "AI settings — new profile, select DeepSeek, click \"Get\"",
+    "lib.setup.3.name": "Obtain a DeepSeek API key",
     "lib.setup.3.desc":
-      "Your browser opens the DeepSeek platform: sign up, top up a little credit, then \u201cCreate API key\u201d — name it, create it, and copy it immediately (it is shown only once).",
-    "lib.setup.3.shot": "DeepSeek platform — create an API key and copy it right away",
+      "Your browser opens the DeepSeek platform: sign up, top up a small amount of credit, then click \"Create API key\"; the key is shown only once — copy it immediately after creation.",
+    "lib.setup.3.shot": "DeepSeek platform — create an API key and copy it immediately",
     "lib.setup.4.name": "Paste the key and save",
     "lib.setup.4.desc":
-      "Back in the app, paste the key, click \u201cTest connection\u201d, and once you see \u201cConnected\u201d, hit \u201cSave current profile\u201d. The AI is ready.",
-    "lib.setup.4.shot": "Connection OK — save the profile",
-    "lib.setup.5.name": "Watch your plasmid folders",
+      "Back in the application, paste the key and click \"Test connection\"; once \"Connected\" is confirmed, click \"Save current profile\" and the AI is ready.",
+    "lib.setup.4.shot": "Connection test passed — save the current profile",
+    "lib.setup.5.name": "Set up watched folders",
     "lib.setup.5.desc":
-      "Click \u201cWatch folders\u201d and add the folders where you keep plasmids. Every launch auto-scans them: new plasmids are indexed automatically, vanished ones removed — zero maintenance.",
-    "lib.setup.5.shot": "Watched folders — new files indexed, missing ones removed, always in sync",
+      "Click \"Watch folders\" and add the folders where plasmids are stored. Every launch scans them automatically: new plasmids are indexed and deleted ones removed, with no manual maintenance.",
+    "lib.setup.5.shot": "Watched folders — additions indexed, removals dropped, kept in sync",
     "lib.setup.note":
-      "With AI configured, plasmids scanned into the library get tags generated automatically. Skipping the AI setup doesn't stop indexing — you just lose tags and the AI assistant.",
+      "With AI configured, plasmids scanned into the library receive tags automatically. Skipping the AI setup does not affect indexing; it only disables tags and the AI assistant.",
 
     "lib.daily.head": "Daily workflow",
     "lib.daily.headEn": "DAILY WORKFLOW",
-    "lib.daily.title": "Found it — now open it right away",
-    "lib.daily.1.name": "Open with your favorite tools",
+    "lib.daily.title": "Search results open directly in your tools",
+    "lib.daily.1.name": "Open with your preferred tools",
     "lib.daily.1.desc":
-      "Right-click any plasmid \u2192 \u201cOpen with\u201d: SnapGene for the map, VS Code for the sequence — hand it off in one click, straight into your existing workflow.",
-    "lib.daily.2.name": "Tags are yours",
+      "Right-click any plasmid → \"Open with\": hand the file to SnapGene for the map or VS Code for the sequence in one click, integrating with your existing workflow.",
+    "lib.daily.2.name": "Editable tags",
     "lib.daily.2.desc":
-      "Edit tags anytime in the details panel: drop the ones the AI got wrong, add your own — like \u201cverified\u201d or \u201calready shared\u201d.",
+      "Tags can be edited at any time in the details panel: remove incorrect AI-generated tags and add your own, such as \"verified\" or \"shared\".",
     "lib.daily.shot":
       "Context menu — open, reveal in folder, hand off to SnapGene / VS Code; edit tags in the details panel on the right",
 
-    "lib.final.title": "It's not a standalone app — it's part of GenePad",
+    "lib.final.title": "A built-in module of GenePad, not a standalone application",
     "lib.final.desc":
-      "The Gene File Library is built into the GenePad gene map editor: install GenePad and it's right there in the toolbox. Free in public beta, on every platform.",
+      "The Gene File Library is built into the GenePad gene map editor: install GenePad and it is available in the toolbox. Free during the public beta, on every platform.",
     "lib.final.cta": "Download GenePad",
   },
 } as const;
