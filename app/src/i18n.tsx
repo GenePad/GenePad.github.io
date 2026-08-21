@@ -148,7 +148,7 @@ const dict = {
     "dl.cmd.brewLabel": "macOS · Homebrew",
     "dl.cmd.npmLabel": "Linux · npm",
     "dl.cmd.npmLabelMac": "macOS · npm",
-    "dl.cmd.note": "复制以下命令，在终端中粘贴并执行。",
+    "dl.cmd.note": "复制以上命令，在终端中粘贴并执行。",
     "dl.cmd.scriptLabel": "Linux · 一键安装脚本",
     "dl.cmd.scriptLabelMac": "macOS · 一键安装脚本",
     "dl.cmdTab.script": "一键脚本",
@@ -161,7 +161,7 @@ const dict = {
       "macOS 安装包未签名，手动安装步骤较多。可将以下提示词复制给 AI 助手（Kimi、ChatGPT 等），在其引导下逐步完成安装。",
     "dl.ai.prompt": `请协助我在 macOS 上安装名为「GenePad」的应用。请按以下顺序尝试，任一方法成功即可停止：
 1. 首选：运行官方一键安装脚本（自动检测并安装 Homebrew，按网络情况切换国内镜像）：
-   curl -fsSL https://genepad.cn/release/linux/install.sh | bash
+   curl -fsSL https://genepad.cn/release/install.sh | bash
    安装完成后运行 open -a GenePad。
 2. 备选：通过 Homebrew 安装（自动加入「应用程序」）：
    brew install genepad/tap/genepad
@@ -505,7 +505,7 @@ const dict = {
     "dl.cmd.brewLabel": "macOS · Homebrew",
     "dl.cmd.npmLabel": "Linux · npm",
     "dl.cmd.npmLabelMac": "macOS · npm",
-    "dl.cmd.note": "Copy the command below, paste it into a terminal, and run it.",
+      "dl.cmd.note": "Copy the command above, paste it into a terminal, and run it.",
     "dl.cmd.scriptLabel": "Linux · Install script",
     "dl.cmd.scriptLabelMac": "macOS · Install script",
     "dl.cmdTab.script": "Install script",
@@ -518,7 +518,7 @@ const dict = {
       "The macOS packages are unsigned and involve several manual steps. Copy the prompt below to an AI assistant (Kimi, ChatGPT, etc.) and complete the installation under its step-by-step guidance.",
     "dl.ai.prompt": `Please help me install an application called "GenePad" on macOS. Try the following methods in order and stop at the first one that succeeds:
 1. Preferred: run the official one-click install script (it detects and installs Homebrew automatically, switching to a CN mirror as network conditions require):
-   curl -fsSL https://genepad.cn/release/linux/install.sh | bash
+   curl -fsSL https://genepad.cn/release/install.sh | bash
    Then run: open -a GenePad.
 2. Alternative: install with Homebrew (adds it to Applications automatically):
    brew install genepad/tap/genepad

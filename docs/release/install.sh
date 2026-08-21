@@ -4,7 +4,7 @@
 #  GenePad one-click installer (Linux / macOS)
 #
 #  用法 / Usage:
-#    curl -fsSL https://genepad.cn/release/linux/install.sh | bash
+#    curl -fsSL https://genepad.cn/release/install.sh | bash
 #
 #  Linux:  自动识别架构（x86_64 / ARM64）与包管理器
 #          （apt / dnf / yum / zypper，其余环境改用 tar.gz）

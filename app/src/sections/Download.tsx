@@ -86,7 +86,6 @@ function CopyCmd({ label, cmd, note }: { label: string; cmd: string; note?: stri
       </div>
       <div className="px-4 py-4">
         <code className="block overflow-x-auto whitespace-nowrap font-mono text-[13.5px] text-paper">
-          <span className="mr-2 text-gfp">$</span>
           {cmd}
         </code>
         {note && <p className="mt-3 text-[12px] leading-6 text-paper/50">{note}</p>}
@@ -340,7 +339,7 @@ export default function Download({ index = "06" }: { index?: string }) {
                     <>
                       <CopyCmd
                         label={t("dl.cmd.scriptLabelMac") as string}
-                        cmd="curl -fsSL https://genepad.cn/release/linux/install.sh | bash"
+                        cmd="curl -fsSL https://genepad.cn/release/install.sh | bash"
                         note={t("dl.cmd.note") as string}
                       />
                       <OrDivider>{t("dl.or.mac")}</OrDivider>
@@ -368,7 +367,7 @@ export default function Download({ index = "06" }: { index?: string }) {
                       {linuxCmd === "script" ? (
                         <CopyCmd
                           label={t("dl.cmd.scriptLabel") as string}
-                          cmd="curl -fsSL https://genepad.cn/release/linux/install.sh | bash"
+                          cmd="curl -fsSL https://genepad.cn/release/install.sh | bash"
                           note={t("dl.cmd.note") as string}
                         />
                       ) : (

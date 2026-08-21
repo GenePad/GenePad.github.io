@@ -69,7 +69,7 @@ language. When adding UI text, add BOTH `zh` and `en` entries.
 
 It also shows, per platform:
 
-- **macOS** — one-click install script first (`curl -fsSL https://genepad.cn/release/linux/install.sh | bash` — same script as Linux; on macOS it installs via Homebrew, auto-installing Homebrew with a USTC mirror when GitHub is unreachable — any failed step aborts with an error, no fallback), then — under an "Or use one of the options below" divider — `brew install genepad/tap/genepad`, `npm i -g @genepad/app`, a copyable AI-assistant
+- **macOS** — one-click install script first (`curl -fsSL https://genepad.cn/release/install.sh | bash` — same script as Linux, lives at the platform-neutral `docs/release/install.sh`; on macOS it installs via Homebrew, auto-installing Homebrew with a USTC mirror when GitHub is unreachable — any failed step aborts with an error, no fallback), then — under an "Or use one of the options below" divider — `brew install genepad/tap/genepad`, `npm i -g @genepad/app`, a copyable AI-assistant
   install prompt (`dl.ai.prompt` in i18n.tsx, zh/en), and the unsigned
   `macos-dmg.zip` / `macos-app.zip` direct links inside a collapsed
   `<details>` with a Gatekeeper "unsigned" warning. Every command box
@@ -140,7 +140,7 @@ convention — browsers flag a bare `.dmg` harder than a `.zip` name).
 
 Remove the previous version's binaries from `docs/release/`.
 
-**Keep `docs/release/linux/install.sh`** — it is the version-agnostic
+**Keep `docs/release/install.sh`** — it is the version-agnostic
 one-click install script linked from the download panel for **both Linux and
 macOS** (macOS goes through Homebrew with automatic mirror detection; it reads
 the latest version from `update.json` at runtime); do not delete it when
