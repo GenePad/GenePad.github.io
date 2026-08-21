@@ -105,11 +105,13 @@ export function Shot({
   caption,
   className = "",
   dark = false,
+  eager = false,
 }: {
   src: string;
   caption: string;
   className?: string;
   dark?: boolean;
+  eager?: boolean;
 }) {
   const zoom = useLightboxImage({ src, caption });
   return (
@@ -126,7 +128,14 @@ export function Shot({
         }}
         aria-label={caption}
       >
-        <img src={src} alt={caption} loading="lazy" className="block w-full" />
+        <img
+          src={src}
+          alt={caption}
+          loading={eager ? "eager" : "lazy"}
+          decoding="async"
+          fetchPriority={eager ? "high" : undefined}
+          className="block w-full"
+        />
       </div>
       <figcaption
         className={`mt-4 flex items-center gap-3 font-mono text-[11px] tracking-[0.14em] ${

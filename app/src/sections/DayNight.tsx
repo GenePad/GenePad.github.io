@@ -37,6 +37,8 @@ function ModeImg({ mode, active }: { mode: ModeKey; active: boolean }) {
     <img
       src={m.src}
       alt={t(m.alt) as string}
+      loading="lazy"
+      decoding="async"
       onClick={active ? zoom : undefined}
       className={`w-full transition-opacity duration-700 ${
         active

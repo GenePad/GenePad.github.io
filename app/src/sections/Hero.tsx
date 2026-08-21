@@ -107,7 +107,8 @@ export default function Hero() {
           <Reveal clip delay={260} className="relative">
             <div className="lg:translate-y-6">
               <Shot
-                src="/shots/light-mode.webp"
+                eager
+                src="shots/light-mode.webp"
                 caption="ADDGENE-PLASMID-54737 — 4,732 BP · CIRCULAR · GC 53.6%"
               />
             </div>

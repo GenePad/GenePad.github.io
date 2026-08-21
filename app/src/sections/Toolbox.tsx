@@ -87,6 +87,8 @@ function ToolCard({ tool, delay = 0 }: { tool: Tool; delay?: number }) {
           <img
             src={tool.src}
             alt={t(tool.name) as string}
+            loading="lazy"
+            decoding="async"
             onClick={zoom}
             className="aspect-[16/8.6] w-full cursor-zoom-in object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.025]"
           />
