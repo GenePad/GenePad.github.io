@@ -52,7 +52,7 @@ const OPEN_TOOLS = [
   {
     no: "O-01",
     name: "tb.o1.name",
-    en: "I18N",
+    en: "MULTILINGUAL",
     src: "shots/i18n.webp",
     desc: "tb.o1.desc",
   },

@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { Reveal, SectionHead, SubpageNav, Shot, ArrowRight } from "../sections/shared";
+import Download from "../sections/Download";
 import Footer from "../sections/Footer";
 import { LightboxProvider } from "../lightbox";
 import { useLang, type TKey } from "../i18n";
@@ -190,7 +191,7 @@ export default function Library() {
                 {t("lib.final.desc")}
               </p>
               <a
-                href="index.html#download"
+                href="index.html"
                 className="group mt-8 inline-flex items-center gap-3 bg-gfp px-6 py-3.5 font-mono text-[13px] tracking-[0.12em] text-ink transition-colors hover:bg-paper"
               >
                 {t("lib.final.cta")}
@@ -200,6 +201,8 @@ export default function Library() {
           </Reveal>
         </main>
       </LightboxProvider>
+      {/* 复用主页下载区（编号顺延为 07-G） */}
+      <Download index="07-G" />
       <Footer />
     </div>
   );

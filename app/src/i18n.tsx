@@ -365,7 +365,7 @@ const dict = {
     "lib.final.title": "基因文件库为 GenePad 的内置模块，并非独立软件",
     "lib.final.desc":
       "基因文件库内置于 GenePad 基因图谱编辑器：下载安装 GenePad 后，在工具箱中即可使用。当前为免费公测阶段，覆盖全部平台。",
-    "lib.final.cta": "下载 GenePad",
+    "lib.final.cta": "返回主页",
   },
   en: {
     // Nav
@@ -466,7 +466,7 @@ const dict = {
     "tb.t2.name": "Gene File Library",
     "tb.t2.desc":
       "Opened vectors are indexed automatically, with AI-generated batch tags and watched folders; files can be located by plasmid attributes without memorizing filenames, and retrieved through the AI assistant. Indexes only — original files are never modified.",
-    "tb.o1.name": "i18n",
+    "tb.o1.name": "Multilingual",
     "tb.o1.desc":
       "Chinese, English, Japanese, French, German and Russian interfaces are built in; language packs can be exported and custom languages added through AI-assisted translation.",
     "tb.o2.name": "Open With",
@@ -722,7 +722,7 @@ const dict = {
     "lib.final.title": "A built-in module of GenePad, not a standalone application",
     "lib.final.desc":
       "The Gene File Library is built into the GenePad gene map editor: install GenePad and it is available in the toolbox. Free during the public beta, on every platform.",
-    "lib.final.cta": "Download GenePad",
+    "lib.final.cta": "Back to Home",
   },
 } as const;
 

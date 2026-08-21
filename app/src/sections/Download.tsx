@@ -251,7 +251,8 @@ function FileBox({ files }: { files: FileEntry[] }) {
   );
 }
 
-export default function Download() {
+/* index：章节编号，主页为 06，子页复用时传自己的编号 */
+export default function Download({ index = "06" }: { index?: string }) {
   const { t } = useLang();
   const [selected, setSelected] = useState<CardId>(detectPlatform);
   const [linuxCmd, setLinuxCmd] = useState<"script" | "npm">("script");
@@ -289,7 +290,7 @@ export default function Download() {
   return (
     <section id="download" className="bg-ink text-paper">
       <div className="mx-auto max-w-[1400px] px-5 py-20 md:px-8 md:py-28">
-        <SectionHead index="06" eyebrow={t("dl.eyebrow") as string} dark title={t("dl.title")}>
+        <SectionHead index={index} eyebrow={t("dl.eyebrow") as string} dark title={t("dl.title")}>
           {t("dl.lead")}
         </SectionHead>
 
