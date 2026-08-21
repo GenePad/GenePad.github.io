@@ -94,6 +94,22 @@ export default function Library() {
             {t("lib.lead")}
           </SectionHead>
 
+          {/* 顶部快捷入口：跳过正文直接跳到底部下载区 */}
+          <Reveal>
+            <div className="-mt-6 mb-12 flex flex-wrap items-center gap-4 md:-mt-8">
+              <a
+                href="#download"
+                className="group inline-flex items-center gap-3 bg-ink px-6 py-3.5 font-mono text-[13px] tracking-[0.12em] text-paper transition-colors hover:bg-gfp-deep"
+              >
+                {t("lib.final.cta2")}
+                <ArrowRight className="h-4 w-4 rotate-90 transition-transform group-hover:translate-y-1" />
+              </a>
+              <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-ink/45">
+                {t("lib.top.hint")}
+              </span>
+            </div>
+          </Reveal>
+
           <Reveal clip>
             <Shot src="shots/library-06.webp" caption={t("lib.hero.shot") as string} />
           </Reveal>
@@ -195,7 +211,7 @@ export default function Library() {
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <a
                   href="index.html"
-                  className="group inline-flex items-center gap-3 bg-gfp px-6 py-3.5 font-mono text-[13px] tracking-[0.12em] text-ink transition-colors hover:bg-paper"
+                  className="group inline-flex items-center gap-3 bg-gfp px-6 py-3.5 font-mono text-[13px] tracking-[0.12em] text-on-gfp transition-colors hover:bg-white"
                 >
                   {t("lib.final.cta")}
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />

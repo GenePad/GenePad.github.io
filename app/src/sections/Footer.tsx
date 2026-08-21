@@ -6,9 +6,9 @@ import { RELEASES_URL, GITEE_RELEASES_URL } from "../download-data";
 function FooterPlasmid() {
   return (
     <svg viewBox="0 0 200 200" fill="none" className="plasmid-draw h-full w-full" aria-hidden>
-      <circle cx="100" cy="100" r="78" stroke="rgba(246,246,244,0.28)" strokeWidth="1.5" style={{ "--dash": 520 } as React.CSSProperties} />
-      <path d="M100 22a78 78 0 0 1 68 40" stroke="#45c51f" strokeWidth="7" strokeLinecap="round" style={{ "--dash": 220 } as React.CSSProperties} />
-      <path d="M100 178a78 78 0 0 1-62-30" stroke="rgba(69,197,31,0.45)" strokeWidth="7" strokeLinecap="round" style={{ "--dash": 220 } as React.CSSProperties} />
+      <circle cx="100" cy="100" r="78" stroke="rgb(var(--gp-lined) / 0.28)" strokeWidth="1.5" style={{ "--dash": 520 } as React.CSSProperties} />
+      <path d="M100 22a78 78 0 0 1 68 40" stroke="rgb(var(--gp-gfp) / 1)" strokeWidth="7" strokeLinecap="round" style={{ "--dash": 220 } as React.CSSProperties} />
+      <path d="M100 178a78 78 0 0 1-62-30" stroke="rgb(var(--gp-gfp) / 0.45)" strokeWidth="7" strokeLinecap="round" style={{ "--dash": 220 } as React.CSSProperties} />
       {Array.from({ length: 24 }).map((_, i) => {
         const a = (i / 24) * Math.PI * 2;
         const x1 = 100 + Math.cos(a) * 86;
@@ -19,16 +19,16 @@ function FooterPlasmid() {
           <path
             key={i}
             d={`M${x1.toFixed(1)} ${y1.toFixed(1)}L${x2.toFixed(1)} ${y2.toFixed(1)}`}
-            stroke="rgba(246,246,244,0.35)"
+            stroke="rgb(var(--gp-lined) / 0.35)"
             strokeWidth="1"
             style={{ "--dash": 12 } as React.CSSProperties}
           />
         );
       })}
-      <text x="100" y="97" textAnchor="middle" fill="rgba(246,246,244,0.75)" fontSize="13" fontFamily="ui-monospace, 'Cascadia Code', Consolas, monospace" letterSpacing="1">
+      <text x="100" y="97" textAnchor="middle" fill="rgb(var(--gp-lined) / 0.75)" fontSize="13" fontFamily="ui-monospace, 'Cascadia Code', Consolas, monospace" letterSpacing="1">
         4,732 bp
       </text>
-      <text x="100" y="114" textAnchor="middle" fill="rgba(69,197,31,0.9)" fontSize="9" fontFamily="ui-monospace, 'Cascadia Code', Consolas, monospace" letterSpacing="2">
+      <text x="100" y="114" textAnchor="middle" fill="rgb(var(--gp-gfp) / 0.9)" fontSize="9" fontFamily="ui-monospace, 'Cascadia Code', Consolas, monospace" letterSpacing="2">
         CIRCULAR
       </text>
     </svg>

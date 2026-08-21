@@ -49,6 +49,12 @@ export default function Nav() {
             </a>
           ))}
           <a
+            href="library.html"
+            className="font-mono text-[12px] tracking-[0.12em] text-ink/70 transition-colors hover:text-gfp-deep"
+          >
+            {t("nav.library")}
+          </a>
+          <a
             href="tech-support.html"
             className="font-mono text-[12px] tracking-[0.12em] text-ink/70 transition-colors hover:text-gfp-deep"
           >

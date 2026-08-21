@@ -5,17 +5,22 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        paper: "#f6f6f4",
-        ink: "#1c3a13",
-        "ink-2": "#2a4a1e",
-        pine: "#2a5b45",
-        sage: "#d2d8d0",
-        gfp: "#45c51f",
-        "gfp-deep": "#2f9a10",
-        line: "rgba(28,58,19,0.16)",
-        "line-strong": "rgba(28,58,19,0.34)",
-        lined: "rgba(246,246,244,0.16)",
-        "lined-strong": "rgba(246,246,244,0.38)",
+        /* 语义色全部走 CSS 变量（index.css 的 :root / prefers-color-scheme: dark），
+           深色模式下整站跟随系统翻转；rgb 三元组保证 /opacity 修饰符可用 */
+        paper: "rgb(var(--gp-paper) / <alpha-value>)",
+        "paper-2": "rgb(var(--gp-paper-2) / <alpha-value>)",
+        ink: "rgb(var(--gp-ink) / <alpha-value>)",
+        "ink-2": "rgb(var(--gp-ink-2) / <alpha-value>)",
+        "ink-deep": "rgb(var(--gp-ink-deep) / <alpha-value>)",
+        pine: "rgb(var(--gp-pine) / <alpha-value>)",
+        sage: "rgb(var(--gp-sage) / <alpha-value>)",
+        gfp: "rgb(var(--gp-gfp) / <alpha-value>)",
+        "gfp-deep": "rgb(var(--gp-gfp-deep) / <alpha-value>)",
+        "on-gfp": "rgb(var(--gp-on-gfp) / <alpha-value>)",
+        line: "rgb(var(--gp-line) / 0.16)",
+        "line-strong": "rgb(var(--gp-line) / 0.34)",
+        lined: "rgb(var(--gp-lined) / 0.16)",
+        "lined-strong": "rgb(var(--gp-lined) / 0.38)",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

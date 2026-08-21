@@ -95,7 +95,7 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
       {children}
       {current && (
         <div
-          className="fixed inset-0 z-[100] flex flex-col bg-ink/95 backdrop-blur-sm"
+          className="lightbox-overlay fixed inset-0 z-[100] flex flex-col bg-ink/95 backdrop-blur-sm"
           onClick={close}
           role="dialog"
           aria-modal="true"

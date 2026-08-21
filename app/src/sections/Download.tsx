@@ -74,7 +74,7 @@ function CopyCmd({ label, cmd, note }: { label: string; cmd: string; note?: stri
   const { t } = useLang();
   const { copied, copy } = useCopy();
   return (
-    <div className="border border-lined bg-[#152b0e]">
+    <div className="border border-lined bg-ink-deep">
       <div className="flex items-center justify-between border-b border-lined px-4 py-2.5">
         <span className="font-mono text-[10px] tracking-[0.2em] text-paper/50">{label}</span>
         <button
@@ -117,7 +117,7 @@ function CmdTabs({
             aria-pressed={on}
             className={`flex flex-1 items-center justify-center gap-2.5 px-4 py-3 font-mono text-[11.5px] tracking-[0.14em] transition-colors ${
               on
-                ? "bg-gfp font-bold text-ink"
+                ? "bg-gfp font-bold text-on-gfp"
                 : "text-paper/60 hover:bg-ink-2 hover:text-paper"
             }`}
           >
@@ -225,7 +225,7 @@ function FileBox({ files }: { files: FileEntry[] }) {
               <a
                 href={f.sources.direct}
                 download
-                className="border border-gfp/60 px-3.5 py-2 text-gfp transition-colors hover:bg-gfp hover:text-ink"
+                className="border border-gfp/60 px-3.5 py-2 text-gfp transition-colors hover:bg-gfp hover:text-on-gfp"
               >
                 {t("dl.source.direct")}
               </a>

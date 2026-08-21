@@ -77,12 +77,29 @@
    GenePad 主题层：实验记录纸 + 技术图纸
    ───────────────────────────────────────────── */
 @layer base {
+  /* 语义色基准值（rgb 三元组）；深色模式覆盖见文件底部
+     paper 页面底 / ink 正文 · 区块底 / line·lined 发丝线（互逆）
+     gfp 亮绿（深底点缀）· gfp-deep 深绿（浅底点缀，深色模式下互换） */
+  :root {
+    --gp-paper: 246 246 244;
+    --gp-paper-2: 240 241 236;
+    --gp-ink: 28 58 19;
+    --gp-ink-2: 42 74 30;
+    --gp-ink-deep: 21 43 14;
+    --gp-pine: 42 91 69;
+    --gp-sage: 210 216 208;
+    --gp-gfp: 69 197 31;
+    --gp-gfp-deep: 47 154 16;
+    --gp-on-gfp: 28 58 19;
+    --gp-line: 28 58 19;
+    --gp-lined: 246 246 244;
+  }
   html {
     scroll-behavior: smooth;
   }
   body {
-    background: #f6f6f4;
-    color: #1c3a13;
+    background: rgb(var(--gp-paper));
+    color: rgb(var(--gp-ink));
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
@@ -95,10 +112,10 @@
     height: 5px;
   }
   ::-webkit-scrollbar-track {
-    background: #f6f6f4;
+    background: rgb(var(--gp-paper));
   }
   ::-webkit-scrollbar-thumb {
-    background: #1c3a13;
+    background: rgb(var(--gp-ink));
   }
 }
 
@@ -187,13 +204,51 @@
   .tick-x {
     background-image: repeating-linear-gradient(
       to right,
-      rgba(28, 58, 19, 0.35) 0,
-      rgba(28, 58, 19, 0.35) 1px,
+      rgb(var(--gp-ink) / 0.35) 0,
+      rgb(var(--gp-ink) / 0.35) 1px,
       transparent 1px,
       transparent 10px
     );
     background-size: 100% 5px;
     background-repeat: no-repeat;
     background-position: bottom;
+  }
+}
+
+/* ── 深色模式：跟随系统偏好整站翻转 ── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --gp-paper: 16 26 12; /* #101a0c */
+    --gp-paper-2: 23 35 17;
+    --gp-ink: 233 240 228; /* #e9f0e4 */
+    --gp-ink-2: 244 249 240;
+    --gp-ink-deep: 250 252 248;
+    --gp-pine: 141 181 141;
+    --gp-sage: 210 216 208;
+    --gp-gfp: 47 154 16; /* 深绿：浅底面板上的点缀 */
+    --gp-gfp-deep: 69 197 31; /* 亮绿：深底页面上的点缀 */
+    --gp-on-gfp: 18 48 10;
+    --gp-line: 246 246 244;
+    --gp-lined: 28 58 19;
+  }
+
+  /* 灯箱遮罩保持深色（其余内容随主题翻转，文字用固定浅色） */
+  .lightbox-overlay {
+    background-color: rgb(16 26 12 / 0.95);
+  }
+  .lightbox-overlay .text-paper {
+    color: rgb(246 246 244 / 1);
+  }
+  .lightbox-overlay .text-paper\/50 {
+    color: rgb(246 246 244 / 0.5);
+  }
+  .lightbox-overlay .text-paper\/55 {
+    color: rgb(246 246 244 / 0.55);
+  }
+  .lightbox-overlay .text-paper\/80 {
+    color: rgb(246 246 244 / 0.8);
+  }
+  .lightbox-overlay .lined {
+    border-color: rgb(246 246 244 / 0.16);
   }
 }

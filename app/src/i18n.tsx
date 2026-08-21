@@ -17,6 +17,7 @@ const dict = {
     "nav.sanger": "测序比对",
     "nav.toolbox": "工具箱",
     "nav.download": "下载",
+    "nav.library": "基因文件库",
     "nav.docs": "技术文档",
     "nav.projects": "生态项目",
     "nav.cta": "免费下载",
@@ -367,6 +368,7 @@ const dict = {
       "基因文件库内置于 GenePad 基因图谱编辑器：下载安装 GenePad 后，在工具箱中即可使用。当前为免费公测阶段，覆盖全部平台。",
     "lib.final.cta": "返回主页",
     "lib.final.cta2": "立即下载",
+    "lib.top.hint": "直达底部下载区",
   },
   en: {
     // Nav
@@ -375,6 +377,7 @@ const dict = {
     "nav.sanger": "Sanger Trace",
     "nav.toolbox": "Toolbox",
     "nav.download": "Download",
+    "nav.library": "File Library",
     "nav.docs": "Dev Docs",
     "nav.projects": "Projects",
     "nav.cta": "Free Download",
@@ -725,6 +728,7 @@ const dict = {
       "The Gene File Library is built into the GenePad gene map editor: install GenePad and it is available in the toolbox. Free during the public beta, on every platform.",
     "lib.final.cta": "Back to Home",
     "lib.final.cta2": "Download Now",
+    "lib.top.hint": "Jump straight to downloads",
   },
 } as const;
 

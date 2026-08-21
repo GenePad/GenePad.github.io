@@ -139,7 +139,7 @@ function GroupLabel({ no, cn, en }: { no: string; cn: ReactNode; en: string }) {
 export default function Toolbox() {
   const { t } = useLang();
   return (
-    <section id="toolbox" className="border-b border-line bg-[#f0f1ec]">
+    <section id="toolbox" className="border-b border-line bg-paper-2">
       <div className="mx-auto max-w-[1400px] px-5 py-20 md:px-8 md:py-28">
         <SectionHead index="05" eyebrow={t("tb.eyebrow") as string} title={t("tb.title")}>
           {t("tb.lead")}
