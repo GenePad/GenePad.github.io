@@ -1,5 +1,14 @@
 import { useEffect, useState } from "react";
-import { Reveal, Shot, ArrowRight, PlasmidGlyph } from "./shared";
+import {
+  Reveal,
+  Shot,
+  ArrowRight,
+  PlasmidGlyph,
+  WindowsIcon,
+  AppleIcon,
+  LinuxIcon,
+  AndroidIcon,
+} from "./shared";
 import { useLang } from "../i18n";
 
 /* 真实 superfolder GFP 起始区序列 */
@@ -66,6 +75,26 @@ export default function Hero() {
               <p className="mt-7 max-w-xl text-[15px] leading-8 text-ink/70">
                 {t("hero.desc")}
               </p>
+            </Reveal>
+
+            {/* 支持平台一行 */}
+            <Reveal delay={270}>
+              <ul className="mt-6 flex flex-wrap items-center gap-x-7 gap-y-3 text-ink/60">
+                <li className="font-mono text-[10px] tracking-[0.24em] uppercase text-ink/40">
+                  {t("hero.platforms")}
+                </li>
+                {[
+                  { Icon: WindowsIcon, name: "Windows" },
+                  { Icon: AppleIcon, name: "macOS" },
+                  { Icon: LinuxIcon, name: "Linux" },
+                  { Icon: AndroidIcon, name: "Android" },
+                ].map(({ Icon, name }) => (
+                  <li key={name} className="flex items-center gap-2">
+                    <Icon className="h-[17px] w-[17px]" />
+                    <span className="text-[13px]">{name}</span>
+                  </li>
+                ))}
+              </ul>
             </Reveal>
 
             <Reveal delay={320}>

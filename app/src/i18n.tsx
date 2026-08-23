@@ -33,6 +33,7 @@ const dict = {
     "hero.download": "免费下载 GenePad",
     "hero.tour": "查看界面",
     "hero.features": "图谱 · 标注 · 酶切 · 引物 · 峰图",
+    "hero.platforms": "支持平台",
 
     // Workbench
     "wb.eyebrow": "Workbench · 图谱工作台",
@@ -393,6 +394,7 @@ const dict = {
     "hero.download": "Download GenePad Free",
     "hero.tour": "View the interface",
     "hero.features": "MAP · ANNOTATION · ENZYME · PRIMER · TRACE",
+    "hero.platforms": "Available on",
 
     // Workbench
     "wb.eyebrow": "Workbench",
