@@ -1,0 +1,455 @@
+{
+  "version": "1.9",
+  "id": "gjson-1787405886329",
+  "type_of_display": "file_name",
+  "custom_name": "41-pPUR-P2A-BFPnls-sgRNA1-RNF2_4AtoG_MS2-MA",
+  "description": "ORIGDB|GenBank",
+  "sequence": "ttggggttgcgccttttccaaggcagccctgggtttgcgcagggacgcggctgctctgggcgtggttccgggaaacgcagcggcgccgaccctgggtctcgcacattcttcacgtccgttcgcagcgtcacccggatcttcgccgctacccttgtgggccccccggcgacgcttcctgctccgcccctaagtcgggaaggttccttgcggttcgcggcgtgccggacgtgacaaacggaagccgcacgtctcactagtaccctcgcagacggacagcgccagggagcaatggcagcgcgccgaccgcgatgggctgtggccaatagcggctgctcagcagggcgcgccgagagcagcggccgggaaggggcggtgcgggaggcggggtgtggggcggtagtgtgggccctgttcctgcccgcgcggtgttccgcattctgcaagcctccggagcgcacgtcggcagtcggctccctcgttgaccgaatcaccgacctctctccccagggggatccgccaccatgaccgagtacaagcccacggtgcgcctcgccacccgcgacgacgtccccagggccgtacgcaccctcgccgccgcgttcgccgactaccccgccacgcgccacaccgtcgatccggaccgccacatcgagcgggtcaccgagctgcaagaactcttcctcacgcgcgtcgggctcgacatcggcaaggtgtgggtcgcggacgacggcgccgcggtggcggtctggaccacgccggagagcgtcgaagcgggggcggtgttcgccgagatcggcccgcgcatggccgagttgagcggttcccggctggccgcgcagcaacagatggaaggcctcctggcgccgcaccggcccaaggagcccgcgtggttcctggccaccgtcggcgtctcgcccgaccaccagggcaagggtctgggcagcgccgtcgtgctccccggagtggaggcggccgagcgcgccggggtgcccgccttcctggagacctccgcgccccgcaacctccccttctacgagcggctcggcttcaccgtcaccgccgacgtcgaggtgcccgaaggaccgcgcacctggtgcatgacccgcaagcccggtgccgctagcggtgctactaacttcagcctgctgaagcaggctggagacgtggaggagaaccctggacctggtagtggaacgcgtatggtgtctaagggcgaagagctgattaaggagaacatgcacatgaagctgtacatggagggcaccgtggacaaccatcacttcaagtgcacatccgagggcgaaggcaagccctacgagggcacccagaccatgagaatcaaggtggtcgagggcggccctctccccttcgccttcgacatcctggctactagcttcctctacggcagcaagaccttcatcaaccacacccagggcatccccgacttcttcaagcagtccttccctgagggcttcacatgggagagagtcaccacatacgaagatgggggcgtgctgaccgctacccaggacaccagcctccaggacggctgcctcatctacaacgtcaagatcagaggggtgaacttcacatccaacggccctgtgatgcagaagaaaacactcggctgggaggccttcaccgagacgctgtaccccgctgacggcggcctggaaggcagaaacgacatggccctgaagctcgtgggcgggagccatctgatcgcaaacgccaagaccacatatagatccaagaaacccgctaagaacctcaagatgcctggcatctactatgtggactacagactggaaagaatcaaggaggccaacaacgaaacctacgtcgagcagcacgaggtggcagtggccagatactgcgacctccctagcaaactggggcacaagcttaatccaaagaaaaagcggaaagtgtgagtcgacctcgagggggggcccggtacctttaagaccaatgacttacaaggcagctgtagatcttagccactttttaaaagaaaaggggggactggaagggctaattcactcccaacgaagaaaagatctgctttttgcttgtactgggtctctctggttagaccagatctgagcctgggagctctctggctaactagggaacccactgcttaagcctcaataaagcttgccttgagtgcttcaagtagtgtgtgcccgtctgttgtgtgactctggtaactagagatccctcagacccttttagtcagtgtggaaaatctctagcagtagtagttcatgtcatcttattattcagtatttataacttgcaaagaaatgaatatcagagagtgagaggaacttgtttattgcagcttataatggttacaaataaagcaatagcatcacaaatttcacaaataaagcatttttttcactgcattctagttgtggtttgtccaaactcatcaatgtatcttatcatgtctggctctagctatcccgcccctaactccgcccatcccgcccctaactccgcccagttccgcccattctccgccccatggctgactaattttttttatttatgcagaggccgaggccgcctcggcctctgagctattccagaagtagtgaggaggcttttttggaggcctagggacgtacccaattcgccctatagtgagtcgtattacgcgcgctcactggccgtcgttttacaacgtcgtgactgggaaaaccctggcgttacccaacttaatcgccttgcagcacatccccctttcgccagctggcgtaatagcgaagaggcccgcaccgatcgcccttcccaacagttgcgcagcctgaatggcgaatgggacgcgccctgtagcggcgcattaagcgcggcgggtgtggtggttacgcgcagcgtgaccgctacacttgccagcgccctagcgcccgctcctttcgctttcttcccttcctttctcgccacgttcgccggctttccccgtcaagctctaaatcgggggctccctttagggttccgatttagtgctttacggcacctcgaccccaaaaaacttgattagggtgatggttcacgtagtgggccatcgccctgatagacggtttttcgccctttgacgttggagtccacgttctttaatagtggactcttgttccaaactggaacaacactcaaccctatctcggtctattcttttgatttataagggattttgccgatttcggcctattggttaaaaaatgagctgatttaacaaaaatttaacgcgaattttaacaaaatattaacgcttacaatttaggtggcacttttcggggaaatgtgcgcggaacccctatttgtttatttttctaaatacattcaaatatgtatccgctcatgagacaataaccctgataaatgcttcaataatattgaaaaaggaagagtatgagtattcaacatttccgtgtcgcccttattcccttttttgcggcattttgccttcctgtttttgctcacccagaaacgctggtgaaagtaaaagatgctgaagatcagttgggtgcacgagtgggttacatcgaactggatctcaacagcggtaagatccttgagagttttcgccccgaagaacgttttccaatgatgagcacttttaaagttctgctatgtggcgcggtattatcccgtattgacgccgggcaagagcaactcggtcgccgcatacactattctcagaatgacttggttgagtactcaccagtcacagaaaagcatcttacggatggcatgacagtaagagaattatgcagtgctgccataaccatgagtgataacactgcggccaacttacttctgacaacgatcggaggaccgaaggagctaaccgcttttttgcacaacatgggggatcatgtaactcgccttgatcgttgggaaccggagctgaatgaagccataccaaacgacgagcgtgacaccacgatgcctgtagcaatggcaacaacgttgcgcaaactattaactggcgaactacttactctagcttcccggcaacaattaatagactggatggaggcggataaagttgcaggaccacttctgcgctcggcccttccggctggctggtttattgctgataaatctggagccggtgagcgtgggtctcgcggtatcattgcagcactggggccagatggtaagccctcccgtatcgtagttatctacacgacggggagtcaggcaactatggatgaacgaaatagacagatcgctgagataggtgcctcactgattaagcattggtaactgtcagaccaagtttactcatatatactttagattgatttaaaacttcatttttaatttaaaaggatctaggtgaagatcctttttgataatctcatgaccaaaatcccttaacgtgagttttcgttccactgagcgtcagaccccgtagaaaagatcaaaggatcttcttgagatcctttttttctgcgcgtaatctgctgcttgcaaacaaaaaaaccaccgctaccagcggtggtttgtttgccggatcaagagctaccaactctttttccgaaggtaactggcttcagcagagcgcagataccaaatactgttcttctagtgtagccgtagttaggccaccacttcaagaactctgtagcaccgcctacatacctcgctctgctaatcctgttaccagtggctgctgccagtggcgataagtcgtgtcttaccgggttggactcaagacgatagttaccggataaggcgcagcggtcgggctgaacggggggttcgtgcacacagcccagcttggagcgaacgacctacaccgaactgagatacctacagcgtgagctatgagaaagcgccacgcttcccgaagggagaaaggcggacaggtatccggtaagcggcagggtcggaacaggagagcgcacgagggagcttccagggggaaacgcctggtatctttatagtcctgtcgggtttcgccacctctgacttgagcgtcgatttttgtgatgctcgtcaggggggcggagcctatggaaaaacgccagcaacgcggcctttttacggttcctggccttttgctggccttttgctcacatgttctttcctgcgttatcccctgattctgtggataaccgtattaccgcctttgagtgagctgataccgctcgccgcagccgaacgaccgagcgcagcgagtcagtgagcgaggaagcggaagagcgcccaatacgcaaaccgcctctccccgcgcgttggccgattcattaatgcagctggcacgacaggtttcccgactggaaagcgggcagtgagcgcaacgcaattaatgtgagttagctcactcattaggcaccccaggctttacactttatgcttccggctcgtatgttgtgtggaattgtgagcggataacaatttcacacaggaaacagctatgaccatgattacgccaagcgcgcaattaaccctcactaaagggaacaaaagctggagctgcaagcttaatgtagtcttatgcaatactcttgtagtcttgcaacatggtaacgatgagttagcaacatgccttacaaggagagaaaaagcaccgtgcatgccgattggtggaagtaaggtggtacgatcgtgccttattaggaaggcaacagacgggtctgacatggattggacgaaccactgaattgccgcattgcagagatattgtatttaagtgcctagctcgatacataaacgggtctctctggttagaccagatctgagcctgggagctctctggctaactagggaacccactgcttaagcctcaataaagcttgccttgagtgcttcaagtagtgtgtgcccgtctgttgtgtgactctggtaactagagatccctcagacccttttagtcagtgtggaaaatctctagcagtggcgcccgaacagggacttgaaagcgaaagggaaaccagaggagctctctcgacgcaggactcggcttgctgaagcgcgcacggcaagaggcgaggggcggcgactggtgagtacgccaaaaattttgactagcggaggctagaaggagagagatgggtgcgagagcgtcagtattaagcgggggagaattagatcgcgatgggaaaaaattcggttaaggccagggggaaagaaaaaatataaattaaaacatatagtatgggcaagcagggagctagaacgattcgcagttaatcctggcctgttagaaacatcagaaggctgtagacaaatactgggacagctacaaccatcccttcagacaggatcagaagaacttagatcattatataatacagtagcaaccctctattgtgtgcatcaaaggatagagataaaagacaccaaggaagctttagacaagatagaggaagagcaaaacaaaagtaagaccaccgcacagcaagcggccgctgatcttcagacctggaggaggagatatgagggacaattggagaagtgaattatataaatataaagtagtaaaaattgaaccattaggagtagcacccaccaaggcaaagagaagagtggtgcagagagaaaaaagagcagtgggaataggagctttgttccttgggttcttgggagcagcaggaagcactatgggcgcagcgtcaatgacgctgacggtacaggccagacaattattgtctggtatagtgcagcagcagaacaatttgctgagggctattgaggcgcaacagcatctgttgcaactcacagtctggggcatcaagcagctccaggcaagaatcctggctgtggaaagatacctaaaggatcaacagctcctggggatttggggttgctctggaaaactcatttgcaccactgctgtgccttggaatgctagttggagtaataaatctctggaacagatttggaatcacacgacctggatggagtgggacagagaaattaacaattacacaagcttaatacactccttaattgaagaatcgcaaaaccagcaagaaaagaatgaacaagaattattggaattagataaatgggcaagtttgtggaattggtttaacataacaaattggctgtggtatataaaattattcataatgatagtaggaggcttggtaggtttaagaatagtttttgctgtactttctatagtgaatagagttaggcagggatattcaccattatcgtttcagacccacctcccaaccccgaggggacccgacaggcccgaaggaatagaagaagaaggtggagagagagacagagacagatccattcgattagtgaacggatctcgacggtatcgatcacgagactagcctcgagcggccgcccccttcaccgagggcctatttcccatgattccttcatatttgcatatacgatacaaggctgttagagagataattggaattaatttgactgtaaacacaaagatattagtacaaaatacgtgacgtagaaagtaataatttcttgggtagtttgcagttttaaaattatgttttaaaatggactatcatatgcttaccgtaacttgaaagtatttcgatttcttggctttatatatcttgtggaaaggacgaaacaccggtcatcttagtcattacctggtttgagagctagaaatagcaagttcaaataaggctagtccgttatcaacttgaaaaagtggcaccgagtcggtgcaacgaacaccccaggtaatgactaagatgacatgaggatcacccatgttttttttgaattctcgacctcgagacaaatggcagtattcatccacaattttaaaagaaaaggggggattggggggtacagtgcaggggaaagaatagtagacataatagcaacagacatacaaactaaagaattacaaaaacaaattacaaaaattcaaaattttcgggtttattacagggacagcagagatccactttggccgcggctcgaggggg",
+  "length": 7952,
+  "isCircular": true,
+  "isDoubleStranded": true,
+  "accession": "-",
+  "organism": null,
+  "date": "2021.6.10",
+  "moleculeType": null,
+  "division": null,
+  "gbVersion": null,
+  "keywords": null,
+  "source": null,
+  "comments": null,
+  "references": null,
+  "features": [
+    {
+      "id": "feature-0",
+      "name": "4AtoG",
+      "type": "misc_feature",
+      "start": 7687,
+      "end": 7715,
+      "strand": "forward",
+      "color": "#3366cc",
+      "label": "4AtoG",
+      "note": "/vntifkey=21",
+      "frame": null,
+      "visible": true,
+      "qualifiers": null
+    },
+    {
+      "id": "feature-1",
+      "name": "RNF2",
+      "type": "misc_feature",
+      "start": 7591,
+      "end": 7610,
+      "strand": "forward",
+      "color": "#3366cc",
+      "label": "RNF2",
+      "note": "/vntifkey=21",
+      "frame": null,
+      "visible": true,
+      "qualifiers": null
+    },
+    {
+      "id": "feature-2",
+      "name": "MS2 stem loop",
+      "type": "misc_RNA",
+      "start": 7716,
+      "end": 7734,
+      "strand": "forward",
+      "color": "#99cc00",
+      "label": "MS2 stem loop",
+      "note": "stem loop that binds the bacteriophage MS2 coat protein",
+      "frame": null,
+      "visible": true,
+      "qualifiers": null
+    },
+    {
+      "id": "feature-3",
+      "name": "Puromycin",
+      "type": "misc_feature",
+      "start": 525,
+      "end": 1118,
+      "strand": "forward",
+      "color": "#66cc99",
+      "label": "Puromycin",
+      "note": "/vntifkey=21",
+      "frame": null,
+      "visible": true,
+      "qualifiers": null
+    },
+    {
+      "id": "feature-4",
+      "name": "NLS",
+      "type": "misc_feature",
+      "start": 1911,
+      "end": 1931,
+      "strand": "forward",
+      "color": "#3366cc",
+      "label": "NLS",
+      "note": "/vntifkey=21",
+      "frame": null,
+      "visible": true,
+      "qualifiers": null
+    },
+    {
+      "id": "feature-5",
+      "name": "U6 promoter",
+      "type": "misc_feature",
+      "start": 7331,
+      "end": 7590,
+      "strand": "forward",
+      "color": "#66cc99",
+      "label": "U6\\promoter",
+      "note": "/vntifkey=21",
+      "frame": null,
+      "visible": true,
+      "qualifiers": null
+    },
+    {
+      "id": "feature-6",
+      "name": "V-to-I mutation",
+      "type": "misc_feature",
+      "start": 1785,
+      "end": 1787,
+      "strand": "forward",
+      "color": "#3366cc",
+      "label": "V-to-I\\mutation",
+      "note": "/vntifkey=21",
+      "frame": null,
+      "visible": true,
+      "qualifiers": null
+    },
+    {
+      "id": "feature-7",
+      "name": "(BbsI)",
+      "type": "misc_feature",
+      "start": 1500,
+      "end": 1505,
+      "strand": "forward",
+      "color": "#3366cc",
+      "label": "(BbsI)",
+      "note": "/vntifkey=21",
+      "frame": null,
+      "visible": true,
+      "qualifiers": null
+    },
+    {
+      "id": "feature-8",
+      "name": "TagBFP2",
+      "type": "misc_feature",
+      "start": 1200,
+      "end": 1910,
+      "strand": "forward",
+      "color": "#66cc99",
+      "label": "TagBFP2",
+      "note": "/vntifkey=21",
+      "frame": null,
+      "visible": true,
+      "qualifiers": null
+    },
+    {
+      "id": "feature-9",
+      "name": "P2A",
+      "type": "misc_feature",
+      "start": 1128,
+      "end": 1184,
+      "strand": "forward",
+      "color": "#3366cc",
+      "label": "P2A",
+      "note": "/vntifkey=21",
+      "frame": null,
+      "visible": true,
+      "qualifiers": null
+    },
+    {
+      "id": "feature-10",
+      "name": "hPGK promoter",
+      "type": "misc_feature",
+      "start": 1,
+      "end": 507,
+      "strand": "forward",
+      "color": "#66cc99",
+      "label": "hPGK\\promoter",
+      "note": "/vntifkey=21",
+      "frame": null,
+      "visible": true,
+      "qualifiers": null
+    },
+    {
+      "id": "feature-11",
+      "name": "(BbsI)",
+      "type": "misc_feature",
+      "start": 2051,
+      "end": 2056,
+      "strand": "forward",
+      "color": "#3366cc",
+      "label": "(BbsI)",
+      "note": "/vntifkey=21",
+      "frame": null,
+      "visible": true,
+      "qualifiers": null
+    },
+    {
+      "id": "feature-12",
+      "name": "Partial U3",
+      "type": "misc_feature",
+      "start": 2026,
+      "end": 2079,
+      "strand": "forward",
+      "color": "#3366cc",
+      "label": "Partial\\U3",
+      "note": "/vntifkey=21",
+      "frame": null,
+      "visible": true,
+      "qualifiers": null
+    },
+    {
+      "id": "feature-13",
+      "name": "PPT",
+      "type": "misc_feature",
+      "start": 2005,
+      "end": 2018,
+      "strand": "forward",
+      "color": "#3366cc",
+      "label": "PPT",
+      "note": "/vntifkey=21",
+      "frame": null,
+      "visible": true,
+      "qualifiers": null
+    },
+    {
+      "id": "feature-14",
+      "name": "SV40 PolyA",
+      "type": "polyA_signal",
+      "start": 2332,
+      "end": 2462,
+      "strand": "forward",
+      "color": "#008000",
+      "label": "SV40\\PolyA",
+      "note": "/vntifkey=25",
+      "frame": null,
+      "visible": true,
+      "qualifiers": null
+    },
+    {
+      "id": "feature-15",
+      "name": "Bla Promoter",
+      "type": "promoter",
+      "start": 3322,
+      "end": 3420,
+      "strand": "forward",
+      "color": "#800000",
+      "label": "Bla\\Promoter",
+      "note": "/vntifkey=30",
+      "frame": null,
+      "visible": true,
+      "qualifiers": null
+    },
+    {
+      "id": "feature-16",
+      "name": "pUC Ori",
+      "type": "rep_origin",
+      "start": 4482,
+      "end": 5022,
+      "strand": "forward",
+      "color": "#ffff00",
+      "label": "pUC\\Ori",
+      "note": "/vntifkey=33",
+      "frame": null,
+      "visible": true,
+      "qualifiers": null
+    },
+    {
+      "id": "feature-17",
+      "name": "HIV 5' LTR",
+      "type": "misc_feature",
+      "start": 5736,
+      "end": 5916,
+      "strand": "forward",
+      "color": "#000000",
+      "label": "HIV\\5'\\LTR",
+      "note": "/vntifkey=22",
+      "frame": null,
+      "visible": true,
+      "qualifiers": null
+    },
+    {
+      "id": "feature-18",
+      "name": "SIN/3' LTR",
+      "type": "misc_feature",
+      "start": 2026,
+      "end": 2270,
+      "strand": "forward",
+      "color": "#000000",
+      "label": "SIN/3'\\LTR",
+      "note": "/vntifkey=22",
+      "frame": null,
+      "visible": true,
+      "qualifiers": null
+    },
+    {
+      "id": "feature-19",
+      "name": "Psi",
+      "type": "misc_recomb",
+      "start": 5983,
+      "end": 6091,
+      "strand": "forward",
+      "color": "#000080",
+      "label": "Psi",
+      "note": "/vntifkey=86",
+      "frame": null,
+      "visible": true,
+      "qualifiers": null
+    },
+    {
+      "id": "feature-20",
+      "name": "5' Gag",
+      "type": "misc_recomb",
+      "start": 6074,
+      "end": 6401,
+      "strand": "forward",
+      "color": "#000080",
+      "label": "5'\\Gag",
+      "note": "/vntifkey=86",
+      "frame": null,
+      "visible": true,
+      "qualifiers": null
+    },
+    {
+      "id": "feature-21",
+      "name": "REV",
+      "type": "misc_recomb",
+      "start": 6592,
+      "end": 6796,
+      "strand": "forward",
+      "color": "#000080",
+      "label": "REV",
+      "note": "/vntifkey=86",
+      "frame": null,
+      "visible": true,
+      "qualifiers": null
+    },
+    {
+      "id": "feature-22",
+      "name": "Amp",
+      "type": "misc_feature",
+      "start": 3421,
+      "end": 4281,
+      "strand": "forward",
+      "color": "#66cc99",
+      "label": "Amp",
+      "note": "/vntifkey=21",
+      "frame": null,
+      "visible": true,
+      "qualifiers": null
+    },
+    {
+      "id": "feature-23",
+      "name": "Misc_Feature_1",
+      "type": "misc_feature",
+      "start": 5627,
+      "end": 6795,
+      "strand": "reverse",
+      "color": "#a6acb3",
+      "label": "Misc_Feature_1",
+      "note": "sgRNA cassette BfuAI sites [Split]",
+      "frame": null,
+      "visible": true,
+      "segments": [
+        {
+          "start": 5627,
+          "end": 5643
+        },
+        {
+          "start": 5644,
+          "end": 5644
+        },
+        {
+          "start": 6699,
+          "end": 6699
+        },
+        {
+          "start": 6700,
+          "end": 6795
+        }
+      ],
+      "qualifiers": null
+    },
+    {
+      "id": "feature-24",
+      "name": "sgRNA1",
+      "type": "misc_feature",
+      "start": 7611,
+      "end": 7686,
+      "strand": "forward",
+      "color": "#66cc99",
+      "label": "sgRNA1",
+      "note": "/vntifkey=21",
+      "frame": null,
+      "visible": true,
+      "qualifiers": null
+    }
+  ],
+  "primers": [
+    {
+      "id": "primer-0",
+      "name": "Primer 2",
+      "sequence": "acatgggtgatcctcatgtcatcttagtcattacctggggtgttcgttgcaccgactcggtgcc",
+      "description": "",
+      "bindingSites": [
+        {
+          "start": 7671,
+          "end": 7734,
+          "boundStrand": "reverse",
+          "annealedBases": "ggcaccgagtcggtgcaacgaacaccccaggtaatgactaagatgacatgaggatcacccatgt",
+          "meltingTemperature": 80.86570880948138,
+          "components": [
+            {
+              "hybridized_range": "7670-7733",
+              "bases": "ggcaccgagtcggtgcaacgaacaccccaggtaatgactaagatgacatgaggatcacccatgt"
+            }
+          ],
+          "alignment": [
+            {
+              "type": "annealed",
+              "primer_bases": "ggcaccgagtcggtgcaacgaacaccccaggtaatgactaagatgacatgaggatcacccatgt",
+              "template_bases": "ggcaccgagtcggtgcaacgaacaccccaggtaatgactaagatgacatgaggatcacccatgt",
+              "template_start": 7671,
+              "template_end": 7734
+            }
+          ]
+        }
+      ],
+      "visible": null
+    },
+    {
+      "id": "primer-1",
+      "name": "Primer 1",
+      "sequence": "gtcatcttagtcattacctggtttgagagctagaaatagcaagttcaaataaggcta",
+      "description": "",
+      "bindingSites": [
+        {
+          "start": 7591,
+          "end": 7647,
+          "boundStrand": "forward",
+          "annealedBases": "gtcatcttagtcattacctggtttgagagctagaaatagcaagttcaaataaggcta",
+          "meltingTemperature": 73.03840617790243,
+          "components": [
+            {
+              "hybridized_range": "7590-7646",
+              "bases": "gtcatcttagtcattacctggtttgagagctagaaatagcaagttcaaataaggcta"
+            }
+          ],
+          "alignment": [
+            {
+              "type": "annealed",
+              "primer_bases": "gtcatcttagtcattacctggtttgagagctagaaatagcaagttcaaataaggcta",
+              "template_bases": "gtcatcttagtcattacctggtttgagagctagaaatagcaagttcaaataaggcta",
+              "template_start": 7591,
+              "template_end": 7647
+            }
+          ]
+        }
+      ],
+      "visible": null
+    }
+  ]
+}
