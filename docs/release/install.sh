@@ -6,6 +6,13 @@
 #  用法 / Usage:
 #    curl -fsSL https://genepad.cn/release/install.sh | bash
 #
+#  脚本结束前（无论成功或失败）会等待按回车再退出，方便查看结果；
+#  无人值守 / 自动化运行请加 -q：
+#    curl -fsSL https://genepad.cn/release/install.sh | bash -s -- -q
+#  The script waits for Enter before exiting (success or failure) so the
+#  result stays visible; add -q / --quiet (or GENEPAD_QUIET=1) to skip the
+#  wait for unattended runs.
+#
 #  Linux:  自动识别架构（x86_64 / ARM64）与包管理器
 #          （apt / dnf / yum / zypper，其余环境改用 tar.gz）
 #  macOS:  检测 Homebrew——已安装则直接用 brew 安装；未安装则先
@@ -22,6 +29,8 @@
 #    GENEPAD_SKIP_INSTALL=1   只下载到当前目录，不安装
 #                             （macOS 即下载 macos-app.zip）
 #                             / Download only, skip installation
+#    GENEPAD_QUIET=1          等价于 -q（管道方式运行时不便传参时更顺手）
+#                             / same as -q (handy when piping)
 # =============================================================
 set -u
 
@@ -32,6 +41,7 @@ GITHUB_DL="https://github.com/${REPO_SLUG}/releases/latest/download"
 
 DRY_RUN="${GENEPAD_DRY_RUN:-0}"
 SKIP_INSTALL="${GENEPAD_SKIP_INSTALL:-0}"
+QUIET="${GENEPAD_QUIET:-0}"
 USE_MIRROR=0
 VERSION="${GENEPAD_VERSION:-}"
 
@@ -57,11 +67,42 @@ warn() { printf '%s\n' "${Y}$(bi "警告:" "Warning:")${N} $(bi "$1" "${2:-}")" 
 die()  { printf '%s\n' "${R}$(bi "错误:" "Error:")${N} $(bi "$1" "${2:-}")" >&2; exit 1; }
 has()  { command -v "$1" >/dev/null 2>&1; }
 
+# ---------- 参数 / arguments ----------
+# -q | --quiet：结束后不等回车直接退出（无人值守 / 自动化）
+# -q | --quiet: do not wait for Enter before exiting (unattended runs)
+# 注：`${1+"$@"}` 兼容 macOS 自带 bash 3.2 在 set -u 下对空 "$@" 的报错
+# note: `${1+"$@"}` works around bash 3.2's set -u error on empty "$@"
+for _arg in ${1+"$@"}; do
+  case "$_arg" in
+    -q|--quiet) QUIET=1 ;;
+    *) die "未知参数: ${_arg}（本脚本仅支持 -q / --quiet）" \
+           "unknown argument: ${_arg} (only -q / --quiet is supported)" ;;
+  esac
+done
+
+# pause —— 结束前等待用户按回车 / wait for Enter before the script exits.
+# 从 /dev/tty 读取（`curl | bash` 时 stdin 是脚本管道，不能直接 read）；
+# 无终端（CI / 无人值守）或指定 -q 时自动跳过。
+# Reads /dev/tty (stdin is the piped script under `curl | bash`); skipped
+# automatically when there is no tty or -q / --quiet was given.
+pause() {
+  [ "$QUIET" = "1" ] && return 0
+  { : </dev/tty; } 2>/dev/null || return 0
+  printf '%s' "${D}$(bi "按回车键退出 ..." "Press Enter to exit ...")${N} "
+  IFS= read -r _pause_reply </dev/tty 2>/dev/null || true
+}
+
+TMP=""
+on_exit() {
+  [ -n "$TMP" ] && rm -rf "$TMP"
+  pause
+}
+trap on_exit EXIT
+
 command -v curl >/dev/null 2>&1 \
   || die "未找到 curl，请先安装 curl 再运行本脚本" "curl not found; install curl first, then rerun this script"
 TMP="$(mktemp -d /tmp/genepad-install.XXXXXX)" \
   || die "无法创建临时目录" "failed to create a temp directory"
-trap 'rm -rf "$TMP"' EXIT
 
 # ---------- 下载（进度条 + 失败换源重试）----------
 # fetch <输出文件> <url>... — download with progress bar and mirror rotation

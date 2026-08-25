@@ -162,8 +162,8 @@ const dict = {
     "dl.ai.desc":
       "macOS 安装包未签名，手动安装步骤较多。可将以下提示词复制给 AI 助手（Kimi、ChatGPT 等），在其引导下逐步完成安装。",
     "dl.ai.prompt": `请协助我在 macOS 上安装名为「GenePad」的应用。请按以下顺序尝试，任一方法成功即可停止：
-1. 首选：运行官方一键安装脚本（自动检测并安装 Homebrew，按网络情况切换国内镜像）：
-   curl -fsSL https://genepad.cn/release/install.sh | bash
+1. 首选：运行官方一键安装脚本（自动检测并安装 Homebrew，按网络情况切换国内镜像）。请务必带上 -q 参数：脚本结束时默认需按回车才会退出，加 -q 可跳过等待，便于无人值守执行：
+   curl -fsSL https://genepad.cn/release/install.sh | bash -s -- -q
    安装完成后运行 open -a GenePad。
 2. 备选：通过 Homebrew 安装（自动加入「应用程序」）：
    brew install genepad/tap/genepad
@@ -523,8 +523,8 @@ const dict = {
     "dl.ai.desc":
       "The macOS packages are unsigned and involve several manual steps. Copy the prompt below to an AI assistant (Kimi, ChatGPT, etc.) and complete the installation under its step-by-step guidance.",
     "dl.ai.prompt": `Please help me install an application called "GenePad" on macOS. Try the following methods in order and stop at the first one that succeeds:
-1. Preferred: run the official one-click install script (it detects and installs Homebrew automatically, switching to a CN mirror as network conditions require):
-   curl -fsSL https://genepad.cn/release/install.sh | bash
+1. Preferred: run the official one-click install script (it detects and installs Homebrew automatically, switching to a CN mirror as network conditions require). Always append the -q flag: by default the script waits for Enter before exiting, and -q skips that wait so it runs unattended:
+   curl -fsSL https://genepad.cn/release/install.sh | bash -s -- -q
    Then run: open -a GenePad.
 2. Alternative: install with Homebrew (adds it to Applications automatically):
    brew install genepad/tap/genepad

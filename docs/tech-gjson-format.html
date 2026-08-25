@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#f4f7fb" media="(prefers-color-scheme: light)" />
         <meta name="theme-color" content="#0b111d" media="(prefers-color-scheme: dark)" />
-        <meta name="description" content="GenePad .gjson 文件格式定义：JSON 顶层字段、Feature、Primer、BaseColorRange 和 AlignmentEntry 结构。" />
+        <meta name="description" content="GenePad .gjson 文件格式完整定义：顶层字段写出/读取行为、Feature、Primer、结合位点、BaseColorRange、AlignmentEntry 与 GenBankRef 结构，键名命名规则、null 语义与容错解析。" />
         <title>.gjson 文件定义 - GenePad 开发者文档</title>
         <link rel="canonical" href="https://genepad.cn/tech-gjson-format.html" />
         <!-- 手绘 SVG 导出图，暂不启用 <link rel="icon" href="icon.png" type="image/png" /> -->
@@ -37,85 +37,133 @@
                 <div class="doc-head">
                     <h1>.gjson 文件定义</h1>
                     <p class="lead">
-                        `.gjson` 是 GenePad 的文本 JSON 交换格式，当前写出版本为 `1.9`。
-                        它适合人工查看、版本 diff、Web 导入导出和跨语言快速读取。
+                        <code>.gjson</code> 是 GenePad 的文本 JSON 交换格式，当前写出版本为 <code>1.9</code>。
+                        序列、注释、引物全部是人类可读的 JSON，适合人工查看、版本 diff、脚本生成与跨语言读取；
+                        代价是不保存撤销历史、测序图谱等工程状态（那是 <code>.gen</code> 的职责）。
+                        写出与解析由应用内的 Rust 组件完成，因此键名混合了 camelCase 与 snake_case——见下方命名规则。
                     </p>
                     <div class="doc-tags">
                         <span class="doc-tag">version = 1.9</span>
-                        <span class="doc-tag">JSON text</span>
+                        <span class="doc-tag">pretty JSON · LF 换行</span>
+                        <span class="doc-tag">空数组整体省略</span>
                         <span class="doc-tag">1-based inclusive</span>
                     </div>
                 </div>
 
+                <section class="doc-section" id="overview">
+                    <div class="section-heading">
+                        <p class="eyebrow">Overview</p>
+                        <h2>读取规则</h2>
+                    </div>
+                    <ul style="color:var(--lead);line-height:1.9;padding-left:1.3em">
+                        <li><strong>唯一必须的字段是 <code>sequence</code></strong>，且必须非空——否则整个文件被拒绝（错误「GJSON file contains no sequence」）。<code>version</code> 不是必须的，读取器兼容无版本号的旧文件。</li>
+                        <li>显示名解析链：<code>custom_name</code>（非空白）→ <code>id</code>（有意义时）→ <code>"Unnamed"</code>。占位 id（如 <code>"."</code>、空串、去掉非字母数字后为空）不作为名字。</li>
+                        <li><code>length</code> 缺失或为 0 时按 <code>sequence</code> 实际长度计算；<code>isCircular</code> 缺省 <code>false</code>；<code>isDoubleStranded</code> 缺省 <code>true</code>。</li>
+                        <li><strong>分段容错</strong>：<code>features</code> / <code>primers</code> / <code>baseColorRanges</code> / <code>alignmentEntries</code> / <code>references</code> 任何一段反序列化失败，只丢弃该段并记入 warnings——序列本体不受影响。例如某个 feature 的 <code>start</code> 写成了字符串，整个 features 数组被跳过，但序列照常加载。</li>
+                        <li>feature 的 <code>segments</code> 段数 ≤ 1 时直接忽略（单段 feature 只用顶层 start/end）。</li>
+                        <li>不持久化的内容：限制酶位点（加载后重新检测）、Dam/Dcm 甲基化状态、测序图谱（chromatogram）。</li>
+                        <li>坐标为 <strong>1-based inclusive</strong>；环形序列跨原点时 <code>start &gt; end</code>，与 <code>.gen</code> 相同。</li>
+                    </ul>
+                </section>
+
+                <section class="doc-section" id="python-read">
+                    <div class="section-heading">
+                        <p class="eyebrow">Getting Started</p>
+                        <h2>快速上手（Python）</h2>
+                    </div>
+                    <p>就是普通 JSON，标准库直接读。可下载真实示例文件试跑：<a href="samples/41-pPUR-P2A-BFPnls-sgRNA1-RNF2_4AtoG_MS2-MA.gjson"><strong>41-pPUR-P2A-BFPnls-sgRNA1-RNF2_4AtoG_MS2-MA.gjson</strong></a>（18 KB，7,952 bp 环形慢病毒 sgRNA 载体，25 个 feature、2 条引物）：</p>
+                    <pre class="code-block"><code>import json
+
+doc = json.load(open("plasmid.gjson", encoding="utf-8"))
+
+print(doc["custom_name"], doc["length"], "bp,",
+      "环状" if doc["isCircular"] else "线状")
+print(doc["sequence"][:30] + "…")
+
+for f in doc["features"]:
+    print(f["start"], f["end"], f["type"], f["name"], f["strand"])
+
+for p in doc["primers"]:
+    for s in p["bindingSites"]:
+        print(p["name"], s["boundStrand"],
+              round(s["meltingTemperature"], 1), "°C")</code></pre>
+                    <pre class="code-block"><code>41-pPUR-P2A-BFPnls-sgRNA1-RNF2_4AtoG_MS2-MA 7952 bp, 环状
+ttggggttgcgccttttccaaggcagccctgg…
+7687 7715 misc_feature 4AtoG forward
+...（共 25 个 feature）
+Primer 2 reverse 80.9 °C
+Primer 1 forward 73.0 °C</code></pre>
+                </section>
+
                 <section class="doc-section" id="example">
                     <div class="section-heading">
                         <p class="eyebrow">Example</p>
-                        <h2>最小有效结构</h2>
+                        <h2>最小有效结构与写出骨架</h2>
                     </div>
-                <pre class="code-block"><code>{
+                    <p>对读取器而言，一行也够——只要有非空的 <code>sequence</code>：</p>
+                    <pre class="code-block"><code>{ "sequence": "ATGGC..." }</code></pre>
+                    <p>而 GenePad 写出器产出的完整骨架如下（真实样本节选，长序列截断；键序即写出顺序）。注意缺失的可选元数据写成显式 <code>null</code>，空数组对应的键整个省略：</p>
+                    <pre class="code-block"><code>{
   "version": "1.9",
-  "id": "gjson-1752000000000",
+  "id": "gjson-1787405886329",
   "type_of_display": "file_name",
-  "custom_name": "",
-  "description": "示例序列",
-  "sequence": "ATGCGTAC",
-  "length": 8,
-  "isCircular": false,
+  "custom_name": "41-pPUR-P2A-BFPnls-sgRNA1-RNF2_4AtoG_MS2-MA",
+  "description": "ORIGDB|GenBank",
+  "sequence": "ttggggttgcgccttttccaaggcagccctggg…",
+  "length": 7952,
+  "isCircular": true,
   "isDoubleStranded": true,
-  "features": [
-    {
-      "id": "feature-0",
-      "name": "示例 CDS",
-      "type": "CDS",
-      "start": 1,
-      "end": 6,
-      "strand": "forward",
-      "color": "#38a16f",
-      "visible": true
-    }
-  ],
-  "baseColorRanges": [],
-  "primers": []
+  "accession": "-",
+  "organism": null,
+  "date": "2021.6.10",
+  "moleculeType": null,
+  "division": null,
+  "gbVersion": null,
+  "keywords": null,
+  "source": null,
+  "comments": null,
+  "references": null,
+  "features": [ … ],
+  "primers": [ … ]
 }</code></pre>
-                <p class="schema-note">读取时至少需要 <code>version</code> 和 <code>sequence</code>。其他字段缺失时会走默认值。</p>
-            </section>
+                    <p class="doc-note">该样本没有碱基着色和比对条目，所以没有 <code>baseColorRanges</code> / <code>alignmentEntries</code> 键——为空时写出器直接省略，而不是写 <code>[]</code>。</p>
+                </section>
 
-            <section class="section schema-band" id="top-level">
+            <section class="schema-band">
                 <div class="section-heading">
                     <p class="eyebrow">Top Level</p>
                     <h2>顶层字段</h2>
                 </div>
                 <div class="schema-body">
                     <table>
-                        <thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead>
+                        <thead><tr><th>字段</th><th>写出行为</th><th>读取行为 / 默认</th></tr></thead>
                         <tbody>
-                            <tr><td><code>version</code></td><td>string</td><td>必须存在，当前写出 <code>"1.9"</code></td></tr>
-                            <tr><td><code>id</code></td><td>string</td><td>写出时生成，当前读取不作为主 id 恢复</td></tr>
-                            <tr><td><code>type_of_display</code></td><td>file_name / custom</td><td>显示名策略；加载时通常由文件名覆盖</td></tr>
-                            <tr><td><code>custom_name</code></td><td>string</td><td>自定义显示名</td></tr>
-                            <tr><td><code>description</code></td><td>string</td><td>序列描述，缺失为空字符串</td></tr>
-                            <tr><td><code>sequence</code></td><td>string</td><td>必须存在，主 DNA 序列</td></tr>
-                            <tr><td><code>length</code></td><td>number</td><td>写出为 <code>sequence.length</code>；读取时以实际序列长度为准</td></tr>
-                            <tr><td><code>isCircular</code></td><td>boolean</td><td>缺失时为 false</td></tr>
-                            <tr><td><code>isDoubleStranded</code></td><td>boolean</td><td>缺失时 canonical 层默认为 true</td></tr>
-                            <tr><td><code>accession</code></td><td>string</td><td>GenBank accession</td></tr>
-                            <tr><td><code>organism</code></td><td>string</td><td>物种</td></tr>
-                            <tr><td><code>date</code></td><td>string</td><td>日期</td></tr>
-                            <tr><td><code>moleculeType</code></td><td>string</td><td>如 DNA, ss-DNA, ds-DNA</td></tr>
-                            <tr><td><code>division</code></td><td>string</td><td>GenBank division</td></tr>
-                            <tr><td><code>gbVersion</code></td><td>string</td><td>映射到内部 <code>version</code></td></tr>
-                            <tr><td><code>keywords</code></td><td>string</td><td>GenBank KEYWORDS</td></tr>
-                            <tr><td><code>source</code></td><td>string</td><td>GenBank SOURCE</td></tr>
-                            <tr><td><code>comments</code></td><td>string</td><td>GenBank COMMENT</td></tr>
-                            <tr><td><code>references</code></td><td>GenBankRef[]</td><td>结构化 REFERENCE 信息</td></tr>
-                            <tr><td><code>features</code></td><td>GjsonFeature[]</td><td>缺失按空数组处理</td></tr>
-                            <tr><td><code>baseColorRanges</code></td><td>BaseColorRange[]</td><td>缺失按空数组处理</td></tr>
-                            <tr><td><code>primers</code></td><td>GjsonPrimer[]</td><td>缺失按空数组处理</td></tr>
-                            <tr><td><code>alignmentEntries</code></td><td>GjsonAlignmentEntry[]</td><td>缺失按空数组处理</td></tr>
+                            <tr><td><code>version</code></td><td>恒 <code>"1.9"</code></td><td>非必需；不影响解析</td></tr>
+                            <tr><td><code>id</code></td><td><code>"gjson-{Unix毫秒}"</code>，每次导出新生成</td><td>缺省回退为显示名；custom_name 为空且 id 有意义时用作显示名</td></tr>
+                            <tr><td><code>type_of_display</code></td><td>恒 <code>"file_name"</code></td><td>读取时不使用（显示名策略由文件名接管）</td></tr>
+                            <tr><td><code>custom_name</code></td><td>= 项目名</td><td>显示名首选（需非空白）</td></tr>
+                            <tr><td><code>description</code></td><td>恒为字符串（可 <code>""</code>）</td><td>缺失 → <code>""</code></td></tr>
+                            <tr><td><code>sequence</code></td><td>主序列原样（大小写保留）</td><td><strong>必须非空</strong>，唯一硬性要求</td></tr>
+                            <tr><td><code>length</code></td><td>= <code>sequence.length</code></td><td>缺失或 0 → 按实际序列长度</td></tr>
+                            <tr><td><code>isCircular</code></td><td>布尔</td><td>缺失 → <code>false</code></td></tr>
+                            <tr><td><code>isDoubleStranded</code></td><td>布尔（内存未知时按 <code>true</code> 写出）</td><td>缺失 → <code>true</code></td></tr>
+                            <tr><td><code>accession</code></td><td>缺失写 <code>null</code></td><td>GenBank ACCESSION</td></tr>
+                            <tr><td><code>organism</code></td><td>缺失写 <code>null</code></td><td>GenBank ORGANISM</td></tr>
+                            <tr><td><code>date</code></td><td>缺失写 <code>null</code></td><td>GenBank LOCUS 日期</td></tr>
+                            <tr><td><code>moleculeType</code></td><td>缺失写 <code>null</code></td><td>LOCUS 分子类型</td></tr>
+                            <tr><td><code>division</code></td><td>缺失写 <code>null</code></td><td>GenBank division</td></tr>
+                            <tr><td><code>gbVersion</code></td><td>缺失写 <code>null</code></td><td>映射到内部 <code>version</code>（GenBank VERSION）</td></tr>
+                            <tr><td><code>keywords</code></td><td>缺失写 <code>null</code></td><td>GenBank KEYWORDS</td></tr>
+                            <tr><td><code>source</code></td><td>缺失写 <code>null</code></td><td>GenBank SOURCE</td></tr>
+                            <tr><td><code>comments</code></td><td>缺失写 <code>null</code></td><td>GenBank COMMENT</td></tr>
+                            <tr><td><code>references</code></td><td><code>GenBankRef[]</code>，缺失写 <code>null</code></td><td>坏数组 → 跳过并记 warning</td></tr>
+                            <tr><td><code>features</code></td><td><strong>恒写出</strong>（可为 <code>[]</code>）</td><td>缺失按空数组；坏数组 → 跳过并记 warning</td></tr>
+                            <tr><td><code>baseColorRanges</code></td><td>空则省略整键</td><td>缺失/坏数组 → 无着色</td></tr>
+                            <tr><td><code>primers</code></td><td>空则省略整键</td><td>缺失按无引物；坏数组 → 跳过并记 warning</td></tr>
+                            <tr><td><code>alignmentEntries</code></td><td>空则省略整键</td><td>缺失按无比对；坏数组 → 跳过并记 warning</td></tr>
                         </tbody>
                     </table>
                 </div>
-                <p class="schema-note"><strong>.gjson 不存储（与 .gen 的保真差异）：</strong>撤销/编辑历史（undo_entries / edit_history）、附件（attachments）、顶层 chromatogram、<code>alignmentEntries[].chromatogram</code>、Dam/Dcm 甲基化（<code>isDamMethylated</code> / <code>isDcmMethylated</code>）。需要完整保真快照请使用 <code>.gen</code>。</p>
             </section>
 
             <section class="schema-band" id="objects">
@@ -125,54 +173,61 @@
                 </div>
                 <div class="schema-list">
                     <details class="schema-item" open>
-                        <summary><strong>GjsonFeature</strong><span>注释对象</span></summary>
+                        <summary><strong>GjsonFeature</strong><span>注释对象（真实样本值）</span></summary>
                         <div class="schema-body">
                             <pre class="code-block"><code>{
-  "id": "feature-0",
-  "name": "lacZ",
-  "type": "CDS",
-  "start": 120,
-  "end": 980,
+  "id": "feature-24",
+  "name": "MS2 stem loop",
+  "type": "misc_RNA",
+  "start": 7716,
+  "end": 7734,
   "strand": "forward",
-  "color": "#4f7bd9",
-  "label": "lacZ",
-  "note": "example",
-  "frame": 1,
+  "color": "#99cc00",
+  "label": "MS2 stem loop",
+  "note": "/vntifkey=16",
+  "frame": null,
   "visible": true,
-  "segments": [
-    { "start": 120, "end": 240, "strand": "forward" }
-  ],
-  "qualifiers": {
-    "gene": ["lacZ"],
-    "translation": ["M..."]
-  }
+  "qualifiers": null
 }</code></pre>
-                            <p class="schema-note"><code>start</code>/<code>end</code> 为 1-based inclusive。<code>segments</code> 仅在段数 &gt; 1 时写出（单段 feature 只用顶层 start/end）；环形跨原点时 start &gt; end。<code>qualifiers</code> 类型为 <code>Record&lt;string, string[]&gt;</code>，保留 GenBank qualifier（如 <code>/translation</code>、<code>/codon_start</code>）。</p>
+                            <p class="schema-note">前 11 个字段恒写出：<code>color/label/note/frame</code> 缺失时写 <code>null</code>，<code>visible</code> 缺省按 <code>true</code> 写。<code>segments</code> 仅在段数 &gt; 1 时写出，且每段<strong>只有</strong> <code>start/end/strand?</code>（.gen 段上可选的 name/color 不导出）：<code>"segments": [{ "start": 5627, "end": 5643 }, …]</code>。<code>qualifiers</code> 为 <code>Record&lt;string, string[]&gt;</code> 或 <code>null</code>。坐标 1-based inclusive，环形跨原点时 start &gt; end。</p>
                         </div>
                     </details>
 
                     <details class="schema-item" open>
-                        <summary><strong>GjsonPrimer</strong><span>引物对象</span></summary>
+                        <summary><strong>GjsonPrimer / bindingSites</strong><span>引物与结合位点（注意内层 snake_case）</span></summary>
                         <div class="schema-body">
                             <pre class="code-block"><code>{
   "id": "primer-0",
-  "name": "Fwd",
-  "sequence": "ATGCGTAC",
-  "description": "forward primer",
-  "visible": true,
+  "name": "Primer 2",
+  "sequence": "acatgggtgatcctcatgtcatcttagtcattacctggg…",
+  "description": "",
   "bindingSites": [
     {
-      "start": 10,
-      "end": 17,
-      "boundStrand": "forward",
-      "annealedBases": "ATGCGTAC",
-      "meltingTemperature": 52.3,
-      "components": [{ "bases": "ATGCGTAC" }],
-      "alignment": []
+      "start": 7671,
+      "end": 7734,
+      "boundStrand": "reverse",
+      "annealedBases": "ggcaccgagtcggtgcaacgaacaccccaggtaatgactaagatg…",
+      "meltingTemperature": 80.86570880948138,
+      "components": [
+        {
+          "hybridized_range": "7670-7733",
+          "bases": "ggcaccgagtcggtgcaacgaacaccccaggtaatgactaagatg…"
+        }
+      ],
+      "alignment": [
+        {
+          "type": "annealed",
+          "primer_bases": "ggcaccgagtcggtgcaac…",
+          "template_bases": "ggcaccgagtcggtgcaac…",
+          "template_start": 7671,
+          "template_end": 7734
+        }
+      ]
     }
-  ]
+  ],
+  "visible": null
 }</code></pre>
-                            <p class="schema-note"><code>bindingSites[]</code> 字段：<code>start</code>/<code>end</code> 1-based inclusive，<code>boundStrand</code> 为 forward/reverse，<code>meltingTemperature</code> 为 Tm(℃)，<code>components</code> 是 <code>{hybridizedRange?, bases}</code> 数组，<code>alignment</code> 是 <code>AlignmentSegment[]</code>（写出时默认空数组，<code>visible</code> 缺省为 true）。</p>
+                            <p class="schema-note">引物层的键是 camelCase（<code>bindingSites/boundStrand/annealedBases/meltingTemperature</code>），但 <code>components</code> 与 <code>alignment</code> 内层是 <strong>snake_case</strong>（<code>hybridized_range/primer_bases/template_bases/template_start/template_end</code>）——与 .gen 数据库 JSON 列的 camelCase 不同，互转时要改名。<code>visible</code> 恒写 <code>null</code>（写出器固定行为，引主可见性在 .gjson 中不保真）。<code>alignment</code> 段的 <code>type</code> 取值 annealed / unannealed / del；<code>alignment</code> 整体可省略。</p>
                         </div>
                     </details>
 
@@ -181,29 +236,81 @@
                         <div class="schema-body">
                             <pre class="code-block"><code>{
   "id": "base-color-0",
+  "color": "#ffcc00",
   "start": 1,
   "end": 20,
-  "strand": "forward",
-  "color": "#ffcc00"
+  "strand": "forward"
 }</code></pre>
-                            <p class="schema-note"><code>strand</code> 只接受 <code>forward</code> 或 <code>reverse</code>；非 reverse 会被归一为 forward。</p>
+                            <p class="schema-note">五个字段恒写出。<code>strand</code> 只接受 <code>forward</code> / <code>reverse</code>；非 reverse 会被归一为 forward。顶层 <code>baseColorRanges</code> 为空时整个键省略。</p>
                         </div>
                     </details>
 
                     <details class="schema-item">
-                        <summary><strong>GjsonAlignmentEntry</strong><span>比对条目</span></summary>
+                        <summary><strong>AlignmentEntry</strong><span>比对条目（仅四字段）</span></summary>
                         <div class="schema-body">
                             <pre class="code-block"><code>{
-  "id": "read-1",
+  "id": "align-1",
   "name": "Sanger read 1",
-  "sequence": "ATGC...",
+  "sequence": "ATGC…",
   "visible": true
 }</code></pre>
-                            <p class="schema-note">.gjson 中比对条目仅保留 <code>id, name, sequence, visible</code> 四个字段；运行时的 chromatogram 不写入 .gjson。</p>
+                            <p class="schema-note">.gjson 中比对条目只保留 <code>id, name, sequence, visible</code>（visible 缺省 true）；运行时挂在上面的 chromatogram 不写入。顶层 <code>alignmentEntries</code> 为空时整个键省略。</p>
+                        </div>
+                    </details>
+
+                    <details class="schema-item">
+                        <summary><strong>GenBankRef</strong><span>文献条目</span></summary>
+                        <div class="schema-body">
+                            <pre class="code-block"><code>{
+  "number": 1,
+  "authors": "Smith,J.",
+  "title": "Cloning of pBR322",
+  "journal": "Nucleic Acids Res 2026",
+  "pubmed": "12345678",
+  "remark": "…"
+}</code></pre>
+                            <p class="schema-note">只有 <code>number</code> 必有；其余字段可省略（省略键，而非写 null）。</p>
                         </div>
                     </details>
                 </div>
             </section>
+
+                <section class="doc-section" id="writer">
+                    <div class="section-heading">
+                        <p class="eyebrow">Writer</p>
+                        <h2>写出行为与命名规则</h2>
+                    </div>
+                    <table class="doc-table">
+                        <thead><tr><th>规则</th><th>内容</th></tr></thead>
+                        <tbody>
+                            <tr><td>序列化</td><td>pretty JSON，2 空格缩进，<strong>LF 换行</strong>，UTF-8（非 ASCII 字符不转义）。键序固定（即上方骨架的顺序），便于逐行 diff</td></tr>
+                            <tr><td>恒定值</td><td><code>version = "1.9"</code>、<code>type_of_display = "file_name"</code>、<code>id = "gjson-{Unix毫秒}"</code>、<code>custom_name</code> = 项目名、<code>primers[].visible = null</code></td></tr>
+                            <tr><td>省略策略</td><td><code>baseColorRanges</code> / <code>primers</code> / <code>alignmentEntries</code> 为空时整个键省略；feature 的 <code>segments</code> 段数 ≤ 1 时省略；GenBankRef 的可选字段省略键。其余可选值（organism、gbVersion、feature.qualifiers…）写<strong>显式 null</strong></td></tr>
+                            <tr><td>命名规则</td><td>顶层 <code>type_of_display</code> / <code>custom_name</code> 为 snake_case；常规字段 camelCase（isCircular、moleculeType、gbVersion、bindingSites、boundStrand、annealedBases、meltingTemperature、baseColorRanges、alignmentEntries）；<strong>结合位点内层</strong> <code>components</code> / <code>alignment</code> 的字段为 snake_case（hybridized_range、primer_bases、template_bases、template_start、template_end）</td></tr>
+                            <tr><td>与 .gen 互转</td><td>除键名改名外，注意 <code>''</code> ↔ <code>null</code>（.gen 的 GenBank 元数据空串在 .gjson 里是 null）、引物 <code>visible</code> 丢失、segments 段的 name/color 丢失。现成脚本见 <a href="tech-gen-format.html#export">.gen 页的导出配方</a>（已用真实文件核对，逐字段一致）</td></tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section class="doc-section" id="fidelity">
+                    <div class="section-heading">
+                        <p class="eyebrow">Fidelity</p>
+                        <h2>与 .gen 的保真差异</h2>
+                    </div>
+                    <p class="doc-note"><strong>.gjson 不存储：</strong>撤销/重做栈（undo_entries）、编辑审计（edit_history）、附件（attachments）、主序列与比对条目的测序图谱（chromatogram）、Dam/Dcm 甲基化、引物可见性（写出时写 null）、feature 多段注释里的段级 name/color、显示名策略（typeOfDisplay）。需要完整工程快照请使用 <code>.gen</code>；两者坐标体系（1-based inclusive、跨原点 start &gt; end）完全一致，互转不涉及坐标换算。</p>
+                </section>
+
+                <section class="doc-section" id="see-also">
+                    <div class="section-heading">
+                        <p class="eyebrow">See Also</p>
+                        <h2>延伸</h2>
+                    </div>
+                    <ul style="color:var(--lead);line-height:1.9;padding-left:1.3em">
+                        <li><a href="tech-gen-format.html">.gen 文件定义</a>——完整项目格式（SQLite），含 .gen → .gjson 导出脚本。</li>
+                        <li><a href="tech-dna-conversion.html">.dna 转换</a>——SnapGene <code>.dna</code> 的读取与转换说明。</li>
+                        <li><a href="tech-rust-readers.html">Rust 读取示例</a>——rusqlite 依赖配置与 .gen / .gjson 读取代码。</li>
+                    </ul>
+                </section>
             </div>
          </div>
         </main>

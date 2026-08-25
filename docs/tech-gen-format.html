@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#f4f7fb" media="(prefers-color-scheme: light)" />
         <meta name="theme-color" content="#0b111d" media="(prefers-color-scheme: dark)" />
-        <meta name="description" content="GenePad .gen 文件格式定义：SQLite 表结构、字段语义、坐标规则和读取注意事项。" />
+        <meta name="description" content="GenePad .gen 项目文件格式完整定义：SQLite 表结构、project_meta 键参考、JSON 字段形状、坐标与环形序列规则、保存/兼容行为，以及 Python 与 sqlite3 CLI 的读取、导出、写回、创建示例。" />
         <title>.gen 文件定义 - GenePad 开发者文档</title>
         <link rel="canonical" href="https://genepad.cn/tech-gen-format.html" />
         <!-- 手绘 SVG 导出图，暂不启用 <link rel="icon" href="icon.png" type="image/png" /> -->
@@ -37,36 +37,82 @@
                 <div class="doc-head">
                     <h1>.gen 文件定义</h1>
                     <p class="lead">
-                        `.gen` 是 GenePad 的完整项目文件，文件本质是 SQLite 3 数据库。
-                        它比 `.gjson` 更完整，适合保存工程状态、测序图谱、比对条目、撤销历史和附件。
+                        <code>.gen</code> 是 GenePad 的完整项目文件，文件本质是标准 <strong>SQLite 3</strong> 数据库
+                        （文件头 16 字节为 <code>SQLite&nbsp;format&nbsp;3\0</code>，MIME 登记为
+                        <code>application/vnd.genepad.database</code>）。它比 <code>.gjson</code> 更完整，
+                        除序列与注释外还保存引物结合位点、测序图谱（chromatogram）、比对条目、撤销/重做栈、
+                        编辑历史和附件。任何语言的标准 SQLite 驱动都能直接读写——不需要安装任何专用解析库。
                     </p>
                     <div class="doc-tags">
                         <span class="doc-tag">SQLite format 3</span>
+                        <span class="doc-tag">12 张表</span>
                         <span class="doc-tag">1-based inclusive</span>
                         <span class="doc-tag">BLOCK_SIZE = 10000</span>
+                        <span class="doc-tag">WAL + checkpoint</span>
                         <span class="doc-tag">SCHEMA_VERSION = 5</span>
                     </div>
                 </div>
 
-                <section class="doc-section">
+                <section class="doc-section" id="overview">
                     <div class="section-heading">
                         <p class="eyebrow">Overview</p>
                         <h2>读取原则</h2>
                     </div>
                     <ul style="color:var(--lead);line-height:1.9;padding-left:1.3em">
-                        <li>无需自定义二进制 parser——用任意 SQLite 驱动打开 `.gen`，再按下方表结构查询。</li>
-                        <li>`sequence_blocks` 需按 `block_index` 升序拼接，不能依赖数据库默认返回顺序。</li>
-                        <li>`segments`、`qualifiers`、`components`、`alignment`、`references` 等字段是 JSON 字符串，需延迟解析。</li>
-                        <li>`.gen` 不持久化 `restrictionSites`，通常由读取程序根据主序列重新检测。</li>
+                        <li>无需自定义二进制 parser——用任意 SQLite 驱动打开 <code>.gen</code>，再按下方表结构查询即可。</li>
+                        <li><code>sequence_blocks</code> 必须按 <code>block_index</code> 升序拼接，不能依赖数据库默认返回顺序。</li>
+                        <li><code>segments</code>、<code>qualifiers</code>、<code>components</code>、<code>alignment</code>、<code>references</code> 等字段是 JSON 字符串（chromatogram 的 trace 是「UTF-8 JSON 装进 BLOB」），需二次解析。</li>
+                        <li><code>.gen</code> 不持久化 <code>restrictionSites</code>（酶切位点），由读取程序根据主序列重新检测：GenePad 在序列长度 ≤ 50,000 bp 时同步检测，超长序列走后台流式检测。</li>
+                        <li>保存出的 <code>.gen</code> 永远是自包含单文件——GenePad 落盘前执行 <code>PRAGMA wal_checkpoint(TRUNCATE)</code>，用户目录里不会出现 <code>-wal</code>/<code>-shm</code> 伴生文件。</li>
+                        <li>布尔值全部以字符串 <code>'true'</code>/<code>'false'</code> 保存；键可能缺失，读取端要给默认值（见 project_meta 键参考）。</li>
                     </ul>
+                </section>
+
+                <section class="doc-section" id="python-read">
+                    <div class="section-heading">
+                        <p class="eyebrow">Getting Started</p>
+                        <h2>快速上手：读一个 .gen（Python）</h2>
+                    </div>
+                    <p>Python 内置的 <code>sqlite3</code> 模块就够，零第三方依赖。下面 20 行代码读出元信息、完整序列和全部 feature：</p>
+                    <pre class="code-block"><code>import json
+import sqlite3
+
+con = sqlite3.connect("plasmid.gen")
+con.row_factory = sqlite3.Row
+
+# —— 元信息：key-value 表，布尔以字符串保存
+meta = {row["key"]: row["value"] for row in con.execute(
+    "SELECT key, value FROM project_meta")}
+is_circular = meta.get("isCircular") == "true"
+
+# —— 主序列：必须按 block_index 升序拼接
+sequence = "".join(row["bases"] for row in con.execute(
+    "SELECT bases FROM sequence_blocks ORDER BY block_index"))
+print(meta.get("name", "Untitled"), len(sequence), "bp,",
+      "环状" if is_circular else "线状")
+
+# —— features：segments / qualifiers 列是 JSON 字符串
+for f in con.execute("SELECT * FROM features ORDER BY start_pos"):
+    length = f["end_pos"] - f["start_pos"] + 1
+    if f["start_pos"] &gt; f["end_pos"]:                  # 跨原点的环形 feature
+        length = len(sequence) - f["start_pos"] + f["end_pos"] + 1
+    qualifiers = json.loads(f["qualifiers"]) if f["qualifiers"] else {}
+    print(f["name"], f["type"], f["strand"], length, "bp", qualifiers)</code></pre>
+                    <p class="doc-note">提示：坐标是 <strong>1-based inclusive</strong>，<code>start=1, end=10</code> 表示第 1~10 号碱基共 10 个；环形序列跨原点时 <code>start &gt; end</code>（详见<a href="#conventions">坐标与环形序列</a>）。</p>
+                    <p>可以下载真实示例文件试跑：<a href="samples/41-pPUR-P2A-BFPnls-sgRNA1-RNF2_4AtoG_MS2-MA.gen"><strong>41-pPUR-P2A-BFPnls-sgRNA1-RNF2_4AtoG_MS2-MA.gen</strong></a>（112 KB）——7,952 bp 的环形慢病毒 sgRNA 载体，含 25 个 feature、2 条引物及结合位点。它也是一个很好的教学样本：碱基全为小写（验证「不强制大写」）、<code>isCircular</code>/<code>isDamMethylated</code> 等布尔以字符串保存、feature <code>Misc_Feature_1</code> 带 4 段 <code>segments</code>。对它运行上面代码的输出：</p>
+                    <pre class="code-block"><code>41-pPUR-P2A-BFPnls-sgRNA1-RNF2_4AtoG_MS2-MA 7952 bp, 环状
+hPGK promoter misc_feature forward 507 bp {}
+Puromycin misc_feature forward 594 bp {}
+P2A misc_feature forward 57 bp {}
+TagBFP2 misc_feature forward 711 bp {}
+...（共 25 个 feature）</code></pre>
                 </section>
 
             <section class="schema-band">
                 <div class="section-heading">
                     <p class="eyebrow">Schema</p>
-                    <h2>核心表结构</h2>
+                    <h2>核心表结构（全部 12 张）</h2>
                 </div>
-
 
                 <div class="schema-list">
                     <details class="schema-item" open>
@@ -79,7 +125,42 @@
                                     <tr><td><code>value</code></td><td>TEXT</td><td>元信息值，布尔值也以字符串保存</td></tr>
                                 </tbody>
                             </table>
-                            <p class="schema-note">布尔值以字符串 <code>'true'</code>/<code>'false'</code> 保存；未设置时键可能缺失（读为 undefined）。已知 key：<code>name</code>, <code>description</code>, <code>isCircular</code>, <code>isDoubleStranded</code>, <code>isDamMethylated</code>, <code>isDcmMethylated</code>, <code>accession</code>, <code>organism</code>, <code>date</code>, <code>moleculeType</code>, <code>division</code>, <code>version</code>, <code>keywords</code>, <code>source</code>, <code>comments</code>, <code>references</code>(JSON 数组字符串), <code>typeOfDisplay</code>, <code>customName</code>, <code>fileName</code>, <code>isDirty</code>。拓扑由 <code>isCircular</code> 表示，无独立 topology 列。</p>
+                            <p class="schema-note">保存时按 key <strong>upsert</strong>（<code>INSERT ... ON CONFLICT(key) DO UPDATE</code>），从不整表清空——因此旧文件里多余的自定义 key 会原样保留。下表是 GenePad 会写入的全部键：</p>
+                            <table>
+                                <thead><tr><th>key</th><th>写入值</th><th>读取行为 / 默认</th><th>说明</th></tr></thead>
+                                <tbody>
+                                    <tr><td><code>name</code></td><td>string</td><td>缺失 → <code>'Untitled'</code></td><td>项目名（GenBank LOCUS 名）</td></tr>
+                                    <tr><td><code>description</code></td><td>string</td><td>缺失 → <code>''</code></td><td>描述（GenBank DEFINITION）</td></tr>
+                                    <tr><td><code>isCircular</code></td><td><code>'true'</code>/<code>'false'</code></td><td>缺失 → <code>false</code></td><td>拓扑：环状 / 线状，无独立 topology 列</td></tr>
+                                    <tr><td><code>isDoubleStranded</code></td><td><code>'true'</code>/<code>'false'</code></td><td>缺失或任何非 <code>'false'</code> 值 → <code>true</code></td><td>双链 / 单链</td></tr>
+                                    <tr><td><code>isDamMethylated</code></td><td><code>'true'</code>/<code>'false'</code>/<code>''</code></td><td>键缺失 → 未知（undefined）；<code>''</code> → <code>false</code></td><td>Dam 甲基化状态</td></tr>
+                                    <tr><td><code>isDcmMethylated</code></td><td><code>'true'</code>/<code>'false'</code>/<code>''</code></td><td>同上</td><td>Dcm 甲基化状态</td></tr>
+                                    <tr><td><code>accession</code></td><td>string</td><td>缺失 → undefined</td><td>GenBank ACCESSION</td></tr>
+                                    <tr><td><code>organism</code></td><td>string</td><td>缺失 → undefined</td><td>GenBank ORGANISM</td></tr>
+                                    <tr><td><code>date</code></td><td>string</td><td>缺失 → undefined</td><td>GenBank LOCUS 行日期</td></tr>
+                                    <tr><td><code>moleculeType</code></td><td>string</td><td>缺失 → undefined</td><td>LOCUS 分子类型（DNA 等）</td></tr>
+                                    <tr><td><code>division</code></td><td>string</td><td>缺失 → undefined</td><td>GenBank division 代码</td></tr>
+                                    <tr><td><code>version</code></td><td>string</td><td>缺失 → undefined</td><td>GenBank VERSION 行</td></tr>
+                                    <tr><td><code>keywords</code></td><td>string</td><td>缺失 → undefined</td><td>GenBank KEYWORDS</td></tr>
+                                    <tr><td><code>source</code></td><td>string</td><td>缺失 → undefined</td><td>GenBank SOURCE</td></tr>
+                                    <tr><td><code>comments</code></td><td>string</td><td>缺失 → undefined</td><td>GenBank COMMENT</td></tr>
+                                    <tr><td><code>references</code></td><td>JSON 字符串 <code>GenBankRef[]</code></td><td>非法 JSON → undefined</td><td>文献条目，形状见下方</td></tr>
+                                    <tr><td><code>typeOfDisplay</code></td><td><code>'file_name'</code>/<code>'custom'</code></td><td>缺失 → <code>'file_name'</code></td><td>标签页标题来源</td></tr>
+                                    <tr><td><code>customName</code></td><td>string</td><td>缺失 → <code>''</code></td><td>自定义显示名（typeOfDisplay 为 custom 时生效）</td></tr>
+                                    <tr><td><code>fileName</code></td><td>string</td><td>缺失 → undefined</td><td>原始导入文件名；桌面端打开时会被实际文件名覆盖</td></tr>
+                                    <tr><td><code>isDirty</code></td><td><code>'0'</code></td><td>加载时不读取</td><td>保存流程的簿记字段，每次落盘后写 <code>'0'</code></td></tr>
+                                </tbody>
+                            </table>
+                            <p class="schema-note">GenBankRef 的 JSON 形状（<code>references</code> 键的值）：</p>
+                            <pre class="code-block"><code>// JSON: GenBankRef[]
+{
+  "number": 1,                  // 必有
+  "authors":  "Smith J., Lee K.",
+  "title":    "Cloning of pBR322",
+  "journal":  "Nucleic Acids Res 2026",
+  "pubmed":   "12345678",
+  "remark":   "..."             // 其余字段均可省略
+}</code></pre>
                         </div>
                     </details>
 
@@ -90,11 +171,11 @@
                                 <thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead>
                                 <tbody>
                                     <tr><td><code>block_index</code></td><td>INTEGER PRIMARY KEY</td><td>0-based block index</td></tr>
-                                    <tr><td><code>bases</code></td><td>TEXT NOT NULL</td><td>该块碱基字符串，通常最多 10,000 bases</td></tr>
+                                    <tr><td><code>bases</code></td><td>TEXT NOT NULL</td><td>该块碱基字符串，除最后一块外恰为 10,000 bases</td></tr>
                                 </tbody>
                             </table>
                             <pre class="code-block"><code>SELECT bases FROM sequence_blocks ORDER BY block_index;</code></pre>
-                            <p class="schema-note">分块规则：每块 <code>BLOCK_SIZE = 10000</code> bp。<code>block_index = floor(position / 10000)</code>，即块 0 存 0–9999，块 1 存 10000–19999。<code>block_index</code> 本身是 0-based（与下方 feature 的 1-based 坐标不同）。无 start_pos 列，起始位置 = block_index × 10000。写入时全删全写（非增量更新）。</p>
+                            <p class="schema-note">分块规则：每块 <code>BLOCK_SIZE = 10000</code> bp，<code>block_index = floor(offset / 10000)</code>（offset 为 0-based 偏移）——块 0 存偏移 0–9999（即 1-based 位置 1–10000），块 1 存 10000–19999，最后一块可以不足 10,000。没有 start_pos 列：块起点 = <code>block_index × 10000</code>。序列总长用 <code>SELECT COALESCE(SUM(LENGTH(bases)), 0) FROM sequence_blocks</code> 计算。写入时全删全写（非增量更新），<code>block_index</code> 必须从 0 起连续无空洞——GenePad 按范围取块拼接，中间缺块会静默错位。碱基大小写保留原样（不强制大写），字符集为 IUPAC。</p>
                         </div>
                     </details>
 
@@ -104,39 +185,78 @@
                             <table>
                                 <thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead>
                                 <tbody>
-                                    <tr><td><code>id</code></td><td>TEXT PRIMARY KEY</td><td>feature id</td></tr>
+                                    <tr><td><code>id</code></td><td>TEXT PRIMARY KEY</td><td>feature id，GenePad 生成格式 <code>{prefix}-{timestamp}-{counter}</code></td></tr>
                                     <tr><td><code>name</code></td><td>TEXT NOT NULL</td><td>feature 名称</td></tr>
-                                    <tr><td><code>type</code></td><td>TEXT NOT NULL</td><td>如 gene, CDS, promoter</td></tr>
+                                    <tr><td><code>type</code></td><td>TEXT NOT NULL</td><td>如 gene, CDS, promoter, rep_origin, misc_feature</td></tr>
                                     <tr><td><code>start_pos</code></td><td>INTEGER NOT NULL</td><td>1-based inclusive start</td></tr>
                                     <tr><td><code>end_pos</code></td><td>INTEGER NOT NULL</td><td>1-based inclusive end</td></tr>
-                                    <tr><td><code>strand</code></td><td>TEXT NOT NULL</td><td>forward, reverse, none</td></tr>
-                                    <tr><td><code>color</code></td><td>TEXT</td><td>颜色</td></tr>
-                                    <tr><td><code>label</code></td><td>TEXT</td><td>显示标签</td></tr>
+                                    <tr><td><code>strand</code></td><td>TEXT NOT NULL</td><td><code>forward</code> / <code>reverse</code> / <code>none</code></td></tr>
+                                    <tr><td><code>color</code></td><td>TEXT</td><td>显示颜色，CSS 颜色字符串（如 <code>#e0502a</code>），NULL 走默认色</td></tr>
+                                    <tr><td><code>label</code></td><td>TEXT</td><td>显示标签（缺省用 name）</td></tr>
                                     <tr><td><code>note</code></td><td>TEXT</td><td>备注</td></tr>
-                                    <tr><td><code>frame</code></td><td>INTEGER</td><td>阅读框</td></tr>
-                                    <tr><td><code>visible</code></td><td>INTEGER DEFAULT 1</td><td>1 可见，0 隐藏</td></tr>
-                                    <tr><td><code>segments</code></td><td>TEXT</td><td>JSON：FeatureSegment[]，多片段 feature 使用</td></tr>
-                                    <tr><td><code>qualifiers</code></td><td>TEXT</td><td>JSON：Record&lt;string, string[]&gt;</td></tr>
+                                    <tr><td><code>frame</code></td><td>INTEGER</td><td>阅读框（0/1/2），可 NULL</td></tr>
+                                    <tr><td><code>visible</code></td><td>INTEGER DEFAULT 1</td><td>1 可见，0 隐藏；缺省按 1 处理</td></tr>
+                                    <tr><td><code>segments</code></td><td>TEXT</td><td>JSON：<code>FeatureSegment[]</code>，仅多片段（&gt;1 段）feature 写入，否则 NULL</td></tr>
+                                    <tr><td><code>qualifiers</code></td><td>TEXT</td><td>JSON：<code>Record&lt;string, string[]&gt;</code>，GenBank 限定词（/translation、/codon_start、/gene…）</td></tr>
                                 </tbody>
                             </table>
+                            <p class="schema-note">索引：<code>idx_features_range ON features(start_pos, end_pos)</code>；GenePad 读取时按 <code>ORDER BY start_pos</code> 返回，范围查询用闭区间重叠判定 <code>start_pos &lt;= rangeEnd AND end_pos &gt;= rangeStart</code>。</p>
+                            <p class="schema-note">两个 JSON 列的形状：</p>
+                            <pre class="code-block"><code>// segments 列 → JSON: FeatureSegment[]（段数 &gt; 1 时才写入）
+[
+  { "start": 1,    "end": 120,  "strand": "forward" },
+  { "start": 500,  "end": 874,  "strand": "forward",
+    "name": " linker ",  "color": "#3aaea0" }   // name / color / strand 可选
+]
+
+// qualifiers 列 → JSON: Record&lt;string, string[]&gt;
+{
+  "gene":        ["AmpR"],
+  "codon_start": ["1"],
+  "translation": ["MSIQ..."]
+}</code></pre>
                         </div>
                     </details>
 
                     <details class="schema-item">
-                        <summary><strong>primers / primer_binding_sites</strong><span>引物与结合位点</span></summary>
+                        <summary><strong>primers / primer_binding_sites</strong><span>引物与结合位点（按 primer_id 关联）</span></summary>
                         <div class="schema-body">
                             <table>
-                                <thead><tr><th>表</th><th>关键字段</th><th>说明</th></tr></thead>
+                                <thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead>
                                 <tbody>
-                                    <tr><td><code>primers</code></td><td><code>id, name, sequence, description, visible</code></td><td>引物基本信息</td></tr>
-                                    <tr><td><code>primer_binding_sites</code></td><td><code>primer_id, start_pos, end_pos, bound_strand, components, alignment</code></td><td>结合位点；components / alignment 为 JSON</td></tr>
+                                    <tr><td><code>primers.id</code></td><td>TEXT PRIMARY KEY</td><td>引物 id</td></tr>
+                                    <tr><td><code>primers.name</code></td><td>TEXT NOT NULL</td><td>引物名称</td></tr>
+                                    <tr><td><code>primers.sequence</code></td><td>TEXT NOT NULL</td><td>引物序列（5'→3'）</td></tr>
+                                    <tr><td><code>primers.description</code></td><td>TEXT</td><td>描述</td></tr>
+                                    <tr><td><code>primers.visible</code></td><td>INTEGER DEFAULT 1</td><td>1 显示，0 隐藏</td></tr>
+                                    <tr><td><code>primer_binding_sites.id</code></td><td>TEXT PRIMARY KEY</td><td>固定格式 <code>{primer_id}-site-{start}</code></td></tr>
+                                    <tr><td><code>primer_binding_sites.primer_id</code></td><td>TEXT NOT NULL</td><td>所属引物</td></tr>
+                                    <tr><td><code>primer_binding_sites.start_pos / end_pos</code></td><td>INTEGER NOT NULL</td><td>1-based inclusive 结合范围</td></tr>
+                                    <tr><td><code>primer_binding_sites.bound_strand</code></td><td>TEXT NOT NULL</td><td><code>forward</code> / <code>reverse</code></td></tr>
+                                    <tr><td><code>primer_binding_sites.annealed_bases</code></td><td>TEXT</td><td>退火碱基，读取时 NULL → <code>''</code></td></tr>
+                                    <tr><td><code>primer_binding_sites.melting_temperature</code></td><td>REAL</td><td>解链温度，读取时 NULL → 0</td></tr>
+                                    <tr><td><code>primer_binding_sites.components</code></td><td>TEXT</td><td>JSON：<code>PrimerComponent[]</code>，恒写入（可为 <code>[]</code>）</td></tr>
+                                    <tr><td><code>primer_binding_sites.alignment</code></td><td>TEXT</td><td>JSON：<code>AlignmentSegment[]</code>，可 NULL</td></tr>
                                 </tbody>
                             </table>
+                            <p class="schema-note">索引：<code>idx_binding_range ON primer_binding_sites(start_pos, end_pos)</code>、<code>idx_binding_primer ON primer_binding_sites(primer_id)</code>。两个 JSON 列的形状：</p>
+                            <pre class="code-block"><code>// components 列 → JSON: PrimerComponent[]
+[ { "hybridizedRange": "25-48", "bases": "ATGGC..." } ]  // hybridizedRange 可选
+
+// alignment 列 → JSON: AlignmentSegment[]
+[
+  { "type": "annealed",   "primerBases": "ATG",
+    "templateBases": "TAC", "templateStart": 101, "templateEnd": 103 },
+  { "type": "unannealed", "primerBases": "AAA",
+    "templateBases": "CGT", "templateStart": 104, "templateEnd": 106 },
+  { "type": "del",        "primerBases": "TT",
+    "templateBases": "",   "templateStart": 107, "templateEnd": 107 }
+]</code></pre>
                         </div>
                     </details>
 
                     <details class="schema-item">
-                        <summary><strong>base_color_ranges</strong><span>碱基颜色范围</span></summary>
+                        <summary><strong>base_color_ranges</strong><span>碱基颜色范围（手工着色）</span></summary>
                         <div class="schema-body">
                             <table>
                                 <thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead>
@@ -144,81 +264,329 @@
                                     <tr><td><code>id</code></td><td>TEXT PRIMARY KEY</td><td>颜色段 id</td></tr>
                                     <tr><td><code>start_pos</code></td><td>INTEGER NOT NULL</td><td>1-based inclusive start</td></tr>
                                     <tr><td><code>end_pos</code></td><td>INTEGER NOT NULL</td><td>1-based inclusive end</td></tr>
-                                    <tr><td><code>strand</code></td><td>TEXT NOT NULL</td><td>forward 或 reverse</td></tr>
+                                    <tr><td><code>strand</code></td><td>TEXT NOT NULL</td><td>仅 <code>forward</code> / <code>reverse</code>（读取时其他值一律归为 forward）</td></tr>
                                     <tr><td><code>color</code></td><td>TEXT NOT NULL</td><td>颜色值</td></tr>
                                 </tbody>
                             </table>
+                            <p class="schema-note">索引：<code>idx_base_color_ranges ON base_color_ranges(start_pos, end_pos, strand)</code>。整表替换式写入（DELETE 后逐行 INSERT）。</p>
                         </div>
                     </details>
 
                     <details class="schema-item">
-                        <summary><strong>alignment_entries / chromatogram_data</strong><span>比对与测序图谱</span></summary>
+                        <summary><strong>alignment_entries</strong><span>比对条目（Sanger 测序比对到主序列）</span></summary>
                         <div class="schema-body">
                             <table>
-                                <thead><tr><th>表</th><th>关键字段</th><th>说明</th></tr></thead>
+                                <thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead>
                                 <tbody>
-                                    <tr><td><code>alignment_entries</code></td><td><code>id, name, sequence, visible, chromatogram_json</code></td><td>比对条目；chromatogram_json 为 JSON</td></tr>
-                                    <tr><td><code>chromatogram_data</code></td><td><code>trace_a, trace_c, trace_g, trace_t, peak_locations</code></td><td>主序列 chromatogram；BLOB 中保存 JSON 数组 bytes</td></tr>
+                                    <tr><td><code>id</code></td><td>TEXT PRIMARY KEY</td><td>比对条目 id</td></tr>
+                                    <tr><td><code>name</code></td><td>TEXT NOT NULL</td><td>条目名（通常为样品/引物名）</td></tr>
+                                    <tr><td><code>sequence</code></td><td>TEXT NOT NULL</td><td>被比对的读段序列</td></tr>
+                                    <tr><td><code>visible</code></td><td>INTEGER DEFAULT 1</td><td>1 显示，0 隐藏</td></tr>
+                                    <tr><td><code>features_json</code></td><td>TEXT</td><td>预留列，当前版本不写入</td></tr>
+                                    <tr><td><code>chromatogram_json</code></td><td>TEXT</td><td>JSON：<code>ChromatogramData</code>（见下），可 NULL</td></tr>
                                 </tbody>
                             </table>
+                            <p class="schema-note">chromatogram_json 的形状（与 <code>chromatogram_data</code> 表同构，但这里存 JSON 字符串、非 BLOB）：</p>
+                            <pre class="code-block"><code>// chromatogram_json → JSON: ChromatogramData
+{
+  "traceA":        [12, 45, 178, ...],   // 四通道荧光强度，number[]
+  "traceC":        [8,  31, 96,  ...],
+  "traceG":        [0,  12, 240, ...],
+  "traceT":        [3,  60, 15,  ...],
+  "peakLocations": [14, 25, 36, ...]     // 峰位索引，number[]
+}</code></pre>
                         </div>
                     </details>
 
                     <details class="schema-item">
-                        <summary><strong>attachments / undo_entries / edit_history</strong><span>工程状态</span></summary>
+                        <summary><strong>chromatogram_data</strong><span>主序列测序图谱（id 固定 'primary'）</span></summary>
                         <div class="schema-body">
                             <table>
-                                <thead><tr><th>表</th><th>说明</th></tr></thead>
+                                <thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead>
                                 <tbody>
-                                    <tr><td><code>attachments</code></td><td>附件：id, name, mime_type, data</td></tr>
-                                    <tr><td><code>undo_entries</code></td><td>撤销/重做栈（<code>stack_type</code> 为 <code>undo</code>/<code>redo</code>）；undo 栈上限 <strong>200</strong> 条，超出删最旧；before_diff / after_diff 为 JSON</td></tr>
-                                    <tr><td><code>edit_history</code></td><td>编辑审计日志，before_snapshot / after_snapshot 为 JSON</td></tr>
+                                    <tr><td><code>id</code></td><td>TEXT PRIMARY KEY</td><td>主序列图谱固定为 <code>'primary'</code>，整表仅此一行</td></tr>
+                                    <tr><td><code>trace_a</code> / <code>trace_c</code> / <code>trace_g</code> / <code>trace_t</code></td><td>BLOB</td><td>A/C/G/T 四通道荧光曲线</td></tr>
+                                    <tr><td><code>peak_locations</code></td><td>BLOB</td><td>碱基峰位索引数组</td></tr>
                                 </tbody>
                             </table>
+                            <p class="schema-note"><strong>BLOB 不是二进制浮点</strong>——内容是 <code>JSON.stringify(number[])</code> 的 UTF-8 字节（TextEncoder 编码）。解码：<code>JSON.parse(bytes.decode('utf-8'))</code> / <code>new TextDecoder().decode(blob)</code>。写入流程为 DELETE WHERE id='primary' 再 INSERT，无该行表示主序列无图谱。</p>
+                        </div>
+                    </details>
+
+                    <details class="schema-item">
+                        <summary><strong>undo_entries</strong><span>撤销/重做栈（持久化，跨会话可用）</span></summary>
+                        <div class="schema-body">
+                            <table>
+                                <thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead>
+                                <tbody>
+                                    <tr><td><code>sequence_number</code></td><td>INTEGER PRIMARY KEY AUTOINCREMENT</td><td>单调递增序号，栈顶 = 最大值</td></tr>
+                                    <tr><td><code>stack_type</code></td><td>TEXT NOT NULL DEFAULT 'undo'</td><td><code>'undo'</code> 或 <code>'redo'</code>（同一张表存两条栈）</td></tr>
+                                    <tr><td><code>operation_type</code></td><td>TEXT NOT NULL</td><td>操作类型，取值见下</td></tr>
+                                    <tr><td><code>target_id</code></td><td>TEXT</td><td>目标实体 id，序列级操作为 NULL</td></tr>
+                                    <tr><td><code>before_diff</code> / <code>after_diff</code></td><td>TEXT</td><td>JSON：操作前/后差异负载，形状见下</td></tr>
+                                </tbody>
+                            </table>
+                            <p class="schema-note">栈机制：undo 栈上限 <strong>200</strong> 条，超出删最旧（按 sequence_number）；每次压入新操作先清空整个 redo 栈；撤销 = 把最新 undo 行的 stack_type 翻转为 'redo'；重做 = 读取后直接删除该行。operation_type 取值：<code>addFeature, removeFeature, updateFeature, applyBaseColor, clearBaseColor, addPrimer, removePrimer, updatePrimer, insertBases, deleteBases, replaceBases, replaceSequence, addAlignmentEntry, removeAlignmentEntry</code>。diff payload 形状：</p>
+                            <pre class="code-block"><code>// 实体操作：before/after 为完整对象或 null
+add:    { before: null,            after: Feature | Primer }
+update: { before: { id, changes }, after: { id, changes } }   // changes = Partial&lt;Feature|Primer&gt;
+applyBaseColor / clearBaseColor:
+        { baseColorRanges: BaseColorRange[] }
+
+// 序列编辑：附带编辑时刻的注释快照 + 编辑参数
+InsertBasesDiff  = Snapshot &amp; { start: number, bases: string }
+DeleteBasesDiff  = Snapshot &amp; { start: number, bases?: string, length?: number }
+ReplaceBasesDiff = Snapshot &amp; { start: number, oldBases?: string, newBases?: string }
+// Snapshot = { features, baseColorRanges, primers, restrictionSites }</code></pre>
+                        </div>
+                    </details>
+
+                    <details class="schema-item">
+                        <summary><strong>edit_history</strong><span>编辑审计日志（只增不删）</span></summary>
+                        <div class="schema-body">
+                            <table>
+                                <thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead>
+                                <tbody>
+                                    <tr><td><code>id</code></td><td>INTEGER PRIMARY KEY AUTOINCREMENT</td><td>行号</td></tr>
+                                    <tr><td><code>timestamp</code></td><td>TEXT NOT NULL</td><td><code>new Date().toISOString()</code> 格式（如 <code>2026-08-22T03:14:07.000Z</code>）</td></tr>
+                                    <tr><td><code>operation_type</code></td><td>TEXT NOT NULL</td><td>与 undo_entries 同一套操作类型</td></tr>
+                                    <tr><td><code>target_id</code></td><td>TEXT</td><td>目标实体 id，可 NULL</td></tr>
+                                    <tr><td><code>description</code></td><td>TEXT</td><td>人类可读描述，如 <code>Added feature 'AmpR' at 12..874</code></td></tr>
+                                    <tr><td><code>before_snapshot</code> / <code>after_snapshot</code></td><td>TEXT</td><td>JSON：受影响实体（增删为完整对象）或小编辑对象（如 <code>{ position, bases }</code>、<code>{ start, oldBases }</code>）</td></tr>
+                                </tbody>
+                            </table>
+                            <p class="schema-note">只追加、无上限、保存时不清空——可以用它做外部审计或改动统计。</p>
+                        </div>
+                    </details>
+
+                    <details class="schema-item">
+                        <summary><strong>attachments / schema_version</strong><span>预留表</span></summary>
+                        <div class="schema-body">
+                            <table>
+                                <thead><tr><th>表</th><th>结构</th><th>状态</th></tr></thead>
+                                <tbody>
+                                    <tr><td><code>attachments</code></td><td><code>id TEXT PK, name TEXT NOT NULL, mime_type TEXT NOT NULL, data BLOB NOT NULL</code></td><td>预留：schema 每次都会建表，但当前版本无写入入口（id 约定为 <code>att-{timestamp}</code>，data 存原始字节）</td></tr>
+                                    <tr><td><code>schema_version</code></td><td><code>key TEXT PK, value TEXT</code></td><td>预留：当前版本从不写入行。常量 <code>SCHEMA_VERSION = 5</code> 仅存在于代码中</td></tr>
+                                </tbody>
+                            </table>
+                            <p class="schema-note">兼容机制因此<strong>不是</strong>版本号门控：GenePad 打开文件时执行幂等 DDL（全部 <code>CREATE TABLE IF NOT EXISTS</code>，外加两条吞掉「列已存在」错误的 <code>ALTER TABLE features ADD COLUMN segments/qualifiers</code>），旧文件缺列/缺表会在打开时自动补齐。外部读取程序应对缺列容错（老文件 features 没有 segments/qualifiers 列）。</p>
                         </div>
                     </details>
                 </div>
+
+                <div class="schema-body" style="max-width:none">
+                    <p class="schema-note"><strong>连接参数：</strong>GenePad 打开数据库即执行 <code>PRAGMA journal_mode=WAL</code> 与 <code>PRAGMA synchronous=NORMAL</code>；保存前执行 <code>PRAGMA wal_checkpoint(TRUNCATE)</code> 再整体复制字节，所以成品 <code>.gen</code> 永远自包含。外部工具用默认 journal（delete 模式）写入同样合法——GenePad 重新打开时会自动切回 WAL。</p>
+                </div>
             </section>
 
-            <section class="doc-section" id="mapping">
-                <div class="section-heading">
-                    <p class="eyebrow">Mapping</p>
-                    <h2>与内存模型的对应</h2>
-                </div>
-                <table class="doc-table">
-                    <thead><tr><th>DNASequence 字段</th><th>.gen 来源</th><th>备注</th></tr></thead>
-                    <tbody>
-                        <tr><td><code>sequence</code></td><td><code>sequence_blocks</code></td><td>按 block_index 拼接</td></tr>
-                        <tr><td><code>features</code></td><td><code>features</code></td><td>segments / qualifiers 需要 JSON 解析</td></tr>
-                        <tr><td><code>primers</code></td><td><code>primers</code> + <code>primer_binding_sites</code></td><td>按 primer_id 关联</td></tr>
-                        <tr><td><code>baseColorRanges</code></td><td><code>base_color_ranges</code></td><td>strand 仅 forward / reverse</td></tr>
-                        <tr><td><code>alignmentEntries</code></td><td><code>alignment_entries</code></td><td>chromatogram_json 可选</td></tr>
-                        <tr><td><code>chromatogram</code></td><td><code>chromatogram_data</code></td><td>id 固定为 primary</td></tr>
-                        <tr><td><code>accession, organism, date...</code></td><td><code>project_meta</code></td><td>全部为字符串值</td></tr>
-                    </tbody>
-                </table>
-            </section>
+                <section class="doc-section" id="conventions">
+                    <div class="section-heading">
+                        <p class="eyebrow">Conventions</p>
+                        <h2>坐标与环形序列</h2>
+                    </div>
+                    <p>feature、primer binding site、base_color_range 的 <code>start_pos</code> / <code>end_pos</code> 均为 <strong>1-based inclusive</strong>：第一个碱基的位置是 1，<code>start=1, end=10</code> 表示第 1 到第 10 个碱基，长度 = <code>end - start + 1</code>。</p>
+                    <p>环形序列（<code>isCircular='true'</code>）的 feature 跨越原点时直接存 <code>start &gt; end</code>，长度公式变为 <code>seqLength - start + end + 1</code>——从 start 走到序列末尾，再从 1 绕回到 end。例：1000 bp 环形质粒上 <code>start=995, end=5</code> 覆盖 995–1000 加 1–5 共 11 个碱基。除 <code>isCircular</code> 标志外没有任何额外的环形专用字段。</p>
+                    <p>多段 feature（如移码拼接、内含子跳过的 CDS）不用多行表示，而是把各段写进 <code>segments</code> JSON 数组，每段独立 <code>{ start, end, strand?, name?, color? }</code>，同样是 1-based inclusive、支持 <code>start &gt; end</code> 跨原点。</p>
+                    <p class="doc-note">注意两套体系：<code>sequence_blocks.block_index</code> 与序列偏移是 <strong>0-based</strong>，而所有注释坐标是 <strong>1-based</strong>。换算：1-based 位置 p 位于块 <code>floor((p-1) / 10000)</code>。</p>
+                </section>
 
-            <section class="doc-section" id="conventions">
-                <div class="section-heading">
-                    <p class="eyebrow">Conventions</p>
-                    <h2>坐标与环形序列</h2>
-                </div>
-                <p>feature / primer / base_color_ranges 的 <code>start_pos</code> / <code>end_pos</code> 均为 <strong>1-based inclusive</strong>。例如 <code>start=1, end=10</code> 表示第 1 到第 10 个碱基（共 10 个）。</p>
-                <p>环形序列跨越原点时 <code>start &gt; end</code>：长度 = <code>seqLength - start + end + 1</code>（从 start 走到序列末尾，再从 1 绕回到 end）。多段 feature 还可用 <code>segments</code> JSON 数组，每段独立 <code>{start, end, strand?, name?, color?}</code>。</p>
-                <p class="doc-note">注意：<code>sequence_blocks.block_index</code> 是 0-based，与上述 1-based 特征坐标是两套体系。</p>
-            </section>
+                <section class="doc-section" id="persistence">
+                    <div class="section-heading">
+                        <p class="eyebrow">Behavior</p>
+                        <h2>保存与兼容行为</h2>
+                    </div>
+                    <table class="doc-table">
+                        <thead><tr><th>行为</th><th>规则</th></tr></thead>
+                        <tbody>
+                            <tr><td>保存策略</td><td>内容表（<code>sequence_blocks</code>、<code>features</code>、<code>base_color_ranges</code>、<code>primers</code>、<code>primer_binding_sites</code>、<code>chromatogram_data</code>，及已加载比对的 <code>alignment_entries</code>）<strong>全删全写</strong>；<code>project_meta</code> 按 key upsert；<code>undo_entries</code>、<code>edit_history</code>、<code>attachments</code> 从不清空。没有「精简导出」选项——历史随文件走</td></tr>
+                            <tr><td>批量写入</td><td>sequence_blocks 每 100 行一条多值 INSERT，features 每 40 行一条（13 列 × 40 = 520 参数）；无显式事务，逐条语句自动提交</td></tr>
+                            <tr><td>序列实时写</td><td>编辑过程中序列整表重建（从位置 0 重写全部分块），不做块级增量更新</td></tr>
+                            <tr><td>工作副本</td><td>打开 <code>.gen</code> 时先整体复制到临时目录（<code>genepad-&lt;random&gt;.gen</code>）再编辑，保存时 checkpoint 后把临时库字节整体写回目标路径</td></tr>
+                            <tr><td>损坏容错</td><td>所有 JSON 列解析失败一律降级为 undefined/空，不报错；Android 导入路径会先校验 16 字节魔头 <code>SQLite format 3\0</code></td></tr>
+                            <tr><td>大小写</td><td>碱基大小写按原样存取（不强制大写）；字符集为 IUPAC 扩展字母</td></tr>
+                            <tr><td>加密</td><td>无——标准未加密 SQLite 文件，任何工具可读</td></tr>
+                        </tbody>
+                    </table>
+                </section>
 
-            <section class="doc-section" id="quick-look">
-                <div class="section-heading">
-                    <p class="eyebrow">Quick Look</p>
-                    <h2>用 sqlite3 打开看一眼</h2>
-                </div>
-                <pre class="code-block"><code># 打开 .gen（本质就是 SQLite）
+                <section class="doc-section" id="export">
+                    <div class="section-heading">
+                        <p class="eyebrow">Recipe</p>
+                        <h2>导出为 .gjson</h2>
+                    </div>
+                    <p>把整个项目导出成 <a href="tech-gjson-format.html"><code>.gjson</code></a>——GenePad 的文本 JSON 交换格式。下面这个脚本复刻了 GenePad 写出器的全部行为（键名、null 语义、空数组省略规则都一致），可直接交给 GenePad 或任何工具读回：</p>
+                    <pre class="code-block"><code>import json, sqlite3, time
+
+def gen_to_gjson(path):
+    con = sqlite3.connect(path)
+    con.row_factory = sqlite3.Row
+    j = lambda s: json.loads(s) if s else None
+    meta = {r["key"]: r["value"] for r in con.execute("SELECT * FROM project_meta")}
+    n = lambda k: meta.get(k) or None          # '' -&gt; None：空串等同未设置
+    sequence = "".join(r["bases"] for r in con.execute(
+        "SELECT bases FROM sequence_blocks ORDER BY block_index"))
+
+    def segs_of(raw):                          # 多段（&gt;1）feature 才带 segments 键
+        if not raw: return {}
+        segs = json.loads(raw)
+        return {"segments": [{"start": s["start"], "end": s["end"],
+                              **({"strand": s["strand"]} if s.get("strand") else {})}
+                             for s in segs]} if len(segs) &gt; 1 else {}
+
+    # .gen 里这两个 JSON 列是 camelCase，.gjson 里是 snake_case
+    comp  = lambda c: [{"hybridized_range": x.get("hybridizedRange"),
+                        "bases": x["bases"]} for x in c]
+    align = lambda a: [{"type": x["type"], "primer_bases": x["primerBases"],
+                        "template_bases": x["templateBases"],
+                        "template_start": x["templateStart"],
+                        "template_end": x["templateEnd"]} for x in a]
+
+    features = [{
+        "id": f["id"], "name": f["name"], "type": f["type"],
+        "start": f["start_pos"], "end": f["end_pos"], "strand": f["strand"],
+        "color": f["color"], "label": f["label"], "note": f["note"],
+        "frame": f["frame"], "visible": bool(f["visible"]),
+        **segs_of(f["segments"]), "qualifiers": j(f["qualifiers"]),
+    } for f in con.execute("SELECT * FROM features ORDER BY start_pos")]
+
+    primers = [{
+        "id": p["id"], "name": p["name"], "sequence": p["sequence"],
+        "description": p["description"],
+        "bindingSites": [{
+            "start": b["start_pos"], "end": b["end_pos"], "boundStrand": b["bound_strand"],
+            "annealedBases": b["annealed_bases"] or "",
+            "meltingTemperature": b["melting_temperature"] or 0.0,
+            "components": comp(json.loads(b["components"]) if b["components"] else []),
+            **({"alignment": align(json.loads(b["alignment"]))} if b["alignment"] else {}),
+        } for b in con.execute("SELECT * FROM primer_binding_sites WHERE primer_id = ?",
+                               (p["id"],))],
+        "visible": None,                       # 写出器固定写 null
+    } for p in con.execute("SELECT * FROM primers")]
+
+    cnt = lambda t: con.execute(f"SELECT COUNT(*) FROM {t}").fetchone()[0]
+    doc = {
+        "version": "1.9",
+        "id": f"gjson-{int(time.time() * 1000)}",      # 毫秒时间戳
+        "type_of_display": "file_name",
+        "custom_name": meta.get("name", "Untitled"),
+        "description": meta.get("description", ""),
+        "sequence": sequence,
+        "length": len(sequence),
+        "isCircular": meta.get("isCircular") == "true",
+        "isDoubleStranded": meta.get("isDoubleStranded") != "false",
+        "accession": n("accession"), "organism": n("organism"), "date": n("date"),
+        "moleculeType": n("moleculeType"), "division": n("division"),
+        "gbVersion": n("version"), "keywords": n("keywords"),
+        "source": n("source"), "comments": n("comments"),
+        "references": j(meta.get("references")),
+        "features": features,
+        **({"baseColorRanges": [{"id": r["id"], "color": r["color"],
+                                 "start": r["start_pos"], "end": r["end_pos"],
+                                 "strand": r["strand"]}
+                                for r in con.execute("SELECT * FROM base_color_ranges")]}
+           if cnt("base_color_ranges") else {}),
+        **({"primers": primers} if primers else {}),
+        **({"alignmentEntries": [{"id": a["id"], "name": a["name"],
+                                  "sequence": a["sequence"], "visible": bool(a["visible"])}
+                                 for a in con.execute("SELECT * FROM alignment_entries")]}
+           if cnt("alignment_entries") else {}),
+    }
+    con.close()
+    return doc
+
+# GenePad 写出 LF 换行；Windows 上 Python 需显式 newline="\n" 才能完全一致
+with open("plasmid.gjson", "w", encoding="utf-8", newline="\n") as f:
+    json.dump(gen_to_gjson("plasmid.gen"), f, ensure_ascii=False, indent=2)</code></pre>
+                    <p>此脚本已与 GenePad 自身导出的同项目 <code>.gjson</code> 逐一核对：除两处原理性差异外完全一致——<code>id</code>（写出时刻的毫秒时间戳）与 feature 顺序（GenePad 按导出时的内存顺序，重开 <code>.gen</code> 后只能得到 <code>start_pos</code> 顺序）。可以用本页提供的两个样本文件自行复核：<a href="samples/41-pPUR-P2A-BFPnls-sgRNA1-RNF2_4AtoG_MS2-MA.gen">.gen 源文件</a>、<a href="samples/41-pPUR-P2A-BFPnls-sgRNA1-RNF2_4AtoG_MS2-MA.gjson">GenePad 导出的 .gjson</a>。</p>
+                    <p class="doc-note">转换要点：<code>organism</code> 等 GenBank 元数据在 .gen 里是空串 <code>''</code>、在 .gjson 里写 <code>null</code>（空串等同未设置）；结合位点 JSON 的键名从 camelCase 转为 snake_case；<code>primers[].visible</code> 恒为 <code>null</code>；<code>baseColorRanges</code>/<code>primers</code>/<code>alignmentEntries</code> 为空时整个键省略；测序图谱（chromatogram）不进 .gjson。完整规则见 <a href="tech-gjson-format.html">.gjson 文件定义</a>。</p>
+                </section>
+
+                <section class="doc-section" id="write-back">
+                    <div class="section-heading">
+                        <p class="eyebrow">Recipe</p>
+                        <h2>写回：外部修改 .gen</h2>
+                    </div>
+                    <p>GenePad 对外部改动完全宽容——只要仍是合法 SQLite 且符合上述约定，重新打开即生效：</p>
+                    <pre class="code-block"><code>import sqlite3
+
+con = sqlite3.connect("plasmid.gen")
+
+# 改 feature 颜色 / 项目名 / 拓扑
+con.execute("UPDATE features SET color = ? WHERE name = ?", ("#7c5cff", "AmpR"))
+con.execute("UPDATE project_meta SET value = 'true' WHERE key = 'isCircular'")
+con.execute("UPDATE project_meta SET value = ?   WHERE key = 'name'", ("pBR322-mod",))
+
+# 增删碱基必须整表重建 sequence_blocks：block_index 从 0 连续，块长 10000
+new_seq = "ATG" + "GCT" * 100          # ...你的新序列
+con.execute("DELETE FROM sequence_blocks")
+con.executemany("INSERT INTO sequence_blocks VALUES (?, ?)",
+                [(i // 10000, new_seq[i:i + 10000])
+                 for i in range(0, len(new_seq), 10000)])
+con.commit()</code></pre>
+                    <p class="doc-note">注意：改动碱基长度后要同步修正受影响 feature 的坐标（GenePad 不会自动重算）；<code>isDirty</code> 只是保存簿记，加载时不读取，外部改动无需维护它。用 Python 默认 journal 写出的文件即为自包含单文件。</p>
+                </section>
+
+                <section class="doc-section" id="create">
+                    <div class="section-heading">
+                        <p class="eyebrow">Recipe</p>
+                        <h2>从零创建 .gen</h2>
+                    </div>
+                    <p>最小可用文件只需要三张表——GenePad 打开时会自动补齐其余表和索引。控制解读方式的 <code>project_meta</code> 键如下：</p>
+                    <table class="doc-table">
+                        <thead><tr><th>key</th><th>推荐写入</th><th>缺省时读取结果</th></tr></thead>
+                        <tbody>
+                            <tr><td><code>isCircular</code></td><td><code>'true'</code>（环形）或 <code>'false'</code>（线形）</td><td>线形</td></tr>
+                            <tr><td><code>isDoubleStranded</code></td><td><code>'true'</code>（双链）或 <code>'false'</code>（单链）</td><td>双链</td></tr>
+                            <tr><td><code>isDamMethylated</code></td><td><code>'true'</code> / <code>'false'</code>，不写则不设置</td><td>未知（undefined）</td></tr>
+                            <tr><td><code>isDcmMethylated</code></td><td><code>'true'</code> / <code>'false'</code>，不写则不设置</td><td>未知（undefined）</td></tr>
+                        </tbody>
+                    </table>
+                    <pre class="code-block"><code>import json, sqlite3
+
+name, seq = "pDemo", "ATGGCTAGC" * 111           # 999 bp 示例序列
+
+con = sqlite3.connect("demo.gen")
+con.executescript("""
+CREATE TABLE project_meta   (key TEXT PRIMARY KEY, value TEXT);
+CREATE TABLE sequence_blocks(block_index INTEGER PRIMARY KEY, bases TEXT NOT NULL);
+CREATE TABLE features (
+    id TEXT PRIMARY KEY, name TEXT NOT NULL, type TEXT NOT NULL,
+    start_pos INTEGER NOT NULL, end_pos INTEGER NOT NULL, strand TEXT NOT NULL,
+    color TEXT, label TEXT, note TEXT, frame INTEGER, visible INTEGER DEFAULT 1,
+    segments TEXT, qualifiers TEXT);
+""")
+
+con.executemany("INSERT INTO project_meta VALUES (?, ?)", {
+    "name":       name,
+    "isCircular": "true",          # 见上表；isDoubleStranded 缺省即双链
+    "isDirty":    "0",
+}.items())
+
+BLOCK = 10000                       # 与 GenePad 的 BLOCK_SIZE 一致
+con.executemany("INSERT INTO sequence_blocks VALUES (?, ?)",
+                [(i // BLOCK, seq[i:i + BLOCK])
+                 for i in range(0, len(seq), BLOCK)])
+
+con.execute("INSERT INTO features VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)", (
+    "feat-1", "GFP", "CDS", 101, 804, "forward",
+    None, None, None, None, 1, None,
+    json.dumps({"gene": ["gfp"]}),          # qualifiers：Record&lt;string, string[]&gt;
+))
+con.commit()</code></pre>
+                    <p class="doc-note">要点：feature 的 13 列一个都不能少（后几列写 NULL 即可）；块长 10000 且 <code>block_index</code> 连续；布尔键用小写字符串。之后 GenePad（或任何读取程序）就能直接打开这个文件。</p>
+                </section>
+
+                <section class="doc-section" id="quick-look">
+                    <div class="section-heading">
+                        <p class="eyebrow">Quick Look</p>
+                        <h2>用 sqlite3 命令行看一眼</h2>
+                    </div>
+                    <pre class="code-block"><code># 打开 .gen（本质就是 SQLite；可换成本页提供的示例文件）
 sqlite3 example.gen
 
-# 列出所有表
+# 列出所有表 / 建表语句
 .tables
+.schema features
 
 # 读取项目名 / 拓扑
 SELECT key, value FROM project_meta WHERE key IN ('name','isCircular');
@@ -226,9 +594,32 @@ SELECT key, value FROM project_meta WHERE key IN ('name','isCircular');
 # 拼接完整序列（注意按 block_index 排序）
 SELECT group_concat(bases, '') FROM (SELECT bases FROM sequence_blocks ORDER BY block_index);
 
-# 查看前几个 feature
-SELECT name, type, start_pos, end_pos, strand FROM features LIMIT 5;</code></pre>
-            </section>
+# 查看前几个 feature（坐标 1-based inclusive）
+SELECT name, type, start_pos, end_pos, strand FROM features ORDER BY start_pos LIMIT 5;
+
+# 看绑定位点 / 编辑历史
+SELECT primer_id, start_pos, end_pos, bound_strand FROM primer_binding_sites LIMIT 5;
+SELECT timestamp, description FROM edit_history ORDER BY id DESC LIMIT 5;
+
+# 解码主序列测序图谱的 A 通道（BLOB 里是 UTF-8 JSON 数组）
+SELECT CAST(trace_a AS TEXT) FROM chromatogram_data WHERE id = 'primary';
+
+# 顺手验证魔头：应为 "SQLite format 3" + \0
+xxd -l 16 example.gen</code></pre>
+                    <p class="doc-note">只读场景请用 <code>sqlite3 "file:example.gen?immutable=1"</code> 打开——避免在文件旁产生 <code>-wal</code>/<code>-shm</code> 副产品（GenePad 自带的质粒库扫描器就是这么做的，Rust 示例见<a href="tech-rust-readers.html">Rust 读取</a>）。</p>
+                </section>
+
+                <section class="doc-section" id="see-also">
+                    <div class="section-heading">
+                        <p class="eyebrow">See Also</p>
+                        <h2>延伸</h2>
+                    </div>
+                    <ul style="color:var(--lead);line-height:1.9;padding-left:1.3em">
+                        <li><a href="tech-gjson-format.html">.gjson 文件定义</a>——单文件 JSON 交换格式，适合脚本生成与轻量共享。</li>
+                        <li><a href="tech-dna-conversion.html">.dna 转换</a>——SnapGene <code>.dna</code> 的读取与转换说明。</li>
+                        <li><a href="tech-rust-readers.html">Rust 读取示例</a>——rusqlite 依赖配置、只读（immutable）打开与 .gjson 读取。</li>
+                    </ul>
+                </section>
             </div>
          </div>
         </main>
