@@ -38,7 +38,8 @@
                 <button class="doc-toc-toggle" type="button">目录</button>
                 <a class="doc-toc-home" href="index.html">← 返回首页</a>
                 <p class="doc-toc-group">版本</p>
-                <a class="current" href="#v0-6-6">v0.6.6</a>
+                <a class="current" href="#v0-6-7">v0.6.7</a>
+                <a href="#v0-6-6">v0.6.6</a>
                 <a href="#v0-6-5">v0.6.5</a>
                 <a href="#v0-6-4">v0.6.4</a>
                 <a href="#v0-6-2">v0.6.2</a>
@@ -51,6 +52,68 @@
                         记录 GenePad 每个版本的新功能、缺陷修复与维护变更。版本按发布时间倒序排列。
                     </p>
                 </div>
+
+                <section class="doc-section" id="v0-6-7">
+                    <div class="section-heading">
+                        <p class="eyebrow">2026-08-26</p>
+                        <h2>v0.6.7</h2>
+                    </div>
+                    <p>本次发布包含自 v0.6.6 以来的 150 项提交，核心是全新的 FASTQ 测序数据浏览与分析能力，同时带来 BLAST 一键查询、限制酶引擎全面升级（默认酶池扩至 NEB &amp; Thermo 并集 765 种）与插入/替换对话框增强。</p>
+
+                    <h3>✨ 新功能</h3>
+                    <ul>
+                        <li><strong>FASTQ 测序浏览（全新）</strong>：
+                            <ul>
+                                <li>支持 .fastq / .fq / .gz 只读浏览，Rust 原生流式解析，大文件秒开；单端/双端自动询问并记忆配对，R2 以互补链配对显示，可一键拼接参考行</li>
+                                <li>打开即统计总 reads 数；长文件按需加载，「再加载 10%」增量续载、「加载全部」断点续传</li>
+                                <li>属性框分组展示总体 / R1 / R2 统计，平均质量附 Phred 分级悬停说明</li>
+                                <li>浏览视图六项升级：六框翻译、临时局部标注（双击编辑 / Del 删除）、cell 内搜索（DNA / 氨基酸双模式）、双光标选区、贯通光标、质量柱整体收放</li>
+                                <li>选区可一键设为阅读框起始片段生成 CDS 标注；顶部工具栏新增「交换 R1/R2」</li>
+                                <li>裁切：左右锚点筛选 + fastp 式多线程流水线导出（实测提速约 12.8 倍），支持随时取消、读级过滤、导出为 gzip 压缩的 .fastq.gz</li>
+                                <li>贯通选区汇总导出 CSV：Rust 多线程逐列六桶计数 + 共识序列 + +1 框氨基酸</li>
+                                <li>「序列分析报告」：唯一序列计数、质量报告、Top20 直方图，附双端文件路径与程序信息</li>
+                            </ul>
+                        </li>
+                        <li><strong>BLAST 一键查询</strong>：
+                            <ul>
+                                <li>选区 / CDS 右键菜单新增 BLAST 子菜单：NCBI 自动预填序列打开网页，CNCB 复制序列并唤起系统浏览器</li>
+                            </ul>
+                        </li>
+                        <li><strong>限制酶引擎升级</strong>：
+                            <ul>
+                                <li>酶表改由 enriched 库生成，从 218 种扩至 765 种，补齐 CpoI 等 547 个此前检不出的酶</li>
+                                <li>新增「NEB &amp; Thermo」并集酶池并设为新默认（旧配置自动迁移）；检测统一走 Rust 引擎</li>
+                                <li>图谱底部新增可收起的酶池 / 筛选方案筛选行，与酶切表表头实时同步</li>
+                                <li>修复打开 GJSON / FASTA 后酶切位点不显示的问题</li>
+                            </ul>
+                        </li>
+                        <li><strong>插入 / 替换对话框增强</strong>：
+                            <ul>
+                                <li>按限制酶位点搜索插入、反向互补插入；DNA / 氨基酸双模式（切换自动翻译、严格过滤）；氨基酸模式密码子优化后插入 / 替换</li>
+                            </ul>
+                        </li>
+                        <li><strong>MCP / AI</strong>：
+                            <ul>
+                                <li>MCP 新增 project.lookup 反查质粒项目归属、project.files 按分类取文件；基因文件库「标签」列 AI 批量刷新按钮增加新手引导气泡</li>
+                                <li>更新检测频率新增「每日」档并设为默认</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <h3>🐛 缺陷修复</h3>
+                    <ul>
+                        <li>FASTQ 单锚裁切方向归一化，修复「左右颠倒 / 切反一侧」；反向 read 双端自动交换 R1/R2、单端整条反向互补后再裁切</li>
+                        <li>FASTQ 快速滚动速度自适应 overscan，高速滚动不再留白</li>
+                        <li>序列视图 4K 快滚白屏治理：方向性 overscan + 行数据缓存 + text-run 化绘制</li>
+                        <li>SnapGene 反向分裂特征排序修正，环形图连接弧取最短弧并计入碰撞避让</li>
+                        <li>打开文档加文件锁（Windows 拒写共享 / Unix flock），防止多实例同时写同一文档</li>
+                        <li>自动标注 note 按界面语言单语生成，悬停不显示与保存后丢失的问题修复</li>
+                        <li>三平台「打开方式」全类型兜底注册；关联文件图标按类型一型一图全平台适配</li>
+                        <li>选中范围与某标注完全一致时按 Del，改为弹窗选择仅删标注或连序列一起删除</li>
+                    </ul>
+
+                    <p><strong>完整变更</strong>：<a href="https://github.com/Masterchiefm/GenePad/compare/v0.6.6...v0.6.7" target="_blank" rel="noopener">v0.6.6...v0.6.7</a></p>
+                </section>
 
                 <section class="doc-section" id="v0-6-6">
                     <div class="section-heading">
