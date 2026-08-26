@@ -78,7 +78,7 @@ const dict = {
     "sg.eyebrow": "Sanger Trace · 测序比对",
     "sg.title": (
       <>
-        测序结果与参考序列
+        Sanger 测序结果与参考序列
         <br />
         逐碱基比对
       </>
@@ -387,7 +387,7 @@ const dict = {
     "ngs.eyebrow": "NGS Data Viewer · NGS 数据查看",
     "ngs.title": (
       <>
-        测序数据直接打开，
+        二代测序（NGS）数据直接打开，
         <br />
         逐条查看、检索与统计
       </>
@@ -533,7 +533,7 @@ const dict = {
     "sg.eyebrow": "Sanger Trace",
     "sg.title": (
       <>
-        Sequencing results aligned
+        Sanger sequencing results aligned
         <br />
         base by base with the reference
       </>
@@ -842,9 +842,9 @@ const dict = {
     "ngs.eyebrow": "NGS Data Viewer",
     "ngs.title": (
       <>
-        Open sequencing data directly —
+        Second-generation (NGS) sequencing data,
         <br />
-        browse, search and count
+        open directly — browse, search and count
       </>
     ),
     "ngs.lead":
