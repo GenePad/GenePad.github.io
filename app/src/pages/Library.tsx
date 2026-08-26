@@ -86,7 +86,7 @@ export default function Library() {
       <LightboxProvider>
         <main className="mx-auto max-w-[1400px] px-5 py-16 md:px-8 md:py-24">
           <SectionHead
-            index="07"
+            index="08"
             eyebrow={t("lib.eyebrow") as string}
             title={t("lib.title")}
             titleTag="h1"
@@ -115,7 +115,7 @@ export default function Library() {
           </Reveal>
 
           {/* 痛点 */}
-          <GroupLabel no="07-A" cn={t("lib.pain.title")} en={t("lib.pain.headEn") as string} />
+          <GroupLabel no="08-A" cn={t("lib.pain.title")} en={t("lib.pain.headEn") as string} />
           <div className="grid gap-px border border-line bg-line md:grid-cols-3">
             {PAINS.map((p, i) => (
               <TextCard key={p.no} no={p.no} en={p.en} name={t(p.name)} desc={t(p.desc)} delay={i * 100} />
@@ -123,7 +123,7 @@ export default function Library() {
           </div>
 
           {/* 三种管理方式 */}
-          <GroupLabel no="07-B" cn={t("lib.ways.title")} en={t("lib.ways.headEn") as string} />
+          <GroupLabel no="08-B" cn={t("lib.ways.title")} en={t("lib.ways.headEn") as string} />
           <div className="grid gap-px border border-line bg-line md:grid-cols-3">
             {WAYS.map((w, i) => (
               <TextCard key={w.no} no={w.no} en={w.en} name={t(w.name)} desc={t(w.desc)} delay={i * 100} />
@@ -131,7 +131,7 @@ export default function Library() {
           </div>
 
           {/* AI 标签 */}
-          <GroupLabel no="07-C" cn={t("lib.tags.title")} en={t("lib.tags.headEn") as string} />
+          <GroupLabel no="08-C" cn={t("lib.tags.title")} en={t("lib.tags.headEn") as string} />
           <div className="grid items-center gap-8 md:grid-cols-2">
             <Reveal>
               <p className="text-[14px] leading-8 text-ink/70">{t("lib.tags.desc")}</p>
@@ -142,7 +142,7 @@ export default function Library() {
           </div>
 
           {/* AI 助手 */}
-          <GroupLabel no="07-D" cn={t("lib.ai.title")} en={t("lib.ai.headEn") as string} />
+          <GroupLabel no="08-D" cn={t("lib.ai.title")} en={t("lib.ai.headEn") as string} />
           <Reveal>
             <p className="mb-10 max-w-3xl text-[14px] leading-8 text-ink/70">{t("lib.ai.desc")}</p>
           </Reveal>
@@ -156,7 +156,7 @@ export default function Library() {
           </div>
 
           {/* 上手步骤 */}
-          <GroupLabel no="07-E" cn={t("lib.setup.title")} en={t("lib.setup.headEn") as string} />
+          <GroupLabel no="08-E" cn={t("lib.setup.title")} en={t("lib.setup.headEn") as string} />
           <Reveal>
             <p className="mb-10 max-w-3xl text-[14px] leading-8 text-ink/70">{t("lib.setup.lead")}</p>
           </Reveal>
@@ -185,7 +185,7 @@ export default function Library() {
           </Reveal>
 
           {/* 日常工作流 */}
-          <GroupLabel no="07-F" cn={t("lib.daily.title")} en={t("lib.daily.headEn") as string} />
+          <GroupLabel no="08-F" cn={t("lib.daily.title")} en={t("lib.daily.headEn") as string} />
           <div className="grid items-center gap-8 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
             <div className="grid gap-px self-stretch border border-line bg-line">
               <TextCard no="D-01" en="OPEN WITH" name={t("lib.daily.1.name")} desc={t("lib.daily.1.desc")} />
@@ -200,7 +200,7 @@ export default function Library() {
           <Reveal>
             <div className="mt-24 bg-ink px-6 py-12 text-paper md:px-12 md:py-16">
               <p className="font-mono text-[11px] tracking-[0.28em] uppercase text-paper/55">
-                <span className="text-gfp">07</span> — PART OF GENEPAD
+                <span className="text-gfp">08</span> — PART OF GENEPAD
               </p>
               <h2 className="mt-6 max-w-3xl font-display text-[clamp(1.6rem,3.4vw,2.6rem)] font-bold leading-[1.15] tracking-tight">
                 {t("lib.final.title")}
@@ -228,8 +228,8 @@ export default function Library() {
           </Reveal>
         </main>
       </LightboxProvider>
-      {/* 复用主页下载区（编号顺延为 07-G） */}
-      <Download index="07-G" />
+      {/* 复用主页下载区（编号顺延为 08-G） */}
+      <Download index="08-G" />
       <Footer />
     </div>
   );

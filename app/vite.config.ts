@@ -26,6 +26,7 @@ export default defineConfig({
         "tech-support": path.resolve(__dirname, "tech-support.html"),
         projects: path.resolve(__dirname, "projects.html"),
         library: path.resolve(__dirname, "library.html"),
+        ngs: path.resolve(__dirname, "ngs.html"),
       },
     },
   },

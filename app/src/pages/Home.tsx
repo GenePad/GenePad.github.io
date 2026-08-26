@@ -6,6 +6,7 @@ import Workbench from "../sections/Workbench";
 import LibraryPromo from "../sections/LibraryPromo";
 import DayNight from "../sections/DayNight";
 import Sanger from "../sections/Sanger";
+import NgsPromo from "../sections/NgsPromo";
 import Toolbox from "../sections/Toolbox";
 import Download from "../sections/Download";
 import Footer from "../sections/Footer";
@@ -26,6 +27,7 @@ export default function Home() {
               "RESTRICTION SITES",
               "PRIMER DESIGN",
               "SANGER TRACE",
+              "NGS FASTQ VIEWER",
               "CRISPR SGRNA",
               "ELECTROPHORESIS",
               "CODON OPTIMIZATION",
@@ -37,8 +39,9 @@ export default function Home() {
           <LibraryPromo />
           <DayNight />
           <Sanger />
+          <NgsPromo />
           <Toolbox />
-          <Download />
+          <Download index="07" />
           <Footer />
         </main>
       </LightboxProvider>

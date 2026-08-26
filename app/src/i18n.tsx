@@ -18,6 +18,7 @@ const dict = {
     "nav.toolbox": "工具箱",
     "nav.download": "下载",
     "nav.library": "基因文件库",
+    "nav.ngs": "NGS 数据查看",
     "nav.docs": "技术文档",
     "nav.projects": "生态项目",
     "nav.cta": "免费下载",
@@ -216,6 +217,7 @@ const dict = {
     "ft.docs": "技术文档",
     "ft.projects": "生态项目",
     "ft.library": "基因文件库",
+    "ft.ngs": "NGS 数据查看",
     "ft.sponsor": "赞助开发者",
     "ft.copyright": "© 2026 GENEPAD — MADE FOR THE BENCH",
 
@@ -370,6 +372,98 @@ const dict = {
     "lib.final.cta": "返回主页",
     "lib.final.cta2": "立即下载",
     "lib.top.hint": "直达底部下载区",
+
+    // 首页 NGS 数据查看推荐节
+    "np.lead":
+      "直接打开 fastq.gz / fastq / fq.gz / fq 测序文件：右键或拖入即可，双端文件自动配对拼接；逐碱基查看测序质量，按氨基酸搜索定位多变区，设置锚点批量裁切，一键生成文库丰度报告。",
+    "np.c1": "fastq.gz · fq.gz 免解压",
+    "np.c2": "双端自动配对拼接",
+    "np.c3": "逐碱基测序质量",
+    "np.c4": "锚点裁切 + 丰度报告",
+    "np.cta": "了解更多",
+    "np.safe": "GenePad 内置功能 · 免费公测 · 覆盖全平台",
+
+    // NGS 数据查看页
+    "ngs.eyebrow": "NGS Data Viewer · NGS 数据查看",
+    "ngs.title": (
+      <>
+        测序数据直接打开，
+        <br />
+        逐条查看、检索与统计
+      </>
+    ),
+    "ngs.lead":
+      "GenePad 可直接打开 fastq.gz / fastq / fq.gz / fq 测序文件：在资源管理器中右键「打开方式」选择 GenePad，或将文件直接拖入程序窗口；双端测序把 R1、R2 两个文件一起拖入，配对关系自动识别。打开后可逐条浏览 reads、检查每个碱基的测序质量与双端拼接效果；以氨基酸片段搜索定位目标多变区，设置裁切锚点后对整个文件批量裁切，最终一键生成文库丰度报告。",
+    "ngs.hero.shot":
+      "FASTQ VIEWER — 双端 reads 自动拼接，逐碱基按质量着色，右侧为文件统计",
+
+    "ngs.open.head": "打开测序文件",
+    "ngs.open.headEn": "OPENING FASTQ FILES",
+    "ngs.open.title": "右键、拖入即可打开，无需命令行",
+    "ngs.open.lead":
+      "支持 fastq.gz、fastq、fq.gz、fq 四种扩展名，gzip 压缩文件无需预先解压。安装 GenePad 后，两种方式任选其一：",
+    "ngs.open.1.name": "右键「打开方式」",
+    "ngs.open.1.desc":
+      "在资源管理器中右键测序文件 →「打开方式」：子菜单中直接选择 GenePad，或在「选择其他应用」列表中选中 GenePad 并设为默认——此后双击测序文件即可直接打开。",
+    "ngs.open.2.name": "拖入窗口",
+    "ngs.open.2.desc":
+      "将一个或多个测序文件直接拖入 GenePad 窗口，欢迎页与工作界面均支持拖放打开。",
+    "ngs.open.1.shot": "右键菜单 — 「打开方式」→ GenePad",
+    "ngs.open.1.shot2": "选择其他应用 — 在系统列表中选中 GenePad，可设为默认",
+    "ngs.open.2.shot": "拖入窗口 — 多个测序文件一起拖入即可打开",
+
+    "ngs.pair.head": "双端测序",
+    "ngs.pair.headEn": "PAIRED-END",
+    "ngs.pair.title": "双端文件自动识别、自动配对",
+    "ngs.pair.desc":
+      "把 R1、R2 两个文件一起拖入窗口，程序按首条 read 的 ID 自动识别配对关系；一次拖入多对文件时弹出配对确认框，可手动调整分组或点击 Auto-pair 一键配对。确认后每一对作为一份双端数据打开——属性面板标注 Paired-end，工具栏提供 Swap R1/R2 一键交换。",
+    "ngs.pair.shot": "PAIR NGS FILES — 按首条 read ID 自动配对，也可手动调整",
+
+    "ngs.reads.head": "逐条浏览",
+    "ngs.reads.headEn": "READS & QUALITY",
+    "ngs.reads.title": "每条 read 的质量与拼接效果一目了然",
+    "ngs.reads.lead":
+      "主界面自上而下列出测序得到的每一条 read，右侧属性面板汇总整个文件的测序统计：",
+    "ngs.reads.1.name": "双端自动拼接",
+    "ngs.reads.1.desc":
+      "双端数据逐条自动拼接（merge），每条 read 显示重叠长度与一致性（如 Overlap 135bp · 99% identity），拼接效果一眼可辨。",
+    "ngs.reads.2.name": "逐碱基测序质量",
+    "ngs.reads.2.desc":
+      "每个碱基按 Phred 质量着色：≥30 绿、20–29 橙、<20 红，低质量区域在质量条中直观可见，无需逐个查看数值。",
+    "ngs.reads.3.name": "文件统计",
+    "ngs.reads.3.desc":
+      "属性面板汇总 reads 数、碱基数、read 长度、平均质量、质量分布、GC 含量与编码格式，支持 Overall / R1 / R2 分组查看；超大文件仅加载预览部分，统计与分析仍覆盖整个文件。",
+    "ngs.reads.shot":
+      "READS & QUALITY — 自上而下逐条浏览：双端拼接、逐碱基质量条与右侧文件统计",
+
+    "ngs.aa.head": "氨基酸搜索",
+    "ngs.aa.headEn": "SEARCH BY AMINO ACIDS",
+    "ngs.aa.title": "按蛋白片段定位感兴趣的多变区",
+    "ngs.aa.desc":
+      "将底部搜索框切换到 AA 模式，输入一段氨基酸序列（如 MATNNQ），程序把拼接后的 read 翻译为蛋白并逐条比对，命中的肽段直接在序列中框出。文库测序的两侧序列保守、中间多变：用一段已知的保守蛋白作查询，即可在数千条 reads 中快速定位各自的目标多变区。",
+    "ngs.aa.shot": "AA SEARCH — 输入氨基酸片段，命中肽段在翻译结果中高亮框出",
+
+    "ngs.trim.head": "锚点裁切",
+    "ngs.trim.headEn": "TRIM ANCHORS",
+    "ngs.trim.title": "设置裁切锚点，精准截取目标区段",
+    "ngs.trim.desc":
+      "把目标区段两侧的保守序列设为左右裁切锚点（Trim anchors），点击 Trim 即对整个测序文件批量裁切，仅保留两锚点之间的多变区序列。属性面板实时反馈通过比例，以及锚点未命中、片段过短等被剔除的数量；裁切后的 reads 可一键导出（Export processed reads），用于后续分析或提交。",
+    "ngs.trim.shot": "TRIM ANCHORS — 左右锚点框出目标窗口，实时显示通过比例",
+
+    "ngs.report.head": "文库丰度分析",
+    "ngs.report.headEn": "LIBRARY ANALYSIS",
+    "ngs.report.title": "对整个文件一键生成丰度报告",
+    "ngs.report.desc":
+      "点击 Sequence analysis 对裁切结果执行统计：默认直接分析整个文件（数千万条 reads 无需全部载入内存），统计每个唯一序列的出现次数与频率，并可选择保留或去除两端锚点。分析完成后生成图文报告——Top 序列直方图（DNA / AA 两种口径）与逐条序列的长度、计数、频率与 +1 阅读框翻译，完整表格同时导出为 CSV，可直接用 Excel 打开。一份简单的文库丰度报告就此完成。",
+    "ngs.report.shot1": "SEQUENCE ANALYSIS — 默认分析整个文件，可选保留 / 去除锚点",
+    "ngs.report.shot2": "ANALYSIS REPORT — Top 序列直方图与完整丰度表（CSV）",
+
+    "ngs.final.title": "NGS 数据查看是 GenePad 的内置功能，并非独立软件",
+    "ngs.final.desc":
+      "NGS 数据查看内置于 GenePad 基因图谱编辑器：下载安装后即可直接打开测序文件，与图谱编辑、Sanger 峰图比对等功能在同一程序内配合使用。当前为免费公测阶段，覆盖全部平台。",
+    "ngs.final.cta": "返回主页",
+    "ngs.final.cta2": "立即下载",
+    "ngs.top.hint": "直达底部下载区",
   },
   en: {
     // Nav
@@ -379,6 +473,7 @@ const dict = {
     "nav.toolbox": "Toolbox",
     "nav.download": "Download",
     "nav.library": "File Library",
+    "nav.ngs": "NGS Viewer",
     "nav.docs": "Dev Docs",
     "nav.projects": "Projects",
     "nav.cta": "Free Download",
@@ -577,6 +672,7 @@ const dict = {
     "ft.docs": "Dev Docs",
     "ft.projects": "Projects",
     "ft.library": "Gene File Library",
+    "ft.ngs": "NGS Data Viewer",
     "ft.sponsor": "Sponsor the Developer",
     "ft.copyright": "© 2026 GENEPAD — MADE FOR THE BENCH",
 
@@ -731,6 +827,99 @@ const dict = {
     "lib.final.cta": "Back to Home",
     "lib.final.cta2": "Download Now",
     "lib.top.hint": "Jump straight to downloads",
+
+    // Homepage NGS promo section
+    "np.lead":
+      "Open fastq.gz / fastq / fq.gz / fq sequencing files directly — right-click or drag-and-drop, with paired-end files merged automatically. Inspect per-base quality, locate variable regions by amino-acid search, clip with trim anchors and finish with a one-click library abundance report.",
+    "np.c1": "fastq.gz · fq.gz without decompressing",
+    "np.c2": "Paired-end auto-merge",
+    "np.c3": "Per-base quality",
+    "np.c4": "Trim anchors + abundance report",
+    "np.cta": "Learn more",
+    "np.safe": "Built into GenePad · Free beta · All platforms",
+
+    // NGS page
+    "ngs.eyebrow": "NGS Data Viewer",
+    "ngs.title": (
+      <>
+        Open sequencing data directly —
+        <br />
+        browse, search and count
+      </>
+    ),
+    "ngs.lead":
+      "GenePad opens fastq.gz / fastq / fq.gz / fq sequencing files directly: right-click → Open with → GenePad in File Explorer, or drag the files into the window. For paired-end runs, drop the R1 and R2 files together and the pairing is recognized automatically. Browse reads one by one, inspect per-base quality and the merged consensus, locate the variable region of interest by searching an amino-acid fragment, set trim anchors to clip the whole file down to the target segment, and finish with a one-click library abundance report.",
+    "ngs.hero.shot":
+      "FASTQ VIEWER — paired reads merged automatically, bases color-coded by quality, file statistics on the right",
+
+    "ngs.open.head": "Opening sequencing files",
+    "ngs.open.headEn": "OPENING FASTQ FILES",
+    "ngs.open.title": "Right-click or drag-and-drop — no command line needed",
+    "ngs.open.lead":
+      "Four extensions are supported — fastq.gz, fastq, fq.gz and fq — and gzip-compressed files open without decompressing first. Once GenePad is installed, either of the two:",
+    "ngs.open.1.name": "Right-click → Open with",
+    "ngs.open.1.desc":
+      "In File Explorer, right-click the sequencing file → \"Open with\": pick GenePad straight from the submenu, or select it in \"Choose another app\" and set it as the default — from then on, double-clicking a sequencing file opens it directly.",
+    "ngs.open.2.name": "Drag into the window",
+    "ngs.open.2.desc":
+      "Drag one or more sequencing files straight into the GenePad window; both the welcome page and the workspace accept drops.",
+    "ngs.open.1.shot": "Right-click menu — \"Open with\" → GenePad",
+    "ngs.open.1.shot2": "\"Choose another app\" — pick GenePad in the system list, optionally as default",
+    "ngs.open.2.shot": "Drag and drop — bring several sequencing files in together",
+
+    "ngs.pair.head": "Paired-end",
+    "ngs.pair.headEn": "PAIRED-END",
+    "ngs.pair.title": "Mate files recognized and paired automatically",
+    "ngs.pair.desc":
+      "Drop the R1 and R2 files into the window together and GenePad pairs them by the first read ID; when several pairs arrive at once, a confirmation dialog lists them for manual adjustment — or one click on Auto-pair settles it. Each pair then opens as one paired-end dataset, flagged Paired-end in the interface, with a one-click R1/R2 swap on the toolbar.",
+    "ngs.pair.shot": "PAIR NGS FILES — pairs are formed by first read ID, adjustable by hand",
+
+    "ngs.reads.head": "Read-by-read browsing",
+    "ngs.reads.headEn": "READS & QUALITY",
+    "ngs.reads.title": "Quality and merging of every read at a glance",
+    "ngs.reads.lead":
+      "The main view lists every sequenced read from top to bottom, with whole-file statistics summarized in the properties panel:",
+    "ngs.reads.1.name": "Automatic mate merging",
+    "ngs.reads.1.desc":
+      "Paired reads are merged one by one, each showing the overlap length and identity (e.g. Overlap 135bp · 99% identity), so the merge result is visible at a glance.",
+    "ngs.reads.2.name": "Per-base quality",
+    "ngs.reads.2.desc":
+      "Every base is colored by Phred quality — green ≥30, orange 20–29, red <20 — making low-quality regions obvious in the quality bars without reading a single number.",
+    "ngs.reads.3.name": "File statistics",
+    "ngs.reads.3.desc":
+      "The properties panel summarizes read count, total bases, read length, mean quality, quality distribution, GC content and encoding, grouped as Overall / R1 / R2; very large files load a preview only, while statistics and analysis still cover the entire file.",
+    "ngs.reads.shot":
+      "READS & QUALITY — browse reads top to bottom: mate merging, per-base quality bars and file statistics on the right",
+
+    "ngs.aa.head": "Amino-acid search",
+    "ngs.aa.headEn": "SEARCH BY AMINO ACIDS",
+    "ngs.aa.title": "Locate the variable region by protein fragment",
+    "ngs.aa.desc":
+      "Switch the search box to AA mode and type an amino-acid fragment (e.g. MATNNQ): merged reads are translated and compared peptide by peptide, and each hit is boxed right in the sequence. In library sequencing the flanks stay conserved while the middle varies — querying a known conserved peptide locates the target variable region within thousands of reads.",
+    "ngs.aa.shot":
+      "AA SEARCH — type an amino-acid fragment; matched peptides are highlighted in the translation",
+
+    "ngs.trim.head": "Trim anchors",
+    "ngs.trim.headEn": "TRIM ANCHORS",
+    "ngs.trim.title": "Set anchors and clip the whole file to the target",
+    "ngs.trim.desc":
+      "Set the conserved flanks as left and right trim anchors, click Trim, and the entire sequencing file is clipped in batch to keep only the variable region between them. The properties panel reports the pass rate live, along with the reads rejected for missed anchors or short inserts; processed reads can be exported in one click (Export processed reads) for downstream analysis or submission.",
+    "ngs.trim.shot": "TRIM ANCHORS — left and right anchors frame the target window; pass rate shown live",
+
+    "ngs.report.head": "Library abundance analysis",
+    "ngs.report.headEn": "LIBRARY ANALYSIS",
+    "ngs.report.title": "One-click abundance report for the whole file",
+    "ngs.report.desc":
+      "Run Sequence analysis on the trimmed data: by default the entire file is analyzed — tens of millions of reads never need to be fully loaded into memory — counting every unique sequence with its count and frequency, keeping or stripping the anchors as chosen. The result is a graphical report — a Top-sequences histogram (DNA or AA) plus a table of each sequence's length, count, frequency and +1-frame translation — alongside a full CSV export that opens directly in Excel. A simple library abundance report, done.",
+    "ngs.report.shot1": "SEQUENCE ANALYSIS — the whole file by default; anchors kept or stripped",
+    "ngs.report.shot2": "ANALYSIS REPORT — Top-sequences histogram and the full abundance table (CSV)",
+
+    "ngs.final.title": "Built into GenePad — not a standalone application",
+    "ngs.final.desc":
+      "NGS data viewing ships inside the GenePad gene map editor: install GenePad and sequencing files open directly, working alongside map editing, Sanger trace alignment and more in the same application. Free during the public beta, on every platform.",
+    "ngs.final.cta": "Back to Home",
+    "ngs.final.cta2": "Download Now",
+    "ngs.top.hint": "Jump straight to downloads",
   },
 } as const;
 

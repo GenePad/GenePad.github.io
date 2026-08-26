@@ -141,25 +141,25 @@ export default function Toolbox() {
   return (
     <section id="toolbox" className="border-b border-line bg-paper-2">
       <div className="mx-auto max-w-[1400px] px-5 py-20 md:px-8 md:py-28">
-        <SectionHead index="05" eyebrow={t("tb.eyebrow") as string} title={t("tb.title")}>
+        <SectionHead index="06" eyebrow={t("tb.eyebrow") as string} title={t("tb.title")}>
           {t("tb.lead")}
         </SectionHead>
 
-        <GroupLabel no="05-A" cn={t("tb.groupA")} en="Context Menu" />
+        <GroupLabel no="06-A" cn={t("tb.groupA")} en="Context Menu" />
         <div className="grid gap-px border border-line bg-line md:grid-cols-3">
           {CONTEXT_TOOLS.map((tool, i) => (
             <ToolCard key={tool.no} tool={tool} delay={i * 100} />
           ))}
         </div>
 
-        <GroupLabel no="05-B" cn={t("tb.groupB")} en="Toolbox" />
+        <GroupLabel no="06-B" cn={t("tb.groupB")} en="Toolbox" />
         <div className="grid gap-px border border-line bg-line md:grid-cols-2">
           {GLOBAL_TOOLS.map((tool, i) => (
             <ToolCard key={tool.no} tool={tool} delay={i * 100} />
           ))}
         </div>
 
-        <GroupLabel no="05-C" cn={t("tb.groupC")} en="Openness" />
+        <GroupLabel no="06-C" cn={t("tb.groupC")} en="Openness" />
         <div className="grid gap-px border border-line bg-line md:grid-cols-2">
           {OPEN_TOOLS.map((tool, i) => (
             <ToolCard key={tool.no} tool={tool} delay={i * 100} />

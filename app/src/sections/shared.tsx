@@ -126,6 +126,15 @@ const SHOT_DIMS: Record<string, { w: number; h: number }> = {
   "shots/library-10.webp": { w: 1468, h: 921 },
   "shots/library-04.webp": { w: 855, h: 757 },
   "shots/library-08.webp": { w: 550, h: 348 },
+  "shots/ngs-01.webp": { w: 1502, h: 1002 },
+  "shots/ngs-02.webp": { w: 1918, h: 1077 },
+  "shots/ngs-03.webp": { w: 588, h: 800 },
+  "shots/ngs-04.webp": { w: 1918, h: 1078 },
+  "shots/ngs-05.webp": { w: 1365, h: 942 },
+  "shots/ngs-06.webp": { w: 1920, h: 1020 },
+  "shots/ngs-07.webp": { w: 1502, h: 1002 },
+  "shots/ngs-08.webp": { w: 1502, h: 1002 },
+  "shots/ngs-09.webp": { w: 1292, h: 852 },
 };
 const SHOT_DIMS_DEFAULT = { w: 2101, h: 1504 };
 

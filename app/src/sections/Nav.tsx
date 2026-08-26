@@ -55,6 +55,12 @@ export default function Nav() {
             {t("nav.library")}
           </a>
           <a
+            href="ngs.html"
+            className="hidden font-mono text-[12px] tracking-[0.12em] text-ink/70 transition-colors hover:text-gfp-deep lg:inline"
+          >
+            {t("nav.ngs")}
+          </a>
+          <a
             href="tech-support.html"
             className="font-mono text-[12px] tracking-[0.12em] text-ink/70 transition-colors hover:text-gfp-deep"
           >
