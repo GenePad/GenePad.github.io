@@ -21,6 +21,7 @@ const dict = {
     "nav.ngs": "NGS 数据查看",
     "nav.docs": "技术文档",
     "nav.projects": "生态项目",
+    "nav.stats": "实时数据",
     "nav.cta": "免费下载",
     "nav.lang": "EN",
 
@@ -464,6 +465,29 @@ const dict = {
     "ngs.final.cta": "返回主页",
     "ngs.final.cta2": "立即下载",
     "ngs.top.hint": "直达底部下载区",
+
+    // Stats 子页（实时数据）
+    "st.eyebrow": "Live Stats · 实时数据",
+    "st.title": (
+      <>
+        真实使用数据，
+        <br />
+        公开可查
+      </>
+    ),
+    "st.lead":
+      "以下数字由 GenePad 应用内的匿名使用统计汇总而来：每个安装实例仅以一个随机标识计数，不包含任何序列、文件或个人信息。数据随每次上报自动更新，无需注册即可使用 GenePad。",
+    "st.k.installs": "总装机数",
+    "st.k.active30": "近 30 天活跃",
+    "st.k.active7": "近 7 天活跃",
+    "st.k.hours": "累计使用时长",
+    "st.k.hoursUnit": "小时",
+    "st.chart.title": "每周新增装机",
+    "st.chart.caption": "WEEKLY NEW INSTALLS — 按安装实例首次运行时间统计",
+    "st.updated": "数据更新于",
+    "st.note": "统计口径：以随机安装标识聚合，关闭统计或卸载后不再计数。",
+    "st.error": "统计数据暂时取不到，请稍后刷新重试。",
+    "st.cta": "免费下载，成为下一位用户",
   },
   en: {
     // Nav
@@ -476,6 +500,7 @@ const dict = {
     "nav.ngs": "NGS Viewer",
     "nav.docs": "Dev Docs",
     "nav.projects": "Projects",
+    "nav.stats": "Live Stats",
     "nav.cta": "Free Download",
     "nav.lang": "中",
 
@@ -920,6 +945,29 @@ const dict = {
     "ngs.final.cta": "Back to Home",
     "ngs.final.cta2": "Download Now",
     "ngs.top.hint": "Jump straight to downloads",
+
+    // Stats subpage (live stats)
+    "st.eyebrow": "Live Stats",
+    "st.title": (
+      <>
+        Real usage data,
+        <br />
+        in the open
+      </>
+    ),
+    "st.lead":
+      "These numbers are aggregated from the anonymous usage statistics inside the GenePad app: each installation counts as a single random identifier, with no sequences, files or personal information of any kind. The data refreshes automatically with each report — GenePad itself needs no registration.",
+    "st.k.installs": "Total installs",
+    "st.k.active30": "Active · 30 days",
+    "st.k.active7": "Active · 7 days",
+    "st.k.hours": "Total usage time",
+    "st.k.hoursUnit": "hours",
+    "st.chart.title": "Weekly new installs",
+    "st.chart.caption": "WEEKLY NEW INSTALLS — by first launch of each installation",
+    "st.updated": "Data updated",
+    "st.note": "Method: aggregated by random install identifier. Statistics stop when turned off or the app is uninstalled.",
+    "st.error": "Stats are temporarily unavailable — please refresh and try again later.",
+    "st.cta": "Download free — become the next user",
   },
 } as const;
 

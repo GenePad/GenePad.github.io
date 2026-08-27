@@ -91,6 +91,68 @@ async function handleReport(request, env) {
   return new Response(null, { status: 204, headers: CORS_HEADERS });
 }
 
+const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
+const STATS_WEEKS = 26;
+const STATS_CACHE_SECONDS = 300;
+
+/* 公开聚合统计：只输出计数/总和,不含任何 uuid 明细 */
+async function handleStats(env) {
+  if (!env.DB) {
+    return json({ error: 'd1 binding missing' }, 503);
+  }
+
+  const now = Date.now();
+  const [totals, weeklyRows] = await Promise.all([
+    env.DB.prepare(
+      `SELECT COUNT(*) AS installs,
+              COALESCE(SUM(CASE WHEN last_seen_at > ?1 THEN 1 ELSE 0 END), 0) AS active30d,
+              COALESCE(SUM(CASE WHEN last_seen_at > ?2 THEN 1 ELSE 0 END), 0) AS active7d,
+              COALESCE(SUM(usage_seconds_total), 0) AS total_seconds
+       FROM usage_reports`,
+    )
+      .bind(now - 30 * 24 * 60 * 60 * 1000, now - 7 * 24 * 60 * 60 * 1000)
+      .first(),
+    env.DB.prepare(
+      `SELECT (first_seen_at / ${WEEK_MS}) * ${WEEK_MS} AS wk, COUNT(*) AS n
+       FROM usage_reports
+       WHERE first_seen_at > ?1
+       GROUP BY wk`,
+    )
+      .bind(now - STATS_WEEKS * WEEK_MS)
+      .all(),
+  ]);
+
+  const counts = new Map(
+    (weeklyRows.results ?? []).map((row) => [Number(row.wk), Number(row.n)]),
+  );
+  const currentWeekStart = Math.floor(now / WEEK_MS) * WEEK_MS;
+  const weekly = [];
+  for (let i = STATS_WEEKS - 1; i >= 0; i -= 1) {
+    const w = currentWeekStart - i * WEEK_MS;
+    weekly.push({ w, n: counts.get(w) ?? 0 });
+  }
+
+  return new Response(
+    JSON.stringify({
+      ok: true,
+      installs: Number(totals?.installs ?? 0),
+      active30d: Number(totals?.active30d ?? 0),
+      active7d: Number(totals?.active7d ?? 0),
+      totalHours: Math.round(Number(totals?.total_seconds ?? 0) / 360) / 10,
+      weekly,
+      updatedAt: now,
+    }),
+    {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Cache-Control': `public, max-age=${STATS_CACHE_SECONDS}`,
+        ...CORS_HEADERS,
+      },
+    },
+  );
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -106,6 +168,10 @@ export default {
         return handleReport(request, env);
       }
       return json({ error: 'method not allowed' }, 405);
+    }
+
+    if (url.pathname === '/api/telemetry/stats' && request.method === 'GET') {
+      return handleStats(env);
     }
 
     return env.ASSETS.fetch(request);

@@ -68,9 +68,15 @@ export default function Nav() {
           </a>
           <a
             href="projects.html"
-            className="font-mono text-[12px] tracking-[0.12em] text-ink/70 transition-colors hover:text-gfp-deep"
+            className="hidden font-mono text-[12px] tracking-[0.12em] text-ink/70 transition-colors hover:text-gfp-deep lg:inline"
           >
             {t("nav.projects")}
+          </a>
+          <a
+            href="stats.html"
+            className="font-mono text-[12px] tracking-[0.12em] text-ink/70 transition-colors hover:text-gfp-deep"
+          >
+            {t("nav.stats")}
           </a>
         </nav>
 

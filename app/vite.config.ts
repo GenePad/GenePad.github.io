@@ -27,6 +27,7 @@ export default defineConfig({
         projects: path.resolve(__dirname, "projects.html"),
         library: path.resolve(__dirname, "library.html"),
         ngs: path.resolve(__dirname, "ngs.html"),
+        stats: path.resolve(__dirname, "stats.html"),
       },
     },
   },
