@@ -34,6 +34,15 @@ docs/                        # SERVED ROOT — do not hand-edit index.html / tec
 wrangler.jsonc               # Cloudflare Pages configuration (serves docs/)
 ```
 
+## Telemetry API (`/api/telemetry`)
+
+`docs/_worker.js` is a Pages advanced-mode Worker committed in the build output: it serves
+`/api/telemetry` (anonymous usage stats POSTed by the Gene Editor app every 7 days, D1-backed)
+and falls back to `env.ASSETS.fetch()` for every other path, so static serving is unchanged.
+Requirements (dashboard, one-time): create a D1 database, run the CREATE TABLE SQL embedded
+at the top of `_worker.js`, and bind it to the Pages project as variable **`DB`**.
+No build tooling touches this file — edit it directly and push.
+
 ## Build & Deploy
 
 ```bash
