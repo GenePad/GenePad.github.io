@@ -17,6 +17,7 @@ interface StatsData {
   active30d: number;
   active7d: number;
   totalHours: number;
+  byOs?: Partial<Record<"windows" | "linux" | "macos" | "android" | "other", number>>;
   weekly: { w: number; n: number }[];
   updatedAt: number;
 }
@@ -74,6 +75,20 @@ export default function Stats() {
   const weekly = data?.weekly?.slice(-WEEKS_SHOWN) ?? [];
   const maxN = Math.max(1, ...weekly.map((d) => d.n));
 
+  /* 系统分布:按装机数降序,零计数不占行 */
+  const osLabels: Record<string, string> = {
+    windows: "Windows",
+    linux: "Linux",
+    macos: "macOS",
+    android: "Android",
+    other: t("st.os.other") as string,
+  };
+  const osRows = Object.entries(data?.byOs ?? {})
+    .map(([key, n]) => ({ key, label: osLabels[key] ?? key, n: n ?? 0 }))
+    .filter((row) => row.n > 0)
+    .sort((a, b) => b.n - a.n || a.key.localeCompare(b.key));
+  const osTotal = osRows.reduce((sum, row) => sum + row.n, 0);
+
   /* 图表绘制区：viewBox 固定 26 根柱，柱高按最大值归一 */
   const CHART_W = 780;
   const CHART_H = 200;
@@ -107,6 +122,40 @@ export default function Stats() {
             ))}
           </ul>
         </Reveal>
+
+        {/* 装机系统分布(接口未返回 byOs 时整块不渲染) */}
+        {osRows.length > 0 && (
+          <Reveal delay={160}>
+            <figure className="mt-14 border border-line">
+              <figcaption className="border-b border-line px-6 py-4 md:px-8">
+                <span className="font-mono text-[11px] tracking-[0.2em] text-ink/55">
+                  {t("st.os.title")}
+                </span>
+              </figcaption>
+              <ul className="flex flex-col gap-4 px-6 py-6 md:px-8 md:py-7">
+                {osRows.map((row) => {
+                  const pct = osTotal > 0 ? (row.n / osTotal) * 100 : 0;
+                  return (
+                    <li key={row.key} className="flex items-center gap-4">
+                      <span className="w-20 shrink-0 font-mono text-[11px] tracking-[0.12em] text-ink/60">
+                        {row.label}
+                      </span>
+                      <span className="h-2 flex-1 overflow-hidden bg-ink/[0.06]">
+                        <span
+                          className="block h-full bg-gfp-deep"
+                          style={{ width: `${Math.max(pct, 0.75)}%` }}
+                        />
+                      </span>
+                      <span className="w-28 shrink-0 text-right font-mono text-[11px] tabular-nums tracking-[0.08em] text-ink/70">
+                        {fmt(row.n)} · {pct.toLocaleString(locale, { maximumFractionDigits: 1 })}%
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </figure>
+          </Reveal>
+        )}
 
         {/* 每周新增装机柱状图 */}
         <Reveal delay={200}>

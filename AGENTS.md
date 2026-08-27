@@ -43,19 +43,27 @@ Requirements (dashboard, one-time): create a D1 database, run the CREATE TABLE S
 at the top of `_worker.js`, and bind it to the Pages project as variable **`DB`**.
 No build tooling touches this file — edit it directly and push.
 
+The payload carries a coarse `os` field (`windows`/`linux`/`macos`/`android`/`other`,
+whitelist-validated server-side; old clients omit it, in which case the stored value is kept
+via `COALESCE`). Existing databases must run
+`ALTER TABLE usage_reports ADD COLUMN os TEXT;` in the D1 console **before** deploying a
+`_worker.js` that writes `os` — otherwise the UPSERT fails with 500 (clients simply retry,
+no data loss). Legacy rows with NULL `os` are derived from the `platform` prefix at query
+time; no backfill is needed.
+
 It also exposes `GET /api/telemetry/stats` — aggregate-only counters (installs, active 7d/30d,
-total hours, 26-week install histogram) consumed by the public `stats.html` subpage; no
-per-uuid rows are ever exposed. Dashboard binding changes take effect only after a redeploy
-(push an empty commit if needed).
+total hours, `byOs` OS distribution, 26-week install histogram) consumed by the public
+`stats.html` subpage; no per-uuid rows are ever exposed. Dashboard binding changes take
+effect only after a redeploy (push an empty commit if needed).
 
 ## Stats Subpage (`stats.html`)
 
 `app/stats.html` + `app/src/stats-main.tsx` + `app/src/pages/Stats.tsx` render the public
-live-stats page (big-number cards + weekly install bar chart, pure SVG, no chart library).
-Data is fetched client-side from `https://genepad.pages.dev/api/telemetry/stats` (absolute
-URL so genepad.cn / GitHub Pages mirrors work; CORS handled by `_worker.js`). Copy lives in
-`app/src/i18n.tsx` under `st.*` and `nav.stats` (zh + en). Remember: `docs/stats.html` is
-build output — never hand-edit.
+live-stats page (big-number cards + OS distribution bars + weekly install bar chart, pure
+SVG/divs, no chart library). Data is fetched client-side from
+`https://genepad.pages.dev/api/telemetry/stats` (absolute URL so genepad.cn / GitHub Pages
+mirrors work; CORS handled by `_worker.js`). Copy lives in `app/src/i18n.tsx` under `st.*`
+and `nav.stats` (zh + en). Remember: `docs/stats.html` is build output — never hand-edit.
 
 ## Build & Deploy
 
