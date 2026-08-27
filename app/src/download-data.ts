@@ -42,7 +42,7 @@ export const PLATFORMS: (Omit<PlatformDownloads, "files"> & {
   {
     id: "windows",
     files: [
-      { name: `GenePad_${VERSION}_Windows_amd64.zip`, size: "8.4 MB" },
+      { name: `GenePad_${VERSION}_Windows_amd64.zip`, size: "8.5 MB" },
     ].map(withSources),
   },
   {
@@ -55,7 +55,7 @@ export const PLATFORMS: (Omit<PlatformDownloads, "files"> & {
   {
     id: "linux-x64",
     files: [
-      { name: `GenePad_${VERSION}_Linux_amd64.deb`, size: "11.2 MB" },
+      { name: `GenePad_${VERSION}_Linux_amd64.deb`, size: "11.1 MB" },
       { name: `GenePad_${VERSION}_Linux_amd64.rpm`, size: "11.2 MB" },
       { name: `GenePad_${VERSION}_Linux_amd64.tar.gz`, size: "10.2 MB" },
     ].map(withSources),
