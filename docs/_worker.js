@@ -6,13 +6,15 @@
 // 站点行为与之前完全一致。
 //
 // 客户端载荷(每 7 天一次,见 Gene Editor 仓库 docs/telemetry.md)：
-// { uuid, appVersion, platform, usageSecondsTotal, usageSecondsPeriod, reportedAt }
+// { uuid, appVersion, platform, os, usageSecondsTotal, usageSecondsPeriod, reportedAt }
+// os 为粗粒度系统归属:windows/linux/macos/android/other(旧客户端不带,按 platform 前缀回退推导)
 //
 // 建表 SQL(在 D1 控制台执行一次)：
 //   CREATE TABLE IF NOT EXISTS usage_reports (
 //     uuid TEXT PRIMARY KEY,
 //     app_version TEXT NOT NULL DEFAULT '',
 //     platform TEXT,
+//     os TEXT,
 //     usage_seconds_total INTEGER NOT NULL DEFAULT 0,
 //     report_count INTEGER NOT NULL DEFAULT 0,
 //     first_seen_at INTEGER NOT NULL,
@@ -20,10 +22,14 @@
 //   );
 //   CREATE INDEX IF NOT EXISTS idx_usage_reports_last_seen ON usage_reports (last_seen_at);
 //   CREATE INDEX IF NOT EXISTS idx_usage_reports_version ON usage_reports (app_version);
+//
+// 已建库升级(一次性,必须先于本版本部署执行,否则 os 列缺失导致 UPSERT 500)：
+//   ALTER TABLE usage_reports ADD COLUMN os TEXT;
 
 const UUID_PATTERN = /^[A-Za-z0-9_-]{8,64}$/;
 const MAX_TEXT_LENGTH = 64;
 const MAX_USAGE_SECONDS = 1_000_000_000;
+const OS_WHITELIST = new Set(['windows', 'linux', 'macos', 'android', 'other']);
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -67,22 +73,26 @@ async function handleReport(request, env) {
 
   const appVersion = sanitizeText(body.appVersion);
   const platform = body.platform === null ? null : sanitizeText(body.platform);
+  // 旧客户端载荷没有 os:存 NULL,聚合查询按 platform 前缀回退推导
+  const os = typeof body.os === 'string' && OS_WHITELIST.has(body.os) ? body.os : null;
   const usageSecondsTotal = clampSeconds(body.usageSecondsTotal);
   const now = Date.now();
 
   try {
-    // 累计时长取 MAX：离线补报 / 多窗口偶发双发不会把总量回退
+    // 累计时长取 MAX：离线补报 / 多窗口偶发双发不会把总量回退;
+    // os 取 COALESCE:旧客户端(不带 os)重报不会抹掉已记录的值
     await env.DB.prepare(
-      `INSERT INTO usage_reports (uuid, app_version, platform, usage_seconds_total, report_count, first_seen_at, last_seen_at)
-       VALUES (?1, ?2, ?3, ?4, 1, ?5, ?5)
+      `INSERT INTO usage_reports (uuid, app_version, platform, os, usage_seconds_total, report_count, first_seen_at, last_seen_at)
+       VALUES (?1, ?2, ?3, ?4, ?5, 1, ?6, ?6)
        ON CONFLICT(uuid) DO UPDATE SET
          app_version = excluded.app_version,
          platform = excluded.platform,
+         os = COALESCE(excluded.os, usage_reports.os),
          usage_seconds_total = MAX(usage_reports.usage_seconds_total, excluded.usage_seconds_total),
          report_count = usage_reports.report_count + 1,
          last_seen_at = MAX(usage_reports.last_seen_at, excluded.last_seen_at)`
     )
-      .bind(uuid, appVersion, platform, usageSecondsTotal, now)
+      .bind(uuid, appVersion, platform, os, usageSecondsTotal, now)
       .run();
   } catch (err) {
     return json({ error: 'db error' }, 500);
@@ -102,7 +112,7 @@ async function handleStats(env) {
   }
 
   const now = Date.now();
-  const [totals, weeklyRows] = await Promise.all([
+  const [totals, weeklyRows, osRows] = await Promise.all([
     env.DB.prepare(
       `SELECT COUNT(*) AS installs,
               COALESCE(SUM(CASE WHEN last_seen_at > ?1 THEN 1 ELSE 0 END), 0) AS active30d,
@@ -120,6 +130,18 @@ async function handleStats(env) {
     )
       .bind(now - STATS_WEEKS * WEEK_MS)
       .all(),
+    // 分系统装机数;历史行 os 为 NULL(旧客户端载荷)时按 platform 前缀回退推导
+    env.DB.prepare(
+      `SELECT COALESCE(os, CASE
+               WHEN platform LIKE 'windows%' THEN 'windows'
+               WHEN platform LIKE 'darwin%' THEN 'macos'
+               WHEN platform LIKE 'linux%' THEN 'linux'
+               WHEN platform = 'android' THEN 'android'
+               ELSE 'other'
+             END) AS os_key, COUNT(*) AS n
+       FROM usage_reports
+       GROUP BY os_key`,
+    ).all(),
   ]);
 
   const counts = new Map(
@@ -132,6 +154,12 @@ async function handleStats(env) {
     weekly.push({ w, n: counts.get(w) ?? 0 });
   }
 
+  const byOs = { windows: 0, linux: 0, macos: 0, android: 0, other: 0 };
+  for (const row of osRows.results ?? []) {
+    const key = String(row.os_key ?? 'other');
+    if (key in byOs) byOs[key] = Number(row.n);
+  }
+
   return new Response(
     JSON.stringify({
       ok: true,
@@ -139,6 +167,7 @@ async function handleStats(env) {
       active30d: Number(totals?.active30d ?? 0),
       active7d: Number(totals?.active7d ?? 0),
       totalHours: Math.round(Number(totals?.total_seconds ?? 0) / 360) / 10,
+      byOs,
       weekly,
       updatedAt: now,
     }),
