@@ -181,6 +181,9 @@ function FileBox({ files }: { files: FileEntry[] }) {
           <span>{t("dl.source.github")}</span>
         </span>
       </div>
+      <p className="border-b border-lined px-5 py-3 text-[12px] leading-6 text-paper/55">
+        {t("dl.upgradeNote")}
+      </p>
       <ul className="divide-y divide-lined">
         {files.map((f) => (
           <li
@@ -301,31 +304,18 @@ export default function Download({ index = "06" }: { index?: string }) {
         {active && (
           <Reveal delay={120}>
             <div className="mt-8 space-y-4">
-              {/* 命令行安装：仅 macOS / Linux，多方式互斥切换 */}
+              {/* 命令行安装：仅 macOS / Linux；macOS 只保留推荐的一键脚本，其余方式合并折叠到底部 */}
               {(isMac || isLinux) && (
                 <>
                   <p className="font-mono text-[11px] tracking-[0.24em] uppercase text-paper/50">
                     {t(isMac ? "dl.cmdTitle.recommended" : "dl.cmdTitle.plain")}
                   </p>
                   {isMac ? (
-                    <>
-                      <CopyCmd
-                        label={t("dl.cmd.scriptLabelMac") as string}
-                        cmd="curl -fsSL https://genepad.cn/release/install.sh | bash"
-                        note={t("dl.cmd.note") as string}
-                      />
-                      <OrDivider>{t("dl.or.mac")}</OrDivider>
-                      <CopyCmd
-                        label={t("dl.cmd.brewLabel") as string}
-                        cmd="brew install genepad/tap/genepad"
-                        note={t("dl.cmd.note") as string}
-                      />
-                      <CopyCmd
-                        label={t("dl.cmd.npmLabelMac") as string}
-                        cmd="npm i -g @genepad/app"
-                        note={t("dl.cmd.note") as string}
-                      />
-                    </>
+                    <CopyCmd
+                      label={t("dl.cmd.scriptLabelMac") as string}
+                      cmd="curl -fsSL https://genepad.cn/release/install.sh | bash"
+                      note={t("dl.cmd.note") as string}
+                    />
                   ) : (
                     <>
                       <CmdTabs
@@ -355,10 +345,7 @@ export default function Download({ index = "06" }: { index?: string }) {
                 </>
               )}
 
-              {/* macOS：AI 辅助安装提示词 */}
-              {isMac && <AiPromptBox />}
-
-              {/* 安装包直链：macOS 折叠并提示未签名 */}
+              {/* macOS：推荐脚本之外的安装方式（brew / npm / AI 提示词 / 未签名直链）合并进同一个折叠区 */}
               {isMac ? (
                 <details className="group border border-lined">
                   <summary className="flex cursor-pointer list-none items-center gap-3 px-5 py-4 transition-colors hover:bg-ink-2 [&::-webkit-details-marker]:hidden">
@@ -367,13 +354,22 @@ export default function Download({ index = "06" }: { index?: string }) {
                     </span>
                     <span className="text-[14px] font-bold">{t("dl.mac.other")}</span>
                   </summary>
-                  <div className="border-t border-lined px-5 py-4">
+                  <div className="space-y-4 border-t border-lined px-5 py-4">
+                    <CopyCmd
+                      label={t("dl.cmd.brewLabel") as string}
+                      cmd="brew install genepad/tap/genepad"
+                      note={t("dl.cmd.note") as string}
+                    />
+                    <CopyCmd
+                      label={t("dl.cmd.npmLabelMac") as string}
+                      cmd="npm i -g @genepad/app"
+                      note={t("dl.cmd.note") as string}
+                    />
+                    <AiPromptBox />
                     <p className="border-l-2 border-amber-400/70 bg-amber-400/[0.06] px-4 py-3 text-[12.5px] leading-6 text-amber-200/90">
                       {t("dl.mac.unsigned")}
                     </p>
-                    <div className="mt-4">
-                      <FileBox files={active.files} />
-                    </div>
+                    <FileBox files={active.files} />
                   </div>
                 </details>
               ) : (

@@ -132,7 +132,7 @@ const dict = {
     "lp.cta": "了解更多",
 
     // Download
-    "dl.eyebrow": "Download · 下载安装",
+    "dl.eyebrow": "Download · 下载 / 覆盖升级",
     "dl.title": (
       <>
         覆盖桌面与移动端的
@@ -141,12 +141,14 @@ const dict = {
       </>
     ),
     "dl.lead":
-      "支持 Windows、macOS、Linux 桌面端与 Android 移动端，各平台功能一致，可随时查看与编辑载体文件。",
+      "支持 Windows、macOS、Linux 桌面端与 Android 移动端，各平台功能一致。首次使用下载安装包即可完成安装；已安装的用户直接下载最新版覆盖安装即可升级，无需卸载旧版本。",
     "dl.note.desktop": "桌面端",
     "dl.note.linuxX64": "桌面端 · x86_64",
     "dl.note.linuxArm64": "桌面端 · ARM64",
     "dl.note.mobile": "移动端",
     "dl.note.soon": "敬请期待",
+    "dl.upgradeNote":
+      "已安装 GenePad？直接下载最新安装包覆盖安装即可完成升级，无需卸载旧版本；新用户下载后按提示安装即可。",
     "dl.cmdTitle.recommended": "命令行安装（推荐）",
     "dl.cmdTitle.plain": "命令行安装",
     "dl.cmd.brewLabel": "macOS · Homebrew",
@@ -158,7 +160,6 @@ const dict = {
     "dl.cmdTab.script": "一键脚本",
     "dl.cmdTab.npm": "npm",
     "dl.cmd.recommendedTag": "推荐",
-    "dl.or.mac": "其他安装方式",
     "dl.or.linux": "或直接下载安装包",
     "dl.ai.title": "AI 辅助安装",
     "dl.ai.desc":
@@ -184,7 +185,7 @@ const dict = {
    open "/Applications/GenePad.app"
 
 ⚠️ 注意：以上方法可能失效或已过时。若某一步无法完成，请自行改用其他可行方案（例如换一种绕过 Gatekeeper 的方式，或使用其他解压、签名工具）。仅当上述下载链接无法访问时，再访问官网 https://genepad.cn——官网仅提供其他下载链接，不提供安装支持。`,
-    "dl.mac.other": "其他下载方式（DMG / APP 直链）",
+    "dl.mac.other": "其他安装方式（Homebrew / npm / AI 辅助 / 安装包直链）",
     "dl.mac.unsigned":
       "未签名说明：浏览器直接下载的 .dmg / .app 文件会被 Gatekeeper 标记为「已损坏」。请通过右键 →「打开」运行，或执行 xattr -cr 移除隔离属性；建议优先采用上述命令行安装方式。",
     "dl.copy": "复制",
@@ -613,7 +614,7 @@ const dict = {
     "lp.cta": "Learn more",
 
     // Download
-    "dl.eyebrow": "Download",
+    "dl.eyebrow": "Download · Install / Upgrade",
     "dl.title": (
       <>
         Full-platform clients
@@ -622,12 +623,14 @@ const dict = {
       </>
     ),
     "dl.lead":
-      "Available on Windows, macOS and Linux desktops as well as Android, with consistent functionality across platforms for viewing and editing vector files at any time.",
+      "Available on Windows, macOS and Linux desktops as well as Android, with consistent functionality across platforms. First-time users can install directly from a downloaded package; existing users can upgrade by downloading the latest version and installing over the old one — no uninstall needed.",
     "dl.note.desktop": "Desktop",
     "dl.note.linuxX64": "Desktop · x86_64",
     "dl.note.linuxArm64": "Desktop · ARM64",
     "dl.note.mobile": "Mobile",
     "dl.note.soon": "Coming soon",
+    "dl.upgradeNote":
+      "Already installed? Just download the latest installer and install over the existing version to upgrade — no uninstall needed. New users can install as usual after downloading.",
     "dl.cmdTitle.recommended": "Command-line install (recommended)",
     "dl.cmdTitle.plain": "Command-line install",
     "dl.cmd.brewLabel": "macOS · Homebrew",
@@ -639,7 +642,6 @@ const dict = {
     "dl.cmdTab.script": "Install script",
     "dl.cmdTab.npm": "npm",
     "dl.cmd.recommendedTag": "Recommended",
-    "dl.or.mac": "Other installation options",
     "dl.or.linux": "Or download the installers directly",
     "dl.ai.title": "AI-assisted install",
     "dl.ai.desc":
@@ -665,7 +667,7 @@ const dict = {
    open "/Applications/GenePad.app"
 
 ⚠️ Note: the methods above may fail or be outdated. If a step does not work, switch to another viable approach on your own (e.g. a different way to bypass Gatekeeper, or other tools to extract and sign the app). Visit the official site https://genepad.cn only if the download links above are unreachable — the site lists alternative download links only and provides no installation support.`,
-    "dl.mac.other": "Other download options (DMG / APP direct links)",
+    "dl.mac.other": "Other installation options (Homebrew / npm / AI-assisted / direct downloads)",
     "dl.mac.unsigned":
       "Unsigned notice: .dmg / .app files downloaded through a browser are flagged as \"damaged\" by Gatekeeper. Open them via right-click → Open, or run xattr -cr to remove the quarantine attribute; the command-line installation above is recommended.",
     "dl.copy": "Copy",

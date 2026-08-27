@@ -61,6 +61,7 @@ export default function Footer() {
         { label: t("ft.projects"), href: "projects.html", external: false },
         { label: t("ft.library"), href: "library.html", external: false },
         { label: t("ft.ngs"), href: "ngs.html", external: false },
+        { label: t("nav.stats"), href: "stats.html", external: false },
         { label: t("ft.sponsor"), href: "https://ifdian.net/a/geneeditor", external: true },
       ],
     },
