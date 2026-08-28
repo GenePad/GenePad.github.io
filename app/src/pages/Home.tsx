@@ -37,9 +37,9 @@ export default function Home() {
           />
           <Workbench />
           <LibraryPromo />
-          <DayNight />
           <Sanger />
           <NgsPromo />
+          <DayNight />
           <Toolbox />
           <Download index="07" />
           <Footer />

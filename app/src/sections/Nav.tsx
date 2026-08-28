@@ -15,8 +15,8 @@ export default function Nav() {
 
   const LINKS = [
     { href: "#workbench", label: t("nav.workbench") },
-    { href: "#daynight", label: t("nav.daynight") },
     { href: "#sanger", label: t("nav.sanger") },
+    { href: "#daynight", label: t("nav.daynight") },
     { href: "#toolbox", label: t("nav.toolbox") },
     { href: "#download", label: t("nav.download") },
   ];

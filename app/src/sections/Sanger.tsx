@@ -33,7 +33,7 @@ export default function Sanger() {
 
           {/* 右侧：文案 + 指标 */}
           <div className="order-1 lg:order-2">
-            <SectionHead index="04" eyebrow={t("sg.eyebrow") as string} title={t("sg.title")}>
+            <SectionHead index="03" eyebrow={t("sg.eyebrow") as string} title={t("sg.title")}>
               {t("sg.lead")}
             </SectionHead>
 

@@ -1,7 +1,7 @@
 import { Reveal, SectionHead, Shot, ArrowRight } from "./shared";
 import { useLang, type TKey } from "../i18n";
 
-/* 首页 NGS 数据查看推荐节：承接 Sanger(04)，链接到 ngs.html 详述页 */
+/* 首页 NGS 数据查看推荐节：承接 Sanger(03)，链接到 ngs.html 详述页 */
 
 const BADGES: { k: string; v: TKey }[] = [
   { k: "FORMATS", v: "np.c1" },
@@ -20,7 +20,7 @@ export default function NgsPromo() {
           {/* 左侧：文案 + 卖点格 + 按钮 */}
           <div className="order-1">
             <SectionHead
-              index="05"
+              index="04"
               eyebrow={t("ngs.eyebrow") as string}
               title={t("ngs.title")}
             >
