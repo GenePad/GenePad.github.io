@@ -22,7 +22,7 @@ const dict = {
     "nav.docs": "技术文档",
     "nav.projects": "生态项目",
     "nav.stats": "实时数据",
-    "nav.cta": "免费下载",
+    "nav.cta": "免费下载/升级",
     "nav.lang": "EN",
 
     // Hero
@@ -32,7 +32,7 @@ const dict = {
     "hero.titleEn": "Gene Map Editor",
     "hero.desc":
       "面向日常分子克隆的跨平台基因图谱编辑器：浏览与编辑质粒图谱、管理序列标注、分析酶切位点、比对 Sanger 测序峰图，覆盖克隆设计与结果核验的完整流程。",
-    "hero.download": "免费下载 GenePad",
+    "hero.download": "免费下载/升级",
     "hero.tour": "查看界面",
     "hero.features": "图谱 · 标注 · 酶切 · 引物 · 峰图",
     "hero.platforms": "支持平台",
@@ -149,19 +149,19 @@ const dict = {
     "dl.note.soon": "敬请期待",
     "dl.upgradeNote":
       "已安装 GenePad？直接下载最新安装包覆盖安装即可完成升级，无需卸载旧版本；新用户下载后按提示安装即可。",
-    "dl.cmdTitle.recommended": "命令行安装（推荐）",
-    "dl.cmdTitle.plain": "命令行安装",
+    "dl.cmdTitle.recommended": "命令行安装/升级（推荐）",
+    "dl.cmdTitle.plain": "命令行安装/升级",
     "dl.cmd.brewLabel": "macOS · Homebrew",
     "dl.cmd.npmLabel": "Linux · npm",
     "dl.cmd.npmLabelMac": "macOS · npm",
     "dl.cmd.note": "复制以上命令，在终端中粘贴并执行。",
-    "dl.cmd.scriptLabel": "Linux · 一键安装脚本",
-    "dl.cmd.scriptLabelMac": "macOS · 一键安装脚本",
+    "dl.cmd.scriptLabel": "Linux · 一键安装/升级脚本",
+    "dl.cmd.scriptLabelMac": "macOS · 一键安装/升级脚本",
     "dl.cmdTab.script": "一键脚本",
     "dl.cmdTab.npm": "npm",
     "dl.cmd.recommendedTag": "推荐",
     "dl.or.linux": "或直接下载安装包",
-    "dl.ai.title": "AI 辅助安装",
+    "dl.ai.title": "AI 辅助安装/升级",
     "dl.ai.desc":
       "macOS 安装包未签名，手动安装步骤较多。可将以下提示词复制给 AI 助手（Kimi、ChatGPT 等），在其引导下逐步完成安装。",
     "dl.ai.prompt": `请协助我在 macOS 上安装名为「GenePad」的应用。请按以下顺序尝试，任一方法成功即可停止：
@@ -185,9 +185,9 @@ const dict = {
    open "/Applications/GenePad.app"
 
 ⚠️ 注意：以上方法可能失效或已过时。若某一步无法完成，请自行改用其他可行方案（例如换一种绕过 Gatekeeper 的方式，或使用其他解压、签名工具）。仅当上述下载链接无法访问时，再访问官网 https://genepad.cn——官网仅提供其他下载链接，不提供安装支持。`,
-    "dl.mac.other": "其他安装方式（Homebrew / npm / AI 辅助 / 安装包直链）",
+    "dl.mac.other": "其他安装/升级方式（Homebrew / npm / AI 辅助 / 安装包直链）",
     "dl.mac.unsigned":
-      "未签名说明：浏览器直接下载的 .dmg / .app 文件会被 Gatekeeper 标记为「已损坏」。请通过右键 →「打开」运行，或执行 xattr -cr 移除隔离属性；建议优先采用上述命令行安装方式。",
+      "未签名说明：浏览器直接下载的 .dmg / .app 文件会被 Gatekeeper 标记为「已损坏」。请通过右键 →「打开」运行，或执行 xattr -cr 移除隔离属性；建议优先采用上述命令行安装/升级方式。",
     "dl.copy": "复制",
     "dl.copied": "已复制 ✓",
     "dl.filesTitle": "直接下载安装包",
@@ -201,7 +201,7 @@ const dict = {
     "dl.arch.x64": "x86_64",
     "dl.arch.arm64": "ARM64",
     "dl.spark": "星火应用商店",
-    "dl.sparkNote": "使用国产 Linux 发行版的用户，也可通过星火应用商店安装",
+    "dl.sparkNote": "使用国产 Linux 发行版的用户，也可通过星火应用商店安装/升级",
     "dl.releases": "全部版本（GitHub Releases）",
     "dl.releasesGitee": "全部版本（Gitee 镜像）",
     "dl.licenseTag": "LICENSE · 授权",
@@ -370,7 +370,7 @@ const dict = {
 
     "lib.final.title": "基因文件库为 GenePad 的内置模块，并非独立软件",
     "lib.final.desc":
-      "基因文件库内置于 GenePad 基因图谱编辑器：下载安装 GenePad 后，在工具箱中即可使用。当前为免费公测阶段，覆盖全部平台。",
+      "基因文件库内置于 GenePad 基因图谱编辑器：下载安装/升级 GenePad 后，在工具箱中即可使用。当前为免费公测阶段，覆盖全部平台。",
     "lib.final.cta": "返回主页",
     "lib.final.cta2": "立即下载",
     "lib.top.hint": "直达底部下载区",
@@ -403,7 +403,7 @@ const dict = {
     "ngs.open.headEn": "OPENING FASTQ FILES",
     "ngs.open.title": "右键、拖入即可打开，无需命令行",
     "ngs.open.lead":
-      "支持 fastq.gz、fastq、fq.gz、fq 四种扩展名，gzip 压缩文件无需预先解压。安装 GenePad 后，两种方式任选其一：",
+      "支持 fastq.gz、fastq、fq.gz、fq 四种扩展名，gzip 压缩文件无需预先解压。安装/升级 GenePad 后，两种方式任选其一：",
     "ngs.open.1.name": "右键「打开方式」",
     "ngs.open.1.desc":
       "在资源管理器中右键测序文件 →「打开方式」：子菜单中直接选择 GenePad，或在「选择其他应用」列表中选中 GenePad 并设为默认——此后双击测序文件即可直接打开。",
@@ -462,7 +462,7 @@ const dict = {
 
     "ngs.final.title": "NGS 数据查看是 GenePad 的内置功能，并非独立软件",
     "ngs.final.desc":
-      "NGS 数据查看内置于 GenePad 基因图谱编辑器：下载安装后即可直接打开测序文件，与图谱编辑、Sanger 峰图比对等功能在同一程序内配合使用。当前为免费公测阶段，覆盖全部平台。",
+      "NGS 数据查看内置于 GenePad 基因图谱编辑器：下载安装/升级后即可直接打开测序文件，与图谱编辑、Sanger 峰图比对等功能在同一程序内配合使用。当前为免费公测阶段，覆盖全部平台。",
     "ngs.final.cta": "返回主页",
     "ngs.final.cta2": "立即下载",
     "ngs.top.hint": "直达底部下载区",
@@ -504,7 +504,7 @@ const dict = {
     "nav.docs": "Dev Docs",
     "nav.projects": "Projects",
     "nav.stats": "Live Stats",
-    "nav.cta": "Free Download",
+    "nav.cta": "Free Download / Upgrade",
     "nav.lang": "中",
 
     // Hero
@@ -514,7 +514,7 @@ const dict = {
     "hero.titleEn": "Cross-platform",
     "hero.desc":
       "A cross-platform gene map editor for everyday molecular cloning: browse and edit plasmid maps, manage sequence annotations, analyze restriction sites, and align Sanger traces — covering the full workflow from cloning design to result verification.",
-    "hero.download": "Download GenePad Free",
+    "hero.download": "Download / Upgrade Free",
     "hero.tour": "View the interface",
     "hero.features": "MAP · ANNOTATION · ENZYME · PRIMER · TRACE",
     "hero.platforms": "Available on",
@@ -631,19 +631,19 @@ const dict = {
     "dl.note.soon": "Coming soon",
     "dl.upgradeNote":
       "Already installed? Just download the latest installer and install over the existing version to upgrade — no uninstall needed. New users can install as usual after downloading.",
-    "dl.cmdTitle.recommended": "Command-line install (recommended)",
-    "dl.cmdTitle.plain": "Command-line install",
+    "dl.cmdTitle.recommended": "Command-line install / upgrade (recommended)",
+    "dl.cmdTitle.plain": "Command-line install / upgrade",
     "dl.cmd.brewLabel": "macOS · Homebrew",
     "dl.cmd.npmLabel": "Linux · npm",
     "dl.cmd.npmLabelMac": "macOS · npm",
       "dl.cmd.note": "Copy the command above, paste it into a terminal, and run it.",
-    "dl.cmd.scriptLabel": "Linux · Install script",
-    "dl.cmd.scriptLabelMac": "macOS · Install script",
-    "dl.cmdTab.script": "Install script",
+    "dl.cmd.scriptLabel": "Linux · Install / upgrade script",
+    "dl.cmd.scriptLabelMac": "macOS · Install / upgrade script",
+    "dl.cmdTab.script": "Install / upgrade",
     "dl.cmdTab.npm": "npm",
     "dl.cmd.recommendedTag": "Recommended",
     "dl.or.linux": "Or download the installers directly",
-    "dl.ai.title": "AI-assisted install",
+    "dl.ai.title": "AI-assisted install / upgrade",
     "dl.ai.desc":
       "The macOS packages are unsigned and involve several manual steps. Copy the prompt below to an AI assistant (Kimi, ChatGPT, etc.) and complete the installation under its step-by-step guidance.",
     "dl.ai.prompt": `Please help me install an application called "GenePad" on macOS. Try the following methods in order and stop at the first one that succeeds:
@@ -667,9 +667,9 @@ const dict = {
    open "/Applications/GenePad.app"
 
 ⚠️ Note: the methods above may fail or be outdated. If a step does not work, switch to another viable approach on your own (e.g. a different way to bypass Gatekeeper, or other tools to extract and sign the app). Visit the official site https://genepad.cn only if the download links above are unreachable — the site lists alternative download links only and provides no installation support.`,
-    "dl.mac.other": "Other installation options (Homebrew / npm / AI-assisted / direct downloads)",
+    "dl.mac.other": "Other install / upgrade options (Homebrew / npm / AI-assisted / direct downloads)",
     "dl.mac.unsigned":
-      "Unsigned notice: .dmg / .app files downloaded through a browser are flagged as \"damaged\" by Gatekeeper. Open them via right-click → Open, or run xattr -cr to remove the quarantine attribute; the command-line installation above is recommended.",
+      "Unsigned notice: .dmg / .app files downloaded through a browser are flagged as \"damaged\" by Gatekeeper. Open them via right-click → Open, or run xattr -cr to remove the quarantine attribute; the command-line install / upgrade above is recommended.",
     "dl.copy": "Copy",
     "dl.copied": "Copied ✓",
     "dl.filesTitle": "Download installers directly",
@@ -683,7 +683,7 @@ const dict = {
     "dl.arch.x64": "x86_64",
     "dl.arch.arm64": "ARM64",
     "dl.spark": "Spark Store",
-    "dl.sparkNote": "Users of Chinese Linux distributions can also install the application from the Spark app store",
+    "dl.sparkNote": "Users of Chinese Linux distributions can also install or upgrade the application from the Spark app store",
     "dl.releases": "All releases (GitHub Releases)",
     "dl.releasesGitee": "All releases (Gitee mirror)",
     "dl.licenseTag": "LICENSE",
@@ -852,7 +852,7 @@ const dict = {
 
     "lib.final.title": "A built-in module of GenePad, not a standalone application",
     "lib.final.desc":
-      "The Gene File Library is built into the GenePad gene map editor: install GenePad and it is available in the toolbox. Free during the public beta, on every platform.",
+      "The Gene File Library is built into the GenePad gene map editor: install or upgrade GenePad and it is available in the toolbox. Free during the public beta, on every platform.",
     "lib.final.cta": "Back to Home",
     "lib.final.cta2": "Download Now",
     "lib.top.hint": "Jump straight to downloads",
@@ -885,7 +885,7 @@ const dict = {
     "ngs.open.headEn": "OPENING FASTQ FILES",
     "ngs.open.title": "Right-click or drag-and-drop — no command line needed",
     "ngs.open.lead":
-      "Four extensions are supported — fastq.gz, fastq, fq.gz and fq — and gzip-compressed files open without decompressing first. Once GenePad is installed, either of the two:",
+      "Four extensions are supported — fastq.gz, fastq, fq.gz and fq — and gzip-compressed files open without decompressing first. Once GenePad is installed or upgraded, either of the two:",
     "ngs.open.1.name": "Right-click → Open with",
     "ngs.open.1.desc":
       "In File Explorer, right-click the sequencing file → \"Open with\": pick GenePad straight from the submenu, or select it in \"Choose another app\" and set it as the default — from then on, double-clicking a sequencing file opens it directly.",
@@ -945,7 +945,7 @@ const dict = {
 
     "ngs.final.title": "Built into GenePad — not a standalone application",
     "ngs.final.desc":
-      "NGS data viewing ships inside the GenePad gene map editor: install GenePad and sequencing files open directly, working alongside map editing, Sanger trace alignment and more in the same application. Free during the public beta, on every platform.",
+      "NGS data viewing ships inside the GenePad gene map editor: install or upgrade GenePad and sequencing files open directly, working alongside map editing, Sanger trace alignment and more in the same application. Free during the public beta, on every platform.",
     "ngs.final.cta": "Back to Home",
     "ngs.final.cta2": "Download Now",
     "ngs.top.hint": "Jump straight to downloads",
