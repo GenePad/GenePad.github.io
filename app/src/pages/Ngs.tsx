@@ -221,6 +221,33 @@ export default function Ngs() {
             </Reveal>
           </div>
 
+          {/* 视频教程：B 站嵌入播放器，沿用截图相框样式 */}
+          <GroupLabel no="09-G" cn={t("ngs.video.head")} en={t("ngs.video.headEn") as string} />
+          <Reveal>
+            <p className="mb-10 max-w-3xl text-[14px] leading-8 text-ink/70">{t("ngs.video.lead")}</p>
+          </Reveal>
+          <Reveal clip>
+            <figure className="shot-frame text-ink/60">
+              <div className="border border-line-strong bg-white p-2 shadow-[0_24px_60px_-28px_rgba(28,58,19,0.45)] md:p-2.5">
+                <div className="relative aspect-video bg-ink">
+                  <iframe
+                    src="https://player.bilibili.com/player.html?isOutside=true&aid=117166909163477&bvid=BV1bS4R6rEyF&cid=41324707953&p=1"
+                    title={t("ngs.video.caption") as string}
+                    scrolling="no"
+                    frameBorder="0"
+                    allowFullScreen
+                    allow="accelerometer; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    className="absolute inset-0 h-full w-full"
+                  />
+                </div>
+              </div>
+              <figcaption className="mt-4 flex items-center gap-3 font-mono text-[11px] tracking-[0.14em] text-ink/55">
+                <span className="inline-block h-1.5 w-1.5 bg-gfp-deep" />
+                {t("ngs.video.caption")}
+              </figcaption>
+            </figure>
+          </Reveal>
+
           {/* 收尾 CTA */}
           <Reveal>
             <div className="mt-24 bg-ink px-6 py-12 text-paper md:px-12 md:py-16">
@@ -253,8 +280,8 @@ export default function Ngs() {
           </Reveal>
         </main>
       </LightboxProvider>
-      {/* 复用主页下载区（编号顺延为 09-G） */}
-      <Download index="09-G" />
+      {/* 复用主页下载区（编号顺延为 09-H） */}
+      <Download index="09-H" />
       <Footer />
     </div>
   );

@@ -460,6 +460,12 @@ const dict = {
     "ngs.report.shot1": "SEQUENCE ANALYSIS — 默认分析整个文件，可选保留 / 去除锚点",
     "ngs.report.shot2": "ANALYSIS REPORT — Top 序列直方图与完整丰度表（CSV）",
 
+    "ngs.video.head": "视频教程",
+    "ngs.video.headEn": "VIDEO TUTORIAL",
+    "ngs.video.lead":
+      "图文看不够？这里有一段完整操作演示：从打开测序文件、双端配对，到锚点裁切与生成丰度报告，全流程在真实数据上逐步走一遍，可直接在页面内播放。",
+    "ngs.video.caption": "VIDEO TUTORIAL — 完整流程演示：打开 → 配对 → 浏览 → 搜索 → 裁切 → 丰度报告",
+
     "ngs.final.title": "NGS 数据查看是 GenePad 的内置功能，并非独立软件",
     "ngs.final.desc":
       "NGS 数据查看内置于 GenePad 基因图谱编辑器：下载安装/升级后即可直接打开测序文件，与图谱编辑、Sanger 峰图比对等功能在同一程序内配合使用。当前为免费公测阶段，覆盖全部平台。",
@@ -942,6 +948,12 @@ const dict = {
       "Run Sequence analysis on the trimmed data: by default the entire file is analyzed — tens of millions of reads never need to be fully loaded into memory — counting every unique sequence with its count and frequency, keeping or stripping the anchors as chosen. The result is a graphical report — a Top-sequences histogram (DNA or AA) plus a table of each sequence's length, count, frequency and +1-frame translation — alongside a full CSV export that opens directly in Excel. A simple library abundance report, done.",
     "ngs.report.shot1": "SEQUENCE ANALYSIS — the whole file by default; anchors kept or stripped",
     "ngs.report.shot2": "ANALYSIS REPORT — Top-sequences histogram and the full abundance table (CSV)",
+
+    "ngs.video.head": "Video tutorial",
+    "ngs.video.headEn": "VIDEO TUTORIAL",
+    "ngs.video.lead":
+      "Prefer watching? This full walkthrough plays right on the page — from opening FASTQ files and pairing mates to trimming anchors and generating the abundance report, step by step on real data.",
+    "ngs.video.caption": "VIDEO TUTORIAL — full walkthrough: open → pair → browse → search → trim → report",
 
     "ngs.final.title": "Built into GenePad — not a standalone application",
     "ngs.final.desc":
