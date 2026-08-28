@@ -123,8 +123,35 @@ export default function Ngs() {
             <Shot src="shots/ngs-01.webp" caption={t("ngs.hero.shot") as string} />
           </Reveal>
 
+          {/* 视频教程：B 站嵌入播放器，沿用截图相框样式 */}
+          <GroupLabel no="09-A" cn={t("ngs.video.head")} en={t("ngs.video.headEn") as string} />
+          <Reveal>
+            <p className="mb-10 max-w-3xl text-[14px] leading-8 text-ink/70">{t("ngs.video.lead")}</p>
+          </Reveal>
+          <Reveal clip>
+            <figure className="shot-frame text-ink/60">
+              <div className="border border-line-strong bg-white p-2 shadow-[0_24px_60px_-28px_rgba(28,58,19,0.45)] md:p-2.5">
+                <div className="relative aspect-video bg-ink">
+                  <iframe
+                    src="https://player.bilibili.com/player.html?isOutside=true&aid=117166909163477&bvid=BV1bS4R6rEyF&cid=41324707953&p=1"
+                    title={t("ngs.video.caption") as string}
+                    scrolling="no"
+                    frameBorder="0"
+                    allowFullScreen
+                    allow="accelerometer; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    className="absolute inset-0 h-full w-full"
+                  />
+                </div>
+              </div>
+              <figcaption className="mt-4 flex items-center gap-3 font-mono text-[11px] tracking-[0.14em] text-ink/55">
+                <span className="inline-block h-1.5 w-1.5 bg-gfp-deep" />
+                {t("ngs.video.caption")}
+              </figcaption>
+            </figure>
+          </Reveal>
+
           {/* 打开方式 */}
-          <GroupLabel no="09-A" cn={t("ngs.open.head")} en={t("ngs.open.headEn") as string} />
+          <GroupLabel no="09-B" cn={t("ngs.open.head")} en={t("ngs.open.headEn") as string} />
           <Reveal>
             <p className="mb-10 max-w-3xl text-[14px] leading-8 text-ink/70">{t("ngs.open.lead")}</p>
           </Reveal>
@@ -156,7 +183,7 @@ export default function Ngs() {
           </ol>
 
           {/* 双端配对 */}
-          <GroupLabel no="09-B" cn={t("ngs.pair.head")} en={t("ngs.pair.headEn") as string} />
+          <GroupLabel no="09-C" cn={t("ngs.pair.head")} en={t("ngs.pair.headEn") as string} />
           <div className="grid items-center gap-8 md:grid-cols-2">
             <Reveal>
               <h3 className="text-[20px] font-bold tracking-tight">{t("ngs.pair.title")}</h3>
@@ -168,7 +195,7 @@ export default function Ngs() {
           </div>
 
           {/* 逐条浏览 */}
-          <GroupLabel no="09-C" cn={t("ngs.reads.head")} en={t("ngs.reads.headEn") as string} />
+          <GroupLabel no="09-D" cn={t("ngs.reads.head")} en={t("ngs.reads.headEn") as string} />
           <Reveal>
             <h3 className="mb-4 text-[20px] font-bold tracking-tight">{t("ngs.reads.title")}</h3>
             <p className="mb-10 max-w-3xl text-[14px] leading-8 text-ink/70">{t("ngs.reads.lead")}</p>
@@ -183,7 +210,7 @@ export default function Ngs() {
           </div>
 
           {/* 氨基酸搜索 */}
-          <GroupLabel no="09-D" cn={t("ngs.aa.head")} en={t("ngs.aa.headEn") as string} />
+          <GroupLabel no="09-E" cn={t("ngs.aa.head")} en={t("ngs.aa.headEn") as string} />
           <div className="grid items-center gap-8 md:grid-cols-2">
             <Reveal>
               <h3 className="text-[20px] font-bold tracking-tight">{t("ngs.aa.title")}</h3>
@@ -195,7 +222,7 @@ export default function Ngs() {
           </div>
 
           {/* 锚点裁切 */}
-          <GroupLabel no="09-E" cn={t("ngs.trim.head")} en={t("ngs.trim.headEn") as string} />
+          <GroupLabel no="09-F" cn={t("ngs.trim.head")} en={t("ngs.trim.headEn") as string} />
           <div className="grid items-center gap-8 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
             <Reveal>
               <h3 className="text-[20px] font-bold tracking-tight">{t("ngs.trim.title")}</h3>
@@ -207,7 +234,7 @@ export default function Ngs() {
           </div>
 
           {/* 文库丰度分析 */}
-          <GroupLabel no="09-F" cn={t("ngs.report.head")} en={t("ngs.report.headEn") as string} />
+          <GroupLabel no="09-G" cn={t("ngs.report.head")} en={t("ngs.report.headEn") as string} />
           <Reveal>
             <h3 className="mb-4 text-[20px] font-bold tracking-tight">{t("ngs.report.title")}</h3>
             <p className="mb-10 max-w-3xl text-[14px] leading-8 text-ink/70">{t("ngs.report.desc")}</p>
@@ -220,33 +247,6 @@ export default function Ngs() {
               <Shot src="shots/ngs-09.webp" caption={t("ngs.report.shot2") as string} />
             </Reveal>
           </div>
-
-          {/* 视频教程：B 站嵌入播放器，沿用截图相框样式 */}
-          <GroupLabel no="09-G" cn={t("ngs.video.head")} en={t("ngs.video.headEn") as string} />
-          <Reveal>
-            <p className="mb-10 max-w-3xl text-[14px] leading-8 text-ink/70">{t("ngs.video.lead")}</p>
-          </Reveal>
-          <Reveal clip>
-            <figure className="shot-frame text-ink/60">
-              <div className="border border-line-strong bg-white p-2 shadow-[0_24px_60px_-28px_rgba(28,58,19,0.45)] md:p-2.5">
-                <div className="relative aspect-video bg-ink">
-                  <iframe
-                    src="https://player.bilibili.com/player.html?isOutside=true&aid=117166909163477&bvid=BV1bS4R6rEyF&cid=41324707953&p=1"
-                    title={t("ngs.video.caption") as string}
-                    scrolling="no"
-                    frameBorder="0"
-                    allowFullScreen
-                    allow="accelerometer; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                    className="absolute inset-0 h-full w-full"
-                  />
-                </div>
-              </div>
-              <figcaption className="mt-4 flex items-center gap-3 font-mono text-[11px] tracking-[0.14em] text-ink/55">
-                <span className="inline-block h-1.5 w-1.5 bg-gfp-deep" />
-                {t("ngs.video.caption")}
-              </figcaption>
-            </figure>
-          </Reveal>
 
           {/* 收尾 CTA */}
           <Reveal>
