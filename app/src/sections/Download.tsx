@@ -376,19 +376,26 @@ export default function Download({ index = "06" }: { index?: string }) {
                 <FileBox files={active.files} />
               )}
 
+              {/* 星火应用商店：嵌入 spk 解析页（沿用旧版验证过的 URL，双斜杠保留） */}
               {active.sparkStore && (
-                <p className="border border-lined px-5 py-3 text-[12px] leading-6 text-paper/50">
-                  <a
-                    href="https://www.spark-app.store/"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-gfp hover:underline"
-                  >
-                    {t("dl.spark")}
-                  </a>
-                  {" — "}
-                  {t("dl.sparkNote")}
-                </p>
+                <div className="border border-lined">
+                  <div className="border-b border-lined px-5 py-3">
+                    <p className="font-mono text-[10px] tracking-[0.24em] uppercase text-paper/50">
+                      {t("dl.spark")}
+                    </p>
+                    <p className="mt-1.5 text-[12px] leading-6 text-paper/55">
+                      {t("dl.sparkNote")}
+                    </p>
+                  </div>
+                  <div className="flex justify-center overflow-hidden p-5">
+                    <iframe
+                      src="https://spk-resolv.spark-app.store//?spk=spk://store/development/gene-pad"
+                      title={t("dl.spark") as string}
+                      loading="lazy"
+                      className="h-[350px] w-full max-w-[500px] bg-white"
+                    />
+                  </div>
+                </div>
               )}
             </div>
           </Reveal>
