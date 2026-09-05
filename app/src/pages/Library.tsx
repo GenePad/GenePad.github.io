@@ -3,7 +3,7 @@ import { Reveal, SectionHead, SubpageNav, Shot, ArrowRight } from "../sections/s
 import Download from "../sections/Download";
 import Footer from "../sections/Footer";
 import { LightboxProvider } from "../lightbox";
-import { useLang, type TKey } from "../i18n";
+import { useLang, usePageTitle, type TKey } from "../i18n";
 import { dismissBoot } from "../boot";
 
 /* 基因文件库宣传页：痛点 → 三种管理方式 → AI 标签 / AI 助手 → 上手步骤 → 日常工作流 */
@@ -78,6 +78,7 @@ const STEPS: { name: TKey; desc: TKey; shot: TKey; src: string }[] = [
 
 export default function Library() {
   const { t } = useLang();
+  usePageTitle("title.library");
   useEffect(() => dismissBoot(), []);
 
   return (

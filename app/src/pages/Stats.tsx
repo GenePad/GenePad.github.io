@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Reveal, SectionHead, SubpageNav, ArrowRight } from "../sections/shared";
 import Footer from "../sections/Footer";
-import { useLang } from "../i18n";
+import { useLang, usePageTitle } from "../i18n";
 import { dismissBoot } from "../boot";
 
 /* 实时数据页：公开的匿名使用统计聚合（总装机 / 活跃 / 时长 / 每周新增）
@@ -24,6 +24,7 @@ interface StatsData {
 
 export default function Stats() {
   const { t, lang } = useLang();
+  usePageTitle("title.stats");
   const [data, setData] = useState<StatsData | null>(null);
   const [failed, setFailed] = useState(false);
 

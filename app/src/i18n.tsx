@@ -25,6 +25,14 @@ const dict = {
     "nav.cta": "免费下载/升级",
     "nav.lang": "EN",
 
+    // Page titles（运行时标题随语言切换；静态 HTML 中的 <title> 是英文版，供搜索引擎抓取）
+    "title.home": "基因工坊 GenePad - 轻量跨平台基因图谱编辑器",
+    "title.library": "基因文件库 - GenePad | 质粒文件检索与管理",
+    "title.ngs": "NGS 数据查看 - GenePad | FASTQ 测序数据查看与文库丰度分析",
+    "title.projects": "生态项目 - GenePad | 质粒元件库与密码子图谱",
+    "title.tech": "开发者技术文档 - GenePad",
+    "title.stats": "实时数据 - GenePad | 公开使用统计",
+
     // Hero
     "hero.badge": "免费公测中",
     "hero.badgeEn": "Free Beta · Cross-platform",
@@ -512,6 +520,14 @@ const dict = {
     "nav.stats": "Live Stats",
     "nav.cta": "Free Download / Upgrade",
     "nav.lang": "中",
+
+    // Page titles (runtime title follows the UI language; static HTML ships the English one for crawlers)
+    "title.home": "GenePad - Lightweight Cross-Platform Gene Map Editor",
+    "title.library": "File Library - GenePad | Plasmid File Search & Management",
+    "title.ngs": "NGS Viewer - GenePad | FASTQ Data Viewing & Library Abundance Analysis",
+    "title.projects": "Projects - GenePad | Plasmid Part Libraries & Codon Maps",
+    "title.tech": "Developer Documentation - GenePad",
+    "title.stats": "Live Stats - GenePad | Public Usage Statistics",
 
     // Hero
     "hero.badge": "IN FREE BETA",
@@ -1043,4 +1059,13 @@ export function LangProvider({ children }: { children: ReactNode }) {
 
 export function useLang() {
   return useContext(LangContext);
+}
+
+/* 页面标题：随界面语言自动切换（爬虫不执行 JS，抓到的是静态 HTML 里的英文标题） */
+export function usePageTitle(key: TKey) {
+  const { lang } = useLang();
+  useEffect(() => {
+    const title = dict[lang][key];
+    if (typeof title === "string") document.title = title;
+  }, [lang, key]);
 }

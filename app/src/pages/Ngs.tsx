@@ -3,7 +3,7 @@ import { Reveal, SectionHead, SubpageNav, Shot, ArrowRight } from "../sections/s
 import Download from "../sections/Download";
 import Footer from "../sections/Footer";
 import { LightboxProvider } from "../lightbox";
-import { useLang, type TKey } from "../i18n";
+import { useLang, usePageTitle, type TKey } from "../i18n";
 import { dismissBoot } from "../boot";
 
 /* NGS 数据查看宣传页：打开方式 → 双端配对 → 逐条浏览 → AA 搜索 → 锚点裁切 → 丰度分析 */
@@ -87,6 +87,7 @@ const READS: { no: string; en: string; name: TKey; desc: TKey }[] = [
 
 export default function Ngs() {
   const { t } = useLang();
+  usePageTitle("title.ngs");
   useEffect(() => dismissBoot(), []);
 
   return (

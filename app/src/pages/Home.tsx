@@ -12,8 +12,10 @@ import Download from "../sections/Download";
 import Footer from "../sections/Footer";
 import { LightboxProvider } from "../lightbox";
 import { dismissBoot } from "../boot";
+import { usePageTitle } from "../i18n";
 
 export default function Home() {
+  usePageTitle("title.home");
   useEffect(() => dismissBoot(), []);
   return (
     <div className="min-h-screen bg-paper font-sans text-ink">

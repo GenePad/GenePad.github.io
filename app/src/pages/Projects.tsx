@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Reveal, SectionHead, ArrowRight, SubpageNav } from "../sections/shared";
 import Footer from "../sections/Footer";
-import { useLang, type Lang } from "../i18n";
+import { useLang, usePageTitle, type Lang } from "../i18n";
 import { dismissBoot } from "../boot";
 
 /* 生态项目页：GenePad 组织的两个独立小项目（commonfeatures / CodonAtlas）
@@ -150,6 +150,7 @@ function SpecTable({ rows, lang }: { rows: { k: L; v: L }[]; lang: Lang }) {
 
 export default function Projects() {
   const { t, lang } = useLang();
+  usePageTitle("title.projects");
   useEffect(() => dismissBoot(), []);
 
   return (
