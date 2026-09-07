@@ -37,12 +37,6 @@
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>https://genepad.cn/stats</loc>
-        <lastmod>2026-09-07</lastmod>
-        <changefreq>daily</changefreq>
-        <priority>0.6</priority>
-    </url>
-    <url>
         <loc>https://genepad.cn/tech-gen-format</loc>
         <lastmod>2026-09-07</lastmod>
         <changefreq>monthly</changefreq>
