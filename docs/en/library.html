@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,38 +7,38 @@
     <meta name="theme-color" content="#1c3a13" media="(prefers-color-scheme: dark)" />
     <meta
       name="description"
-      content="GenePad 基因文件库：将分散存储的质粒文件纳入统一的可检索索引，按项目、按存储路径、按 AI 生成的标签三种方式管理；配置 DeepSeek 后自动生成质粒标签，并支持通过 AI 助手按属性特征检索定位质粒，无需记忆文件名与存放位置。"
+      content="GenePad's built-in plasmid file library: collect plasmid files scattered across folders into one searchable index — organize them by project, storage path, or AI-generated tags; configure DeepSeek to auto-tag plasmids and use the AI assistant to find them by feature, without memorizing file names or locations."
     />
-    <title>基因文件库 - GenePad | 质粒文件检索与管理</title>
+    <title>File Library - GenePad | Plasmid File Search &amp; Management</title>
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://genepad.cn/library" />
-    <link rel="alternate" hreflang="zh-CN" href="https://genepad.cn/library" />
+    <link rel="canonical" href="https://en.genepad.cn/library" />
     <link rel="alternate" hreflang="en" href="https://en.genepad.cn/library" />
+    <link rel="alternate" hreflang="zh-CN" href="https://genepad.cn/library" />
     <link rel="alternate" hreflang="x-default" href="https://genepad.cn/library" />
     <!-- Open Graph / Twitter 卡片 -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="GenePad" />
-    <meta property="og:locale" content="zh_CN" />
-    <meta property="og:title" content="基因文件库 - GenePad | 质粒文件检索与管理" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="File Library - GenePad | Plasmid File Search &amp; Management" />
     <meta
       property="og:description"
-      content="GenePad 内置的基因文件库：按项目、存储路径与 AI 生成的标签三种方式管理质粒文件，配置 DeepSeek 后自动生成标签，并支持通过 AI 助手按属性特征检索定位。"
+      content="Manage plasmid files by project, storage path, or AI-generated tags, and find them through the AI assistant — the plasmid file library built into GenePad."
     />
-    <meta property="og:url" content="https://genepad.cn/library" />
+    <meta property="og:url" content="https://en.genepad.cn/library" />
     <meta property="og:image" content="https://genepad.cn/icon.png" />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="基因文件库 - GenePad | 质粒文件检索与管理" />
+    <meta name="twitter:title" content="File Library - GenePad | Plasmid File Search &amp; Management" />
     <meta
       name="twitter:description"
-      content="按项目、存储路径与 AI 标签管理质粒文件，支持 AI 助手按属性检索——GenePad 内置的基因文件库。"
+      content="Manage plasmid files by project, storage path, or AI tags, and search them by feature with the AI assistant — built into GenePad."
     />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "name": "GenePad 基因文件库",
-        "description": "GenePad 内置的基因文件库：按项目、存储路径与 AI 生成的标签三种方式管理质粒文件，支持文件夹监视自动入库、AI 批量生成标签、AI 助手按属性检索，并可一键交给 SnapGene / VS Code 等工具打开。",
-        "url": "https://genepad.cn/library",
+        "name": "GenePad File Library",
+        "description": "GenePad's built-in plasmid file library: collect plasmid files scattered across folders into one searchable index. Organize by project, storage path, or AI-generated tags; auto-import via folder watch, batch-tag plasmids with AI, and find them through the AI assistant by feature. Open any file with SnapGene / VS Code in one click.",
+        "url": "https://en.genepad.cn/library",
         "isPartOf": { "@type": "WebSite", "name": "GenePad", "url": "https://genepad.cn/" },
         "about": {
           "@type": "SoftwareApplication",
@@ -46,13 +46,12 @@
           "applicationCategory": "ScientificApplication",
           "operatingSystem": "Windows, macOS, Linux, Android",
           "url": "https://genepad.cn/",
-          "featureList": "质粒文件库, 按项目分类, 按存储路径浏览, AI 质粒标签, 文件夹监视自动入库, AI 助手属性检索, SnapGene/VS Code 打开方式"
+          "featureList": "Plasmid file library, organize by project, browse by storage path, AI plasmid tags, folder watch auto-import, AI assistant feature search, SnapGene/VS Code open-with"
         },
-        "keywords": ["质粒管理", "基因文件库", "plasmid library", "AI 标签", "DeepSeek", "分子克隆", "GenePad"]
+        "keywords": ["plasmid management", "plasmid file library", "AI tags", "DeepSeek", "molecular cloning", "GenePad"]
       }
     </script>
-    <!-- 手绘 SVG 导出图，暂不启用 <link rel="icon" type="image/png" href="/icon.png" /> -->
-    <link rel="icon" href="./icon.ico" sizes="any" />
+    <link rel="icon" href="../icon.ico" sizes="any" />
     <style>
       /* 首屏骨架：JS 与样式表就绪前先出文字；React 挂载后淡出移除（见 src/boot.ts） */
       html { background: #f6f6f4; }
@@ -76,16 +75,16 @@
         #boot .sp { border-color: rgba(246, 246, 244, 0.22); border-top-color: #45c51f; }
       }
     </style>
-    <script type="module" crossorigin src="./assets/boot-D86vqaeu.js"></script>
-    <script type="module" crossorigin src="./assets/Download-CsEcq8z-.js"></script>
-    <script type="module" crossorigin src="./assets/library-main-CAXcVnF3.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/boot-833VZBFT.css">
+    <script type="module" crossorigin src="../assets/boot-D86vqaeu.js"></script>
+    <script type="module" crossorigin src="../assets/Download-CsEcq8z-.js"></script>
+    <script type="module" crossorigin src="../assets/library-main-CAXcVnF3.js"></script>
+    <link rel="stylesheet" crossorigin href="../assets/boot-833VZBFT.css">
   </head>
   <body>
     <div id="boot">
-      <div class="bt">基因文件库<small>GENE FILE LIBRARY</small></div>
-      <p class="bd">质粒文件的统一检索与管理：按项目、按存储路径、按 AI 生成的标签组织质粒，无需记忆文件名与存放位置。</p>
-      <div class="sp" role="status" aria-label="加载中"></div>
+      <div class="bt">File Library<small>PLASMID FILE LIBRARY</small></div>
+      <p class="bd">A single searchable index for your plasmid files: organize them by project, storage path, or AI-generated tags — no need to remember file names or locations.</p>
+      <div class="sp" role="status" aria-label="Loading"></div>
     </div>
     <div id="root"></div>
   </body>

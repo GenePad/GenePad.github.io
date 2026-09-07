@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,16 +7,15 @@
     <meta name="theme-color" content="#1c3a13" media="(prefers-color-scheme: dark)" />
     <meta
       name="description"
-      content="GenePad 开发者技术文档入口，包含 .gen、.gjson 文件定义、Rust 读取示例和 SnapGene .dna 转换方案。"
+      content="GenePad developer documentation hub: .gen and .gjson file definitions, Rust reader examples, and the SnapGene .dna conversion guide."
     />
-    <title>开发者技术文档 - GenePad</title>
+    <title>Developer Documentation - GenePad</title>
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://genepad.cn/tech-support" />
-    <link rel="alternate" hreflang="zh-CN" href="https://genepad.cn/tech-support" />
+    <link rel="canonical" href="https://en.genepad.cn/tech-support" />
     <link rel="alternate" hreflang="en" href="https://en.genepad.cn/tech-support" />
+    <link rel="alternate" hreflang="zh-CN" href="https://genepad.cn/tech-support" />
     <link rel="alternate" hreflang="x-default" href="https://genepad.cn/tech-support" />
-    <!-- 手绘 SVG 导出图，暂不启用 <link rel="icon" type="image/png" href="/icon.png" /> -->
-    <link rel="icon" href="./icon.ico" sizes="any" />
+    <link rel="icon" href="/icon.ico" sizes="any" />
     <style>
       /* 首屏骨架：JS 与样式表就绪前先出文字；React 挂载后淡出移除（见 src/boot.ts） */
       html { background: #f6f6f4; }
@@ -40,16 +39,14 @@
         #boot .sp { border-color: rgba(246, 246, 244, 0.22); border-top-color: #45c51f; }
       }
     </style>
-    <script type="module" crossorigin src="./assets/boot-D86vqaeu.js"></script>
-    <script type="module" crossorigin src="./assets/tech-main-D-DTLs4z.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/boot-833VZBFT.css">
   </head>
   <body>
     <div id="boot">
-      <div class="bt">GenePad<small>开发者技术文档 · DEV DOCS</small></div>
-      <p class="bd">文件格式开发文档：.gen、.gjson 文件定义、Rust 读取示例与 SnapGene .dna 转换方案。</p>
-      <div class="sp" role="status" aria-label="加载中"></div>
+      <div class="bt">Developer Docs<small>DEV DOCS</small></div>
+      <p class="bd">File-format developer documentation: .gen and .gjson file definitions, Rust reader examples, and the SnapGene .dna conversion guide.</p>
+      <div class="sp" role="status" aria-label="Loading"></div>
     </div>
     <div id="root"></div>
+    <script type="module" src="/src/tech-main.tsx"></script>
   </body>
 </html>

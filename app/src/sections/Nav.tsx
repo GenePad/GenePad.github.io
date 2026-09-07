@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { PlasmidGlyph } from "./shared";
 import { useLang } from "../i18n";
+import { isEnHost, otherLangHref } from "../links";
 import { VERSION } from "../download-data";
 
 export default function Nav() {
@@ -75,13 +76,24 @@ export default function Nav() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <button
-            onClick={() => setLang(lang === "zh" ? "en" : "zh")}
-            aria-label="Switch language"
-            className="border border-line-strong px-3 py-2 font-mono text-[12px] tracking-[0.12em] text-ink/70 transition-colors hover:border-gfp-deep hover:text-gfp-deep"
-          >
-            {t("nav.lang")}
-          </button>
+          {/* genepad.cn：原地切换文案；en.genepad.cn 镜像：跳回中文主机的同一页 */}
+          {isEnHost() ? (
+            <a
+              href={otherLangHref()}
+              aria-label="Switch language"
+              className="border border-line-strong px-3 py-2 font-mono text-[12px] tracking-[0.12em] text-ink/70 transition-colors hover:border-gfp-deep hover:text-gfp-deep"
+            >
+              {t("nav.lang")}
+            </a>
+          ) : (
+            <button
+              onClick={() => setLang(lang === "zh" ? "en" : "zh")}
+              aria-label="Switch language"
+              className="border border-line-strong px-3 py-2 font-mono text-[12px] tracking-[0.12em] text-ink/70 transition-colors hover:border-gfp-deep hover:text-gfp-deep"
+            >
+              {t("nav.lang")}
+            </button>
+          )}
           <a
             href="#download"
             className="group flex items-center gap-2 bg-ink px-4 py-2 font-mono text-[12px] tracking-[0.12em] text-paper transition-colors hover:bg-gfp-deep"

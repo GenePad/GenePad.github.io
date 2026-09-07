@@ -29,7 +29,8 @@ function withSources(f: DownloadFile) {
   return {
     ...f,
     sources: {
-      direct: `release/${f.name.startsWith("macos") ? "mac" : f.name.endsWith(".apk") ? "android" : f.name.includes("Windows") ? "windows" : "linux"}/${f.name}`,
+      /* 根相对路径：en.genepad.cn 镜像页与本地 dev 的 /en/ 路径下也不会 404（解析结果与原相对写法一致） */
+      direct: `/release/${f.name.startsWith("macos") ? "mac" : f.name.endsWith(".apk") ? "android" : f.name.includes("Windows") ? "windows" : "linux"}/${f.name}`,
       github: `${GITHUB_LATEST}${f.name}`,
       gitee: `${GITEE_TAG}${f.name}`,
     },

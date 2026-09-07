@@ -105,6 +105,41 @@ const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
 const STATS_WEEKS = 26;
 const STATS_CACHE_SECONDS = 300;
 
+// ── en.genepad.cn 英文镜像路由 ──
+// 英文主机的路径映射到构建输出的 /en 子树（docs/en/*.html）；哈希产物、截图、安装包、
+// 接口等共享资源仍取根路径。genepad.cn 上的 /en/* 308 到子域名（容错历史路径）；
+// genepad.pages.dev 的 /en/* 静态直出，作为子域名 DNS 配好前的预览入口。
+const EN_HOST_PATTERN = /(^|\.)en\.genepad\.cn$/;
+const EN_SHARED_PREFIXES = [
+  '/assets/',
+  '/shots/',
+  '/release/',
+  '/api/',
+  '/update.json',
+  '/icon.ico',
+  '/icon.png',
+  '/robots.txt',
+  '/sitemap.xml',
+];
+
+/* 纯函数，便于 node 单测：返回 { redirect } 或 { assetPath }（null 表示原样交给 ASSETS） */
+export function route(url) {
+  const enPath = url.pathname === '/en' || url.pathname.startsWith('/en/');
+  if (EN_HOST_PATTERN.test(url.hostname)) {
+    if (enPath) {
+      return { redirect: 'https://en.genepad.cn' + url.pathname.slice(3) + url.search };
+    }
+    if (!EN_SHARED_PREFIXES.some((p) => url.pathname.startsWith(p))) {
+      return { assetPath: '/en' + url.pathname };
+    }
+    return { assetPath: null };
+  }
+  if (url.hostname === 'genepad.cn' && enPath) {
+    return { redirect: 'https://en.genepad.cn' + url.pathname.slice(3) + url.search };
+  }
+  return { assetPath: null };
+}
+
 /* 公开聚合统计：只输出计数/总和,不含任何 uuid 明细 */
 async function handleStats(env) {
   if (!env.DB) {
@@ -203,6 +238,13 @@ export default {
       return handleStats(env);
     }
 
+    const routed = route(url);
+    if (routed.redirect) {
+      return Response.redirect(routed.redirect, 308);
+    }
+    if (routed.assetPath) {
+      return env.ASSETS.fetch(new Request('https://en.genepad.cn' + routed.assetPath, request));
+    }
     return env.ASSETS.fetch(request);
   },
 };

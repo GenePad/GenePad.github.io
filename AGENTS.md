@@ -13,16 +13,19 @@ The site is a React + Vite app; its **build output is committed to `docs/`**.
 app/                         # Website source (React 19 + Vite + Tailwind, TypeScript)
   index.html                 # Home page entry (SEO meta lives here)
   tech-support.html          # Tech-support page entry (multi-page build)
+  en/                        # English mirror shells (en.genepad.cn) — see "English mirror" below
   src/
     i18n.tsx                 # zh/en dictionary + LangProvider + useLang() — ALL site copy lives here
     download-data.ts         # VERSION + per-platform installer files & sizes (edit on every release)
+    links.ts                 # Cross-host link helpers (isEnHost / otherLangHref / rootHref)
     sections/                # Nav / Hero / Workbench / DayNight / Sanger / Toolbox / Download / Footer
     pages/                   # Home.tsx, TechSupport.tsx
   public/shots/              # Screenshots (webp, converted from docs/screenshot/)
-  vite.config.ts             # build.outDir = ../docs, emptyOutDir: false, two html inputs
+  vite.config.ts             # build.outDir = ../docs, emptyOutDir: false, zh + en html inputs
 docs/                        # SERVED ROOT — do not hand-edit index.html / tech-support.html / assets/ / shots/
   index.html                 # BUILD OUTPUT (overwritten by `npm run build`)
   tech-support.html          # BUILD OUTPUT
+  en/                        # BUILD OUTPUT (English mirror pages, served at en.genepad.cn)
   assets/                    # BUILD OUTPUT (hashed js/css; safe to delete before rebuild)
   shots/                     # BUILD OUTPUT (copied from app/public/)
   styles.css                 # Hand-maintained: styles for the legacy tech-*.html / changelog pages
@@ -46,6 +49,11 @@ the same change**: add/remove its `<url>` block and refresh `<lastmod`
 order. `priority` conventions: home 1.0; main nav pages (library/ngs/
 tech-support) 0.8; secondary pages (projects, tech-*) 0.7; utility pages
 (changelog/stats) 0.6.
+
+Exception: the English mirror pages (`docs/en/*.html`, served at
+`en.genepad.cn`) are **not** listed here — a sitemap must not mix hosts, so the
+English URLs are discovered via the `hreflang` alternates in each page's
+`<head>` instead.
 
 ## Telemetry API (`/api/telemetry`)
 
@@ -98,9 +106,45 @@ protects `release/` etc.) — it is safe to `rm -rf docs/assets` before a build.
 ## i18n
 
 The site is bilingual (zh/en). All copy lives in `app/src/i18n.tsx`; components
-call `t("key")` from `useLang()`. The toggle sits in the Nav; the choice is
-persisted to `localStorage` (`genepad-lang`), defaulting to the browser
-language. When adding UI text, add BOTH `zh` and `en` entries.
+call `t("key")` from `useLang()`. On **genepad.cn** the language is chosen at
+runtime (localStorage `genepad-lang`, falling back to the browser language) and
+the Nav toggle swaps copy in place — this UX is deliberately unchanged. The only
+exception: `en.genepad.cn` (and local dev `/en/` paths) render English and never
+read localStorage/navigator. When adding UI text, add BOTH `zh` and `en` entries.
+
+## English Mirror (`en.genepad.cn`)
+
+`en.genepad.cn` is a crawler-facing pure-English mirror of the five bilingual
+pages (+ stats), so search engines can index English without changing anything
+about how genepad.cn behaves for users:
+
+- **Shells**: `app/en/*.html` are static English HTML shells (en `<title>` /
+  description / boot skeleton / JSON-LD, `<html lang="en">`) built to
+  `docs/en/` via the `en-*` inputs in `app/vite.config.ts`. They share the same
+  `/src` modules as the zh pages.
+- **Routing**: `docs/_worker.js` maps `en.genepad.cn/<path>` to the asset
+  `/en<path>` (pure helper `route()`, unit-testable via node). Shared prefixes
+  (`/assets/` `/shots/` `/release/` `/api/` `/update.json` `/icon.*`
+  `/robots.txt` `/sitemap.xml`) are never prefixed. `genepad.cn/en/*` 308s to
+  `en.genepad.cn/*`; on en hosts `/en/*` 308s to `/*`.
+- **Prerequisite (dashboard, one-time)**: Pages project → Custom domains → add
+  `en.genepad.cn` (the zone's DNS record is created automatically).
+- **Language binding**: `i18n.tsx` `detectLang()` returns `"en"` when the
+  hostname is `en.genepad.cn` (or the path starts with `/en/` for local dev);
+  elsewhere the localStorage/browser detection runs as before.
+- **Cross-host links**: `app/src/links.ts` — `otherLangHref()` (toggle target
+  on en hosts), `rootHref(name)` for zh-only pages (changelog, `tech-*.html`;
+  must be absolute on en hosts, else the worker prefix-maps them into `/en/`
+  and 404s).
+- **SEO pairing**: every bilingual page's zh and en shell carry matching
+  `hreflang` trios (`zh-CN` → genepad.cn, `en` → en.genepad.cn,
+  `x-default` → genepad.cn). Static `<title>`/og on zh pages are Chinese; en
+  shells are English. `stats` carries no hreflang (robots-disallowed anyway).
+- **When adding/removing a bilingual page**: add/remove BOTH `app/<page>.html`
+  and `app/en/<page>.html`, wire both into `vite.config.ts`, add/remove the
+  hreflang pair in both heads, and keep `rootHref()` for any zh-only links.
+- The GitHub Pages mirror has no worker: `genepad.github.io/en/...` serves the
+  en shells directly — harmless, their canonicals point at `en.genepad.cn`.
 
 ## Download Panel
 

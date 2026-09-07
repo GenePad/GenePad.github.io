@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,38 +7,38 @@
     <meta name="theme-color" content="#1c3a13" media="(prefers-color-scheme: dark)" />
     <meta
       name="description"
-      content="GenePad 组织的生态项目：质粒构建通用元件序列库（266 个元件、20 个分类、NCBI 可溯源、MIT 协议）与基于 GTEx/GENCODE 的人类组织特异性密码子使用图谱（源码公开），为科研工作者与开发者提供便利。"
+      content="Ecosystem projects maintained by GenePad: a sequence library of common plasmid parts (266 parts in 20 categories, traceable to NCBI, MIT licensed) and a human tissue-specific codon usage atlas built from GTEx/GENCODE (source code public) — tools for researchers and developers."
     />
-    <title>生态项目 - GenePad | 质粒元件库与密码子图谱</title>
+    <title>Projects - GenePad | Plasmid Part Libraries &amp; Codon Maps</title>
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://genepad.cn/projects" />
-    <link rel="alternate" hreflang="zh-CN" href="https://genepad.cn/projects" />
+    <link rel="canonical" href="https://en.genepad.cn/projects" />
     <link rel="alternate" hreflang="en" href="https://en.genepad.cn/projects" />
+    <link rel="alternate" hreflang="zh-CN" href="https://genepad.cn/projects" />
     <link rel="alternate" hreflang="x-default" href="https://genepad.cn/projects" />
     <!-- Open Graph / Twitter 卡片 -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="GenePad" />
-    <meta property="og:locale" content="zh_CN" />
-    <meta property="og:title" content="生态项目 - GenePad | 质粒元件库与密码子图谱" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="Projects - GenePad | Plasmid Part Libraries &amp; Codon Maps" />
     <meta
       property="og:description"
-      content="质粒构建通用元件序列库（266 元件、NCBI 可溯源、MIT）与人类组织特异性密码子使用图谱（GTEx/GENCODE，源码公开）——GenePad 组织为科研工作者与开发者维护的生态小项目。"
+      content="A sequence library of common plasmid parts (266 parts, NCBI-traceable, MIT) and a human tissue-specific codon usage atlas (GTEx/GENCODE, source public) — small ecosystem projects maintained by GenePad."
     />
-    <meta property="og:url" content="https://genepad.cn/projects" />
+    <meta property="og:url" content="https://en.genepad.cn/projects" />
     <meta property="og:image" content="https://genepad.cn/icon.png" />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="生态项目 - GenePad | 质粒元件库与密码子图谱" />
+    <meta name="twitter:title" content="Projects - GenePad | Plasmid Part Libraries &amp; Codon Maps" />
     <meta
       name="twitter:description"
-      content="质粒构建通用元件序列库与人类组织特异性密码子使用图谱——GenePad 组织的生态小项目。"
+      content="A sequence library of common plasmid parts and a human tissue-specific codon usage atlas — small ecosystem projects maintained by GenePad."
     />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "CollectionPage",
-        "name": "GenePad 生态项目",
-        "description": "GenePad 组织围绕分子克隆工具链维护的生态项目集合，为科研工作者与开发者提供便利。",
-        "url": "https://genepad.cn/projects",
+        "name": "GenePad Ecosystem Projects",
+        "description": "Small ecosystem projects maintained by the GenePad organization around the molecular cloning toolchain, for researchers and developers.",
+        "url": "https://en.genepad.cn/projects",
         "isPartOf": { "@type": "WebSite", "name": "GenePad", "url": "https://genepad.cn/" },
         "mainEntity": {
           "@type": "ItemList",
@@ -49,11 +49,11 @@
               "item": {
                 "@type": "Dataset",
                 "name": "genepad-commonfeatures",
-                "alternateName": "质粒构建通用元件序列库",
-                "description": "266 个质粒构建通用元件、20 个分类，每条序列可溯源至 NCBI 登录号与参考质粒。输出 GenBank 与 FASTA 双格式，可导入 SnapGene、Benchling 作为 common features 库，FASTA 可用于 BLAST。",
+                "alternateName": "Common plasmid parts sequence library",
+                "description": "266 common parts for plasmid construction in 20 categories; every sequence is traceable to an NCBI accession and a reference plasmid. Exported as GenBank and FASTA, importable into SnapGene or Benchling as a common features library; the FASTA output works with BLAST.",
                 "url": "https://github.com/GenePad/genepad-commonfeatures/",
                 "license": "https://opensource.org/licenses/MIT",
-                "keywords": ["plasmid", "common features", "SnapGene", "Benchling", "GenBank", "分子克隆", "质粒元件"],
+                "keywords": ["plasmid", "common features", "SnapGene", "Benchling", "GenBank", "molecular cloning", "plasmid parts"],
                 "creator": { "@type": "Organization", "name": "GenePad", "url": "https://github.com/GenePad" }
               }
             },
@@ -63,12 +63,12 @@
               "item": {
                 "@type": "SoftwareSourceCode",
                 "name": "GenePadCodonAtlas",
-                "alternateName": "人类组织特异性密码子图谱",
-                "description": "源码公开的人类组织特异性密码子使用统计构建管线：基于 GTEx v8 基因中位 TPM 与 GENCODE release 50 注释，按组织表达加权计数密码子，输出 Frequency/1000、同义分数、RSCU、CAI 权重与偏好密码子。",
+                "alternateName": "Human tissue-specific codon atlas",
+                "description": "An open-source pipeline for human tissue-specific codon usage statistics: built from gene median TPM in GTEx v8 and GENCODE release 50 annotations, counting codons weighted by tissue expression, and outputting Frequency/1000, synonymous scores, RSCU, CAI weights and preferred codons.",
                 "url": "https://github.com/GenePad/GenePadCodonAtlas",
                 "programmingLanguage": "Python",
                 "license": "https://github.com/GenePad/GenePadCodonAtlas/blob/main/LICENSE",
-                "keywords": ["codon usage", "GTEx", "GENCODE", "RSCU", "CAI", "密码子优化", "组织特异性"],
+                "keywords": ["codon usage", "GTEx", "GENCODE", "RSCU", "CAI", "codon optimization", "tissue-specific"],
                 "creator": { "@type": "Organization", "name": "GenePad", "url": "https://github.com/GenePad" }
               }
             }
@@ -76,8 +76,7 @@
         }
       }
     </script>
-    <!-- 手绘 SVG 导出图，暂不启用 <link rel="icon" type="image/png" href="/icon.png" /> -->
-    <link rel="icon" href="./icon.ico" sizes="any" />
+    <link rel="icon" href="../icon.ico" sizes="any" />
     <style>
       /* 首屏骨架：JS 与样式表就绪前先出文字；React 挂载后淡出移除（见 src/boot.ts） */
       html { background: #f6f6f4; }
@@ -101,15 +100,15 @@
         #boot .sp { border-color: rgba(246, 246, 244, 0.22); border-top-color: #45c51f; }
       }
     </style>
-    <script type="module" crossorigin src="./assets/boot-D86vqaeu.js"></script>
-    <script type="module" crossorigin src="./assets/projects-main-BefS4SQf.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/boot-833VZBFT.css">
+    <script type="module" crossorigin src="../assets/boot-D86vqaeu.js"></script>
+    <script type="module" crossorigin src="../assets/projects-main-BefS4SQf.js"></script>
+    <link rel="stylesheet" crossorigin href="../assets/boot-833VZBFT.css">
   </head>
   <body>
     <div id="boot">
-      <div class="bt">GenePad<small>生态项目 · ECOSYSTEM</small></div>
-      <p class="bd">GenePad 生态项目：质粒通用元件库、功能扩展与周边工具。</p>
-      <div class="sp" role="status" aria-label="加载中"></div>
+      <div class="bt">Projects<small>ECOSYSTEM</small></div>
+      <p class="bd">Ecosystem projects around GenePad: a common plasmid parts library, extensions, and companion tools.</p>
+      <div class="sp" role="status" aria-label="Loading"></div>
     </div>
     <div id="root"></div>
   </body>

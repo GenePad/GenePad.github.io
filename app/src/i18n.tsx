@@ -25,7 +25,7 @@ const dict = {
     "nav.cta": "免费下载/升级",
     "nav.lang": "EN",
 
-    // Page titles（运行时标题随语言切换；静态 HTML 中的 <title> 是英文版，供搜索引擎抓取）
+    // Page titles（运行时标题随语言切换；静态 HTML 中的 <title> 与页面语言一致：根路径中文、en.genepad.cn 英文）
     "title.home": "基因工坊 GenePad - 轻量跨平台基因图谱编辑器",
     "title.library": "基因文件库 - GenePad | 质粒文件检索与管理",
     "title.ngs": "NGS 数据查看 - GenePad | FASTQ 测序数据查看与文库丰度分析",
@@ -1017,7 +1017,18 @@ const LangContext = createContext<{
   t: (k) => k,
 });
 
+/* en.genepad.cn 是纯英文镜像：语言锁定英文，不读缓存/浏览器语言；本地 dev 的 /en/ 路径同样按英文渲染 */
+function isEnContext(): boolean {
+  if (typeof window === "undefined") return false;
+  return (
+    window.location.hostname === "en.genepad.cn" ||
+    window.location.hostname.endsWith(".en.genepad.cn") ||
+    window.location.pathname.startsWith("/en/")
+  );
+}
+
 function detectLang(): Lang {
+  if (isEnContext()) return "en";
   try {
     const saved = localStorage.getItem("genepad-lang");
     if (saved === "zh" || saved === "en") return saved;
@@ -1061,7 +1072,7 @@ export function useLang() {
   return useContext(LangContext);
 }
 
-/* 页面标题：随界面语言自动切换（爬虫不执行 JS，抓到的是静态 HTML 里的英文标题） */
+/* 页面标题：随界面语言自动切换（与静态 HTML 头部写好的 <title> 相同，仅为一致性保障） */
 export function usePageTitle(key: TKey) {
   const { lang } = useLang();
   useEffect(() => {
