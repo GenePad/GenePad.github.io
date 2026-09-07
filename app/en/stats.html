@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,38 +7,31 @@
     <meta name="theme-color" content="#1c3a13" media="(prefers-color-scheme: dark)" />
     <meta
       name="description"
-      content="基因工坊 GenePad 是一个轻量、跨平台的基因图谱编辑器，支持 GEN、GenBank、FASTA、SnapGene DNA（.dna）、AB1、GJSON，覆盖日常分子克隆设计与质粒检查。"
+      content="GenePad live usage statistics: total installs, active users in the last 30 days, cumulative usage time, and weekly install trends. Aggregated automatically by in-app anonymous telemetry and open to the public — no personal information is included."
     />
-    <title>基因工坊 GenePad - 轻量跨平台基因图谱编辑器</title>
+    <title>Live Stats - GenePad | Public Usage Statistics</title>
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://genepad.cn/" />
-    <link rel="alternate" hreflang="zh-CN" href="https://genepad.cn/" />
-    <link rel="alternate" hreflang="en" href="https://genepad.cn/en/" />
-    <link rel="alternate" hreflang="x-default" href="https://genepad.cn/" />
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "基因工坊",
-        "alternateName": "GenePad",
-        "image": "https://genepad.cn/icon.png",
-        "description": "轻量、跨平台的基因图谱编辑器，支持 GEN、GenBank、FASTA、SnapGene DNA（.dna）、AB1、GJSON，覆盖日常分子克隆设计与质粒检查。",
-        "applicationCategory": "ScienceApplication",
-        "operatingSystem": "Windows, macOS, Linux, Android",
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "CNY"
-        },
-        "author": {
-          "@type": "Organization",
-          "name": "GenePad"
-        }
-      }
-    </script>
-    <!-- 手绘 SVG 导出图，暂不启用 <link rel="icon" type="image/png" href="/icon.png" /> -->
-    <link rel="icon" href="./icon.ico" sizes="any" />
-    <link rel="preload" as="image" href="shots/light-mode.webp" fetchpriority="high" />
+    <link rel="canonical" href="https://genepad.cn/en/stats" />
+    <link rel="alternate" hreflang="en" href="https://genepad.cn/en/stats" />
+    <link rel="alternate" hreflang="zh-CN" href="https://genepad.cn/stats" />
+    <link rel="alternate" hreflang="x-default" href="https://genepad.cn/stats" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="GenePad" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="Live Stats - GenePad | Public Usage Statistics" />
+    <meta
+      property="og:description"
+      content="Total installs, active users, and cumulative usage time — aggregated automatically from anonymous in-app telemetry and open to the public."
+    />
+    <meta property="og:url" content="https://genepad.cn/en/stats" />
+    <meta property="og:image" content="https://genepad.cn/icon.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Live Stats - GenePad | Public Usage Statistics" />
+    <meta
+      name="twitter:description"
+      content="Total installs, active users, and cumulative usage time — aggregated automatically from anonymous in-app telemetry."
+    />
+    <link rel="icon" href="/icon.ico" sizes="any" />
     <style>
       /* 首屏骨架：JS 与样式表就绪前先出文字；React 挂载后淡出移除（见 src/boot.ts） */
       html { background: #f6f6f4; }
@@ -65,11 +58,11 @@
   </head>
   <body>
     <div id="boot">
-      <div class="bt">GenePad<small>基因工坊 · GENE MAP EDITOR</small></div>
-      <p class="bd">面向日常分子克隆的跨平台基因图谱编辑器：浏览与编辑质粒图谱、管理序列标注、分析酶切位点、比对 Sanger 测序峰图。</p>
-      <div class="sp" role="status" aria-label="加载中"></div>
+      <div class="bt">Live Stats<small>LIVE STATS</small></div>
+      <p class="bd">Total installs, active users, and cumulative usage time — aggregated anonymously and open to the public.</p>
+      <div class="sp" role="status" aria-label="Loading"></div>
     </div>
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <script type="module" src="/src/stats-main.tsx"></script>
   </body>
 </html>

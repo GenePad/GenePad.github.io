@@ -28,6 +28,13 @@ export default defineConfig({
         library: path.resolve(__dirname, "library.html"),
         ngs: path.resolve(__dirname, "ngs.html"),
         stats: path.resolve(__dirname, "stats.html"),
+        // 英文树：app/en/*.html → docs/en/*.html，与中文页共用同一套 /src 模块
+        "en-main": path.resolve(__dirname, "en/index.html"),
+        "en-tech-support": path.resolve(__dirname, "en/tech-support.html"),
+        "en-projects": path.resolve(__dirname, "en/projects.html"),
+        "en-library": path.resolve(__dirname, "en/library.html"),
+        "en-ngs": path.resolve(__dirname, "en/ngs.html"),
+        "en-stats": path.resolve(__dirname, "en/stats.html"),
       },
     },
   },

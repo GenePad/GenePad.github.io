@@ -5,14 +5,14 @@ import { useLightboxImage } from "../lightbox";
 
 const MODES = {
   night: {
-    src: "shots/dark-mode.webp",
+    src: "/shots/dark-mode.webp",
     alt: "dn.alt.night",
     caption: "dn.caption.night",
     frame: "bg-[#101a0c]",
     state: "dn.state.night",
   },
   day: {
-    src: "shots/light-mode.webp",
+    src: "/shots/light-mode.webp",
     alt: "dn.alt.day",
     caption: "dn.caption.day",
     frame: "bg-white",

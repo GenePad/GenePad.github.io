@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { PlasmidGlyph } from "./shared";
 import { useLang } from "../i18n";
+import { otherLangHref } from "../links";
 import { VERSION } from "../download-data";
 
 export default function Nav() {
-  const { t, lang, setLang } = useLang();
+  const { t } = useLang();
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -75,13 +76,13 @@ export default function Nav() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <button
-            onClick={() => setLang(lang === "zh" ? "en" : "zh")}
+          <a
+            href={otherLangHref()}
             aria-label="Switch language"
             className="border border-line-strong px-3 py-2 font-mono text-[12px] tracking-[0.12em] text-ink/70 transition-colors hover:border-gfp-deep hover:text-gfp-deep"
           >
             {t("nav.lang")}
-          </button>
+          </a>
           <a
             href="#download"
             className="group flex items-center gap-2 bg-ink px-4 py-2 font-mono text-[12px] tracking-[0.12em] text-paper transition-colors hover:bg-gfp-deep"

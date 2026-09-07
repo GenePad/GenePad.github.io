@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <!-- 中文版：根路径（默认语言，x-default） -->
     <url>
         <loc>https://genepad.cn/</loc>
         <lastmod>2026-09-07</lastmod>
@@ -30,6 +31,38 @@
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
+    <!-- 英文版：/en/ 子树（与中文页互有 hreflang） -->
+    <url>
+        <loc>https://genepad.cn/en/</loc>
+        <lastmod>2026-09-07</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://genepad.cn/en/library</loc>
+        <lastmod>2026-09-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://genepad.cn/en/ngs</loc>
+        <lastmod>2026-09-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://genepad.cn/en/tech-support</loc>
+        <lastmod>2026-09-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://genepad.cn/en/projects</loc>
+        <lastmod>2026-09-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <!-- 中文单语页（暂无英文版，仅根路径）：changelog + 开发者文档 -->
     <url>
         <loc>https://genepad.cn/changelog</loc>
         <lastmod>2026-09-07</lastmod>

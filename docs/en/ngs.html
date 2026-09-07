@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,38 +7,38 @@
     <meta name="theme-color" content="#1c3a13" media="(prefers-color-scheme: dark)" />
     <meta
       name="description"
-      content="GenePad 内置的 NGS 数据查看器：直接打开 fastq.gz / fastq / fq.gz / fq 测序文件，右键「打开方式」或拖入窗口即可；双端文件自动配对拼接，逐碱基查看测序质量，按氨基酸片段搜索定位多变区，设置裁切锚点批量截取目标区段，并一键生成文库丰度报告。"
+      content="GenePad's built-in NGS data viewer: open fastq.gz / fastq / fq.gz / fq files directly with right-click “Open With” or drag-and-drop; paired-end files are auto-matched and assembled, per-base sequencing quality, amino-acid fragment search to locate variable regions, trim anchors for batch capture, and one-click library abundance reports."
     />
-    <title>NGS 数据查看 - GenePad | FASTQ 测序数据查看与文库丰度分析</title>
+    <title>NGS Viewer - GenePad | FASTQ Data Viewing &amp; Library Abundance Analysis</title>
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://genepad.cn/ngs" />
-    <link rel="alternate" hreflang="zh-CN" href="https://genepad.cn/ngs" />
+    <link rel="canonical" href="https://genepad.cn/en/ngs" />
     <link rel="alternate" hreflang="en" href="https://genepad.cn/en/ngs" />
+    <link rel="alternate" hreflang="zh-CN" href="https://genepad.cn/ngs" />
     <link rel="alternate" hreflang="x-default" href="https://genepad.cn/ngs" />
     <!-- Open Graph / Twitter 卡片 -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="GenePad" />
-    <meta property="og:locale" content="zh_CN" />
-    <meta property="og:title" content="NGS 数据查看 - GenePad | FASTQ 测序数据查看与文库丰度分析" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="NGS Viewer - GenePad | FASTQ Data Viewing &amp; Library Abundance Analysis" />
     <meta
       property="og:description"
-      content="直接打开 fastq.gz / fastq / fq.gz / fq：双端自动配对拼接、逐碱基质量、氨基酸搜索定位多变区、锚点裁切与一键文库丰度报告——GenePad 内置的 NGS 数据查看器。"
+      content="Open fastq.gz / fastq / fq.gz / fq directly: auto-paired reads, per-base quality, amino-acid search for variable regions, trim anchors, and one-click library abundance reports — GenePad's built-in NGS viewer."
     />
-    <meta property="og:url" content="https://genepad.cn/ngs" />
+    <meta property="og:url" content="https://genepad.cn/en/ngs" />
     <meta property="og:image" content="https://genepad.cn/icon.png" />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="NGS 数据查看 - GenePad | FASTQ 测序数据查看与文库丰度分析" />
+    <meta name="twitter:title" content="NGS Viewer - GenePad | FASTQ Data Viewing &amp; Library Abundance Analysis" />
     <meta
       name="twitter:description"
-      content="右键或拖入即可打开 FASTQ 测序文件，双端自动配对，锚点裁切与文库丰度分析——GenePad 内置的 NGS 数据查看器。"
+      content="Right-click or drag and drop to open FASTQ files; auto-paired ends, trim anchors and library abundance analysis — GenePad's built-in NGS data viewer."
     />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "name": "GenePad NGS 数据查看",
-        "description": "GenePad 内置的 NGS 数据查看器：直接打开 fastq.gz / fastq / fq.gz / fq 测序文件，双端文件自动配对拼接，逐碱基查看测序质量，按氨基酸搜索定位多变区，设置裁切锚点批量截取，并一键生成文库丰度报告（CSV 导出）。",
-        "url": "https://genepad.cn/ngs",
+        "name": "GenePad NGS Viewer",
+        "description": "GenePad's built-in NGS data viewer: open fastq.gz / fastq / fq.gz / fq files directly; paired-end files are auto-matched and assembled, per-base sequencing quality, amino-acid search to locate variable regions, trim anchors for batch capture, and one-click library abundance reports with CSV export.",
+        "url": "https://genepad.cn/en/ngs",
         "isPartOf": { "@type": "WebSite", "name": "GenePad", "url": "https://genepad.cn/" },
         "about": {
           "@type": "SoftwareApplication",
@@ -46,13 +46,12 @@
           "applicationCategory": "ScientificApplication",
           "operatingSystem": "Windows, macOS, Linux, Android",
           "url": "https://genepad.cn/",
-          "featureList": "FASTQ 查看器, fastq.gz/fastq/fq.gz/fq 打开, 双端自动配对, reads 自动拼接, 逐碱基测序质量, 氨基酸搜索, 裁切锚点, 文库丰度分析, CSV 导出"
+          "featureList": "FASTQ viewer, fastq.gz/fastq/fq.gz/fq open, auto paired-end matching, read assembly, per-base quality, amino-acid search, trim anchors, library abundance analysis, CSV export"
         },
-        "keywords": ["FASTQ 查看器", "NGS 数据查看", "fastq.gz", "双端测序", "paired-end", "测序质量", "文库丰度分析", "GenePad"]
+        "keywords": ["FASTQ viewer", "NGS data viewer", "fastq.gz", "paired-end reads", "sequencing quality", "library abundance analysis", "GenePad"]
       }
     </script>
-    <!-- 手绘 SVG 导出图，暂不启用 <link rel="icon" type="image/png" href="/icon.png" /> -->
-    <link rel="icon" href="./icon.ico" sizes="any" />
+    <link rel="icon" href="../icon.ico" sizes="any" />
     <style>
       /* 首屏骨架：JS 与样式表就绪前先出文字；React 挂载后淡出移除（见 src/boot.ts） */
       html { background: #f6f6f4; }
@@ -76,16 +75,16 @@
         #boot .sp { border-color: rgba(246, 246, 244, 0.22); border-top-color: #45c51f; }
       }
     </style>
-    <script type="module" crossorigin src="./assets/boot-BavvAolR.js"></script>
-    <script type="module" crossorigin src="./assets/Download-DTxESENW.js"></script>
-    <script type="module" crossorigin src="./assets/ngs-main-BP_D0aGX.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/boot-833VZBFT.css">
+    <script type="module" crossorigin src="../assets/boot-BavvAolR.js"></script>
+    <script type="module" crossorigin src="../assets/Download-DTxESENW.js"></script>
+    <script type="module" crossorigin src="../assets/ngs-main-BP_D0aGX.js"></script>
+    <link rel="stylesheet" crossorigin href="../assets/boot-833VZBFT.css">
   </head>
   <body>
     <div id="boot">
-      <div class="bt">NGS 数据查看<small>NGS DATA VIEWER</small></div>
-      <p class="bd">直接打开 fastq.gz / fastq / fq.gz / fq 测序文件：双端自动配对拼接，逐碱基查看质量，锚点裁切定位多变区，一键生成文库丰度报告。</p>
-      <div class="sp" role="status" aria-label="加载中"></div>
+      <div class="bt">NGS Viewer<small>NGS DATA VIEWER</small></div>
+      <p class="bd">Open fastq.gz / fastq / fq.gz / fq files directly: auto-paired reads, per-base quality, amino-acid search for variable regions, trim anchors, and one-click library abundance reports.</p>
+      <div class="sp" role="status" aria-label="Loading"></div>
     </div>
     <div id="root"></div>
   </body>
