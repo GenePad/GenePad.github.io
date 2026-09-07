@@ -2,11 +2,9 @@ import { useEffect } from "react";
 import { Reveal, SectionHead, ArrowRight, SubpageNav } from "../sections/shared";
 import Footer from "../sections/Footer";
 import { useLang, usePageTitle } from "../i18n";
-import { rootHref } from "../links";
 import { dismissBoot } from "../boot";
 
-/* 技术支持 / 开发者文档首页：.gen、.gjson、.dna、Rust 示例四个入口
-   （四个文档页目前只有中文版、位于根路径，中英文 hub 都用 rootHref 指向它们） */
+/* 技术支持 / 开发者文档首页：.gen、.gjson、.dna、Rust 示例四个入口 */
 
 export default function TechSupport() {
   const { t } = useLang();
@@ -20,19 +18,19 @@ export default function TechSupport() {
       en: t("ts.group.formatsEn") as string,
       docs: [
         {
-          href: rootHref("tech-gen-format.html"),
+          href: "tech-gen-format.html",
           title: t("ts.gen.title"),
           desc: t("ts.gen.desc"),
           tag: ".GEN · SQLITE 3",
         },
         {
-          href: rootHref("tech-gjson-format.html"),
+          href: "tech-gjson-format.html",
           title: t("ts.gjson.title"),
           desc: t("ts.gjson.desc"),
           tag: ".GJSON · JSON",
         },
         {
-          href: rootHref("tech-dna-conversion.html"),
+          href: "tech-dna-conversion.html",
           title: t("ts.dna.title"),
           desc: t("ts.dna.desc"),
           tag: ".DNA · SNAPGENE",
@@ -45,7 +43,7 @@ export default function TechSupport() {
       en: t("ts.group.codeEn") as string,
       docs: [
         {
-          href: rootHref("tech-rust-readers.html"),
+          href: "tech-rust-readers.html",
           title: t("ts.rust.title"),
           desc: t("ts.rust.desc"),
           tag: "RUST · RUSQLITE + SERDE_JSON",

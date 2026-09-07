@@ -25,7 +25,7 @@ const dict = {
     "nav.cta": "免费下载/升级",
     "nav.lang": "EN",
 
-    // Page titles（标题语言与 URL 语言一致：根路径=中文，/en/=英文）
+    // Page titles（运行时标题随语言切换；静态 HTML 中的 <title> 是英文版，供搜索引擎抓取）
     "title.home": "基因工坊 GenePad - 轻量跨平台基因图谱编辑器",
     "title.library": "基因文件库 - GenePad | 质粒文件检索与管理",
     "title.ngs": "NGS 数据查看 - GenePad | FASTQ 测序数据查看与文库丰度分析",
@@ -1007,24 +1007,42 @@ const dict = {
 
 export type TKey = keyof (typeof dict)["zh"];
 
-/* 页面语言由 URL 决定，不再按浏览器语言猜测：
-   路径以 /en 开头（/en/ 子树）渲染英文，其余（根路径，中文版）一律渲染中文。
-   同一 URL 同时只属于一种语言，搜索引擎对每个 URL 只保存一份语言快照。 */
-export const PAGE_LANG: Lang =
-  typeof window !== "undefined" && window.location.pathname.startsWith("/en")
-    ? "en"
-    : "zh";
-
 const LangContext = createContext<{
   lang: Lang;
+  setLang: (l: Lang) => void;
   t: (key: TKey) => ReactNode;
 }>({
-  lang: PAGE_LANG,
+  lang: "zh",
+  setLang: () => {},
   t: (k) => k,
 });
 
+function detectLang(): Lang {
+  try {
+    const saved = localStorage.getItem("genepad-lang");
+    if (saved === "zh" || saved === "en") return saved;
+  } catch {
+    /* localStorage 不可用时忽略 */
+  }
+  // 按系统/浏览器首选语言判断：首选是中文（zh-CN/zh-TW/zh-HK…）就用中文，否则一律英文
+  const primary =
+    typeof navigator !== "undefined"
+      ? navigator.language || navigator.languages?.[0] || ""
+      : "";
+  return primary.toLowerCase().startsWith("zh") ? "zh" : "en";
+}
+
 export function LangProvider({ children }: { children: ReactNode }) {
-  const [lang] = useState<Lang>(PAGE_LANG);
+  const [lang, setLangState] = useState<Lang>(detectLang);
+
+  const setLang = (l: Lang) => {
+    setLangState(l);
+    try {
+      localStorage.setItem("genepad-lang", l);
+    } catch {
+      /* 忽略写入失败 */
+    }
+  };
 
   useEffect(() => {
     document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
@@ -1033,7 +1051,7 @@ export function LangProvider({ children }: { children: ReactNode }) {
   const t = (key: TKey): ReactNode => dict[lang][key] ?? dict.zh[key] ?? key;
 
   return (
-    <LangContext.Provider value={{ lang, t }}>
+    <LangContext.Provider value={{ lang, setLang, t }}>
       {children}
     </LangContext.Provider>
   );
@@ -1043,8 +1061,7 @@ export function useLang() {
   return useContext(LangContext);
 }
 
-/* 页面标题：与 URL 语言保持一致（usePageTitle 在运行时再写一次，
-   与静态 HTML 头部按语言写好的 <title> 相同，仅为一致性保障） */
+/* 页面标题：随界面语言自动切换（爬虫不执行 JS，抓到的是静态 HTML 里的英文标题） */
 export function usePageTitle(key: TKey) {
   const { lang } = useLang();
   useEffect(() => {

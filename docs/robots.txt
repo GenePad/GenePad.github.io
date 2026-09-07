@@ -1,6 +1,5 @@
 User-agent: *
 Allow: /
 Disallow: /stats
-Disallow: /en/stats
 
 Sitemap: https://genepad.cn/sitemap.xml

@@ -1,6 +1,5 @@
 import { Reveal, PlasmidGlyph } from "./shared";
 import { useLang } from "../i18n";
-import { rootHref } from "../links";
 import { RELEASES_URL, GITEE_RELEASES_URL } from "../download-data";
 
 /* 页脚质粒环：滚动到位后描线绘制 */
@@ -45,7 +44,7 @@ export default function Footer() {
       links: [
         { label: "GitHub Releases", href: RELEASES_URL, external: true },
         { label: t("ft.giteeMirror"), href: GITEE_RELEASES_URL, external: true },
-        { label: t("ft.changelog"), href: rootHref("changelog.html"), external: false },
+        { label: t("ft.changelog"), href: "changelog.html", external: false },
       ],
     },
     {

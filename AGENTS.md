@@ -11,21 +11,18 @@ The site is a React + Vite app; its **build output is committed to `docs/`**.
 
 ```
 app/                         # Website source (React 19 + Vite + Tailwind, TypeScript)
-  index.html                 # 中文版首页入口（SEO meta 在此；根路径 = 中文）
-  tech-support.html etc.     # 中文版子页入口（multi-page build）
-  en/                        # 英文版同名页壳（index/library/ngs/projects/tech-support/stats → docs/en/）
+  index.html                 # Home page entry (SEO meta lives here)
+  tech-support.html          # Tech-support page entry (multi-page build)
   src/
     i18n.tsx                 # zh/en dictionary + LangProvider + useLang() — ALL site copy lives here
-    links.ts                 # pageHref/rootHref/otherLangHref（跨语言/跨子树链接工具）
     download-data.ts         # VERSION + per-platform installer files & sizes (edit on every release)
     sections/                # Nav / Hero / Workbench / DayNight / Sanger / Toolbox / Download / Footer
     pages/                   # Home.tsx, TechSupport.tsx
   public/shots/              # Screenshots (webp, converted from docs/screenshot/)
-  vite.config.ts             # build.outDir = ../docs, emptyOutDir: false, 6 zh + 6 en html inputs
-docs/                        # SERVED ROOT — do not hand-edit index.html / en/ / assets/ / shots/
-  index.html                 # BUILD OUTPUT (中文版，overwritten by `npm run build`)
-  tech-support.html          # BUILD OUTPUT (中文版)
-  en/                        # BUILD OUTPUT (英文版：docs/en/index.html etc.)
+  vite.config.ts             # build.outDir = ../docs, emptyOutDir: false, two html inputs
+docs/                        # SERVED ROOT — do not hand-edit index.html / tech-support.html / assets/ / shots/
+  index.html                 # BUILD OUTPUT (overwritten by `npm run build`)
+  tech-support.html          # BUILD OUTPUT
   assets/                    # BUILD OUTPUT (hashed js/css; safe to delete before rebuild)
   shots/                     # BUILD OUTPUT (copied from app/public/)
   styles.css                 # Hand-maintained: styles for the legacy tech-*.html / changelog pages
@@ -37,36 +34,18 @@ docs/                        # SERVED ROOT — do not hand-edit index.html / en/
 wrangler.jsonc               # Cloudflare Pages configuration (serves docs/)
 ```
 
-**Language model: URL decides the language.** Chinese is the default and lives on the root paths
-(`/`, `/library`, …); English lives under `/en/` (`/en/`, `/en/library`, …). Each URL belongs to
-exactly one language and renders it regardless of the visitor's browser language (`PAGE_LANG` in
-`i18n.tsx` derives from the pathname; there is no `localStorage`/`navigator` detection anymore).
-The Nav "EN / 中" toggle is a plain `<a>` link to the same page in the other language
-(`links.ts: otherLangHref`). The static `<head>` (lang, title, description, JSON-LD, og/twitter,
-`#boot` text) is written per language in the html shells — zh at `app/*.html`, en at `app/en/*.html` —
-and must stay in sync with the language of that tree. Every bilingual page carries reciprocal
-`hreflang` (zh-CN ↔ en) plus an `x-default` pointing at the Chinese URL. Hand-maintained pages that
-have no English edition yet (`changelog.html`, `tech-*.html`) stay Chinese-only at the root and are
-referenced from both trees via `rootHref()` in `links.ts`. Media URLs (shots, icons) are absolute
-(`/shots/…`, `/icon.ico`) so they resolve from the deeper `/en/` subtree too.
-
 ## Sitemap (`docs/sitemap.xml`)
 
 `docs/sitemap.xml` is hand-maintained (no build step) and referenced by
 `docs/robots.txt`. It must cover **every** public HTML page in `docs/` — both
-build output (Chinese root pages + their `/en/` English counterparts:
-`index` / `tech-support` / `projects` / `library` / `ngs` / `stats`) and
-hand-maintained pages (`changelog`, `tech-*.html`, Chinese-only, no `/en/`
-counterpart). **Whenever a page is added, removed, renamed, or its content
-changes, update the sitemap in the same change**: add/remove its `<url>` block
-and refresh `<lastmod` (`YYYY-MM-DD`) for any page whose content changed. Keep
-entries in site nav order. `priority` conventions: home 1.0; main nav pages
-(library/ngs/tech-support, incl. their `/en/` twins) 0.8; secondary pages
-(projects, tech-*) 0.7; utility pages (changelog/stats) 0.6. Note that
-`stats` is intentionally absent (robots.txt disallows `/stats` and
-`/en/stats`). The sitemap uses extensionless canonical URLs — never list
-`.html` forms (Cloudflare Pages 308-redirects `.html` → clean URL, which Google
-reports as "Page with redirect").
+build output (`index` / `tech-support` / `projects` / `library` / `ngs` /
+`stats`) and hand-maintained pages (`changelog`, `tech-*.html`). **Whenever a
+page is added, removed, renamed, or its content changes, update the sitemap in
+the same change**: add/remove its `<url>` block and refresh `<lastmod`
+(`YYYY-MM-DD`) for any page whose content changed. Keep entries in site nav
+order. `priority` conventions: home 1.0; main nav pages (library/ngs/
+tech-support) 0.8; secondary pages (projects, tech-*) 0.7; utility pages
+(changelog/stats) 0.6.
 
 ## Telemetry API (`/api/telemetry`)
 
@@ -114,20 +93,14 @@ Then commit `docs/` and push — both hosts serve `docs/` as-is, no CI build ste
 
 The build uses relative asset paths (`base: './'`), so it works from any mount point.
 `docs/assets/` accumulates stale hashed files across builds (`emptyOutDir: false`
-protects `release/` etc.) — it is safe to `rm -rf docs/assets` before a build. The
-build also (re)emits the English subtree `docs/en/`; if a page is removed, clean it
-with `rm -rf docs/en` before rebuilding (stale `docs/en/*.html` are not auto-deleted).
+protects `release/` etc.) — it is safe to `rm -rf docs/assets` before a build.
 
 ## i18n
 
 The site is bilingual (zh/en). All copy lives in `app/src/i18n.tsx`; components
-call `t("key")` from `useLang()`. Language is decided by the URL tree
-(`PAGE_LANG` in `i18n.tsx`: root paths → zh, `/en/` → en) — there is **no**
-browser-language detection or `localStorage` persistence anymore; the Nav
-toggle is a cross-language `<a>` link (`links.ts`). When adding UI text, add
-BOTH `zh` and `en` entries, and when adding a page, create the html shell in
-**both** `app/` and `app/en/` with matching per-language static `<head>` and
-reciprocal hreflang.
+call `t("key")` from `useLang()`. The toggle sits in the Nav; the choice is
+persisted to `localStorage` (`genepad-lang`), defaulting to the browser
+language. When adding UI text, add BOTH `zh` and `en` entries.
 
 ## Download Panel
 

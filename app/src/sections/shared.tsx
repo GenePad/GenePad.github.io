@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode, type CSSProperties, type RefObject } from "react";
 import { useLightboxImage } from "../lightbox";
 import { useLang } from "../i18n";
-import { otherLangHref } from "../links";
 
 /* ── 滚动显现容器：进入视口时给自身与子级加 .rv-in ── */
 export function Reveal({
@@ -177,9 +176,7 @@ export function Shot({
   dark?: boolean;
   eager?: boolean;
 }) {
-  // 媒体统一用绝对路径（/shots/…），这样 /en/ 子树的页面也能正确取图
-  const url = src.startsWith("shots/") ? "/" + src : src;
-  const zoom = useLightboxImage({ src: url, caption });
+  const zoom = useLightboxImage({ src, caption });
   const imgRef = useRef<HTMLImageElement>(null);
   const { loaded, onLoad, onError } = useImgLoaded(imgRef);
   const { w, h } = SHOT_DIMS[src] ?? SHOT_DIMS_DEFAULT;
@@ -201,7 +198,7 @@ export function Shot({
           {!loaded && <ImgSpin />}
           <img
             ref={imgRef}
-            src={url}
+            src={src}
             alt={caption}
             width={w}
             height={h}
@@ -293,7 +290,7 @@ export function PlasmidGlyph({ className = "h-5 w-5" }: { className?: string }) 
 
 /* ── 子页面共用导航头：logo 返回首页 + 语言切换 + 返回首页 CTA ── */
 export function SubpageNav({ tag }: { tag: string }) {
-  const { t } = useLang();
+  const { t, lang, setLang } = useLang();
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-paper/90 backdrop-blur-md">
       <div className="mx-auto flex h-14 max-w-[1400px] items-center justify-between px-5 md:px-8">
@@ -305,13 +302,13 @@ export function SubpageNav({ tag }: { tag: string }) {
           </span>
         </a>
         <div className="flex items-center gap-3">
-          <a
-            href={otherLangHref()}
+          <button
+            onClick={() => setLang(lang === "zh" ? "en" : "zh")}
             aria-label="Switch language"
             className="border border-line-strong px-3 py-2 font-mono text-[12px] tracking-[0.12em] text-ink/70 transition-colors hover:border-gfp-deep hover:text-gfp-deep"
           >
             {t("nav.lang")}
-          </a>
+          </button>
           <a
             href="index.html"
             className="group flex items-center gap-2 bg-ink px-4 py-2 font-mono text-[12px] tracking-[0.12em] text-paper transition-colors hover:bg-gfp-deep"
