@@ -2,55 +2,67 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://genepad.cn/</loc>
-        <lastmod>2026-08-14</lastmod>
+        <lastmod>2026-09-06</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
+        <loc>https://genepad.cn/library.html</loc>
+        <lastmod>2026-09-06</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://genepad.cn/ngs.html</loc>
+        <lastmod>2026-09-06</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
         <loc>https://genepad.cn/tech-support.html</loc>
-        <lastmod>2026-08-14</lastmod>
+        <lastmod>2026-09-06</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://genepad.cn/projects.html</loc>
-        <lastmod>2026-08-15</lastmod>
+        <lastmod>2026-09-06</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://genepad.cn/library.html</loc>
-        <lastmod>2026-08-20</lastmod>
+        <loc>https://genepad.cn/changelog.html</loc>
+        <lastmod>2026-09-03</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
+        <priority>0.6</priority>
     </url>
     <url>
         <loc>https://genepad.cn/stats.html</loc>
-        <lastmod>2026-08-27</lastmod>
+        <lastmod>2026-09-06</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.6</priority>
     </url>
     <url>
         <loc>https://genepad.cn/tech-gen-format.html</loc>
-        <lastmod>2026-08-14</lastmod>
+        <lastmod>2026-08-26</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://genepad.cn/tech-gjson-format.html</loc>
-        <lastmod>2026-08-14</lastmod>
+        <lastmod>2026-08-26</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://genepad.cn/tech-rust-readers.html</loc>
-        <lastmod>2026-08-14</lastmod>
+        <lastmod>2026-08-15</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://genepad.cn/tech-dna-conversion.html</loc>
-        <lastmod>2026-08-14</lastmod>
+        <lastmod>2026-08-15</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>

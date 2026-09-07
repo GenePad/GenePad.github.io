@@ -34,6 +34,19 @@ docs/                        # SERVED ROOT — do not hand-edit index.html / tec
 wrangler.jsonc               # Cloudflare Pages configuration (serves docs/)
 ```
 
+## Sitemap (`docs/sitemap.xml`)
+
+`docs/sitemap.xml` is hand-maintained (no build step) and referenced by
+`docs/robots.txt`. It must cover **every** public HTML page in `docs/` — both
+build output (`index` / `tech-support` / `projects` / `library` / `ngs` /
+`stats`) and hand-maintained pages (`changelog`, `tech-*.html`). **Whenever a
+page is added, removed, renamed, or its content changes, update the sitemap in
+the same change**: add/remove its `<url>` block and refresh `<lastmod`
+(`YYYY-MM-DD`) for any page whose content changed. Keep entries in site nav
+order. `priority` conventions: home 1.0; main nav pages (library/ngs/
+tech-support) 0.8; secondary pages (projects, tech-*) 0.7; utility pages
+(changelog/stats) 0.6.
+
 ## Telemetry API (`/api/telemetry`)
 
 `docs/_worker.js` is a Pages advanced-mode Worker committed in the build output: it serves
