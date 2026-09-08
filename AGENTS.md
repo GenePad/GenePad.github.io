@@ -347,9 +347,12 @@ curl -s -X PATCH "https://gitee.com/api/v5/repos/GenePad/GenePad.github.io/relea
 ### 8. Update the Homebrew tap
 
 Repo `GenePad/homebrew-tap`, file `Casks/genepad.rb`. The cask downloads the
-versioned `https://genepad.cn/release/mac/GenePad_<v>_Darwin_arm64.dmg`
-(0.7.1 起从 versionless `macos-app.zip` 改指 dmg), so on every
-release bump `version`, `url` and `sha256` (= `sha256sum` of the dmg):
+versioned `https://genepad.cn/release/mac/GenePad_<v>_Darwin_arm64.app.tar.gz`
+(0.7.1 起从 versionless `macos-app.zip` 改指版本化 .app.tar.gz——与应用内
+updater / 官网一键脚本的 SKIP 下载共用同一份文件同一哈希;一键脚本 mac 安装
+仍强制走 Homebrew:应用未签名/未公证,curl 或浏览器下载的 app 会被 Gatekeeper
+拦成「已损坏」,brew cask 安装自动处理隔离属性), so on every
+release bump `version` and `sha256` (= `sha256sum` of the .app.tar.gz):
 
 ```bash
 gh repo clone GenePad/homebrew-tap /tmp/homebrew-tap
@@ -358,12 +361,12 @@ cd /tmp/homebrew-tap
 git commit -am "genepad x.x.x" && git push origin main
 ```
 
-**Only push after Cloudflare Pages has deployed the new `macos-app.zip`** —
+**Only push after Cloudflare Pages has deployed the new `.app.tar.gz`** —
 verify the live file first, otherwise `brew` users hit a sha mismatch:
 
 ```bash
-curl -sL -x http://127.0.0.1:10801 -o /tmp/deployed.dmg "https://genepad.cn/release/mac/GenePad_<v>_Darwin_arm64.dmg"
-sha256sum /tmp/deployed.dmg   # must equal the sha written into the cask
+curl -sL -x http://127.0.0.1:10801 -o /tmp/deployed.tgz "https://genepad.cn/release/mac/GenePad_<v>_Darwin_arm64.app.tar.gz"
+sha256sum /tmp/deployed.tgz   # must equal the sha written into the cask
 ```
 
 ### 9. Update the changelog page
