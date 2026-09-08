@@ -293,17 +293,21 @@ gh release create vx.x.x \
   --notes "<same Chinese release notes from update.json>"
 ```
 
-### 7. Push to Gitee and create Gitee Release
+### 7. Create Gitee Release (git mirror frozen — release assets only)
 
 Gitee repo: `https://gitee.com/GenePad/GenePad.github.io`
 Gitee token: stored in opencode skill config
 
-```bash
-# Push to Gitee
-git remote add gitee https://oauth2:<gitee_token>@gitee.com/GenePad/GenePad.github.io.git
-git push gitee main
-git remote remove gitee
+**Do NOT `git push` to Gitee.** The Gitee git mirror exceeded the free-tier
+quota (repo size 1301MB > 1024MB; the culprit is release binaries committed
+into git history across 0.6.x releases) and its pre-receive hook now rejects
+**every** push, including ref deletions — the mirror is frozen at `4228db7`
+(2026-09-08). Nobody consumes the Gitee git branch: the download panel's Gitee
+source points at **Release attach_files**, which are stored independently of
+git and keep working. Per release, only create the release + upload assets via
+the API below.
 
+```bash
 # Create Gitee Release (capture release ID from response)
 # IMPORTANT: put access_token in the QUERY STRING and send the JSON body from a
 # UTF-8 file. Inline -d '{"body":"中文…"}' mangles the encoding and Gitee
@@ -316,16 +320,11 @@ curl -s -X POST "https://gitee.com/api/v5/repos/GenePad/GenePad.github.io/releas
 # Upload assets to Gitee Release (replace <release_id> from previous response)
 # The download panel's Gitee URLs expect tag v<x.x.x> and the exact filenames from step 1.
 for f in \
-  "docs/release/windows/GenePad_x.x.x_Windows_amd64.zip" \
+  "docs/release/windows/GenePad_x.x.x_Windows_amd64.exe" \
   "docs/release/linux/GenePad_x.x.x_Linux_amd64.deb" \
-  "docs/release/linux/GenePad_x.x.x_Linux_amd64.rpm" \
-  "docs/release/linux/GenePad_x.x.x_Linux_amd64.tar.gz" \
-  "docs/release/linux/GenePad_x.x.x_Linux_arm64.deb" \
-  "docs/release/linux/GenePad_x.x.x_Linux_arm64.rpm" \
-  "docs/release/linux/GenePad_x.x.x_Linux_arm64.tar.gz" \
-  "docs/release/android/app-universal-release.apk" \
-  "docs/release/mac/macos-dmg.zip" \
-  "docs/release/mac/macos-app.zip"; do
+  "docs/release/android/GenePad-vx.x.x-android-universal-release.apk" \
+  "docs/release/mac/GenePad_x.x.x_Darwin_arm64.dmg" \
+  "docs/release/mac/GenePad_x.x.x_Darwin_arm64.app.tar.gz"; do
   curl -s -X POST "https://gitee.com/api/v5/repos/GenePad/GenePad.github.io/releases/<release_id>/attach_files?access_token=<gitee_token>" \
     -F "file=@$f"
 done
@@ -333,8 +332,11 @@ done
 
 Gitee quirks:
 
-- Gitee auto-attaches source archives (`vx.x.x.zip` / `vx.x.x.tar.gz`), so the
-  release ends up with 12 assets after uploading 10 — that is normal.
+- Gitee auto-attaches source archives (`vx.x.x.zip` / `vx.x.x.tar.gz`) built
+  from the (frozen) git tag, so the release ends up with 7 assets after
+  uploading 5 — that is normal.
+- Old releases before v0.7.1 were deleted (2026-09-08) to shed attach storage;
+  keep only the current version's release going forward.
 - To edit notes later, `PATCH` the release — the request must repeat
   `tag_name` **and** `name` alongside `body`, otherwise 400:
 
@@ -389,8 +391,8 @@ be backfilled at v0.6.5. After pushing, verify `https://genepad.cn/changelog`
 When notes start as a placeholder (or get rewritten later), the final text must
 land in all three spots:
 
-1. `docs/update.json` → `notes` — edit + commit + push **both** remotes (GitHub
-   and Gitee); no rebuild needed. Easiest via a small node script that reads the
+1. `docs/update.json` → `notes` — edit + commit + push GitHub only (the Gitee
+   git mirror is frozen, see step 7); no rebuild needed. Easiest via a small node script that reads the
    markdown file and `JSON.stringify`s it back, avoiding manual `\n` escaping.
 2. GitHub Release — `gh release edit vx.x.x --repo GenePad/GenePad.github.io --notes-file <file>`
 3. Gitee Release — the `PATCH` call from step 7.
