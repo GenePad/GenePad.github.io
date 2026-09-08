@@ -1,7 +1,7 @@
 /* 安装包下载数据：三个来源 = 本站直链 / Gitee / GitHub
    发新版本时只需更新 VERSION 与各文件的 name/size（size 单位 MB） */
 
-export const VERSION = "0.6.9";
+export const VERSION = "0.7.1";
 
 const GITHUB_LATEST =
   "https://github.com/GenePad/GenePad.github.io/releases/latest/download/";
@@ -16,7 +16,6 @@ export type PlatformId =
   | "windows"
   | "mac"
   | "linux-x64"
-  | "linux-arm64"
   | "android";
 
 export interface PlatformDownloads {
@@ -30,7 +29,7 @@ function withSources(f: DownloadFile) {
     ...f,
     sources: {
       /* 根相对路径：en.genepad.cn 镜像页与本地 dev 的 /en/ 路径下也不会 404（解析结果与原相对写法一致） */
-      direct: `/release/${f.name.startsWith("macos") ? "mac" : f.name.endsWith(".apk") ? "android" : f.name.includes("Windows") ? "windows" : "linux"}/${f.name}`,
+      direct: `/release/${f.name.endsWith(".apk") ? "android" : f.name.includes("Windows") ? "windows" : f.name.includes("Darwin") ? "mac" : "linux"}/${f.name}`,
       github: `${GITHUB_LATEST}${f.name}`,
       gitee: `${GITEE_TAG}${f.name}`,
     },
@@ -43,37 +42,27 @@ export const PLATFORMS: (Omit<PlatformDownloads, "files"> & {
   {
     id: "windows",
     files: [
-      { name: `GenePad_${VERSION}_Windows_amd64.zip`, size: "8.5 MB" },
+      { name: `GenePad_${VERSION}_Windows_amd64.exe`, size: "9.2 MB" },
     ].map(withSources),
   },
   {
     id: "mac",
     files: [
-      { name: "macos-dmg.zip", size: "10.6 MB" },
-      { name: "macos-app.zip", size: "10.2 MB" },
+      { name: `GenePad_${VERSION}_Darwin_arm64.dmg`, size: "11.5 MB" },
     ].map(withSources),
   },
   {
     id: "linux-x64",
     files: [
-      { name: `GenePad_${VERSION}_Linux_amd64.deb`, size: "11.3 MB" },
-      { name: `GenePad_${VERSION}_Linux_amd64.rpm`, size: "11.3 MB" },
-      { name: `GenePad_${VERSION}_Linux_amd64.tar.gz`, size: "10.3 MB" },
-    ].map(withSources),
-    sparkStore: true,
-  },
-  {
-    id: "linux-arm64",
-    files: [
-      { name: `GenePad_${VERSION}_Linux_arm64.deb`, size: "11.1 MB" },
-      { name: `GenePad_${VERSION}_Linux_arm64.rpm`, size: "11.1 MB" },
-      { name: `GenePad_${VERSION}_Linux_arm64.tar.gz`, size: "10.0 MB" },
+      { name: `GenePad_${VERSION}_Linux_amd64.deb`, size: "12.3 MB" },
     ].map(withSources),
     sparkStore: true,
   },
   {
     id: "android",
-    files: [{ name: "app-universal-release.apk", size: "22.8 MB" }].map(withSources),
+    files: [
+      { name: `GenePad-v${VERSION}-android-universal-release.apk`, size: "24.3 MB" },
+    ].map(withSources),
   },
 ];
 

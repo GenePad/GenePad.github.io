@@ -1,0 +1,19 @@
+{
+  "version": "0.7.1",
+  "notes": "本次更新的两大主角是**应用内自动更新**与**团队服务器**：Windows / macOS / Linux 均可在应用内一键检查并完成升级（下载经 minisign 签名校验，更新前先保存未落盘的文档，旧版本的浏览器跳转链路保留为回退）；团队服务器面向实验室共享质粒库——公共库 / 成员库检索、一键索取与审批、投递给公共库或指定成员、个人空间自动同步与冲突裁决，断线自动重连。同时带来多标签页模式、新手教程、蛋白与 RNA 序列支持，Windows 任务栏的多窗口也改为显示各自文件名。\n\n## ✨ 新功能\n\n**应用内更新（0.7.0）**\n- Windows / macOS / Linux 应用内直接「检查 → 下载 → 安装 → 重启」，下载包经 minisign 签名校验\n- 未保存文档先弹保存闸门（保存并更新 / 不保存直接更新 / 取消）；进度条按真实下载进度校准\n- 微软商店版与 npm 便携版不受影响，继续走原渠道；旧版客户端仍读 update.json 跳浏览器下载\n\n**团队服务器**\n- 设置 → 团队服务器：UDP 自动发现或手动地址登录加入；TLS 证书指纹首次使用时信任（known_hosts 式），证书变更即冻结轮询等待人工裁决\n- 基因文件库新增「团队共享」分类：公共库检索 / 下载入库、成员库逐人浏览、跨库搜索与一键索取（待审批 / 已驳回状态跟踪、可撤回）\n- 分享菜单三项目标：通过其它程序分享 / 投递到公共库 / 投递给指定成员（多文件批量）\n- 个人空间自动同步：清单增量上传、元数据增量对比；冲突时三分支裁决（用我的覆盖 / 保留两份 / 取服务器）\n- 「团队消息」综合信息窗口按事件自动弹出（索取 / 投递 / 公告 / 令牌失效重新登录 / 下载完成 / 同步问题裁决）；WebSocket 实时通知 + 轮询兜底 + 定期对账；断连静默、服务器换址自动重发现重连\n\n**多标签页模式**\n- 单窗口多文档标签页，标签保活切换零加载；「+」随时开欢迎页标签；模式切换在关闭全部文档后生效（Android 恒为标签页）\n\n**新手教程**\n- 首次打开质粒触发分步导览：聚光灯高亮、上一个 / 下一个、「下次再学习」临时关闭、「跳过所有教程提示」二次确认；步骤按视图分组，隐藏的视图下次切出再补讲\n- 基因文件库窗口亦有专属教程（含 AI 批量刷新标签）；设置 → 外观可重置教程\n\n**蛋白与 RNA 序列**\n- 直接打开 SnapGene .prot / .rna 与蛋白 FASTA：展示、翻译与读码框按分子类型门控、搜索（蛋白按氨基酸、RNA 支持 U↔T 互转）、另存为按类型给格式\n- FASTA / GenBank 多序列文件打开时询问「分别打开 / 只打开第一条」\n\n**其它新功能**\n- CRISPR sgRNA 落图：工具窗口选中的 sgRNA 以「Target N」分段标注（结合区 + PAM）落到原文档图谱\n- 可配置键盘快捷键：设置 → 快捷键，Ctrl+T 添加标注 / Ctrl+R 添加引物等可录制改绑\n- 复制 / 粘贴标注随行：复制选区时把完整落在选区内的元件标注与引物一并携带，粘贴或插入到其它序列时随行落位（支持反向互补形态）\n- SnapGene .dna 原生比对包读写（含色谱）；比对条目右键导出 FASTA / AB1\n- 基因文件库行 Ctrl / Shift 多选；右键菜单批量打开 / 分享 / 移出\n- 酶表价格改「单次反应」口径，新增「低价酶」分组（≤¥20 / 反应）；酶池 × 筛选方案恒为交集\n- F5 / Ctrl+R 不再刷新界面丢失工作状态\n- 默认视图改为图谱 + 序列同屏，侧栏圆徽可切同屏 / 互斥\n\n## ⚡ 性能与流畅度\n- 大基因组（>50kb）限制酶位点流式扫描：千万级位点不再卡顿，序列视图酶标记按行窗口化物化（2 万上限解除）\n- FASTQ 快速滚动渲染帧率优化（滚动提交桶量化脏检查 + 方向提前量）\n\n## 🐛 修复\n- Windows 任务栏每个文档窗口显示文件名（此前所有窗口只显示 GenePad）\n- 环形跨起点选区删除 / 替换的序列错误拼接；圆图轴逆时针 / 跨起点拖选方向保持，松手不再被误点清空\n- 「隐藏 ORF」立即生效；SnapGene 无名文件打开后新手教程不触发（空 id）\n- 图谱底部酶池 / 筛选下拉在窗口隐藏挂载后压成只剩箭头\n- Android 0.7.0 构建失败修复（本版恢复 Android 发布）\n\n**完整变更**：https://github.com/Masterchiefm/GenePad/compare/v0.6.9...v0.7.1",
+  "pub_date": "2026-09-08T21:39:02.030+08:00",
+  "platforms": {
+    "windows-x86_64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRK20xNzladkFOWktFSXpxZW5sbGt1VlVrdGNrTDhqSmJEUGorK0x5M0xKTVptUlE0RnluK2gwQ0x1NnlFYWNBakhRak05czRaWGYwV2JWOXFIUlBzaDZTODJja2FlbVFNPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg4ODc0MzkyCWZpbGU6R2VuZVBhZF8wLjcuMV94NjQtc2V0dXAuZXhlCjAyWEN6RktXeXd5QkhrYVJqcEpkc1NueXRXZjdES1dUUFBRQzI4WWJnY3VPUzExU0ovQ1ZUZ1VLaWNTT3RMaFZNWVhIb3V0c25SQ1FnMXZ1Vk1heEJ3PT0K",
+      "url": "https://genepad.pages.dev/release/windows/GenePad_0.7.1_Windows_amd64.exe"
+    },
+    "darwin-aarch64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRK20xNzladkFOWkdONjN1Nm42YWdvQmc3V0c2eEZBYmtXekt5YW9wVnVaRVdDTGN6cTNDdEp6NEhLd0Y5QTJRZXdyRGJNSFdyNW8xcWh3eDV3UXp0RjFQcUUyQ3FFYmdNPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg4ODczMzY2CWZpbGU6R2VuZVBhZC5hcHAudGFyLmd6Cis2eXVQR1RLekhEOWRJRU5LYk9YeDlSbXpCRTk0S3hiZzJtdHNWazJIaktIQ3M5bHQwRmFjc1ZYUkdpckhCSlBvanppMlAwZ294cjdZNTZ6MVRTaUFRPT0K",
+      "url": "https://genepad.pages.dev/release/mac/GenePad_0.7.1_Darwin_arm64.app.tar.gz"
+    },
+    "linux-x86_64-deb": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRK20xNzladkFOWkhENXcvc2JZK0N5WmlQZjRlVWs4YWlERGc1djJOZnJxcGNoUUVacitXRmtlVzVQdWFnanBJMlN0U011VFJtcDlMeEZFQjJWLzRMS0hLL2RMdmhnL0F3PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg4ODczMjUwCWZpbGU6R2VuZVBhZF8wLjcuMV9hbWQ2NC5kZWIKeUMraElHMTViaEJYOCt1aGhXc3laeGhnd0RTanhYTk5LRUM0K2dVY05BRW00cjNYVTBXMkkveXB3YU1JT21UeFBrUVBvWHpHM2lyWHBoRnM1Q0J4QlE9PQo=",
+      "url": "https://genepad.pages.dev/release/linux/GenePad_0.7.1_Linux_amd64.deb"
+    }
+  }
+}

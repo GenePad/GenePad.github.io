@@ -13,8 +13,8 @@
 #  result stays visible; add -q / --quiet (or GENEPAD_QUIET=1) to skip the
 #  wait for unattended runs.
 #
-#  Linux:  自动识别架构（x86_64 / ARM64）与包管理器
-#          （apt / dnf / yum / zypper，其余环境改用 tar.gz）
+#  Linux:  自动识别架构（仅 x86_64）与包管理器（apt / dpkg 安装
+#          deb 包；自 0.7.1 起不再提供 rpm / tar.gz / ARM64 安装包）
 #  macOS:  检测 Homebrew——已安装则直接用 brew 安装；未安装则先
 #          自动安装 Homebrew（按网络环境自动选择官方源或国内
 #          USTC 镜像）再安装；任一步失败则报错退出，不做兜底。
@@ -27,7 +27,7 @@
 #    GENEPAD_DRY_RUN=1        只打印将执行的操作，不下载不安装
 #                             / Print planned actions only, no download
 #    GENEPAD_SKIP_INSTALL=1   只下载到当前目录，不安装
-#                             （macOS 即下载 macos-app.zip）
+#                             （macOS 即下载 .app.tar.gz）
 #                             / Download only, skip installation
 #    GENEPAD_QUIET=1          等价于 -q（管道方式运行时不便传参时更顺手）
 #                             / same as -q (handy when piping)
@@ -218,13 +218,18 @@ if [ "$OS_NAME" = "Darwin" ]; then
   fi
 
   if [ "$SKIP_INSTALL" = "1" ]; then
-    fetch "${TMP}/macos-app.zip" \
-      "${SITE}/release/mac/macos-app.zip" \
-      "${GITHUB_DL}/macos-app.zip"
-    cp -f "${TMP}/macos-app.zip" "${PWD}/macos-app.zip" \
+    resolve_version \
+      || die "无法获取最新版本号。可先设置 GENEPAD_VERSION=x.y.z 再运行本脚本" \
+             "failed to resolve the latest version; set GENEPAD_VERSION=x.y.z and rerun"
+    MAC_FILE="GenePad_${VERSION}_Darwin_arm64.app.tar.gz"
+    fetch "${TMP}/${MAC_FILE}" \
+      "${SITE}/release/mac/${MAC_FILE}" \
+      "${GITEE_DL}/v${VERSION}/${MAC_FILE}" \
+      "${GITHUB_DL}/${MAC_FILE}"
+    cp -f "${TMP}/${MAC_FILE}" "${PWD}/${MAC_FILE}" \
       || die "复制到当前目录失败" "failed to copy the file into the current directory"
-    ok "GENEPAD_SKIP_INSTALL=1，已跳过安装。文件已保存: ${PWD}/macos-app.zip" \
-       "GENEPAD_SKIP_INSTALL=1, installation skipped. File saved to: ${PWD}/macos-app.zip"
+    ok "GENEPAD_SKIP_INSTALL=1，已跳过安装。文件已保存: ${PWD}/${MAC_FILE}" \
+       "GENEPAD_SKIP_INSTALL=1, installation skipped. File saved: ${PWD}/${MAC_FILE}"
     exit 0
   fi
 
@@ -281,9 +286,10 @@ fi
 # ---------- 1. 识别 CPU 架构 / detect architecture ----------
 case "$(uname -m)" in
   x86_64|amd64)  ARCH="amd64" ;;
-  aarch64|arm64) ARCH="arm64" ;;
-  *) die "不支持的 CPU 架构: $(uname -m)（目前提供 x86_64 与 ARM64 安装包）" \
-        "unsupported CPU architecture: $(uname -m) (only x86_64 / ARM64 builds are provided)" ;;
+  aarch64|arm64) die "自 0.7.1 起不再提供 ARM64 Linux 安装包（仅 x86_64 deb）。旧版 0.6.9 的 ARM64 包仍可在 ${SITE} 下载页获取" \
+                    "ARM64 Linux builds were discontinued in 0.7.1 (x86_64 deb only). The last ARM64 packages (0.6.9) remain available on the download page at ${SITE}" ;;
+  *) die "不支持的 CPU 架构: $(uname -m)（目前仅提供 x86_64 安装包）" \
+        "unsupported CPU architecture: $(uname -m) (only x86_64 builds are provided)" ;;
 esac
 say "检测到架构: ${ARCH}" "Detected architecture: ${ARCH}"
 
@@ -291,21 +297,16 @@ say "检测到架构: ${ARCH}" "Detected architecture: ${ARCH}"
 PKG_TYPE="" PM=""
 if has apt-get;       then PKG_TYPE="deb"; PM="apt-get"
 elif has apt;         then PKG_TYPE="deb"; PM="apt"
-elif has dnf;         then PKG_TYPE="rpm"; PM="dnf"
-elif has yum;         then PKG_TYPE="rpm"; PM="yum"
-elif has zypper;      then PKG_TYPE="rpm"; PM="zypper"
-else                        PKG_TYPE="tgz"; PM=""
+elif has dpkg;        then PKG_TYPE="deb"; PM="dpkg"
+else PKG_TYPE=""; PM=""
 fi
 
-if [ "$PKG_TYPE" = "tgz" ]; then
-  has tar || die "未检测到 deb/rpm 包管理器，且未找到 tar，无法安装" \
-                 "no deb/rpm package manager detected and tar is missing; cannot install"
-  say "未检测到 deb/rpm 包管理器，将使用 tar.gz 解压安装到 /usr/local/bin" \
-      "No deb/rpm package manager found; will install from tar.gz into /usr/local/bin"
-else
-  say "检测到包管理器: ${PM}（.${PKG_TYPE} 包）" \
-      "Detected package manager: ${PM} (.${PKG_TYPE} package)"
+if [ -z "$PKG_TYPE" ]; then
+  die "自 0.7.1 起仅提供 deb 安装包（rpm / tar.gz 已停发），且本机未检测到 apt/dpkg。请到 ${SITE} 下载页手动获取 deb 包；旧版 rpm / tar.gz（0.6.9）仍可下载" \
+      "Only deb packages are published since 0.7.1 (rpm / tar.gz discontinued), and no apt/dpkg was found on this machine. Grab the deb from the download page at ${SITE}; legacy rpm / tar.gz (0.6.9) remain downloadable"
 fi
+say "检测到包管理器: ${PM}（deb 包）" \
+    "Detected package manager: ${PM} (deb package)"
 
 # ---------- 3. 确定版本 / resolve version ----------
 resolve_version \
@@ -314,12 +315,7 @@ resolve_version \
 say "安装版本: v${VERSION}" "Installing version: v${VERSION}"
 
 # ---------- 4. 组装文件名与下载地址 / build file name and URLs ----------
-# 注意 tgz 对应的发布文件扩展名是 .tar.gz / note: the tgz fallback file ships as .tar.gz
-if [ "$PKG_TYPE" = "tgz" ]; then
-  FILE="GenePad_${VERSION}_Linux_${ARCH}.tar.gz"
-else
-  FILE="GenePad_${VERSION}_Linux_${ARCH}.${PKG_TYPE}"
-fi
+FILE="GenePad_${VERSION}_Linux_${ARCH}.deb"
 urls=(
   "${SITE}/release/linux/${FILE}"
   "${GITEE_DL}/v${VERSION}/${FILE}"
@@ -331,11 +327,7 @@ if [ "$DRY_RUN" = "1" ]; then
   say "DRY RUN — 将执行以下操作:" "DRY RUN — planned actions:"
   echo "    $(bi "文件" "File"): ${FILE}"
   for u in "${urls[@]}"; do echo "    $(bi "下载" "Download"): $u"; done
-  if [ "$PKG_TYPE" = "tgz" ]; then
-    echo "    $(bi "安装" "Install"): tar -xzf ${FILE} -> /usr/local/bin/genepad"
-  else
-    echo "    $(bi "安装" "Install"): sudo ${PM} install ${FILE}"
-  fi
+  echo "    $(bi "安装" "Install"): sudo ${PM} install ${FILE}"
   exit 0
 fi
 
@@ -373,26 +365,6 @@ case "$PKG_TYPE" in
         || die "dpkg 安装失败，请把上方报错反馈到 ${SITE}" \
                "dpkg install failed; please report the error above at ${SITE}"
     fi
-    ;;
-  rpm)
-    say "使用 ${PM} 安装 ..." "Installing with ${PM} ..."
-    case "$PM" in
-      dnf|yum) $SUDO "$PM" install -y "$OUT" \
-        || die "${PM} 安装失败，请把上方报错反馈到 ${SITE}" \
-               "${PM} install failed; please report the error above at ${SITE}" ;;
-      zypper)  $SUDO zypper --non-interactive install "$OUT" \
-        || die "zypper 安装失败，请把上方报错反馈到 ${SITE}" \
-               "zypper install failed; please report the error above at ${SITE}" ;;
-    esac
-    ;;
-  tgz)
-    say "解压安装到 /usr/local/bin ..." "Extracting into /usr/local/bin ..."
-    tar -xzf "$OUT" -C "$TMP" || die "解压失败" "extraction failed"
-    [ -f "${TMP}/genepad" ] \
-      || die "压缩包内容与预期不符（未找到 genepad 可执行文件）" \
-             "archive layout unexpected (genepad executable not found)"
-    $SUDO install -m 0755 "${TMP}/genepad" /usr/local/bin/genepad \
-      || die "安装到 /usr/local/bin 失败" "failed to install into /usr/local/bin"
     ;;
 esac
 

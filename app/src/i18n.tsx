@@ -152,7 +152,6 @@ const dict = {
       "支持 Windows、macOS、Linux 桌面端与 Android 移动端，各平台功能一致。首次使用下载安装包即可完成安装；已安装的用户直接下载最新版覆盖安装即可升级，无需卸载旧版本。",
     "dl.note.desktop": "桌面端",
     "dl.note.linuxX64": "桌面端 · x86_64",
-    "dl.note.linuxArm64": "桌面端 · ARM64",
     "dl.note.mobile": "移动端",
     "dl.note.soon": "敬请期待",
     "dl.upgradeNote":
@@ -184,9 +183,9 @@ const dict = {
    npm install -g @genepad/app
    mkdir -p ~/Applications && cp -R "$(npm root -g)/@genepad/darwin-arm64/GenePad.app" ~/Applications/
    之后运行 open -a GenePad（或命令行运行 genepad）
-4. 手动方式（兜底）：该应用未签名，浏览器下载的文件会被 Gatekeeper 标记为「已损坏」，因此使用 curl 下载并本地签名：
-   curl -L -o /tmp/gene-pad-app.zip "https://genepad.cn/release/mac/macos-app.zip"
-   unzip -o /tmp/gene-pad-app.zip -d /tmp/gene-pad-extract
+4. 手动方式（兜底）：该应用未签名，浏览器下载的文件会被 Gatekeeper 标记为「已损坏」，因此使用 curl 下载并本地签名。先从 https://genepad.cn/update.json 读取最新版本号（记为 VERSION，如 0.7.1），再下载对应版本的 .app.tar.gz 并解压安装：
+   curl -L -o /tmp/gene-pad-app.tar.gz "https://genepad.cn/release/mac/GenePad_\${VERSION}_Darwin_arm64.app.tar.gz"
+   mkdir -p /tmp/gene-pad-extract && tar -xzf /tmp/gene-pad-app.tar.gz -C /tmp/gene-pad-extract
    mv "/tmp/gene-pad-extract/GenePad.app" /Applications/
    xattr -cr "/Applications/GenePad.app"
    codesign --force --deep --sign - "/Applications/GenePad.app"
@@ -648,7 +647,6 @@ const dict = {
       "Available on Windows, macOS and Linux desktops as well as Android, with consistent functionality across platforms. First-time users can install directly from a downloaded package; existing users can upgrade by downloading the latest version and installing over the old one — no uninstall needed.",
     "dl.note.desktop": "Desktop",
     "dl.note.linuxX64": "Desktop · x86_64",
-    "dl.note.linuxArm64": "Desktop · ARM64",
     "dl.note.mobile": "Mobile",
     "dl.note.soon": "Coming soon",
     "dl.upgradeNote":
@@ -680,9 +678,9 @@ const dict = {
    npm install -g @genepad/app
    mkdir -p ~/Applications && cp -R "$(npm root -g)/@genepad/darwin-arm64/GenePad.app" ~/Applications/
    Then open it with: open -a GenePad (or run: genepad)
-4. Fallback (manual): the application is unsigned and browser downloads are flagged "damaged" by Gatekeeper, so download with curl and re-sign locally:
-   curl -L -o /tmp/gene-pad-app.zip "https://genepad.cn/release/mac/macos-app.zip"
-   unzip -o /tmp/gene-pad-app.zip -d /tmp/gene-pad-extract
+4. Fallback (manual): the application is unsigned and browser downloads are flagged "damaged" by Gatekeeper, so download with curl and re-sign locally. First read the latest version number from https://genepad.cn/update.json (call it VERSION, e.g. 0.7.1), then download that version's .app.tar.gz and extract it:
+   curl -L -o /tmp/gene-pad-app.tar.gz "https://genepad.cn/release/mac/GenePad_\${VERSION}_Darwin_arm64.app.tar.gz"
+   mkdir -p /tmp/gene-pad-extract && tar -xzf /tmp/gene-pad-app.tar.gz -C /tmp/gene-pad-extract
    mv "/tmp/gene-pad-extract/GenePad.app" /Applications/
    xattr -cr "/Applications/GenePad.app"
    codesign --force --deep --sign - "/Applications/GenePad.app"

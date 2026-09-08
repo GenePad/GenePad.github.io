@@ -158,13 +158,16 @@ about how genepad.cn behaves for users:
 It also shows, per platform:
 
 - **macOS** — one-click install script first (`curl -fsSL https://genepad.cn/release/install.sh | bash` — same script as Linux, lives at the platform-neutral `docs/release/install.sh`; on macOS it installs via Homebrew, auto-installing Homebrew with a USTC mirror when GitHub is unreachable — any failed step aborts with an error, no fallback), then — under an "Or use one of the options below" divider — `brew install genepad/tap/genepad`, `npm i -g @genepad/app`, a copyable AI-assistant
-  install prompt (`dl.ai.prompt` in i18n.tsx, zh/en), and the unsigned
-  `macos-dmg.zip` / `macos-app.zip` direct links inside a collapsed
+  install prompt (`dl.ai.prompt` in i18n.tsx, zh/en; the manual fallback
+  downloads the versioned `GenePad_<v>_Darwin_arm64.app.tar.gz`), and the
+  versioned `GenePad_<v>_Darwin_arm64.dmg` direct link inside a collapsed
   `<details>` with a Gatekeeper "unsigned" warning. Every command box
-  carries the same one-liner note (`dl.cmd.note`).
-- **Linux** — split into two cards (x86_64 / ARM64); `npm i -g @genepad/app`
-  plus the three packages per arch, and a Spark Store note.
-- **Windows / Android** — direct installer rows only.
+  carries the same one-liner note (`dl.cmd.note`). 0.7.1 起不再产
+  `.app.zip`/`macos-*.zip`(updater 产物 `.app.tar.gz` 与 dmg 同源)。
+- **Linux** — single x86_64 card (ARM64 自 0.7.1 停发,仅 deb);Spark Store note.
+- **Windows / Android** — direct installer rows only (Windows 为裸 NSIS
+  `GenePad_<v>_Windows_amd64.exe`,0.7.1 起 zip 重复封装取消;Android 为
+  `GenePad-v<v>-android-universal-release.apk`).
 
 ## Release Checklist
 
@@ -185,28 +188,24 @@ Copy the latest built binaries from the Gene Editor source project into `docs/re
 | Linux | `\\wsl.localhost\Ubuntu-24.04\home\chief\Gene_Editor\src-tauri\target\release\bundle` |
 | Android | `C:\Users\moqiq\PycharmProjects\Gene_Editor-master\src-tauri\gen\android\app\build\outputs\apk\universal\release` |
 
-Copy the latest version files to `docs/release/` (current naming, e.g. v0.6.2):
+Copy the latest version files to `docs/release/` (naming since 0.7.1 — 渠道裁撤
+见 app 仓 docs/distribution.md:Windows 裸 NSIS exe、mac dmg+app.tar.gz、
+Linux x86_64 deb、Android 版本化 apk;updater `.sig` 一并入库):
 ```
-docs/release/windows/GenePad_x.x.x_Windows_amd64.zip   (zip the NSIS exe to avoid browser security warnings)
-docs/release/linux/GenePad_x.x.x_Linux_amd64.deb
-docs/release/linux/GenePad_x.x.x_Linux_amd64.rpm
-docs/release/linux/GenePad_x.x.x_Linux_amd64.tar.gz
-docs/release/linux/GenePad_x.x.x_Linux_arm64.deb
-docs/release/linux/GenePad_x.x.x_Linux_arm64.rpm
-docs/release/linux/GenePad_x.x.x_Linux_arm64.tar.gz
-docs/release/android/app-universal-release.apk   (in-place update, no version in filename)
-docs/release/mac/macos-dmg.zip                   (copied manually by user)
-docs/release/mac/macos-app.zip                   (copied manually by user)
+docs/release/windows/GenePad_x.x.x_Windows_amd64.exe (+ .exe.sig)
+docs/release/linux/GenePad_x.x.x_Linux_amd64.deb     (+ .deb.sig)
+docs/release/android/GenePad-vx.x.x-android-universal-release.apk
+docs/release/mac/GenePad_x.x.x_Darwin_arm64.dmg
+docs/release/mac/GenePad_x.x.x_Darwin_arm64.app.tar.gz (+ .app.tar.gz.sig)
 ```
 
-**Important: Windows exe must be compressed to zip** — use `Compress-Archive` to zip the `.exe` into `.zip` before placing in `docs/release/windows/`. This avoids browser security warnings when downloading.
-
-**Important: Do NOT include AppImage files** — skip any `.AppImage` files found in the Linux bundle directory.
+**不再 zip 封装**(0.6.x 的 exe→zip、macos-*.zip 伪装扩展名惯例已废)。旧版本
+0.6.9 的 rpm/tar.gz/arm64 包保留作存档(install.sh 的停发提示指向它们),勿删。
 
 **macOS notes:** the app is unsigned, so browser downloads get flagged by
 Gatekeeper — the site steers macOS users to `brew install genepad/tap/genepad`
-(recommended) or `npm i -g @genepad/app`; `macos-dmg.zip` / `macos-app.zip`
-are the manual fallback and are copied by hand, not from CI.
+(recommended) or the one-click script; the versioned dmg / app.tar.gz are the
+manual fallback.
 
 **Alternative source: per-platform zip drop folder.** The user may instead hand
 over five zips in a Downloads folder (e.g. `C:\Users\moqiq\Downloads\新建文件夹`):
@@ -348,8 +347,9 @@ curl -s -X PATCH "https://gitee.com/api/v5/repos/GenePad/GenePad.github.io/relea
 ### 8. Update the Homebrew tap
 
 Repo `GenePad/homebrew-tap`, file `Casks/genepad.rb`. The cask downloads the
-**versionless** `https://genepad.cn/release/mac/macos-app.zip`, so on every
-release bump `version` and `sha256` (= `sha256sum docs/release/mac/macos-app.zip`):
+versioned `https://genepad.cn/release/mac/GenePad_<v>_Darwin_arm64.dmg`
+(0.7.1 起从 versionless `macos-app.zip` 改指 dmg), so on every
+release bump `version`, `url` and `sha256` (= `sha256sum` of the dmg):
 
 ```bash
 gh repo clone GenePad/homebrew-tap /tmp/homebrew-tap
@@ -362,8 +362,8 @@ git commit -am "genepad x.x.x" && git push origin main
 verify the live file first, otherwise `brew` users hit a sha mismatch:
 
 ```bash
-curl -sL -x http://127.0.0.1:10801 -o /tmp/deployed.zip "https://genepad.cn/release/mac/macos-app.zip"
-sha256sum /tmp/deployed.zip   # must equal the sha written into the cask
+curl -sL -x http://127.0.0.1:10801 -o /tmp/deployed.dmg "https://genepad.cn/release/mac/GenePad_<v>_Darwin_arm64.dmg"
+sha256sum /tmp/deployed.dmg   # must equal the sha written into the cask
 ```
 
 ### 9. Update the changelog page

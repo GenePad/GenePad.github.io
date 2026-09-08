@@ -38,7 +38,8 @@
                 <button class="doc-toc-toggle" type="button">目录</button>
                 <a class="doc-toc-home" href="index.html">← 返回首页</a>
                 <p class="doc-toc-group">版本</p>
-                <a class="current" href="#v0-6-9">v0.6.9</a>
+                <a class="current" href="#v0-7-1">v0.7.1</a>
+                <a href="#v0-6-9">v0.6.9</a>
                 <a href="#v0-6-8">v0.6.8</a>
                 <a href="#v0-6-7">v0.6.7</a>
                 <a href="#v0-6-6">v0.6.6</a>
@@ -54,6 +55,81 @@
                         记录 GenePad 每个版本的新功能、缺陷修复与维护变更。版本按发布时间倒序排列。
                     </p>
                 </div>
+
+                <section class="doc-section" id="v0-7-1">
+                    <div class="section-heading">
+                        <p class="eyebrow">2026-09-08</p>
+                        <h2>v0.7.1</h2>
+                    </div>
+                    <p>本次更新的两大主角是<strong>应用内自动更新</strong>与<strong>团队服务器</strong>：Windows / macOS / Linux 均可在应用内一键检查并完成升级（下载经 minisign 签名校验，更新前先保存未落盘的文档，旧版本的浏览器跳转链路保留为回退）；团队服务器面向实验室共享质粒库——公共库 / 成员库检索、一键索取与审批、投递给公共库或指定成员、个人空间自动同步与冲突裁决，断线自动重连。同时带来多标签页模式、新手教程、蛋白与 RNA 序列支持，Windows 任务栏的多窗口也改为显示各自文件名。</p>
+
+                    <h3>✨ 新功能</h3>
+                    <ul>
+                        <li><strong>应用内更新（0.7.0）</strong>：
+                            <ul>
+                                <li>Windows / macOS / Linux 应用内直接「检查 → 下载 → 安装 → 重启」，下载包经 minisign 签名校验</li>
+                                <li>未保存文档先弹保存闸门（保存并更新 / 不保存直接更新 / 取消）；进度条按真实下载进度校准</li>
+                                <li>微软商店版与 npm 便携版不受影响，继续走原渠道；旧版客户端仍读 update.json 跳浏览器下载</li>
+                            </ul>
+                        </li>
+                        <li><strong>团队服务器</strong>：
+                            <ul>
+                                <li>设置 → 团队服务器：UDP 自动发现或手动地址登录加入；TLS 证书指纹首次使用时信任（known_hosts 式），证书变更即冻结等待人工裁决</li>
+                                <li>基因文件库新增「团队共享」分类：公共库检索 / 下载入库、成员库逐人浏览、跨库搜索与一键索取（待审批 / 已驳回状态跟踪、可撤回）</li>
+                                <li>分享菜单三项目标：通过其它程序分享 / 投递到公共库 / 投递给指定成员（多文件批量）</li>
+                                <li>个人空间自动同步：清单增量上传、元数据增量对比；冲突时三分支裁决（用我的覆盖 / 保留两份 / 取服务器）</li>
+                                <li>「团队消息」综合信息窗口按事件自动弹出（索取 / 投递 / 公告 / 令牌失效重新登录 / 下载完成 / 同步问题裁决）；WebSocket 实时通知 + 轮询兜底 + 定期对账；断连静默、服务器换址自动重发现重连</li>
+                            </ul>
+                        </li>
+                        <li><strong>多标签页模式</strong>：
+                            <ul>
+                                <li>单窗口多文档标签页，标签保活切换零加载；「+」随时开欢迎页标签；模式切换在关闭全部文档后生效（Android 恒为标签页）</li>
+                            </ul>
+                        </li>
+                        <li><strong>新手教程</strong>：
+                            <ul>
+                                <li>首次打开质粒触发分步导览：聚光灯高亮、上一个 / 下一个、「下次再学习」临时关闭、「跳过所有教程提示」二次确认；步骤按视图分组，隐藏的视图下次切出再补讲</li>
+                                <li>基因文件库窗口亦有专属教程（含 AI 批量刷新标签）；设置 → 外观可重置教程</li>
+                            </ul>
+                        </li>
+                        <li><strong>蛋白与 RNA 序列</strong>：
+                            <ul>
+                                <li>直接打开 SnapGene .prot / .rna 与蛋白 FASTA：展示、翻译与读码框按分子类型门控、搜索（蛋白按氨基酸、RNA 支持 U↔T 互转）、另存为按类型给格式</li>
+                                <li>FASTA / GenBank 多序列文件打开时询问「分别打开 / 只打开第一条」</li>
+                            </ul>
+                        </li>
+                        <li><strong>其它新功能</strong>：
+                            <ul>
+                                <li>CRISPR sgRNA 落图：工具窗口选中的 sgRNA 以「Target N」分段标注（结合区 + PAM）落到原文档图谱</li>
+                                <li>可配置键盘快捷键：设置 → 快捷键，Ctrl+T 添加标注 / Ctrl+R 添加引物等可录制改绑</li>
+                                <li>复制 / 粘贴标注随行：复制选区时把完整落在选区内的元件标注与引物一并携带，粘贴或插入到其它序列时随行落位（支持反向互补形态）</li>
+                                <li>SnapGene .dna 原生比对包读写（含色谱）；比对条目右键导出 FASTA / AB1</li>
+                                <li>基因文件库行 Ctrl / Shift 多选；右键菜单批量打开 / 分享 / 移出</li>
+                                <li>酶表价格改「单次反应」口径，新增「低价酶」分组（≤¥20 / 反应）；酶池 × 筛选方案恒为交集</li>
+                                <li>F5 / Ctrl+R 不再刷新界面丢失工作状态</li>
+                                <li>默认视图改为图谱 + 序列同屏，侧栏圆徽可切同屏 / 互斥</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <h3>⚡ 性能与流畅度</h3>
+                    <ul>
+                        <li>大基因组（&gt;50kb）限制酶位点流式扫描：千万级位点不再卡顿，序列视图酶标记按行窗口化物化（2 万上限解除）</li>
+                        <li>FASTQ 快速滚动渲染帧率优化（滚动提交桶量化脏检查 + 方向提前量）</li>
+                    </ul>
+
+                    <h3>🐛 问题修复</h3>
+                    <ul>
+                        <li>Windows 任务栏每个文档窗口显示文件名（此前所有窗口只显示 GenePad）</li>
+                        <li>环形跨起点选区删除 / 替换的序列错误拼接；圆图轴逆时针 / 跨起点拖选方向保持，松手不再被误点清空</li>
+                        <li>「隐藏 ORF」立即生效；SnapGene 无名文件打开后新手教程不触发（空 id）</li>
+                        <li>图谱底部酶池 / 筛选下拉在窗口隐藏挂载后压成只剩箭头</li>
+                        <li>Android 0.7.0 构建失败修复（本版恢复 Android 发布）</li>
+                    </ul>
+
+                    <p><strong>完整变更</strong>：<a href="https://github.com/Masterchiefm/GenePad/compare/v0.6.9...v0.7.1" target="_blank" rel="noopener">v0.6.9...v0.7.1</a></p>
+                    <p><strong>渠道调整</strong>：自本版起仅发布 Windows 安装包（.exe）、macOS DMG / .app.tar.gz、Linux x86_64 deb 与安卓 APK / AAB；npm 安装、ARM64 Linux、rpm / AppImage / 便携包等渠道停止更新（旧版安装包仍可在下载页获取）。</p>
+                </section>
 
                 <section class="doc-section" id="v0-6-9">
                     <div class="section-heading">

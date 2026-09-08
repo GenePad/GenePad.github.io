@@ -23,7 +23,6 @@ const ICONS: Record<CardId, (p: { className?: string }) => React.JSX.Element> = 
   windows: WindowsIcon,
   mac: AppleIcon,
   "linux-x64": LinuxIcon,
-  "linux-arm64": LinuxIcon,
   android: AndroidIcon,
   harmony: HarmonyIcon,
 };
@@ -160,7 +159,7 @@ function detectPlatform(): CardId {
   if (/Android/i.test(ua)) return "android";
   if (/iPhone|iPad|iPod/i.test(ua)) return "windows";
   if (/Mac/i.test(ua)) return (navigator.maxTouchPoints ?? 0) > 1 ? "windows" : "mac";
-  if (/Linux/i.test(ua)) return /aarch64|arm64/i.test(ua) ? "linux-arm64" : "linux-x64";
+  if (/Linux/i.test(ua)) return "linux-x64";
   return "windows";
 }
 
@@ -252,14 +251,13 @@ export default function Download({ index = "06" }: { index?: string }) {
     { id: "windows", name: "Windows", note: t("dl.note.desktop") as string },
     { id: "mac", name: "macOS", note: t("dl.note.desktop") as string },
     { id: "linux-x64", name: "Linux", note: t("dl.note.linuxX64") as string },
-    { id: "linux-arm64", name: "Linux", note: t("dl.note.linuxArm64") as string },
     { id: "android", name: "Android", note: t("dl.note.mobile") as string },
     { id: "harmony", name: "HarmonyOS", note: t("dl.note.soon") as string, soon: true },
   ];
 
   const active = PLATFORMS.find((p) => p.id === selected);
   const isMac = selected === "mac";
-  const isLinux = selected === "linux-x64" || selected === "linux-arm64";
+  const isLinux = selected === "linux-x64";
 
   return (
     <section id="download" className="bg-ink text-paper">
@@ -268,9 +266,9 @@ export default function Download({ index = "06" }: { index?: string }) {
           {t("dl.lead")}
         </SectionHead>
 
-        {/* 平台格：手机端单行横向滑动，避免图标占满首屏；sm+ 恢复网格（Linux 分 x86_64 / ARM64） */}
+        {/* 平台格：手机端单行横向滑动，避免图标占满首屏；sm+ 恢复网格 */}
         <Reveal>
-          <ul ref={stripRef} className="flex gap-px overflow-x-auto border border-lined bg-lined sm:grid sm:grid-cols-3 lg:grid-cols-6">
+          <ul ref={stripRef} className="flex gap-px overflow-x-auto border border-lined bg-lined sm:grid sm:grid-cols-3 lg:grid-cols-5">
             {platformCards.map((p) => {
               const Icon = ICONS[p.id];
               const on = selected === p.id;
