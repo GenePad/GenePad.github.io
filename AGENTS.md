@@ -165,8 +165,10 @@ It also shows, per platform:
   carries the same one-liner note (`dl.cmd.note`). 0.7.1 起不再产
   `.app.zip`/`macos-*.zip`(updater 产物 `.app.tar.gz` 与 dmg 同源)。
 - **Linux** — single x86_64 card (ARM64 自 0.7.1 停发,仅 deb);Spark Store note.
-- **Windows / Android** — direct installer rows only (Windows 为裸 NSIS
-  `GenePad_<v>_Windows_amd64.exe`,0.7.1 起 zip 重复封装取消;Android 为
+- **Windows / Android** — direct installer rows only (Windows 为 zip 包裹的 NSIS
+  安装器 `GenePad_<v>_Windows_amd64.zip`——内含 setup exe,防浏览器直下裸 exe 被
+  拦截,应用内 updater 下载同一 zip 自动解压静默安装;2026-09-09 于 0.7.1 周期内
+  从裸 exe 中途切换,更早为裸 exe;Android 为
   `GenePad-v<v>-android-universal-release.apk`).
 
 ## Release Checklist
@@ -188,19 +190,26 @@ Copy the latest built binaries from the Gene Editor source project into `docs/re
 | Linux | `\\wsl.localhost\Ubuntu-24.04\home\chief\Gene_Editor\src-tauri\target\release\bundle` |
 | Android | `C:\Users\moqiq\PycharmProjects\Gene_Editor-master\src-tauri\gen\android\app\build\outputs\apk\universal\release` |
 
-Copy the latest version files to `docs/release/` (naming since 0.7.1 — 渠道裁撤
-见 app 仓 docs/distribution.md:Windows 裸 NSIS exe、mac dmg+app.tar.gz、
-Linux x86_64 deb、Android 版本化 apk;updater `.sig` 一并入库):
+Copy the latest version files to `docs/release/` (naming since the 2026-09-09
+zip switch during 0.7.1 — 渠道裁撤
+见 app 仓 docs/distribution.md:Windows zip 包裹 NSIS exe、mac dmg+app.tar.gz、
+Linux x86_64 deb、Android 版本化 apk;updater `.sig` 一并入库——windows 的
+`.zip.sig` 签的是 **zip 本体**而非内部 exe,来自 CI 的 Sign Windows zip 步):
 ```
-docs/release/windows/GenePad_x.x.x_Windows_amd64.exe (+ .exe.sig)
+docs/release/windows/GenePad_x.x.x_Windows_amd64.zip (+ .zip.sig)
 docs/release/linux/GenePad_x.x.x_Linux_amd64.deb     (+ .deb.sig)
 docs/release/android/GenePad-vx.x.x-android-universal-release.apk
 docs/release/mac/GenePad_x.x.x_Darwin_arm64.dmg
 docs/release/mac/GenePad_x.x.x_Darwin_arm64.app.tar.gz (+ .app.tar.gz.sig)
 ```
 
-**不再 zip 封装**(0.6.x 的 exe→zip、macos-*.zip 伪装扩展名惯例已废)。旧版本
-0.6.9 的 rpm/tar.gz/arm64 包保留作存档(install.sh 的停发提示指向它们),勿删。
+**Windows zip 回归(2026-09-09,0.7.1 周期内切换,未另发版)**:人用下载与 updater
+直链同为一个 zip(内含 NSIS setup exe)——浏览器直下裸 exe 会被 SmartScreen/下载
+拦截,zip 不会;应用内 updater
+(tauri-plugin-updater 2.11,0.7.0 起所有客户端内置)下载 zip→minisign 验签→自动
+解压临时目录→静默安装,存量客户端无需任何改动。mac 的 `.app.zip`/`macos-*.zip`
+伪装扩展名惯例仍废。旧版本 0.6.9 的 rpm/tar.gz/arm64 包与 0.7.1 的裸 exe(+sig)
+保留作存档(install.sh 的停发提示指向它们),勿删。
 
 **macOS notes:** the app is unsigned, so browser downloads get flagged by
 Gatekeeper — the site steers macOS users to `brew install genepad/tap/genepad`
@@ -208,20 +217,18 @@ Gatekeeper — the site steers macOS users to `brew install genepad/tap/genepad`
 manual fallback.
 
 **Alternative source: per-platform zip drop folder.** The user may instead hand
-over five zips in a Downloads folder (e.g. `C:\Users\moqiq\Downloads\新建文件夹`):
-`windows-x64.zip`, `linux-x86_64.zip`, `linux-arm64.zip`, `macos-arm64.zip`,
-`android-release.zip`. Extract them and rename to the convention above:
+over the CI artifact zips in a Downloads Folder (e.g.
+`C:\Users\moqiq\Downloads\新建文件夹`): `windows-x64.zip`, `linux-x86_64.zip`,
+`macos-arm64.zip`, `android-release.zip` (arm64 Linux 已停发). Extract them and
+rename to the convention above:
 
 | Inside the drop zips | Destination in `docs/release/` |
 |---|---|
-| `GenePad_x.x.x_Windows_amd64.zip` (exe already zipped) | `windows/…amd64.zip` — copy as-is, no re-zip needed |
-| `GenePad_x.x.x_Linux_amd64.{deb,rpm,tar.gz}` / `…_arm64.*` | `linux/…` — names already final |
-| `apk/universal/release/GenePad-vX.Y.Z-android-universal-release.apk` | `android/app-universal-release.apk` — rename |
-| `GenePad_x.x.x_Darwin_arm64.dmg` | `mac/macos-dmg.zip` — raw dmg renamed, do NOT zip again |
-| `GenePad_x.x.x_Darwin_arm64.app.zip` | `mac/macos-app.zip` — rename |
-
-Note `macos-dmg.zip` is a raw dmg with a `.zip` extension (that is the existing
-convention — browsers flag a bare `.dmg` harder than a `.zip` name).
+| `GenePad_x.x.x_Windows_amd64.zip` + `.zip.sig` (exe already zipped by CI) | `windows/…amd64.zip` — copy both as-is, no re-zip needed |
+| `GenePad_x.x.x_Linux_amd64.deb` (+ `.deb.sig`) | `linux/…` — names already final |
+| `apk/universal/release/GenePad-vX.Y.Z-android-universal-release.apk` | `android/…` — versioned name already final, copy as-is |
+| `GenePad_x.x.x_Darwin_arm64.dmg` | `mac/…` — copy as-is |
+| `GenePad_x.x.x_Darwin_arm64.app.tar.gz` (+ `.app.tar.gz.sig`) | `mac/…` — updater artifact, copy with its sig |
 
 ### 2. Delete old release files
 
@@ -238,11 +245,33 @@ clearing old binaries.
 - `version` — match the new app package version.
 - `pub_date` — today's date in ISO 8601 with timezone (e.g. `2026-06-15T00:00:00+08:00`).
 - `notes` — read commit history from `C:\Users\moqiq\PycharmProjects\Gene_Editor-master` since the last release, summarize new features in Chinese. A user-facing condensed version is derived from the developer changelog (keep user-visible items, drop dev-only details like test/build fixes).
-- `platforms.*.url` — point to the new version filenames under `https://genepad.pages.dev/release/...`.
-- Preserve platform keys: `windows-x86_64`, `linux-x86_64-deb`, `linux-x86_64-rpm`, `android`.
+- `platforms.*.url` — point to the new version filenames under `https://genepad.pages.dev/release/...`
+  (windows 指向 `.zip`——老客户端的浏览器回落下载链路同样防拦截).
+- Preserve platform keys: `windows-x86_64`, `linux-x86_64-deb`, `android`.
 
 If the final notes are not ready yet, ship with a placeholder (`# GenePad vX.Y.Z\n\n更新说明整理中，稍后补充。`)
 and sync the real notes everywhere later — see step 10.
+
+### 3b. Regenerate `docs/latest.json` (in-app updater manifest)
+
+`docs/latest.json` serves the **in-app updater** of 0.7.0+ clients (0.6.x and
+older only read `update.json`). **Never hand-edit it** — the minisign signatures
+must be embedded verbatim from the `.sig` files; generate it with the app repo
+script AFTER `update.json` is finalized (notes/pub_date are taken from
+update.json so the two manifests cannot drift):
+
+```bash
+node <app-repo>/scripts/generate-updater-manifest.js \
+  --release-dir <GenePad-free>/docs/release \
+  --output <GenePad-free>/docs/latest.json \
+  --notes-from-json <GenePad-free>/docs/update.json
+```
+
+Requires step 1's files in `docs/release/`: windows `GenePad_<v>_Windows_amd64.zip`
+(+ `.zip.sig`,zip 内含 NSIS exe——updater 下载 zip 自动解压安装,2026-09-09 起)、
+mac `app.tar.gz`(+sig)、linux deb(+sig);android 不进 latest.json。任一产物或
+`.sig` 缺失时脚本直接报错退出(勿加 `--allow-missing` 掩盖,那是 CI 的容错口径)。
+Full runbook: app 仓 `docs/distribution.md`「内置 updater」.
 
 ### 4. Update the download data and rebuild the site
 
@@ -250,9 +279,12 @@ Edit `app/src/download-data.ts`:
 
 - `VERSION` — bump to the new version (it drives all versioned filenames and
   the Gitee tag URL).
+- Windows entry — `GenePad_${VERSION}_Windows_amd64.zip` (bare `.exe` until the
+  2026-09-09 switch during 0.7.1; bump with VERSION on every release, otherwise
+  the panel links 404).
 - `size` fields — match actual file sizes (check with `dir` / `ls -l`).
-- The macOS entries (`macos-dmg.zip`, `macos-app.zip`) are versionless and
-  only need touching if the bundle layout changes.
+- macOS/Linux entries are versioned and follow `VERSION` automatically; only
+  touch if the bundle layout changes.
 
 Then rebuild so `docs/` picks up the change:
 
@@ -281,14 +313,9 @@ git push origin main
 gh release create vx.x.x \
   "docs/release/windows/GenePad_x.x.x_Windows_amd64.zip" \
   "docs/release/linux/GenePad_x.x.x_Linux_amd64.deb" \
-  "docs/release/linux/GenePad_x.x.x_Linux_amd64.rpm" \
-  "docs/release/linux/GenePad_x.x.x_Linux_amd64.tar.gz" \
-  "docs/release/linux/GenePad_x.x.x_Linux_arm64.deb" \
-  "docs/release/linux/GenePad_x.x.x_Linux_arm64.rpm" \
-  "docs/release/linux/GenePad_x.x.x_Linux_arm64.tar.gz" \
-  "docs/release/android/app-universal-release.apk" \
-  "docs/release/mac/macos-dmg.zip" \
-  "docs/release/mac/macos-app.zip" \
+  "docs/release/android/GenePad-vx.x.x-android-universal-release.apk" \
+  "docs/release/mac/GenePad_x.x.x_Darwin_arm64.dmg" \
+  "docs/release/mac/GenePad_x.x.x_Darwin_arm64.app.tar.gz" \
   --title "GenePad vx.x.x" \
   --notes "<same Chinese release notes from update.json>"
 ```
@@ -320,7 +347,7 @@ curl -s -X POST "https://gitee.com/api/v5/repos/GenePad/GenePad.github.io/releas
 # Upload assets to Gitee Release (replace <release_id> from previous response)
 # The download panel's Gitee URLs expect tag v<x.x.x> and the exact filenames from step 1.
 for f in \
-  "docs/release/windows/GenePad_x.x.x_Windows_amd64.exe" \
+  "docs/release/windows/GenePad_x.x.x_Windows_amd64.zip" \
   "docs/release/linux/GenePad_x.x.x_Linux_amd64.deb" \
   "docs/release/android/GenePad-vx.x.x-android-universal-release.apk" \
   "docs/release/mac/GenePad_x.x.x_Darwin_arm64.dmg" \
@@ -406,19 +433,23 @@ https://genepad.pages.dev/update.json
 ```
 
 The app checks this manifest in the background once per week. Keep the metadata small and valid JSON.
+`docs/latest.json` is a **separate** manifest consumed only by the in-app updater
+of 0.7.0+ clients — regenerate it with the app repo script (step 3b), never
+hand-edit; its `version` must match `update.json`. Since the 2026-09-09 switch
+(during 0.7.1) the windows entry of both manifests points at
+`GenePad_<v>_Windows_amd64.zip`.
 
 Required shape:
 
 ```json
 {
-  "version": "0.6.2",
-  "pub_date": "2026-08-12T00:00:00+08:00",
+  "version": "0.7.1",
+  "pub_date": "2026-09-08T21:39:02.030+08:00",
   "notes": "Release notes shown in the app update dialog",
   "platforms": {
-    "windows-x86_64": { "url": "https://genepad.pages.dev/release/windows/GenePad_0.6.2_Windows_amd64.zip" },
-    "linux-x86_64-deb": { "url": "https://genepad.pages.dev/release/linux/GenePad_0.6.2_Linux_amd64.deb" },
-    "linux-x86_64-rpm": { "url": "https://genepad.pages.dev/release/linux/GenePad_0.6.2_Linux_amd64.rpm" },
-    "android": { "url": "https://genepad.pages.dev/release/android/app-universal-release.apk" }
+    "windows-x86_64": { "url": "https://genepad.pages.dev/release/windows/GenePad_0.7.1_Windows_amd64.zip" },
+    "linux-x86_64-deb": { "url": "https://genepad.pages.dev/release/linux/GenePad_0.7.1_Linux_amd64.deb" },
+    "android": { "url": "https://genepad.pages.dev/release/android/GenePad-v0.7.1-android-universal-release.apk" }
   }
 }
 ```

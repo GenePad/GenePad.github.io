@@ -42,7 +42,7 @@ export const PLATFORMS: (Omit<PlatformDownloads, "files"> & {
   {
     id: "windows",
     files: [
-      { name: `GenePad_${VERSION}_Windows_amd64.exe`, size: "9.2 MB" },
+      { name: `GenePad_${VERSION}_Windows_amd64.zip`, size: "9.2 MB" },
     ].map(withSources),
   },
   {

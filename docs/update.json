@@ -4,7 +4,7 @@
   "notes": "本次更新的主要变化是新增**应用内自动更新**：自本版本起，Windows / macOS / Linux 的后续升级可直接在应用内完成，无需再手动下载安装包；更新前会提示保存未保存的文档，更新包经数字签名校验。同时新增**多标签页模式**、**新手教程**与**蛋白 / RNA 序列支持**。\n\n## ✨ 新功能\n\n**应用内更新**\n- 自本版本起，可在应用内完成「检查更新 → 下载 → 安装 → 重启」，无需手动下载安装包\n- 更新前若有未保存的文档，会先提示保存；下载进度实时显示\n- 更新包经数字签名校验\n\n**多标签页**\n- 单窗口多文档标签页，切换无需重新加载；点「+」可新开欢迎页\n- 多标签与单文档模式可切换，切换在关闭全部文档后生效（Android 始终为标签页）\n\n**新手教程**\n- 首次打开质粒时分步导览：高亮指示当前位置，逐步介绍各功能区，可跳过或稍后再学\n- 基因文件库窗口亦有专属教程；设置 → 外观 可重置教程\n\n**蛋白与 RNA 序列**\n- 支持直接打开蛋白（SnapGene .prot、蛋白 FASTA）与 RNA（.rna）文件，支持查看、翻译与搜索\n- 另存为按分子类型给出对应格式\n- 打开含多条序列的 FASTA / GenBank 文件时，可选择拆分打开或只打开第一条\n\n**其它新功能**\n- CRISPR sgRNA 可标注到图谱，「Target N」分段显示结合区与 PAM\n- 快捷键可自定义（设置 → 快捷键）\n- 复制选区时，选区内的元件标注与引物一并复制，粘贴后原样落位\n- 支持 SnapGene 比对文件读写（含色谱），比对条目可导出 FASTA / AB1\n- 基因文件库支持 Ctrl / Shift 多选与批量打开 / 分享 / 移出\n- 酶表价格改按「单次反应」计价，新增「低价酶」分组（≤¥20 / 反应）\n- F5 / Ctrl+R 不再刷新界面、丢失工作状态\n- 默认图谱 + 序列同屏显示，可切换为单视图\n\n## ⚡ 性能与流畅度\n- 大序列（>50kb）的酶切位点标记不再卡顿\n- FASTQ 快速滚动更流畅\n\n## 🐛 问题修复\n- Windows 任务栏窗口显示各自打开的文件名\n- 修复环形图跨起点选区删除 / 替换出错、拖选方向异常的问题\n- 修复「隐藏 ORF」不立即生效的问题\n- 修复图谱底部酶池 / 筛选下拉显示异常的问题\n- 恢复 Android 发布（上一版因打包问题缺席）\n\n**完整变更**：https://github.com/Masterchiefm/GenePad/compare/v0.6.9...v0.7.1",
   "platforms": {
     "windows-x86_64": {
-      "url": "https://genepad.pages.dev/release/windows/GenePad_0.7.1_Windows_amd64.exe"
+      "url": "https://genepad.pages.dev/release/windows/GenePad_0.7.1_Windows_amd64.zip"
     },
     "linux-x86_64-deb": {
       "url": "https://genepad.pages.dev/release/linux/GenePad_0.7.1_Linux_amd64.deb"
