@@ -34,6 +34,7 @@ const dict = {
     "title.tutorial.ai": "配置 AI 教程 - GenePad | DeepSeek API 密钥获取与设置",
     "title.tutorial.library": "基因文件库教程 - GenePad | 质粒入库、检索与 AI 标签",
     "title.tutorial.ngs": "NGS 数据分析教程 - GenePad | fastq.gz 查看与文库丰度报告",
+    "title.tutorial.lang": "配置任意语言教程 - GenePad | AI 翻译生成语言包",
     "title.projects": "生态项目 - GenePad | 质粒元件库与密码子图谱",
     "title.tech": "开发者技术文档 - GenePad",
     "title.stats": "实时数据 - GenePad | 公开使用统计",
@@ -513,6 +514,10 @@ const dict = {
     "tut.toc.ngs.desc":
       "拖入 fastq.gz 即可开始：双端配对、逐碱基质检、氨基酸搜索、锚点裁切与丰度报告。",
     "tut.toc.ngs.en": "NGS ANALYSIS",
+    "tut.toc.lang.name": "配置任意语言",
+    "tut.toc.lang.desc":
+      "设置 → Language → AI Translate：输入目标语言自动生成语言包，界面整体切换为法语、俄语等任意语言。",
+    "tut.toc.lang.en": "ANY LANGUAGE",
 
     // 教程分类（目录页分区 + 侧边导航）
     "tut.cat.gs.name": "快速上手",
@@ -596,6 +601,33 @@ const dict = {
     "tut.ngs.6.desc":
       "点击 Sequence analysis：统计整个文件中每条唯一序列的出现次数与频率，生成 Top 序列直方图与逐条明细，完整表格导出为 CSV，可直接用 Excel 打开。一份简单的文库丰度报告就此完成。",
 
+    // 教程四：配置任意语言
+    "tut.lang.head": "教程四 · 配置任意语言",
+    "tut.lang.headEn": "TUTORIAL 4 · ANY LANGUAGE",
+    "tut.lang.title": "用 AI 翻译，把界面换成任意语言",
+    "tut.lang.lead":
+      "GenePad 内置中文与英文界面，其他语言无需等待官方支持：打开设置 → Language，点击 AI Translate，输入目标语言即可自动生成语言包并应用。请先按教程一完成 AI 配置。",
+    "tut.lang.1.name": "打开设置",
+    "tut.lang.1.desc": "与教程一相同：启动 GenePad，点击欢迎页右上角的齿轮图标，打开设置窗口。",
+    "tut.lang.2.name": "进入 Language 设置，点击 AI Translate",
+    "tut.lang.2.desc":
+      "在设置左侧选择「Language」，点击「AI Translate」。此页也可手动导入 / 导出语言文件。",
+    "tut.lang.2.shot": "语言设置 — 选择 Language，点击 AI Translate",
+    "tut.lang.3.name": "输入目标语言，开始翻译",
+    "tut.lang.3.desc":
+      "输入语言名称与代码（如 français 和 fr），点击「Translate」：程序用已配置的 AI 翻译内置语言文件——长文本自动分段、失败段自动重试，完成后自动导入并应用。",
+    "tut.lang.3.shot": "输入语言名称与代码 — 点击 Translate",
+    "tut.lang.4.name": "界面整体切换为目标语言",
+    "tut.lang.4.desc":
+      "翻译完成后界面即刻整体切换。以法语为例：所有菜单、设置与提示均已本地化。",
+    "tut.lang.4.shot": "界面整体切换为法语",
+    "tut.lang.5.name": "继续添加更多语言",
+    "tut.lang.5.desc":
+      "同样方式可再生成俄语、西班牙语等任意语言；导入的语言包都可在 Language 页选择、管理或删除。",
+    "tut.lang.5.shot": "同样方式添加的俄语界面",
+    "tut.lang.note":
+      "AI 翻译以内置中文语言文件为源；个别词条若不准确，可导出语言文件手动修改后再导入。",
+
     "tut.final.title": "教程涉及的功能均内置于 GenePad，并非独立软件",
     "tut.final.desc":
       "下载安装/升级 GenePad 后即可按教程操作：AI 助手、基因文件库与 NGS 数据查看在同一程序内配合使用。当前为免费公测阶段，覆盖全部平台。",
@@ -652,6 +684,7 @@ const dict = {
     "title.tutorial.ai": "AI Setup Tutorial - GenePad | Get & Save a DeepSeek API Key",
     "title.tutorial.library": "File Library Tutorial - GenePad | Plasmid Import, Search & AI Tags",
     "title.tutorial.ngs": "NGS Analysis Tutorial - GenePad | fastq.gz Viewing & Abundance Report",
+    "title.tutorial.lang": "Any-Language Tutorial - GenePad | Translate Language Packs with AI",
     "title.projects": "Projects - GenePad | Plasmid Part Libraries & Codon Maps",
     "title.tech": "Developer Documentation - GenePad",
     "title.stats": "Live Stats - GenePad | Public Usage Statistics",
@@ -1132,6 +1165,10 @@ const dict = {
     "tut.toc.ngs.desc":
       "Drag in a fastq.gz to begin: paired-end auto-matching, per-base quality, amino-acid search, anchor trimming, and an abundance report.",
     "tut.toc.ngs.en": "NGS ANALYSIS",
+    "tut.toc.lang.name": "Use any language",
+    "tut.toc.lang.desc":
+      "Settings → Language → AI Translate: type a target language and GenePad generates the language pack and switches the whole interface — French, Russian, and more.",
+    "tut.toc.lang.en": "ANY LANGUAGE",
 
     // Tutorial categories (hub sections + sidebar navigation)
     "tut.cat.gs.name": "Getting started",
@@ -1214,6 +1251,33 @@ const dict = {
     "tut.ngs.6.name": "Generate the abundance report",
     "tut.ngs.6.desc":
       "Click Sequence analysis: GenePad counts the occurrences and frequency of every unique sequence across the whole file, produces a Top-sequences histogram with per-sequence details, and exports the full table as CSV that opens directly in Excel. A simple library abundance report, done.",
+
+    // Tutorial 4: use any language
+    "tut.lang.head": "Tutorial 4 · Use any language",
+    "tut.lang.headEn": "TUTORIAL 4 · ANY LANGUAGE",
+    "tut.lang.title": "Translate the interface into any language with AI",
+    "tut.lang.lead":
+      "GenePad ships with Chinese and English interfaces — every other language starts here: open Settings → Language, click AI Translate, and type the target language to generate and apply a language pack automatically. Finish Tutorial 1 first so the AI is configured.",
+    "tut.lang.1.name": "Open Settings",
+    "tut.lang.1.desc": "Same as Tutorial 1: launch GenePad and click the gear icon in the top-right corner of the welcome screen.",
+    "tut.lang.2.name": "Open Language settings, click AI Translate",
+    "tut.lang.2.desc":
+      "Choose \"Language\" in the left sidebar and click \"AI Translate\". This page also lets you import / export language files manually.",
+    "tut.lang.2.shot": "Language settings — pick Language, then click AI Translate",
+    "tut.lang.3.name": "Enter the target language and translate",
+    "tut.lang.3.desc":
+      "Type the language name and code (e.g. français and fr), then click \"Translate\": the configured AI translates the built-in language file — long texts are done in segments, failed segments retry automatically, and the pack is imported and applied when finished.",
+    "tut.lang.3.shot": "Enter the language name and code — click Translate",
+    "tut.lang.4.name": "The whole interface switches over",
+    "tut.lang.4.desc":
+      "Once translation finishes, the entire interface switches immediately. French shown here: every menu, setting, and message is localized.",
+    "tut.lang.4.shot": "The whole interface switched to French",
+    "tut.lang.5.name": "Add more languages the same way",
+    "tut.lang.5.desc":
+      "Russian, Spanish, or any other language works the same way; imported packs can be selected, managed, or removed on the Language page.",
+    "tut.lang.5.shot": "Russian added the same way",
+    "tut.lang.note":
+      "AI translation uses the built-in Chinese language file as its source; if a term reads oddly, export the language file, edit it by hand, and import it again.",
 
     "tut.final.title": "Everything in these tutorials is built into GenePad — no separate software",
     "tut.final.desc":

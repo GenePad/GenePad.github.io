@@ -163,6 +163,43 @@ export const TUTORIALS: TutorialEntry[] = [
         "https://player.bilibili.com/player.html?isOutside=true&aid=117166909163477&bvid=BV1bS4R6rEyF&cid=41324707953&p=1",
     },
   },
+  {
+    id: "lang",
+    pageTitle: "title.tutorial.lang",
+    toc: { name: "tut.toc.lang.name", desc: "tut.toc.lang.desc", en: "tut.toc.lang.en" },
+    head: "tut.lang.head",
+    headEn: "tut.lang.headEn",
+    title: "tut.lang.title",
+    lead: "tut.lang.lead",
+    steps: [
+      {
+        name: "tut.lang.1.name",
+        desc: "tut.lang.1.desc",
+        shots: [{ src: "shots/tutorial-01.webp", shot: "tut.ai.1.shot" }],
+      },
+      {
+        name: "tut.lang.2.name",
+        desc: "tut.lang.2.desc",
+        shots: [{ src: "shots/tutorial-lang-01.webp", shot: "tut.lang.2.shot" }],
+      },
+      {
+        name: "tut.lang.3.name",
+        desc: "tut.lang.3.desc",
+        shots: [{ src: "shots/tutorial-lang-02.webp", shot: "tut.lang.3.shot" }],
+      },
+      {
+        name: "tut.lang.4.name",
+        desc: "tut.lang.4.desc",
+        shots: [{ src: "shots/tutorial-lang-03.webp", shot: "tut.lang.4.shot" }],
+      },
+      {
+        name: "tut.lang.5.name",
+        desc: "tut.lang.5.desc",
+        shots: [{ src: "shots/tutorial-lang-04.webp", shot: "tut.lang.5.shot" }],
+      },
+    ],
+    note: "tut.lang.note",
+  },
 ];
 
 /** 教程详情页地址（相对链接，中文主机 / en 镜像 / GitHub Pages 均适用） */
@@ -188,7 +225,7 @@ export const TUTORIAL_CATEGORIES: TutorialCategory[] = [
     name: "tut.cat.gs.name",
     en: "tut.cat.gs.en",
     desc: "tut.cat.gs.desc",
-    tutorials: ["ai", "library"],
+    tutorials: ["ai", "library", "lang"],
   },
   {
     id: "analysis",
