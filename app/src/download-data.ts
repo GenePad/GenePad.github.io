@@ -1,7 +1,7 @@
 /* 安装包下载数据：三个来源 = 本站直链 / Gitee / GitHub
    发新版本时只需更新 VERSION 与各文件的 name/size（size 单位 MB） */
 
-export const VERSION = "0.7.1";
+export const VERSION = "0.7.2";
 
 const GITHUB_LATEST =
   "https://github.com/GenePad/GenePad.github.io/releases/latest/download/";
@@ -42,26 +42,26 @@ export const PLATFORMS: (Omit<PlatformDownloads, "files"> & {
   {
     id: "windows",
     files: [
-      { name: `GenePad_${VERSION}_Windows_amd64.zip`, size: "9.2 MB" },
+      { name: `GenePad_${VERSION}_Windows_amd64.zip`, size: "9.4 MB" },
     ].map(withSources),
   },
   {
     id: "mac",
     files: [
-      { name: `GenePad_${VERSION}_Darwin_arm64.dmg`, size: "11.5 MB" },
+      { name: `GenePad_${VERSION}_Darwin_arm64.dmg`, size: "11.7 MB" },
     ].map(withSources),
   },
   {
     id: "linux-x64",
     files: [
-      { name: `GenePad_${VERSION}_Linux_amd64.deb`, size: "12.3 MB" },
+      { name: `GenePad_${VERSION}_Linux_amd64.deb`, size: "12.5 MB" },
     ].map(withSources),
     sparkStore: true,
   },
   {
     id: "android",
     files: [
-      { name: `GenePad-v${VERSION}-android-universal-release.apk`, size: "24.3 MB" },
+      { name: `GenePad-v${VERSION}-android-universal-release.apk`, size: "24.6 MB" },
     ].map(withSources),
   },
 ];
