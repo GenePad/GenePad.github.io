@@ -62,6 +62,12 @@ export default function Nav() {
             {t("nav.ngs")}
           </a>
           <a
+            href="tutorial.html"
+            className="hidden font-mono text-[12px] tracking-[0.12em] text-ink/70 transition-colors hover:text-gfp-deep lg:inline"
+          >
+            {t("nav.tutorial")}
+          </a>
+          <a
             href="tech-support.html"
             className="font-mono text-[12px] tracking-[0.12em] text-ink/70 transition-colors hover:text-gfp-deep"
           >

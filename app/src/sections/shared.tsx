@@ -136,6 +136,9 @@ const SHOT_DIMS: Record<string, { w: number; h: number }> = {
   "shots/ngs-07.webp": { w: 1502, h: 1002 },
   "shots/ngs-08.webp": { w: 1502, h: 1002 },
   "shots/ngs-09.webp": { w: 1292, h: 852 },
+  "shots/tutorial-01.webp": { w: 1502, h: 1002 },
+  "shots/tutorial-02.webp": { w: 1502, h: 1002 },
+  "shots/tutorial-03.webp": { w: 1502, h: 1002 },
 };
 const SHOT_DIMS_DEFAULT = { w: 2101, h: 1504 };
 

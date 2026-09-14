@@ -19,6 +19,7 @@ const dict = {
     "nav.download": "下载",
     "nav.library": "基因文件库",
     "nav.ngs": "NGS 数据查看",
+    "nav.tutorial": "使用教程",
     "nav.docs": "技术文档",
     "nav.projects": "生态项目",
     "nav.stats": "实时数据",
@@ -29,6 +30,7 @@ const dict = {
     "title.home": "基因工坊 GenePad - 轻量跨平台基因图谱编辑器",
     "title.library": "基因文件库 - GenePad | 质粒文件检索与管理",
     "title.ngs": "NGS 数据查看 - GenePad | FASTQ 测序数据查看与文库丰度分析",
+    "title.tutorial": "使用教程 - GenePad | AI 配置 · 基因文件库 · NGS 文件分析",
     "title.projects": "生态项目 - GenePad | 质粒元件库与密码子图谱",
     "title.tech": "开发者技术文档 - GenePad",
     "title.stats": "实时数据 - GenePad | 公开使用统计",
@@ -480,6 +482,112 @@ const dict = {
     "ngs.final.cta2": "立即下载",
     "ngs.top.hint": "直达底部下载区",
 
+    // Tutorial 页（教程中心：持续收录各功能的使用教程）
+    "tut.eyebrow": "Tutorials · 使用教程",
+    "tut.title": (
+      <>
+        从配置到日常分析，
+        <br />
+        逐步图解
+      </>
+    ),
+    "tut.lead":
+      "这里汇集 GenePad 的图文教程，并会陆续补充新篇目：从接入 DeepSeek 解锁 AI 能力、用基因文件库管理数百份质粒，到完成从 fastq.gz 到文库丰度报告的 NGS 分析。每一步均配实际界面截图，按顺序操作即可。",
+    "tut.toc.hint": "点击卡片直达对应教程",
+    "tut.toc.ai.name": "配置 AI（DeepSeek）",
+    "tut.toc.ai.desc":
+      "打开设置、新建配置、获取并保存 API 密钥——五步接入 DeepSeek，解锁 AI 助手与质粒自动标签。",
+    "tut.toc.ai.en": "SET UP AI",
+    "tut.toc.lib.name": "基因文件库",
+    "tut.toc.lib.desc":
+      "监视文件夹自动入库，按项目、路径、标签三种方式检索，AI 助手按属性定位质粒。",
+    "tut.toc.lib.en": "FILE LIBRARY",
+    "tut.toc.ngs.name": "NGS 文件分析",
+    "tut.toc.ngs.desc":
+      "拖入 fastq.gz 即可开始：双端配对、逐碱基质检、氨基酸搜索、锚点裁切与丰度报告。",
+    "tut.toc.ngs.en": "NGS ANALYSIS",
+
+    // 教程一：配置 AI
+    "tut.ai.head": "教程一 · 配置 AI",
+    "tut.ai.headEn": "TUTORIAL 1 · SET UP DEEPSEEK",
+    "tut.ai.title": "五步接入 DeepSeek，解锁 AI 助手与自动标签",
+    "tut.ai.lead":
+      "AI 助手与质粒自动标签由大模型驱动，推荐使用 DeepSeek：注册即赠额度，价格低廉。完成以下五步后，即可用自然语言操作序列与标注，质粒在入库与打开时也会自动生成性质标签。",
+    "tut.ai.1.name": "打开设置",
+    "tut.ai.1.desc": "启动 GenePad，点击欢迎页右上角的齿轮图标，打开设置窗口。",
+    "tut.ai.1.shot": "欢迎页 — 点击右上角齿轮图标",
+    "tut.ai.2.name": "进入 AI 设置，新建配置",
+    "tut.ai.2.desc": "在设置窗口左侧选择「AI Settings」，再点击「New config」新建一份 AI 配置。",
+    "tut.ai.2.shot": "AI 设置 — 选择 AI Settings，点击 New config",
+    "tut.ai.3.name": "填写配置",
+    "tut.ai.3.desc":
+      "为配置起一个名字，提供商选择 DeepSeek，模型选择 deepseek-v4-flash，API URL 保持默认；然后点击 API Key 旁的「获取」，浏览器会打开 DeepSeek 开放平台。",
+    "tut.ai.3.shot": "填写名称与模型 — 点击 API Key 旁的「获取」",
+    "tut.ai.4.name": "获取 DeepSeek API 密钥",
+    "tut.ai.4.desc":
+      "在 DeepSeek 开放平台注册账号并充值少量额度，点击「创建 API key」，命名后确认；密钥仅显示一次，请立即复制。",
+    "tut.ai.5.name": "粘贴密钥并保存",
+    "tut.ai.5.desc":
+      "回到 GenePad 粘贴密钥，点击「Test connection」；看到连接成功提示后，点击「Save current config」保存。至此 AI 配置完成。",
+    "tut.ai.note":
+      "配置一次即可长期使用，密钥仅保存在本机。此后欢迎页与工作界面的 AI 图标可直接对话；打开或入库的质粒也会自动生成性质标签。",
+
+    // 教程二：基因文件库
+    "tut.lib.head": "教程二 · 基因文件库",
+    "tut.lib.headEn": "TUTORIAL 2 · GENE FILE LIBRARY",
+    "tut.lib.title": "把数百份质粒，管成一个可检索的文库",
+    "tut.lib.lead":
+      "基因文件库位于工具箱中：不移动、不复制任何文件，仅为分散在各处的质粒建立统一索引。以下步骤从自动入库开始，直到按属性一句话定位目标质粒。",
+    "tut.lib.1.name": "设置监视文件夹，质粒自动入库",
+    "tut.lib.1.desc":
+      "打开基因文件库 →「监视文件夹」→ 添加存放质粒的文件夹。此后每次启动自动扫描：新增质粒自动入库，已删除的自动移除，无需手动维护。",
+    "tut.lib.2.name": "按项目、路径、标签检索",
+    "tut.lib.2.desc":
+      "新建项目并拖入质粒即完成归类；或按存储路径原样浏览；配置 AI 后，每个质粒带有一组性质标签，点击标签即可筛出全部相关质粒。",
+    "tut.lib.3.name": "AI 自动生成性质标签",
+    "tut.lib.3.desc":
+      "完成教程一的配置后，扫描或打开质粒时自动生成 lentiviral、sgRNA、ampicillin 等标签；也可在表头批量刷新——仅补充缺失标签，或全部重新生成。",
+    "tut.lib.4.name": "AI 助手按属性定位",
+    "tut.lib.4.desc":
+      "直接向 AI 助手描述需求，例如「查找一个 Type I CRISPR 质粒」：助手检索整个文库，列出候选并说明各质粒的性质与推荐用途。",
+    "tut.lib.5.name": "检索结果直接使用",
+    "tut.lib.5.desc":
+      "右键任意质粒 →「使用其它打开方式」，可交给 SnapGene（图谱）、VS Code（序列）等工具；详情面板中还可增删标签、添加「已验证」等自定义标签。",
+    "tut.lib.note":
+      "文件库仅为索引，不改动原始文件；暂不配置 AI 也不影响入库与浏览，仅自动标签与 AI 检索不可用。",
+
+    // 教程三：NGS 文件分析
+    "tut.ngs.head": "教程三 · NGS 文件分析",
+    "tut.ngs.headEn": "TUTORIAL 3 · NGS ANALYSIS",
+    "tut.ngs.title": "从 fastq.gz 到文库丰度报告",
+    "tut.ngs.lead":
+      "无需命令行，把测序文件拖入窗口即可开始。以下六步覆盖打开、配对、质检、搜索、裁切与丰度分析的完整流程，文末附完整操作视频。",
+    "tut.ngs.1.name": "打开测序文件",
+    "tut.ngs.1.desc":
+      "将一个或多个测序文件直接拖入 GenePad 窗口；也可在资源管理器中右键「打开方式」选择 GenePad。支持 fastq.gz、fastq、fq.gz、fq，gzip 压缩无需解压。",
+    "tut.ngs.2.name": "双端文件自动配对",
+    "tut.ngs.2.desc":
+      "把 R1、R2 两个文件一起拖入，程序按首条 read 的 ID 自动识别配对；一次拖入多对时弹出确认框，可 Auto-pair 一键配对，确认后每对作为一份双端数据打开。",
+    "tut.ngs.3.name": "逐条浏览与质检",
+    "tut.ngs.3.desc":
+      "主界面逐条列出 reads：每个碱基按 Phred 质量着色，双端数据自动拼接并显示 Overlap 长度与一致性；右侧属性面板汇总 reads 数、GC 含量等文件统计。",
+    "tut.ngs.4.name": "氨基酸搜索定位多变区",
+    "tut.ngs.4.desc":
+      "底部搜索框切换到 AA 模式，输入一段已知保守蛋白（如 MATNNQ）：程序把拼接后的 read 翻译为蛋白并逐条比对，命中的肽段直接框出，数千条 reads 中快速定位目标多变区。",
+    "tut.ngs.5.name": "设置锚点批量裁切",
+    "tut.ngs.5.desc":
+      "把目标区段两侧的保守序列设为左右裁切锚点，点击 Trim 即对整个文件批量裁切，仅保留两锚点之间的多变区；属性面板实时反馈通过比例，裁切结果可一键导出。",
+    "tut.ngs.6.name": "生成文库丰度报告",
+    "tut.ngs.6.desc":
+      "点击 Sequence analysis：统计整个文件中每条唯一序列的出现次数与频率，生成 Top 序列直方图与逐条明细，完整表格导出为 CSV，可直接用 Excel 打开。一份简单的文库丰度报告就此完成。",
+
+    "tut.final.title": "教程涉及的功能均内置于 GenePad，并非独立软件",
+    "tut.final.desc":
+      "下载安装/升级 GenePad 后即可按教程操作：AI 助手、基因文件库与 NGS 数据查看在同一程序内配合使用。当前为免费公测阶段，覆盖全部平台。",
+    "tut.final.cta": "返回主页",
+    "tut.final.cta2": "立即下载",
+    "tut.top.hint": "直达底部下载区",
+
     // Stats 子页（实时数据）
     "st.eyebrow": "Live Stats · 实时数据",
     "st.title": (
@@ -514,6 +622,7 @@ const dict = {
     "nav.download": "Download",
     "nav.library": "File Library",
     "nav.ngs": "NGS Viewer",
+    "nav.tutorial": "Tutorials",
     "nav.docs": "Dev Docs",
     "nav.projects": "Projects",
     "nav.stats": "Live Stats",
@@ -524,6 +633,7 @@ const dict = {
     "title.home": "GenePad - Lightweight Cross-Platform Gene Map Editor",
     "title.library": "File Library - GenePad | Plasmid File Search & Management",
     "title.ngs": "NGS Viewer - GenePad | FASTQ Data Viewing & Library Abundance Analysis",
+    "title.tutorial": "Tutorials - GenePad | AI Setup · File Library · NGS Analysis",
     "title.projects": "Projects - GenePad | Plasmid Part Libraries & Codon Maps",
     "title.tech": "Developer Documentation - GenePad",
     "title.stats": "Live Stats - GenePad | Public Usage Statistics",
@@ -975,6 +1085,112 @@ const dict = {
     "ngs.final.cta": "Back to Home",
     "ngs.final.cta2": "Download Now",
     "ngs.top.hint": "Jump straight to downloads",
+
+    // Tutorial page (tutorial hub: feature guides, added over time)
+    "tut.eyebrow": "Tutorials",
+    "tut.title": (
+      <>
+        From setup to daily analysis,
+        <br />
+        illustrated step by step
+      </>
+    ),
+    "tut.lead":
+      "The home of GenePad's illustrated tutorials, with new guides added over time: connect DeepSeek to unlock the AI features, keep hundreds of plasmids organized in the gene file library, take an NGS dataset from fastq.gz to an abundance report — and more to come. Every step shows the real interface; just follow along in order.",
+    "tut.toc.hint": "Click a card to jump to its tutorial",
+    "tut.toc.ai.name": "Set up AI (DeepSeek)",
+    "tut.toc.ai.desc":
+      "Open Settings, create a profile, get and save an API key — five steps to unlock the AI assistant and automatic plasmid tags.",
+    "tut.toc.ai.en": "SET UP AI",
+    "tut.toc.lib.name": "Gene file library",
+    "tut.toc.lib.desc":
+      "Watched folders import plasmids automatically; browse by project, path, or tag, and locate plasmids by describing them to the AI assistant.",
+    "tut.toc.lib.en": "FILE LIBRARY",
+    "tut.toc.ngs.name": "NGS data analysis",
+    "tut.toc.ngs.desc":
+      "Drag in a fastq.gz to begin: paired-end auto-matching, per-base quality, amino-acid search, anchor trimming, and an abundance report.",
+    "tut.toc.ngs.en": "NGS ANALYSIS",
+
+    // Tutorial 1: set up AI
+    "tut.ai.head": "Tutorial 1 · Set up AI",
+    "tut.ai.headEn": "TUTORIAL 1 · SET UP DEEPSEEK",
+    "tut.ai.title": "Connect DeepSeek in five steps to unlock the AI assistant and auto-tagging",
+    "tut.ai.lead":
+      "The AI assistant and automatic plasmid tags are powered by a large language model; DeepSeek is recommended — new accounts get free credit and pricing is low. After the five steps below you can drive sequences and annotations in plain language, and plasmids are tagged automatically when opened or imported.",
+    "tut.ai.1.name": "Open Settings",
+    "tut.ai.1.desc": "Launch GenePad and click the gear icon in the top-right corner of the welcome screen.",
+    "tut.ai.1.shot": "Welcome screen — click the gear icon in the top-right corner",
+    "tut.ai.2.name": "Open AI Settings, create a profile",
+    "tut.ai.2.desc": "Choose \"AI Settings\" in the left sidebar of the Settings window, then click \"New config\" to create an AI profile.",
+    "tut.ai.2.shot": "AI settings — pick AI Settings, then click New config",
+    "tut.ai.3.name": "Fill in the profile",
+    "tut.ai.3.desc":
+      "Name the profile, set the provider to DeepSeek and the model to deepseek-v4-flash, and leave the API URL as-is. Then click \"Get\" next to the API Key field — your browser opens the DeepSeek platform.",
+    "tut.ai.3.shot": "Name the profile and pick the model — click \"Get\" beside the API key",
+    "tut.ai.4.name": "Get a DeepSeek API key",
+    "tut.ai.4.desc":
+      "Sign up on the DeepSeek platform and top up a small amount of credit, click \"Create API key\", name it and confirm. The key is shown only once — copy it immediately.",
+    "tut.ai.5.name": "Paste the key and save",
+    "tut.ai.5.desc":
+      "Back in GenePad, paste the key and click \"Test connection\". Once the connection succeeds, click \"Save current config\" — the AI features are now ready.",
+    "tut.ai.note":
+      "Configure once and you're set — the key is stored locally. The AI icon on the welcome screen and in the workspace opens the assistant, and plasmids are tagged automatically when opened or imported.",
+
+    // Tutorial 2: gene file library
+    "tut.lib.head": "Tutorial 2 · Gene file library",
+    "tut.lib.headEn": "TUTORIAL 2 · GENE FILE LIBRARY",
+    "tut.lib.title": "Turn hundreds of plasmids into one searchable library",
+    "tut.lib.lead":
+      "The gene file library lives in the toolbox: it never moves or copies files — it only builds a single index over the plasmids scattered across your disks. The steps below go from automatic import to finding a plasmid by describing it in one sentence.",
+    "tut.lib.1.name": "Add watched folders — plasmids import themselves",
+    "tut.lib.1.desc":
+      "Open the gene file library → \"Watched folders\" → add the folders where you keep plasmids. Every launch re-scans them: new plasmids are indexed and deleted ones drop out — no manual upkeep.",
+    "tut.lib.2.name": "Search by project, path, or tag",
+    "tut.lib.2.desc":
+      "Create a project and drag plasmids in to group them; browse them in place by storage path; and once AI is configured, every plasmid carries property tags — click one to filter out every matching plasmid.",
+    "tut.lib.3.name": "AI generates property tags automatically",
+    "tut.lib.3.desc":
+      "After finishing Tutorial 1, scanning or opening a plasmid generates tags such as lentiviral, sgRNA, or ampicillin. Refresh in bulk from the table header — fill in only the missing tags, or regenerate all of them.",
+    "tut.lib.4.name": "Locate plasmids through the AI assistant",
+    "tut.lib.4.desc":
+      "Describe what you need, e.g. \"find a Type I CRISPR plasmid\": the assistant searches the whole library and lists candidates with their properties and suggested uses.",
+    "tut.lib.5.name": "Put search results straight to work",
+    "tut.lib.5.desc":
+      "Right-click any plasmid → \"Open with\" to hand it to SnapGene (maps) or VS Code (sequences); edit tags in the details panel — remove wrong ones, add custom ones like \"verified\".",
+    "tut.lib.note":
+      "The library is only an index — your files stay untouched. AI is optional: without it, import and browsing still work; only automatic tags and AI search are unavailable.",
+
+    // Tutorial 3: NGS analysis
+    "tut.ngs.head": "Tutorial 3 · NGS data analysis",
+    "tut.ngs.headEn": "TUTORIAL 3 · NGS ANALYSIS",
+    "tut.ngs.title": "From fastq.gz to a library abundance report",
+    "tut.ngs.lead":
+      "No command line required — drag your sequencing files into the window to begin. The six steps below cover the full pipeline: opening, pairing, quality checks, searching, trimming, and the abundance report, with a full video walkthrough at the end.",
+    "tut.ngs.1.name": "Open the sequencing files",
+    "tut.ngs.1.desc":
+      "Drag one or more sequencing files straight into the GenePad window; or right-click the file in Explorer and choose \"Open with\" → GenePad. fastq.gz, fastq, fq.gz, and fq are all supported — gzip archives need no decompression.",
+    "tut.ngs.2.name": "Paired-end files pair up automatically",
+    "tut.ngs.2.desc":
+      "Drop the R1 and R2 files in together and GenePad matches them by the first read's ID. Dropping several pairs at once brings up a confirmation dialog — let Auto-pair sort them; each pair then opens as one paired-end dataset.",
+    "tut.ngs.3.name": "Browse reads and check quality",
+    "tut.ngs.3.desc":
+      "The main view lists every read: bases are colored by Phred quality, paired reads are merged automatically with the overlap length and identity shown, and the panel on the right summarizes read counts, GC content, and more.",
+    "tut.ngs.4.name": "Find variable regions by amino-acid search",
+    "tut.ngs.4.desc":
+      "Switch the search box at the bottom to AA mode and enter a known conserved peptide (e.g. MATNNQ): merged reads are translated and scanned line by line, hits are boxed in place, and the variable region of interest surfaces from thousands of reads.",
+    "tut.ngs.5.name": "Set anchors and trim in bulk",
+    "tut.ngs.5.desc":
+      "Set the conserved sequences flanking the target segment as left/right trim anchors, then click Trim to process the whole file at once — only the variable region between the anchors is kept. The panel reports the pass rate live, and trimmed reads export in one click.",
+    "tut.ngs.6.name": "Generate the abundance report",
+    "tut.ngs.6.desc":
+      "Click Sequence analysis: GenePad counts the occurrences and frequency of every unique sequence across the whole file, produces a Top-sequences histogram with per-sequence details, and exports the full table as CSV that opens directly in Excel. A simple library abundance report, done.",
+
+    "tut.final.title": "Everything in these tutorials is built into GenePad — no separate software",
+    "tut.final.desc":
+      "Install or upgrade GenePad and follow along: the AI assistant, gene file library, and NGS viewer work together in the same app. Free during the public beta, on every platform.",
+    "tut.final.cta": "Back to Home",
+    "tut.final.cta2": "Download Now",
+    "tut.top.hint": "Jump straight to downloads",
 
     // Stats subpage (live stats)
     "st.eyebrow": "Live Stats",

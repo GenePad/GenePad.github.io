@@ -53,6 +53,7 @@ export default function Footer() {
       links: [
         { label: "GitHub Issues", href: "https://github.com/GenePad/GenePad.github.io/issues", external: true },
         { label: "Gitee Issues", href: "https://gitee.com/GenePad/GenePad.github.io/issues", external: true },
+        { label: t("nav.tutorial"), href: "tutorial.html", external: false },
         { label: t("ft.docs"), href: "tech-support.html", external: false },
       ],
     },
