@@ -355,7 +355,7 @@ const dict = {
     "lib.setup.2.shot": "AI 设置 — 新建配置，选择 DeepSeek，点击「获取」",
     "lib.setup.3.name": "获取 DeepSeek API 密钥",
     "lib.setup.3.desc":
-      "浏览器将打开 DeepSeek 开放平台：注册账号并充值少量额度后，点击「创建 API key」；密钥仅显示一次，创建后请立即复制。",
+      "浏览器将打开 DeepSeek 开放平台：注册账号并充值额度后，点击「创建 API key」；密钥仅显示一次，创建后请立即复制。",
     "lib.setup.3.shot": "DEEPSEEK 开放平台 — 创建并立即复制 API key",
     "lib.setup.4.name": "粘贴密钥并保存",
     "lib.setup.4.desc":
@@ -527,7 +527,7 @@ const dict = {
     "tut.ai.headEn": "TUTORIAL 1 · SET UP DEEPSEEK",
     "tut.ai.title": "五步接入 DeepSeek，解锁 AI 助手与自动标签",
     "tut.ai.lead":
-      "AI 助手与质粒自动标签由大模型驱动，推荐使用 DeepSeek：注册即赠额度，价格低廉。完成以下五步后，即可用自然语言操作序列与标注，质粒在入库与打开时也会自动生成性质标签。",
+      "AI 助手与质粒自动标签由大模型驱动，推荐使用 DeepSeek。完成以下五步后，即可用自然语言操作序列与标注，质粒在入库与打开时也会自动生成性质标签。",
     "tut.ai.1.name": "打开设置",
     "tut.ai.1.desc": "启动 GenePad，点击欢迎页右上角的齿轮图标，打开设置窗口。",
     "tut.ai.1.shot": "欢迎页 — 点击右上角齿轮图标",
@@ -540,7 +540,7 @@ const dict = {
     "tut.ai.3.shot": "填写名称与模型 — 点击 API Key 旁的「获取」",
     "tut.ai.4.name": "获取 DeepSeek API 密钥",
     "tut.ai.4.desc":
-      "在 DeepSeek 开放平台注册账号并充值少量额度，点击「创建 API key」，命名后确认；密钥仅显示一次，请立即复制。",
+      "在 DeepSeek 开放平台注册账号并充值额度，点击「创建 API key」，命名后确认；密钥仅显示一次，请立即复制。",
     "tut.ai.5.name": "粘贴密钥并保存",
     "tut.ai.5.desc":
       "回到 GenePad 粘贴密钥，点击「Test connection」；看到连接成功提示后，点击「Save current config」保存。至此 AI 配置完成。",
@@ -973,7 +973,7 @@ const dict = {
     "lib.setup.2.shot": "AI settings — new profile, select DeepSeek, click \"Get\"",
     "lib.setup.3.name": "Obtain a DeepSeek API key",
     "lib.setup.3.desc":
-      "Your browser opens the DeepSeek platform: sign up, top up a small amount of credit, then click \"Create API key\"; the key is shown only once — copy it immediately after creation.",
+      "Your browser opens the DeepSeek platform: sign up, top up your credit balance, then click \"Create API key\"; the key is shown only once — copy it immediately after creation.",
     "lib.setup.3.shot": "DeepSeek platform — create an API key and copy it immediately",
     "lib.setup.4.name": "Paste the key and save",
     "lib.setup.4.desc":
@@ -1146,7 +1146,7 @@ const dict = {
     "tut.ai.headEn": "TUTORIAL 1 · SET UP DEEPSEEK",
     "tut.ai.title": "Connect DeepSeek in five steps to unlock the AI assistant and auto-tagging",
     "tut.ai.lead":
-      "The AI assistant and automatic plasmid tags are powered by a large language model; DeepSeek is recommended — new accounts get free credit and pricing is low. After the five steps below you can drive sequences and annotations in plain language, and plasmids are tagged automatically when opened or imported.",
+      "The AI assistant and automatic plasmid tags are powered by a large language model; DeepSeek is recommended. After the five steps below you can drive sequences and annotations in plain language, and plasmids are tagged automatically when opened or imported.",
     "tut.ai.1.name": "Open Settings",
     "tut.ai.1.desc": "Launch GenePad and click the gear icon in the top-right corner of the welcome screen.",
     "tut.ai.1.shot": "Welcome screen — click the gear icon in the top-right corner",
@@ -1159,7 +1159,7 @@ const dict = {
     "tut.ai.3.shot": "Name the profile and pick the model — click \"Get\" beside the API key",
     "tut.ai.4.name": "Get a DeepSeek API key",
     "tut.ai.4.desc":
-      "Sign up on the DeepSeek platform and top up a small amount of credit, click \"Create API key\", name it and confirm. The key is shown only once — copy it immediately.",
+      "Sign up on the DeepSeek platform and top up your credit balance, click \"Create API key\", name it and confirm. The key is shown only once — copy it immediately.",
     "tut.ai.5.name": "Paste the key and save",
     "tut.ai.5.desc":
       "Back in GenePad, paste the key and click \"Test connection\". Once the connection succeeds, click \"Save current config\" — the AI features are now ready.",
