@@ -7,38 +7,38 @@
     <meta name="theme-color" content="#1c3a13" media="(prefers-color-scheme: dark)" />
     <meta
       name="description"
-      content="GenePad 使用教程目录：配置 DeepSeek AI、基因文件库质粒管理、NGS 测序数据分析等图文教程，每篇一页、逐步图解，持续更新。"
+      content="GenePad 基因文件库图文教程：设置监视文件夹让质粒自动入库，按项目、存储路径、AI 标签三种方式检索，AI 助手按属性定位质粒，右键一键交给 SnapGene / VS Code。每步均配实际界面截图。"
     />
-    <title>使用教程 - GenePad | AI 配置 · 基因文件库 · NGS 文件分析</title>
+    <title>基因文件库教程 - GenePad | 质粒入库、检索与 AI 标签</title>
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://genepad.cn/tutorial" />
-    <link rel="alternate" hreflang="zh-CN" href="https://genepad.cn/tutorial" />
-    <link rel="alternate" hreflang="en" href="https://en.genepad.cn/tutorial" />
-    <link rel="alternate" hreflang="x-default" href="https://genepad.cn/tutorial" />
+    <link rel="canonical" href="https://genepad.cn/tutorial-library" />
+    <link rel="alternate" hreflang="zh-CN" href="https://genepad.cn/tutorial-library" />
+    <link rel="alternate" hreflang="en" href="https://en.genepad.cn/tutorial-library" />
+    <link rel="alternate" hreflang="x-default" href="https://genepad.cn/tutorial-library" />
     <!-- Open Graph / Twitter 卡片 -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="GenePad" />
     <meta property="og:locale" content="zh_CN" />
-    <meta property="og:title" content="使用教程 - GenePad | AI 配置 · 基因文件库 · NGS 文件分析" />
+    <meta property="og:title" content="基因文件库教程 - GenePad | 质粒入库、检索与 AI 标签" />
     <meta
       property="og:description"
-      content="GenePad 图文教程目录，持续更新：配置 DeepSeek AI、管理基因文件库、从 fastq.gz 到文库丰度报告的 NGS 分析等，每篇一页、按步骤操作即可完成。"
+      content="监视文件夹让质粒自动入库，按项目、路径、AI 标签三种方式检索，AI 助手按属性定位质粒——GenePad 基因文件库按步图解教程。"
     />
-    <meta property="og:url" content="https://genepad.cn/tutorial" />
+    <meta property="og:url" content="https://genepad.cn/tutorial-library" />
     <meta property="og:image" content="https://genepad.cn/icon.png" />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="使用教程 - GenePad | AI 配置 · 基因文件库 · NGS 文件分析" />
+    <meta name="twitter:title" content="基因文件库教程 - GenePad | 质粒入库、检索与 AI 标签" />
     <meta
       name="twitter:description"
-      content="配置 DeepSeek AI、管理基因文件库、分析 NGS 测序数据——按步操作的图文教程，持续更新。"
+      content="把数百份质粒管成一个可检索的文库——GenePad 基因文件库按步图解教程。"
     />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "name": "GenePad 使用教程",
-        "description": "GenePad 使用教程目录（持续更新，每篇一页）：配置 DeepSeek AI 解锁 AI 助手与质粒自动标签；基因文件库监视文件夹自动入库、按项目/路径/标签检索；NGS 测序文件从 fastq.gz 打开、双端配对、氨基酸搜索、锚点裁切到文库丰度报告。",
-        "url": "https://genepad.cn/tutorial",
+        "name": "GenePad 基因文件库教程",
+        "description": "设置监视文件夹让质粒自动入库，按项目、存储路径、AI 标签三种方式检索，AI 助手按属性定位质粒，右键一键交给 SnapGene / VS Code。",
+        "url": "https://genepad.cn/tutorial-library",
         "isPartOf": { "@type": "WebSite", "name": "GenePad", "url": "https://genepad.cn/" },
         "about": {
           "@type": "SoftwareApplication",
@@ -46,9 +46,9 @@
           "applicationCategory": "ScientificApplication",
           "operatingSystem": "Windows, macOS, Linux, Android",
           "url": "https://genepad.cn/",
-          "featureList": "DeepSeek AI 配置, AI 助手, 质粒自动标签, 基因文件库, 监视文件夹, NGS 数据查看, 双端配对, 锚点裁切, 文库丰度分析"
+          "featureList": "基因文件库, 监视文件夹自动入库, 按项目/路径/标签检索, AI 质粒标签, AI 助手检索, SnapGene/VS Code 打开方式"
         },
-        "keywords": ["GenePad 教程", "DeepSeek API 配置", "AI 配置教程", "质粒文件管理", "NGS 分析教程", "fastq 查看", "分子克隆"]
+        "keywords": ["质粒文件管理", "基因文件库教程", "质粒标签", "AI 检索", "质粒入库", "GenePad 教程"]
       }
     </script>
     <!-- 手绘 SVG 导出图，暂不启用 <link rel="icon" type="image/png" href="/icon.png" /> -->
@@ -77,13 +77,13 @@
       }
     </style>
   </head>
-  <body>
+  <body data-tutorial="library">
     <div id="boot">
-      <div class="bt">使用教程<small>STEP-BY-STEP TUTORIALS</small></div>
-      <p class="bd">配置 DeepSeek AI、管理基因文件库、分析 NGS 测序数据——每篇教程一页、逐步图解，并持续更新。</p>
+      <div class="bt">基因文件库教程<small>GENE FILE LIBRARY</small></div>
+      <p class="bd">监视文件夹让质粒自动入库，按项目、路径、AI 标签三种方式检索，AI 助手按属性定位质粒。</p>
       <div class="sp" role="status" aria-label="加载中"></div>
     </div>
     <div id="root"></div>
-    <script type="module" src="/src/tutorial-main.tsx"></script>
+    <script type="module" src="/src/tutorial-detail-main.tsx"></script>
   </body>
 </html>

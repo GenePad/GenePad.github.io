@@ -7,38 +7,38 @@
     <meta name="theme-color" content="#1c3a13" media="(prefers-color-scheme: dark)" />
     <meta
       name="description"
-      content="The GenePad tutorial directory: illustrated, step-by-step guides — set up DeepSeek AI, organize the gene file library, take NGS data from fastq.gz to a library abundance report, and more. One page per tutorial, updated over time."
+      content="Step-by-step GenePad tutorial: open fastq.gz by drag-and-drop, auto-pair paired-end mates, check per-base quality, search by amino acids, trim with anchors, and generate a library abundance report — with a full video walkthrough. Every step illustrated with real screenshots."
     />
-    <title>Tutorials - GenePad | AI Setup · File Library · NGS Analysis</title>
+    <title>NGS Analysis Tutorial - GenePad | fastq.gz Viewing &amp; Abundance Report</title>
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://en.genepad.cn/tutorial" />
-    <link rel="alternate" hreflang="en" href="https://en.genepad.cn/tutorial" />
-    <link rel="alternate" hreflang="zh-CN" href="https://genepad.cn/tutorial" />
-    <link rel="alternate" hreflang="x-default" href="https://genepad.cn/tutorial" />
+    <link rel="canonical" href="https://en.genepad.cn/tutorial-ngs" />
+    <link rel="alternate" hreflang="en" href="https://en.genepad.cn/tutorial-ngs" />
+    <link rel="alternate" hreflang="zh-CN" href="https://genepad.cn/tutorial-ngs" />
+    <link rel="alternate" hreflang="x-default" href="https://genepad.cn/tutorial-ngs" />
     <!-- Open Graph / Twitter 卡片 -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="GenePad" />
     <meta property="og:locale" content="en_US" />
-    <meta property="og:title" content="Tutorials - GenePad | AI Setup · File Library · NGS Analysis" />
+    <meta property="og:title" content="NGS Analysis Tutorial - GenePad | fastq.gz Viewing &amp; Abundance Report" />
     <meta
       property="og:description"
-      content="GenePad's tutorial directory, updated over time: set up DeepSeek AI, organize the gene file library, take NGS data from fastq.gz to an abundance report, and more — one page per tutorial."
+      content="From fastq.gz to a library abundance report: drag to open, auto-pair mates, per-base quality, amino-acid search, anchor trimming, abundance analysis — the GenePad NGS tutorial with a full video walkthrough."
     />
-    <meta property="og:url" content="https://en.genepad.cn/tutorial" />
+    <meta property="og:url" content="https://en.genepad.cn/tutorial-ngs" />
     <meta property="og:image" content="https://genepad.cn/icon.png" />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Tutorials - GenePad | AI Setup · File Library · NGS Analysis" />
+    <meta name="twitter:title" content="NGS Analysis Tutorial - GenePad | fastq.gz Viewing &amp; Abundance Report" />
     <meta
       name="twitter:description"
-      content="Set up DeepSeek AI, organize the gene file library, and analyze NGS data — step-by-step GenePad tutorials, updated over time."
+      content="The full pipeline from fastq.gz to a library abundance report — the GenePad NGS tutorial, illustrated step by step."
     />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "name": "GenePad Tutorials",
-        "description": "GenePad's tutorial directory (updated over time, one page per tutorial): connect DeepSeek AI to unlock the AI assistant and automatic plasmid tags; organize plasmids in the gene file library with watched folders, projects, paths, and AI tags; take NGS data from fastq.gz to a library abundance report.",
-        "url": "https://en.genepad.cn/tutorial",
+        "name": "GenePad NGS Analysis Tutorial",
+        "description": "Open fastq.gz by drag-and-drop, auto-pair paired-end mates, check per-base quality, search by amino acids, trim with anchors, and generate a library abundance report — with a full video walkthrough.",
+        "url": "https://en.genepad.cn/tutorial-ngs",
         "isPartOf": { "@type": "WebSite", "name": "GenePad", "url": "https://genepad.cn/" },
         "about": {
           "@type": "SoftwareApplication",
@@ -46,12 +46,12 @@
           "applicationCategory": "ScientificApplication",
           "operatingSystem": "Windows, macOS, Linux, Android",
           "url": "https://genepad.cn/",
-          "featureList": "DeepSeek AI setup, AI assistant, automatic plasmid tags, gene file library, watched folders, NGS viewer, paired-end matching, anchor trimming, abundance analysis"
+          "featureList": "NGS viewer, fastq.gz opening, paired-end auto-matching, per-base quality, amino-acid search, anchor trimming, abundance analysis"
         },
-        "keywords": ["GenePad tutorials", "DeepSeek API setup", "AI configuration guide", "plasmid file management", "NGS analysis tutorial", "fastq viewer", "molecular cloning"]
+        "keywords": ["NGS analysis tutorial", "fastq viewer", "fastq.gz", "paired-end matching", "abundance analysis", "anchor trimming", "GenePad tutorial"]
       }
     </script>
-    <link rel="icon" href="../icon.ico" sizes="any" />
+    <link rel="icon" href="/icon.ico" sizes="any" />
     <style>
       /* 首屏骨架：JS 与样式表就绪前先出文字；React 挂载后淡出移除（见 src/boot.ts） */
       html { background: #f6f6f4; }
@@ -75,18 +75,14 @@
         #boot .sp { border-color: rgba(246, 246, 244, 0.22); border-top-color: #45c51f; }
       }
     </style>
-    <script type="module" crossorigin src="../assets/boot-DkZ2IKmP.js"></script>
-    <script type="module" crossorigin src="../assets/TutorialSidebar-CnWz-Ycf.js"></script>
-    <script type="module" crossorigin src="../assets/Download-CCzBmL2y.js"></script>
-    <script type="module" crossorigin src="../assets/tutorial-main-BnIdlLau.js"></script>
-    <link rel="stylesheet" crossorigin href="../assets/boot-7cguEPBI.css">
   </head>
-  <body>
+  <body data-tutorial="ngs">
     <div id="boot">
-      <div class="bt">Tutorials<small>STEP-BY-STEP GUIDES</small></div>
-      <p class="bd">Set up DeepSeek AI, organize the gene file library, and analyze NGS data — one illustrated page per tutorial, with more added over time.</p>
+      <div class="bt">NGS Analysis Tutorial<small>NGS DATA ANALYSIS</small></div>
+      <p class="bd">From fastq.gz to a library abundance report: drag to open, auto-pair mates, check quality, search by amino acids, trim, and analyze abundance.</p>
       <div class="sp" role="status" aria-label="Loading"></div>
     </div>
     <div id="root"></div>
+    <script type="module" src="/src/tutorial-detail-main.tsx"></script>
   </body>
 </html>

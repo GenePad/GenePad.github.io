@@ -31,6 +31,9 @@ const dict = {
     "title.library": "基因文件库 - GenePad | 质粒文件检索与管理",
     "title.ngs": "NGS 数据查看 - GenePad | FASTQ 测序数据查看与文库丰度分析",
     "title.tutorial": "使用教程 - GenePad | AI 配置 · 基因文件库 · NGS 文件分析",
+    "title.tutorial.ai": "配置 AI 教程 - GenePad | DeepSeek API 密钥获取与设置",
+    "title.tutorial.library": "基因文件库教程 - GenePad | 质粒入库、检索与 AI 标签",
+    "title.tutorial.ngs": "NGS 数据分析教程 - GenePad | fastq.gz 查看与文库丰度报告",
     "title.projects": "生态项目 - GenePad | 质粒元件库与密码子图谱",
     "title.tech": "开发者技术文档 - GenePad",
     "title.stats": "实时数据 - GenePad | 公开使用统计",
@@ -493,7 +496,11 @@ const dict = {
     ),
     "tut.lead":
       "这里汇集 GenePad 的图文教程，并会陆续补充新篇目：从接入 DeepSeek 解锁 AI 能力、用基因文件库管理数百份质粒，到完成从 fastq.gz 到文库丰度报告的 NGS 分析。每一步均配实际界面截图，按顺序操作即可。",
-    "tut.toc.hint": "点击卡片直达对应教程",
+    "tut.toc.hint": "点击卡片进入对应教程",
+    "tut.card.view": "查看教程",
+    "tut.prev": "上一篇",
+    "tut.next": "下一篇",
+    "tut.backTo": "返回教程目录",
     "tut.toc.ai.name": "配置 AI（DeepSeek）",
     "tut.toc.ai.desc":
       "打开设置、新建配置、获取并保存 API 密钥——五步接入 DeepSeek，解锁 AI 助手与质粒自动标签。",
@@ -506,6 +513,14 @@ const dict = {
     "tut.toc.ngs.desc":
       "拖入 fastq.gz 即可开始：双端配对、逐碱基质检、氨基酸搜索、锚点裁切与丰度报告。",
     "tut.toc.ngs.en": "NGS ANALYSIS",
+
+    // 教程分类（目录页分区 + 侧边导航）
+    "tut.cat.gs.name": "快速上手",
+    "tut.cat.gs.en": "GETTING STARTED",
+    "tut.cat.gs.desc": "新手建议按顺序完成：先接入 AI，再把质粒文件管起来。",
+    "tut.cat.analysis.name": "数据分析",
+    "tut.cat.analysis.en": "DATA ANALYSIS",
+    "tut.cat.analysis.desc": "测序数据的查看、检索与定量分析。",
 
     // 教程一：配置 AI
     "tut.ai.head": "教程一 · 配置 AI",
@@ -634,6 +649,9 @@ const dict = {
     "title.library": "File Library - GenePad | Plasmid File Search & Management",
     "title.ngs": "NGS Viewer - GenePad | FASTQ Data Viewing & Library Abundance Analysis",
     "title.tutorial": "Tutorials - GenePad | AI Setup · File Library · NGS Analysis",
+    "title.tutorial.ai": "AI Setup Tutorial - GenePad | Get & Save a DeepSeek API Key",
+    "title.tutorial.library": "File Library Tutorial - GenePad | Plasmid Import, Search & AI Tags",
+    "title.tutorial.ngs": "NGS Analysis Tutorial - GenePad | fastq.gz Viewing & Abundance Report",
     "title.projects": "Projects - GenePad | Plasmid Part Libraries & Codon Maps",
     "title.tech": "Developer Documentation - GenePad",
     "title.stats": "Live Stats - GenePad | Public Usage Statistics",
@@ -1097,7 +1115,11 @@ const dict = {
     ),
     "tut.lead":
       "The home of GenePad's illustrated tutorials, with new guides added over time: connect DeepSeek to unlock the AI features, keep hundreds of plasmids organized in the gene file library, take an NGS dataset from fastq.gz to an abundance report — and more to come. Every step shows the real interface; just follow along in order.",
-    "tut.toc.hint": "Click a card to jump to its tutorial",
+    "tut.toc.hint": "Click a card to open its tutorial",
+    "tut.card.view": "Read tutorial",
+    "tut.prev": "Previous",
+    "tut.next": "Next",
+    "tut.backTo": "All tutorials",
     "tut.toc.ai.name": "Set up AI (DeepSeek)",
     "tut.toc.ai.desc":
       "Open Settings, create a profile, get and save an API key — five steps to unlock the AI assistant and automatic plasmid tags.",
@@ -1110,6 +1132,14 @@ const dict = {
     "tut.toc.ngs.desc":
       "Drag in a fastq.gz to begin: paired-end auto-matching, per-base quality, amino-acid search, anchor trimming, and an abundance report.",
     "tut.toc.ngs.en": "NGS ANALYSIS",
+
+    // Tutorial categories (hub sections + sidebar navigation)
+    "tut.cat.gs.name": "Getting started",
+    "tut.cat.gs.en": "GETTING STARTED",
+    "tut.cat.gs.desc": "Start here in order: connect DeepSeek first, then bring your plasmids into the library.",
+    "tut.cat.analysis.name": "Data analysis",
+    "tut.cat.analysis.en": "DATA ANALYSIS",
+    "tut.cat.analysis.desc": "View, search, and quantify sequencing data.",
 
     // Tutorial 1: set up AI
     "tut.ai.head": "Tutorial 1 · Set up AI",

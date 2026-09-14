@@ -28,6 +28,9 @@ export default defineConfig({
         library: path.resolve(__dirname, "library.html"),
         ngs: path.resolve(__dirname, "ngs.html"),
         tutorial: path.resolve(__dirname, "tutorial.html"),
+        "tutorial-ai": path.resolve(__dirname, "tutorial-ai.html"),
+        "tutorial-library": path.resolve(__dirname, "tutorial-library.html"),
+        "tutorial-ngs": path.resolve(__dirname, "tutorial-ngs.html"),
         stats: path.resolve(__dirname, "stats.html"),
         // en.genepad.cn 镜像壳页：app/en/*.html → docs/en/*.html，与中文页共用同一套 /src 模块
         // （_worker.js 把 en 主机下的路径映射到 /en 子树）
@@ -37,6 +40,9 @@ export default defineConfig({
         "en-library": path.resolve(__dirname, "en/library.html"),
         "en-ngs": path.resolve(__dirname, "en/ngs.html"),
         "en-tutorial": path.resolve(__dirname, "en/tutorial.html"),
+        "en-tutorial-ai": path.resolve(__dirname, "en/tutorial-ai.html"),
+        "en-tutorial-library": path.resolve(__dirname, "en/tutorial-library.html"),
+        "en-tutorial-ngs": path.resolve(__dirname, "en/tutorial-ngs.html"),
         "en-stats": path.resolve(__dirname, "en/stats.html"),
       },
     },
