@@ -250,7 +250,7 @@ const dict = {
     "ts.group.codeEn": "CODE SAMPLES",
     "ts.gen.title": ".gen 文件定义",
     "ts.gen.desc":
-      "SQLite 3 项目文件：12 张表定义、字段语义、坐标规则、分块与撤销机制。读完后能独立读写 .gen。",
+      "SQLite 3 项目文件：全部 14 张表定义、字段语义、坐标规则、编辑历史树、分块与撤销机制。读完后能独立读写 .gen。",
     "ts.gjson.title": ".gjson 文件定义",
     "ts.gjson.desc":
       "JSON 交换格式：顶层字段、各对象定义、与 .gen 的保真差异。读完后能解析 .gjson。",
@@ -639,9 +639,9 @@ const dict = {
     "st.eyebrow": "Live Stats · 实时数据",
     "st.title": (
       <>
-        真实使用数据，
+        实时装机统计，
         <br />
-        公开可查
+        欢迎成为下一个
       </>
     ),
     "st.lead":
@@ -652,7 +652,13 @@ const dict = {
     "st.k.hours": "累计使用时长",
     "st.k.hoursUnit": "小时",
     "st.chart.title": "每周新增装机",
-    "st.chart.caption": "WEEKLY NEW INSTALLS — 按安装实例首次运行时间统计",
+    "st.chart.title.daily": "每日新增装机",
+    "st.chart.caption": "WEEKLY NEW INSTALLS — 按安装实例首次运行时间统计（周一至周日，UTC）",
+    "st.chart.caption.daily": "DAILY NEW INSTALLS — 按安装实例首次运行日期统计（UTC 自然日）",
+    "st.chart.note.daily": "最后一根为今日进行中的不完整统计，数字仍会增长。",
+    "st.tab.aria": "统计粒度",
+    "st.tab.weekly": "每周",
+    "st.tab.daily": "每日",
     "st.os.title": "装机系统分布",
     "st.os.other": "其他",
     "st.updated": "数据更新于",
@@ -900,7 +906,7 @@ const dict = {
     "ts.group.codeEn": "CODE SAMPLES",
     "ts.gen.title": ".gen File Definition",
     "ts.gen.desc":
-      "The SQLite 3 project file: 12 table definitions, field semantics, coordinate rules, chunking and the undo mechanism. After reading you'll be able to read and write .gen on your own.",
+      "The SQLite 3 project file: all 14 table definitions, field semantics, coordinate rules, the edit history tree, chunking and the undo mechanism. After reading you'll be able to read and write .gen on your own.",
     "ts.gjson.title": ".gjson File Definition",
     "ts.gjson.desc":
       "The JSON exchange format: top-level fields, every object definition, and fidelity differences versus .gen. After reading you'll be able to parse .gjson.",
@@ -1290,9 +1296,9 @@ const dict = {
     "st.eyebrow": "Live Stats",
     "st.title": (
       <>
-        Real usage data,
+        Live install stats,
         <br />
-        in the open
+        be the next one
       </>
     ),
     "st.lead":
@@ -1303,7 +1309,13 @@ const dict = {
     "st.k.hours": "Total usage time",
     "st.k.hoursUnit": "hours",
     "st.chart.title": "Weekly new installs",
-    "st.chart.caption": "WEEKLY NEW INSTALLS — by first launch of each installation",
+    "st.chart.title.daily": "Daily new installs",
+    "st.chart.caption": "WEEKLY NEW INSTALLS — first launch of each installation (Mon–Sun, UTC)",
+    "st.chart.caption.daily": "DAILY NEW INSTALLS — first launch date of each installation (UTC days)",
+    "st.chart.note.daily": "The last bar is today and still incomplete — the number keeps growing.",
+    "st.tab.aria": "Time granularity",
+    "st.tab.weekly": "Weekly",
+    "st.tab.daily": "Daily",
     "st.os.title": "Installs by operating system",
     "st.os.other": "Other",
     "st.updated": "Data updated",

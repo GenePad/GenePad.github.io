@@ -10,7 +10,9 @@ import { dismissBoot } from "../boot";
 
 const STATS_URL = "https://genepad.pages.dev/api/telemetry/stats";
 const WEEKS_SHOWN = 26;
-const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
+const DAYS_SHOWN = 30;
+const DAY_MS = 24 * 60 * 60 * 1000;
+const WEEK_MS = 7 * DAY_MS;
 
 interface StatsData {
   installs: number;
@@ -19,6 +21,8 @@ interface StatsData {
   totalHours: number;
   byOs?: Partial<Record<"windows" | "linux" | "macos" | "android" | "other", number>>;
   weekly: { w: number; n: number }[];
+  /* 近 30 个 UTC 自然日；接口尚未返回 daily 时（老 worker / 缓存响应）只保留每周视图 */
+  daily?: { d: number; n: number }[];
   updatedAt: number;
 }
 
@@ -27,6 +31,7 @@ export default function Stats() {
   usePageTitle("title.stats");
   const [data, setData] = useState<StatsData | null>(null);
   const [failed, setFailed] = useState(false);
+  const [mode, setMode] = useState<"weekly" | "daily">("weekly");
 
   useEffect(() => dismissBoot(), []);
 
@@ -51,8 +56,14 @@ export default function Stats() {
   const fmt = (n: number) => n.toLocaleString(locale);
   const fmtHours = (n: number) =>
     n.toLocaleString(locale, { maximumFractionDigits: 1 });
+  /* 桶边界按 UTC 对齐（周=周一 00:00 / 日=00:00 UTC），日期标签也必须按 UTC 渲染，
+     否则 UTC+8 下区间末端会落到次日,显示成「周一 – 下周一」的 8 天错觉 */
   const fmtDay = (ms: number) =>
-    new Date(ms).toLocaleDateString(locale, { month: "short", day: "numeric" });
+    new Date(ms).toLocaleDateString(locale, {
+      month: "short",
+      day: "numeric",
+      timeZone: "UTC",
+    });
   const fmtUpdated = (ms: number) =>
     new Date(ms).toLocaleString(locale, {
       year: "numeric",
@@ -73,8 +84,28 @@ export default function Stats() {
     },
   ];
 
-  const weekly = data?.weekly?.slice(-WEEKS_SHOWN) ?? [];
-  const maxN = Math.max(1, ...weekly.map((d) => d.n));
+  /* 图表粒度：接口给了 daily 才放出「每日」开关 */
+  const dailyReady = (data?.daily?.length ?? 0) > 0;
+  const granularity: "weekly" | "daily" =
+    mode === "daily" && dailyReady ? "daily" : "weekly";
+  const series =
+    granularity === "daily"
+      ? (data?.daily ?? []).slice(-DAYS_SHOWN).map((d) => ({ at: d.d, n: d.n }))
+      : (data?.weekly ?? []).slice(-WEEKS_SHOWN).map((d) => ({ at: d.w, n: d.n }));
+  const spanMs = granularity === "daily" ? DAY_MS : WEEK_MS;
+  const maxN = Math.max(1, ...series.map((d) => d.n));
+  const chartTitle = t(granularity === "daily" ? "st.chart.title.daily" : "st.chart.title");
+  const chartCaption = t(
+    granularity === "daily" ? "st.chart.caption.daily" : "st.chart.caption",
+  );
+  /* 悬停提示写完整区间（周 = 周一至周日），否则只给起点日期会被误读成单日增量 */
+  const bucketLabel = (at: number) =>
+    granularity === "daily" ? fmtDay(at) : `${fmtDay(at)} – ${fmtDay(at + WEEK_MS - 1)}`;
+  const rangeText = series.length
+    ? `${fmtDay(series[0].at)} — ${fmtDay(series[series.length - 1].at + spanMs - 1)}`
+    : "";
+  /* x 轴约 7 个刻度，粒度无关 */
+  const labelStep = Math.max(1, Math.ceil(series.length / 7));
 
   /* 系统分布:按装机数降序,零计数不占行 */
   const osLabels: Record<string, string> = {
@@ -90,11 +121,11 @@ export default function Stats() {
     .sort((a, b) => b.n - a.n || a.key.localeCompare(b.key));
   const osTotal = osRows.reduce((sum, row) => sum + row.n, 0);
 
-  /* 图表绘制区：viewBox 固定 26 根柱，柱高按最大值归一 */
+  /* 图表绘制区：viewBox 固定宽度，柱高按最大值归一 */
   const CHART_W = 780;
   const CHART_H = 200;
   const PAD_BOTTOM = 26;
-  const BAR_SLOT = CHART_W / Math.max(1, weekly.length);
+  const BAR_SLOT = CHART_W / Math.max(1, series.length);
   const BAR_W = Math.floor(BAR_SLOT * 0.56);
 
   return (
@@ -158,16 +189,44 @@ export default function Stats() {
           </Reveal>
         )}
 
-        {/* 每周新增装机柱状图 */}
+        {/* 新增装机柱状图（每周 / 每日可切换） */}
         <Reveal delay={200}>
           <figure className="mt-14 border border-line">
-            <figcaption className="flex flex-wrap items-baseline justify-between gap-3 border-b border-line px-6 py-4 md:px-8">
+            <figcaption className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-6 py-4 md:px-8">
               <span className="font-mono text-[11px] tracking-[0.2em] text-ink/55">
-                {t("st.chart.title")}
+                {chartTitle}
               </span>
-              <span className="font-mono text-[10px] tracking-[0.16em] text-ink/40">
-                {data ? `${fmtDay(weekly[0]?.w ?? 0)} — ${fmtDay((weekly[weekly.length - 1]?.w ?? 0) + WEEK_MS - 1)}` : ""}
-              </span>
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="font-mono text-[10px] tracking-[0.16em] text-ink/40">
+                  {data ? rangeText : ""}
+                </span>
+                {dailyReady && (
+                  <div
+                    role="group"
+                    aria-label={t("st.tab.aria") as string}
+                    className="flex border border-line"
+                  >
+                    {(["weekly", "daily"] as const).map((g) => {
+                      const active = granularity === g;
+                      return (
+                        <button
+                          key={g}
+                          type="button"
+                          aria-pressed={active}
+                          onClick={() => setMode(g)}
+                          className={`px-3 py-1 font-mono text-[10px] tracking-[0.16em] transition-colors ${
+                            active
+                              ? "bg-ink text-paper"
+                              : "text-ink/55 hover:bg-ink/[0.05]"
+                          }`}
+                        >
+                          {t(g === "daily" ? "st.tab.daily" : "st.tab.weekly")}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
             </figcaption>
 
             {failed ? (
@@ -183,15 +242,15 @@ export default function Stats() {
                 viewBox={`0 0 ${CHART_W} ${CHART_H + PAD_BOTTOM}`}
                 className="block h-auto w-full"
                 role="img"
-                aria-label={t("st.chart.caption") as string}
+                aria-label={chartCaption as string}
               >
                 {/* 基准线 */}
                 <line x1="0" y1={CHART_H} x2={CHART_W} y2={CHART_H} stroke="currentColor" strokeWidth="1" className="text-line-strong" />
-                {weekly.map((d, i) => {
+                {series.map((d, i) => {
                   const h = d.n > 0 ? Math.max(3, (CHART_H - 18) * (d.n / maxN)) : 0;
                   return (
-                    <g key={d.w}>
-                      <title>{`${fmtDay(d.w)} · ${fmt(d.n)}`}</title>
+                    <g key={d.at}>
+                      <title>{`${bucketLabel(d.at)} · ${fmt(d.n)}`}</title>
                       {d.n > 0 && (
                         <rect
                           x={i * BAR_SLOT + (BAR_SLOT - BAR_W) / 2}
@@ -214,7 +273,7 @@ export default function Stats() {
                         fontFamily="ui-monospace, monospace"
                         letterSpacing="0.08em"
                       >
-                        {i % 4 === 0 ? fmtDay(d.w) : ""}
+                        {i % labelStep === 0 ? fmtDay(d.at) : ""}
                       </text>
                     </g>
                   );
@@ -222,8 +281,13 @@ export default function Stats() {
               </svg>
             )}
             <p className="border-t border-line px-6 py-3 font-mono text-[10px] tracking-[0.14em] text-ink/45 md:px-8">
-              {t("st.chart.caption")}
+              {chartCaption}
             </p>
+            {data && granularity === "daily" && (
+              <p className="border-t border-line px-6 py-3 font-mono text-[10px] tracking-[0.14em] text-ink/40 md:px-8">
+                {t("st.chart.note.daily")}
+              </p>
+            )}
           </figure>
         </Reveal>
 

@@ -101,9 +101,18 @@ async function handleReport(request, env) {
   return new Response(null, { status: 204, headers: CORS_HEADERS });
 }
 
-const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
+const DAY_MS = 24 * 60 * 60 * 1000;
+const WEEK_MS = 7 * DAY_MS;
 const STATS_WEEKS = 26;
+const STATS_DAYS = 30;
+// 周桶对齐到「周一 00:00 UTC」：epoch(1970-01-01) 是周四,直接用 t/WEEK 分桶会得到
+// 周四~周三这种反直觉的周区间,向前平移 4 天后即为周一~周日。
+const WEEK_ALIGN_MS = 4 * DAY_MS;
 const STATS_CACHE_SECONDS = 300;
+
+/* 桶起点（与服务端 SQL 的分桶表达式保持一致） */
+const dayStart = (t) => Math.floor(t / DAY_MS) * DAY_MS;
+const weekStart = (t) => Math.floor((t - WEEK_ALIGN_MS) / WEEK_MS) * WEEK_MS + WEEK_ALIGN_MS;
 
 // ── en.genepad.cn 英文镜像路由 ──
 // 英文主机的路径映射到构建输出的 /en 子树（docs/en/*.html）；哈希产物、截图、安装包、
@@ -140,14 +149,17 @@ export function route(url) {
   return { assetPath: null };
 }
 
-/* 公开聚合统计：只输出计数/总和,不含任何 uuid 明细 */
+/* 公开聚合统计：只输出计数/总和,不含任何 uuid 明细。
+   时间序列两条：weekly(近 26 周,周一 00:00 UTC 起)与 daily(近 30 个 UTC 自然日,
+   最后一项是当天、仍在累计)——前端 stats 页按同一份数据切换视图,
+   日/周分桶都补齐空桶,不依赖前端补零 */
 async function handleStats(env) {
   if (!env.DB) {
     return json({ error: 'd1 binding missing' }, 503);
   }
 
   const now = Date.now();
-  const [totals, weeklyRows, osRows] = await Promise.all([
+  const [totals, weeklyRows, dailyRows, osRows] = await Promise.all([
     env.DB.prepare(
       `SELECT COUNT(*) AS installs,
               COALESCE(SUM(CASE WHEN last_seen_at > ?1 THEN 1 ELSE 0 END), 0) AS active30d,
@@ -158,12 +170,22 @@ async function handleStats(env) {
       .bind(now - 30 * 24 * 60 * 60 * 1000, now - 7 * 24 * 60 * 60 * 1000)
       .first(),
     env.DB.prepare(
-      `SELECT (first_seen_at / ${WEEK_MS}) * ${WEEK_MS} AS wk, COUNT(*) AS n
+      `SELECT ((first_seen_at - ${WEEK_ALIGN_MS}) / ${WEEK_MS}) * ${WEEK_MS} + ${WEEK_ALIGN_MS} AS wk,
+              COUNT(*) AS n
        FROM usage_reports
        WHERE first_seen_at > ?1
        GROUP BY wk`,
     )
       .bind(now - STATS_WEEKS * WEEK_MS)
+      .all(),
+    // 日桶：按 UTC 自然日（与「近 30 天活跃」口径一致）,供前端「每日」视图切换
+    env.DB.prepare(
+      `SELECT (first_seen_at / ${DAY_MS}) * ${DAY_MS} AS d, COUNT(*) AS n
+       FROM usage_reports
+       WHERE first_seen_at > ?1
+       GROUP BY d`,
+    )
+      .bind(now - STATS_DAYS * DAY_MS)
       .all(),
     // 分系统装机数;历史行 os 为 NULL(旧客户端载荷)时按 platform 前缀回退推导
     env.DB.prepare(
@@ -182,11 +204,21 @@ async function handleStats(env) {
   const counts = new Map(
     (weeklyRows.results ?? []).map((row) => [Number(row.wk), Number(row.n)]),
   );
-  const currentWeekStart = Math.floor(now / WEEK_MS) * WEEK_MS;
+  const currentWeekStart = weekStart(now);
   const weekly = [];
   for (let i = STATS_WEEKS - 1; i >= 0; i -= 1) {
     const w = currentWeekStart - i * WEEK_MS;
     weekly.push({ w, n: counts.get(w) ?? 0 });
+  }
+
+  const dayCounts = new Map(
+    (dailyRows.results ?? []).map((row) => [Number(row.d), Number(row.n)]),
+  );
+  const currentDayStart = dayStart(now);
+  const daily = [];
+  for (let i = STATS_DAYS - 1; i >= 0; i -= 1) {
+    const d = currentDayStart - i * DAY_MS;
+    daily.push({ d, n: dayCounts.get(d) ?? 0 });
   }
 
   const byOs = { windows: 0, linux: 0, macos: 0, android: 0, other: 0 };
@@ -204,6 +236,7 @@ async function handleStats(env) {
       totalHours: Math.round(Number(totals?.total_seconds ?? 0) / 360) / 10,
       byOs,
       weekly,
+      daily,
       updatedAt: now,
     }),
     {
