@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#f4f7fb" media="(prefers-color-scheme: light)" />
         <meta name="theme-color" content="#0b111d" media="(prefers-color-scheme: dark)" />
-        <meta name="description" content="GenePad .gen 项目文件格式完整定义：SQLite 表结构、project_meta 键参考、JSON 字段形状、坐标与环形序列规则、保存/兼容行为，以及 Python 与 sqlite3 CLI 的读取、导出、写回、创建示例。" />
+        <meta name="description" content="GenePad .gen 项目文件格式完整定义：SQLite 全部 14 张表结构、project_meta 键参考、JSON 字段形状、坐标与环形序列规则、编辑历史树（history_tree + history_snapshots）、保存/兼容行为，Python 与 sqlite3 CLI 的读取、导出、写回、创建示例，并附 ITR-CMV-AAV5-AfeI.gen 真实文件逐表解剖。" />
         <title>.gen 文件定义 - GenePad 开发者文档</title>
         <link rel="canonical" href="https://genepad.cn/tech-gen-format.html" />
         <!-- 手绘 SVG 导出图，暂不启用 <link rel="icon" href="icon.png" type="image/png" /> -->
@@ -41,15 +41,16 @@
                         （文件头 16 字节为 <code>SQLite&nbsp;format&nbsp;3\0</code>，MIME 登记为
                         <code>application/vnd.genepad.database</code>）。它比 <code>.gjson</code> 更完整，
                         除序列与注释外还保存引物结合位点、测序图谱（chromatogram）、比对条目、撤销/重做栈、
-                        编辑历史和附件。任何语言的标准 SQLite 驱动都能直接读写——不需要安装任何专用解析库。
+                        编辑审计、附件，以及 <strong>编辑历史树</strong>（完整克隆谱系 + 每步的序列快照）。
+                        任何语言的标准 SQLite 驱动都能直接读写——不需要安装任何专用解析库。
                     </p>
                     <div class="doc-tags">
                         <span class="doc-tag">SQLite format 3</span>
-                        <span class="doc-tag">12 张表</span>
+                        <span class="doc-tag">14 张表</span>
                         <span class="doc-tag">1-based inclusive</span>
                         <span class="doc-tag">BLOCK_SIZE = 10000</span>
                         <span class="doc-tag">WAL + checkpoint</span>
-                        <span class="doc-tag">SCHEMA_VERSION = 5</span>
+                        <span class="doc-tag">SCHEMA_VERSION = 6</span>
                     </div>
                 </div>
 
@@ -61,10 +62,11 @@
                     <ul style="color:var(--lead);line-height:1.9;padding-left:1.3em">
                         <li>无需自定义二进制 parser——用任意 SQLite 驱动打开 <code>.gen</code>，再按下方表结构查询即可。</li>
                         <li><code>sequence_blocks</code> 必须按 <code>block_index</code> 升序拼接，不能依赖数据库默认返回顺序。</li>
-                        <li><code>segments</code>、<code>qualifiers</code>、<code>components</code>、<code>alignment</code>、<code>references</code> 等字段是 JSON 字符串（chromatogram 的 trace 是「UTF-8 JSON 装进 BLOB」），需二次解析。</li>
+                        <li><code>segments</code>、<code>qualifiers</code>、<code>components</code>、<code>alignment</code>、<code>references</code>、<code>history_op</code>、<code>annotations_json</code> 等字段是 JSON 字符串；<code>history_tree.tree</code> 是整棵历史树的 JSON；<code>history_snapshots.nested_base64</code> 是原始字节的 base64；chromatogram 的 trace 是「UTF-8 JSON 装进 BLOB」——这些都需二次解析。</li>
                         <li><code>.gen</code> 不持久化 <code>restrictionSites</code>（酶切位点），由读取程序根据主序列重新检测：GenePad 在序列长度 ≤ 50,000 bp 时同步检测，超长序列走后台流式检测。</li>
                         <li>保存出的 <code>.gen</code> 永远是自包含单文件——GenePad 落盘前执行 <code>PRAGMA wal_checkpoint(TRUNCATE)</code>，用户目录里不会出现 <code>-wal</code>/<code>-shm</code> 伴生文件。</li>
                         <li>布尔值全部以字符串 <code>'true'</code>/<code>'false'</code> 保存；键可能缺失，读取端要给默认值（见 project_meta 键参考）。</li>
+                        <li>编辑历史两张表（<code>history_tree</code> + <code>history_snapshots</code>）记录编辑历史（克隆谱系）：<strong>根节点 = 当前文件状态，子节点 = 产生它的输入，树向过去生长</strong>。语义与字段详见<a href="#history">编辑历史树</a>一节。</li>
                     </ul>
                 </section>
 
@@ -108,10 +110,206 @@ TagBFP2 misc_feature forward 711 bp {}
 ...（共 25 个 feature）</code></pre>
                 </section>
 
+                <section class="doc-section" id="itr">
+                    <div class="section-heading">
+                        <p class="eyebrow">Walkthrough</p>
+                        <h2>实例解剖：ITR-CMV-AAV5-AfeI.gen（逐表过一遍）</h2>
+                    </div>
+                    <p>下面用一份真实文件把上面所有概念串起来：<strong>ITR-CMV-AAV5-AfeI.gen</strong>——一个 8,206 bp 的环形 AAV 载体（ITR 骨架 + CMV enhancer / chicken β-actin 启动子 + AAV5 cap 基因 + NeoR/KanR + AmpR，带 AfeI 定点突变与 NNK 简并引物文库位点）。它由 GenePad 打开同名 <code>.dna</code> 文件后「另存为 .gen」得到，因此<strong>携带完整的编辑历史</strong>（225 个历史快照），是观察历史树表结构的最佳样本。文件总大小 37,810,176 字节（约 36 MB），其中约九成是历史快照的 base64——这也直观展示了「历史随文件走」的代价。</p>
+                    <p>所有命令与输出都是对这份文件的实际运行结果，可逐条复现（换成本页提供的 <a href="samples/41-pPUR-P2A-BFPnls-sgRNA1-RNF2_4AtoG_MS2-MA.gen">小样本</a>或任何一份 .gen 同样能跑，只是行数不同）：</p>
+                    <pre class="code-block"><code># ① 魔头验证：SQLite 3
+$ xxd -l 16 ITR-CMV-AAV5-AfeI.gen
+00000000: 5351 4c69 7465 2066 6f72 6d61 7420 3300  SQLite format 3.
+
+# ② 打开并列出全部表（sqlite_sequence 是 AUTOINCREMENT 的簿记表，不算业务表）
+$ sqlite3 ITR-CMV-AAV5-AfeI.gen
+sqlite&gt; .tables
+alignment_entries     features              project_meta
+attachments           history_snapshots     schema_version
+base_color_ranges     history_tree          sequence_blocks
+chromatogram_data     primer_binding_sites  undo_entries
+edit_history          primers
+
+# ③ 每张表各有多少行
+sqlite&gt; SELECT 'sequence_blocks', COUNT(*) FROM sequence_blocks
+   ...&gt; UNION ALL SELECT 'features', COUNT(*) FROM features
+   ...&gt; UNION ALL SELECT 'base_color_ranges', COUNT(*) FROM base_color_ranges
+   ...&gt; UNION ALL SELECT 'primers', COUNT(*) FROM primers
+   ...&gt; UNION ALL SELECT 'primer_binding_sites', COUNT(*) FROM primer_binding_sites
+   ...&gt; UNION ALL SELECT 'alignment_entries', COUNT(*) FROM alignment_entries
+   ...&gt; UNION ALL SELECT 'chromatogram_data', COUNT(*) FROM chromatogram_data
+   ...&gt; UNION ALL SELECT 'attachments', COUNT(*) FROM attachments
+   ...&gt; UNION ALL SELECT 'undo_entries', COUNT(*) FROM undo_entries
+   ...&gt; UNION ALL SELECT 'edit_history', COUNT(*) FROM edit_history
+   ...&gt; UNION ALL SELECT 'history_tree', COUNT(*) FROM history_tree
+   ...&gt; UNION ALL SELECT 'history_snapshots', COUNT(*) FROM history_snapshots
+   ...&gt; UNION ALL SELECT 'schema_version', COUNT(*) FROM schema_version;
+sequence_blocks|1
+features|18
+base_color_ranges|4
+primers|30
+primer_binding_sites|30
+alignment_entries|0
+chromatogram_data|0
+attachments|0
+undo_entries|0
+edit_history|0
+history_tree|1
+history_snapshots|225
+schema_version|0</code></pre>
+                    <p>这份文件刚从 <code>.dna</code> 转存、尚未在 GenePad 里做新编辑，所以 undo / 审计 / 比对 / 图谱 / 附件表全空，内容都集中在序列、注释与历史三块。逐块看：</p>
+
+                    <p><strong>④ project_meta——19 个键全在</strong>（保存流程幂等 upsert 所致，GenBank 元数据没有就落空串）：</p>
+                    <pre class="code-block"><code>sqlite&gt; SELECT key, value FROM project_meta;
+name|ITR-CMV-AAV5-AfeI
+description|
+isCircular|true
+isDoubleStranded|true
+isDamMethylated|false
+isDcmMethylated|false
+accession|
+organism|
+date|
+moleculeType|
+division|
+version|
+keywords|
+source|
+comments|
+references|
+typeOfDisplay|file_name
+customName|ITR-CMV-AAV5-AfeI
+fileName|ITR-CMV-AAV5-AfeI.dna
+isDirty|0</code></pre>
+                    <p class="doc-note">看点：<code>fileName</code> 记录了它的出身（同名 <code>.dna</code> 转存）；<code>isCircular=true</code> 环形质粒；Dam/Dcm 甲基化在源文件里显式为否（键值 <code>'false'</code>；若源文件未设置，GenePad 写空串 <code>''</code>，读取时空串同样按 false 处理，键缺失才是「未知」）。</p>
+
+                    <p><strong>⑤ sequence_blocks——8,206 bp 一块装下</strong>（块上限 10,000，故只有 block 0）：</p>
+                    <pre class="code-block"><code>sqlite&gt; SELECT block_index, length(bases), substr(bases, 1, 50) FROM sequence_blocks;
+0|8206|TAAGAAACCATTATTATCATGACATTAACCTATAAAAATAGGCGTATCACGAGG</code></pre>
+
+                    <p><strong>⑥ features——18 个注释</strong>（注意多来源 CDS 的重叠与 <code>none</code> 方向）：</p>
+                    <pre class="code-block"><code>sqlite&gt; SELECT name, type, start_pos, end_pos, strand, color FROM features ORDER BY start_pos;
+telL|misc_feature|625|652|none|#a6acb3
+telR|misc_feature|653|680|none|#a6acb3
+CMV enhancer|enhancer|911|1290|none|#ffffff
+chicken β-actin promoter|promoter|1293|1568|forward|#ffffff
+Cap9|CDS|2685|3209|forward|#ffcc99
+VP2|CDS|3096|3209|forward|#993366
+AAV5 CAP|CDS|3210|4877|forward|#ffcc99
+VP2|CDS|3210|4877|forward|#ff0000
+AAP5|CDS|3211|3816|forward|#993366
+Variable Region|CDS|4425|4445|forward|#993366
+AGC-ACC（Ser-Thr）|misc_feature|4833|4835|none|#ff0000
+telR|misc_feature|5128|5155|none|#a6acb3
+telL|misc_feature|5156|5183|none|#a6acb3
+f1 ori|rep_origin|5184|5638|reverse|#ffff00
+ITR|repeat_region|6172|6274|none|#ffe4c4
+ori|rep_origin|6517|7105|reverse|#ffff00
+NeoR/KanR|CDS|7276|8070|reverse|#ccffcc
+AmpR promoter|promoter|8071|8175|reverse|#ffffff</code></pre>
+                    <p class="doc-note">看点：VP1/VP2/VP3 共用 cap 读码框（Cap9 与 VP2 区段重叠、坐标交叠是正常的）；无方向注释（ITR、telL/telR、enhancer）<code>strand='none'</code>；中文名与全角括号原样存取。qualifiers 列也带着完整 GenBank 限定词，例如 NeoR/KanR 一行：</p>
+                    <pre class="code-block"><code>sqlite&gt; SELECT qualifiers FROM features WHERE name = 'NeoR/KanR';
+{"transl_table":["1"],"label":["NeoR/KanR"],"gene":["aph(3')-II (or nptII)"],
+ "codon_start":["1"],"product":["aminoglycoside phosphotransferase from Tn5"],
+ "translation":["MIEQDGLHAGSPAAWVERLFGYDWAQQTIG…"]}</code></pre>
+
+                    <p><strong>⑦ base_color_ranges——手工碱基着色</strong>（同一区间正反链各一条，对应序列视图上下链颜色）：</p>
+                    <pre class="code-block"><code>sqlite&gt; SELECT id, start_pos, end_pos, strand, color FROM base_color_ranges;
+base-color-0|4414|4430|forward|#ef4444
+base-color-2|4414|4430|reverse|#ef4444
+base-color-1|4437|4453|forward|#3b82f6
+base-color-3|4437|4453|reverse|#3b82f6</code></pre>
+                    <p class="doc-note">4414–4453 正是 AAV5 cap 的 variable region（上面 features 表里的 Variable Region 4425–4445）——作者用红/蓝两段底色把突变文库区域标了出来。</p>
+
+                    <p><strong>⑧ primers / primer_binding_sites——30 条引物各一个结合位点</strong>：</p>
+                    <pre class="code-block"><code>sqlite&gt; SELECT id, name, sequence FROM primers LIMIT 4;
+primer-0|AAV5-AfeI-NNK-R|TACGTGCCGGTCGCGGGaGC
+primer-1|AAV5-AfeI-NNK|GGCCACCAACAACCAGAGCTCCACCnnknnknnknnknnknnknnkACTGCtCCCGCGACCGGCAC
+primer-2|AAV5-L8-AfeI-F|CCAACAACCAGAGCgcttaaAgcGCtCCCGCGACCGGCA
+primer-3|NQJ p5enhancer F|CCATGATGCTCATCAAGAACA
+
+sqlite&gt; SELECT id, start_pos, end_pos, bound_strand,
+   ...&gt;        round(melting_temperature, 1) AS tm, length(annealed_bases) AS annealed
+   ...&gt; FROM primer_binding_sites LIMIT 4;
+primer-0-site-4437|4437|4456|reverse|69.9|20
+primer-1-site-4409|4409|4453|forward|66.0|36
+primer-2-site-4414|4414|4452|forward|73.6|39
+primer-3-site-4603|4603|4623|forward|44.4|21</code></pre>
+                    <p class="doc-note">看点：<code>primer-1</code> 是 NNK 简并引物（连续小写 <code>nnk</code> 21 个简并位，用于 cap 文库饱和突变），大小写原样保留；位点 id 遵循 <code>{primer_id}-site-{start}</code> 固定格式；components / alignment 两列是 camelCase JSON，例如 <code>{"hybridizedRange":"4436-4455","bases":"GCtCCCGCGACCGGCACGTA"}</code>。</p>
+
+                    <p><strong>⑨ history_tree——一行存整棵克隆谱系</strong>。<code>tree</code> 列是 1,377,563 字符的 JSON（仅节点元数据，不含序列）。根节点原样片段（键序即写出顺序）：</p>
+                    <pre class="code-block"><code>sqlite&gt; SELECT substr(tree, 1, 720) FROM history_tree WHERE id = 1;
+{"id":225,"name":"ITR-CMV-AAV5-AfeI.dna","seqLen":8206,"circular":true,
+ "operation":"inFusionCloning","resurrectable":true,"strandedness":"double",
+ "type":"DNA","upstreamModification":"Unmodified","downstreamModification":"Unmodified",
+ "inputSummaries":[
+   {"manipulation":"replace","val1":905,"val2":4893,
+    "enzymes":[["BglII",2],["BglII",2]]},
+   {"manipulation":"overlapAndInsert","val1":0,"val2":1796},
+   {"manipulation":"overlapAndInsert","val1":0,"val2":1767},
+   {"manipulation":"overlapAndInsert","val1":0,"val2":483}],
+ "children":[ … 四个输入：骨架 + 三个片段 … ]}</code></pre>
+                    <p>这段 JSON 说的是：<strong>最终载体由一次 In-Fusion 无缝克隆组装而成</strong>——用 BglII 双酶切替换单元（905–4893，0-based 闭区间），再让三个带重叠末端的片段（1,796 / 1,767 / 483 bp）重组插入；根的四个 children 正是骨架（#20）与三个片段供体（#88 / #156 / #224，均为 PCR 扩增产物）。每个 <code>children</code> 元素是产生它的一个输入，递归向过去生长。用十来行 Python 就能把整棵树摘要出来：</p>
+                    <pre class="code-block"><code>import json, sqlite3
+
+con = sqlite3.connect("ITR-CMV-AAV5-AfeI.gen")
+tree = json.loads(con.execute(
+    "SELECT tree FROM history_tree WHERE id = 1").fetchone()[0])
+
+def walk(node, depth=0):
+    inputs = "; ".join(
+        f"{s['manipulation']}({s['val1']},{s['val2']})"
+        for s in node.get("inputSummaries", []))
+    print("  " * depth +
+          f"#{node['id']} {node.get('name','')} op={node.get('operation','')} "
+          f"len={node.get('seqLen')} circ={node.get('circular')} [{inputs}]")
+    for child in node.get("children", []):
+        walk(child, depth + 1)
+
+walk(tree)          # 共 226 个节点（含根）</code></pre>
+                    <p>实际输出（截选——根的骨架分支、片段分支与最深处的「原始文件」节点）：</p>
+                    <pre class="code-block"><code>#225 ITR-CMV-AAV5-AfeI.dna op=inFusionCloning len=8206 circ=True [replace(905,4893); overlapAndInsert(0,1796); overlapAndInsert(0,1767); overlapAndInsert(0,483)]
+  #20 ITR-CB-Rh74.dna op=insert len=8221 circ=True [insertAt(4418,0)]
+    #19 ITR-CB-Rh74.dna op=remove len=8200 circ=True [remove(4418,4438)]
+      #18 ITR-CB-Rh74.dna op=remove len=8221 circ=True [remove(1402,1437)]
+        …（骨干上一长串 insert / remove / insertRestrictionSite 微编辑）…
+          #1 Untitled 7.dna op=replace len=8301 circ=True [replace(2684,4849)]
+            #0 Untitled 7.dna op=invalid len=8250 circ=True []      ← 原始导入文件
+  #88 CB.dna op=amplifyFragment len=1797 circ=False [amplify(887,2683)]
+    #87 ITR-CMV-AAV5-AfeI.dna op=insert len=8106 circ=True [insertAt(4433,0)]
+      …（cap 供体分支，一路追溯到）…
+          #180 pAAV5-XR5-right-NQJ.dna op=invalid len=7438 circ=True []   ← 另一原始文件
+  #156 Cap-1.dna op=amplifyFragment len=1768 circ=False [amplify(2666,4433)]   ┐
+  #224 Cap-2.dna op=amplifyFragment len=484  circ=False [amplify(4413,4896)]   ┘ 另两个片段供体</code></pre>
+                    <p class="doc-note">读法：<code>op=invalid</code> 是「从外部文件导入」的起点节点；骨干分支（Untitled 7 → AarI → ITR-CB-Rh74）记录了载体骨架的每一步酶切/插入/定点突变，cap 供体分支（pAAV5-XR5… → CB.dna 的 PCR 扩增 <code>amplifyFragment</code>）最终作为 In-Fusion 片段汇入根节点——一份完整可追溯的克隆实验记录。GenePad 的「历史」面板渲染的就是这两张表。</p>
+
+                    <p><strong>⑩ history_snapshots——225 个历史时点的序列快照</strong>：</p>
+                    <pre class="code-block"><code>sqlite&gt; SELECT seq_type, COUNT(*), SUM(length(nested_base64)) FROM history_snapshots;
+1|225|34367936          -- 全部为压缩 DNA 快照；nested 共 34.4 MB base64
+
+sqlite&gt; SELECT node_id, length(sequence) AS seq_len, seq_type,
+   ...&gt;        length(nested_base64) AS nested FROM history_snapshots
+   ...&gt; ORDER BY node_id LIMIT 4;
+node_id|seq_len|seq_type|nested
+0|8250|1|8032       -- 原始导入文件（树里 #0）的序列与嵌套标注
+1|8301|1|14092
+2|8304|1|14308
+3|8307|1|14308
+
+sqlite&gt; SELECT substr(sequence, 1, 60) FROM history_snapshots WHERE node_id = 0;
+TAAGAAACCATTATTATCATGACATTAACCTATAAAAATAGGCGTATCACGAGGCCCTTT
+
+sqlite&gt; SELECT COUNT(*) FROM history_snapshots WHERE node_id = 225;
+0                       -- 根节点永远没有快照（= 当前文件状态）</code></pre>
+                    <p class="doc-note"><code>sequence</code> 列已经是 GenePad 解好的可读碱基串（打开 .dna 时把分段压缩快照解码后存入），<code>nested_base64</code> 是快照随附的嵌套 TLV 原始字节（该历史时点的 features/primers/notes 等标注包）的 base64，供「打开快照」时惰性解码。34.4 MB base64 ≈ 25.8 MB 原始字节，就是这份文件 36 MB 体积的来源——不需要历史时可用<a href="#write-back">写回</a>一节的瘦身配方清掉。</p>
+
+                    <p><strong>如何获得同类文件：</strong>拿任意一份带历史的 <code>.dna</code> 文件（商业合成载体常自带克隆谱系）在 GenePad 里打开，「另存为」选 <code>.gen</code> 即可——历史树会随转换完整落入这两张表；此后在 GenePad 里的每次编辑也会增量追加快照。</p>
+                </section>
+
             <section class="schema-band">
                 <div class="section-heading">
                     <p class="eyebrow">Schema</p>
-                    <h2>核心表结构（全部 12 张）</h2>
+                    <h2>核心表结构（全部 14 张）</h2>
                 </div>
 
                 <div class="schema-list">
@@ -324,9 +522,10 @@ TagBFP2 misc_feature forward 711 bp {}
                                     <tr><td><code>operation_type</code></td><td>TEXT NOT NULL</td><td>操作类型，取值见下</td></tr>
                                     <tr><td><code>target_id</code></td><td>TEXT</td><td>目标实体 id，序列级操作为 NULL</td></tr>
                                     <tr><td><code>before_diff</code> / <code>after_diff</code></td><td>TEXT</td><td>JSON：操作前/后差异负载，形状见下</td></tr>
+                                    <tr><td><code>history_op</code></td><td>TEXT</td><td>JSON：<code>{ nodeId, operation, manipulation, val1, val2 }</code>——序列编辑对应的编辑历史树节点元数据；undo 按 <code>nodeId</code> 弹根、redo 按相同 id 重挂。2026-09 起写入；旧库由迁移补列，旧行 NULL 时 undo 退化为仅同步根节点长度</td></tr>
                                 </tbody>
                             </table>
-                            <p class="schema-note">栈机制：undo 栈上限 <strong>200</strong> 条，超出删最旧（按 sequence_number）；每次压入新操作先清空整个 redo 栈；撤销 = 把最新 undo 行的 stack_type 翻转为 'redo'；重做 = 读取后直接删除该行。operation_type 取值：<code>addFeature, removeFeature, updateFeature, applyBaseColor, clearBaseColor, addPrimer, removePrimer, updatePrimer, insertBases, deleteBases, replaceBases, replaceSequence, addAlignmentEntry, removeAlignmentEntry</code>。diff payload 形状：</p>
+                            <p class="schema-note">栈机制：undo 栈上限 <strong>200</strong> 条，超出删最旧（按 sequence_number）；每次压入新操作先清空整个 redo 栈；撤销 = 把最新 undo 行的 stack_type 翻转为 'redo'；重做 = 读取后直接删除该行。operation_type 取值：<code>addFeature, removeFeature, updateFeature, applyBaseColor, clearBaseColor, addPrimer, removePrimer, updatePrimer, insertBases, deleteBases, deleteBasesWrapped, replaceBases, replaceBasesWrapped, replaceSequence, addAlignmentEntry, removeAlignmentEntry</code>（*Wrapped = 环形序列跨起点的删除/替换）。diff payload 形状：</p>
                             <pre class="code-block"><code>// 实体操作：before/after 为完整对象或 null
 add:    { before: null,            after: Feature | Primer }
 update: { before: { id, changes }, after: { id, changes } }   // changes = Partial&lt;Feature|Primer&gt;
@@ -342,7 +541,7 @@ ReplaceBasesDiff = Snapshot &amp; { start: number, oldBases?: string, newBases?:
                     </details>
 
                     <details class="schema-item">
-                        <summary><strong>edit_history</strong><span>编辑审计日志（只增不删）</span></summary>
+                        <summary><strong>edit_history</strong><span>编辑审计日志（滚动保留最近 500 条）</span></summary>
                         <div class="schema-body">
                             <table>
                                 <thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead>
@@ -355,7 +554,34 @@ ReplaceBasesDiff = Snapshot &amp; { start: number, oldBases?: string, newBases?:
                                     <tr><td><code>before_snapshot</code> / <code>after_snapshot</code></td><td>TEXT</td><td>JSON：受影响实体（增删为完整对象）或小编辑对象（如 <code>{ position, bases }</code>、<code>{ start, oldBases }</code>）</td></tr>
                                 </tbody>
                             </table>
-                            <p class="schema-note">只追加、无上限、保存时不清空——可以用它做外部审计或改动统计。</p>
+                            <p class="schema-note">只追加、保存时不清空，但<strong>不是无限增长</strong>：每累计 50 次写入清理一次超限旧行，只保留最近 <strong>500</strong> 条（防止 .gen 随编辑无限膨胀；撤销用的是 undo_entries，不受此限）。可以用它做外部审计或改动统计；需要更长审计请自行定期导出。</p>
+                        </div>
+                    </details>
+
+                    <details class="schema-item">
+                        <summary><strong>history_tree / history_snapshots</strong><span>编辑历史（2026-09 起；克隆谱系 + 序列快照）</span></summary>
+                        <div class="schema-body">
+                            <table>
+                                <thead><tr><th>表</th><th>字段</th><th>说明</th></tr></thead>
+                                <tbody>
+                                    <tr><td rowspan="2"><code>history_tree</code></td><td><code>id</code> INTEGER PK（CHECK id=1）</td><td>全表恒一行</td></tr>
+                                    <tr><td><code>tree</code> TEXT NOT NULL</td><td>整棵历史树的 JSON——只有节点元数据，不含序列；每次树结构变化（编辑/undo/裁切/清空）整行重写</td></tr>
+                                    <tr><td rowspan="5"><code>history_snapshots</code></td><td><code>node_id</code> INTEGER PK</td><td>对应树节点 id；<strong>根节点永远没有快照</strong>（根 = 当前文件状态）</td></tr>
+                                    <tr><td><code>sequence</code> TEXT NOT NULL</td><td>该历史时点的完整序列（GenePad 已解好的可读碱基串）</td></tr>
+                                    <tr><td><code>seq_type</code> INTEGER</td><td>1=压缩 DNA（默认）、0/21/32=明文（蛋白/RNA）、29=仅修饰符（序列由父状态反推）</td></tr>
+                                    <tr><td><code>nested_base64</code> TEXT</td><td>快照随附的嵌套 TLV 原始字节（该时点 features/primers/notes 标注包）的 base64，可 NULL</td></tr>
+                                    <tr><td><code>annotations_json</code> TEXT</td><td>GenePad 自产快照的编辑前时点标注（结构化 JSON，见下），可 NULL；由 .dna 文件转存而来的 .gen 此列为 NULL（时点标注随 nested_base64 携带）</td></tr>
+                                </tbody>
+                            </table>
+                            <p class="schema-note">写入时序：编辑时快照按 <code>node_id</code> <strong>增量 upsert</strong>（ON CONFLICT DO UPDATE），分支裁切按 id 批量 DELETE；保存（另存为）时两张表全删全写。树 JSON 的节点形状与操作语义见<a href="#history">编辑历史树</a>一节；真实文件示例见<a href="#itr">ITR 解剖</a>。</p>
+                            <pre class="code-block"><code>// annotations_json → SnapshotAnnotations（.dna 嵌套 TLV 的结构化对应物）
+{
+  "features": [ /* Feature[]，形状同 features 表行 → JSON */ ],
+  "primers":  [ /* Primer[]，形状同 primers + 结合位点 */ ],
+  "notes":      { "name": "...", "description": "..." },   // 可选
+  "baseColorRanges": [ /* BaseColorRange[]，可选 */ ],
+  "isDoubleStranded": true                                   // 可选
+}</code></pre>
                         </div>
                     </details>
 
@@ -366,10 +592,10 @@ ReplaceBasesDiff = Snapshot &amp; { start: number, oldBases?: string, newBases?:
                                 <thead><tr><th>表</th><th>结构</th><th>状态</th></tr></thead>
                                 <tbody>
                                     <tr><td><code>attachments</code></td><td><code>id TEXT PK, name TEXT NOT NULL, mime_type TEXT NOT NULL, data BLOB NOT NULL</code></td><td>预留：schema 每次都会建表，但当前版本无写入入口（id 约定为 <code>att-{timestamp}</code>，data 存原始字节）</td></tr>
-                                    <tr><td><code>schema_version</code></td><td><code>key TEXT PK, value TEXT</code></td><td>预留：当前版本从不写入行。常量 <code>SCHEMA_VERSION = 5</code> 仅存在于代码中</td></tr>
+                                    <tr><td><code>schema_version</code></td><td><code>key TEXT PK, value TEXT</code></td><td>预留：当前版本从不写入行。常量 <code>SCHEMA_VERSION = 6</code> 仅存在于代码中</td></tr>
                                 </tbody>
                             </table>
-                            <p class="schema-note">兼容机制因此<strong>不是</strong>版本号门控：GenePad 打开文件时执行幂等 DDL（全部 <code>CREATE TABLE IF NOT EXISTS</code>，外加两条吞掉「列已存在」错误的 <code>ALTER TABLE features ADD COLUMN segments/qualifiers</code>），旧文件缺列/缺表会在打开时自动补齐。外部读取程序应对缺列容错（老文件 features 没有 segments/qualifiers 列）。</p>
+                            <p class="schema-note">兼容机制因此<strong>不是</strong>版本号门控：GenePad 打开文件时执行幂等 DDL（全部 <code>CREATE TABLE IF NOT EXISTS</code>，外加四条吞掉「列已存在」错误的 <code>ALTER TABLE</code>：<code>features ADD COLUMN segments / qualifiers</code>、<code>undo_entries ADD COLUMN history_op</code>、<code>history_snapshots ADD COLUMN annotations_json</code>），旧文件缺列/缺表会在打开时自动补齐。外部读取程序应对缺列容错（老文件 features 没有 segments/qualifiers 列，更老的库没有 history_* 两表）。</p>
                         </div>
                     </details>
                 </div>
@@ -390,6 +616,35 @@ ReplaceBasesDiff = Snapshot &amp; { start: number, oldBases?: string, newBases?:
                     <p class="doc-note">注意两套体系：<code>sequence_blocks.block_index</code> 与序列偏移是 <strong>0-based</strong>，而所有注释坐标是 <strong>1-based</strong>。换算：1-based 位置 p 位于块 <code>floor((p-1) / 10000)</code>。</p>
                 </section>
 
+                <section class="doc-section" id="history">
+                    <div class="section-heading">
+                        <p class="eyebrow">History Tree</p>
+                        <h2>编辑历史树：字段与语义</h2>
+                    </div>
+                    <p>GenePad 的编辑历史是一棵<strong>向过去生长的树</strong>：<strong>根节点 = 当前文件状态，子节点 = 产生它的输入</strong>。每次编辑时，旧根降级为新根的子节点；undo「弹根」、redo「重挂」。在 <code>.gen</code> 里树元数据进 <code>history_tree.tree</code>，每个非根节点的序列快照进 <code>history_snapshots</code>。节点 JSON 形状：</p>
+                    <table class="doc-table">
+                        <thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead>
+                        <tbody>
+                            <tr><td><code>id</code></td><td>number</td><td>节点 id，整树唯一；快照表按它关联</td></tr>
+                            <tr><td><code>name</code></td><td>string</td><td>来源文件名（如 <code>ITR-CB-Rh74.dna</code>）或 GenePad 生成的操作描述名</td></tr>
+                            <tr><td><code>seqLen</code></td><td>number</td><td>该时点序列长度</td></tr>
+                            <tr><td><code>circular</code></td><td>boolean</td><td>该时点拓扑</td></tr>
+                            <tr><td><code>operation</code></td><td>string</td><td>产生该节点的操作：<code>invalid</code>（原始导入文件）、<code>insert</code> / <code>remove</code> / <code>replace</code> / <code>flip</code>（反向互补）/ <code>changeTopology</code>、<code>insertRestrictionSite</code>、<code>setOrigin</code>、<code>digest</code> / <code>amplifyFragment</code>（酶切/PCR）、<code>ligateFragments</code> / <code>insertFragments</code> / <code>inFusionCloning</code>（组装）等</td></tr>
+                            <tr><td><code>resurrectable</code></td><td>boolean?</td><td>undo 弹根后的节点标记（可「复活」重挂）</td></tr>
+                            <tr><td><code>strandedness</code> / <code>type</code></td><td>string?</td><td>链数（<code>double</code>/<code>single</code>）与分子类型（<code>DNA</code> 等）</td></tr>
+                            <tr><td><code>upstreamModification</code> / <code>downstreamModification</code></td><td>string?</td><td>末端修饰状态（如 <code>Unmodified</code>）</td></tr>
+                            <tr><td><code>inputSummaries</code></td><td>InputSummary[]</td><td>父编辑对该输入的处理，见下</td></tr>
+                            <tr><td><code>oligos</code></td><td>{ name, sequence, phosphorylated? }[]?</td><td>PCR 扩增等操作使用的引物</td></tr>
+                            <tr><td><code>parameters</code></td><td>[string, string][]?</td><td>操作参数对（如聚合酶、blunt 末端），保持写出顺序</td></tr>
+                            <tr><td><code>children</code></td><td>Node[]</td><td>递归子节点（输入），树深可达数百层</td></tr>
+                            <tr><td><code>extraAttrs</code> / <code>rawChildren</code></td><td>object? / string[]?</td><td>未建模 XML 属性 / 子元素的原样透传（.dna 往返保真用）</td></tr>
+                        </tbody>
+                    </table>
+                    <p><strong>InputSummary</strong>（<code>{ manipulation, val1, val2, enzymes?, extras? }</code>）描述父编辑对该输入做了什么。⚠️ <code>val1/val2</code> 是 <strong>0-based 闭区间</strong>——与 .gen 注释列的 1-based 不同，换算时务必 ±1。常见 manipulation：日常编辑 <code>insert</code>/<code>insertAt</code>（val1=0-based 位点）、<code>remove</code>、<code>replace</code>、<code>flip</code>、<code>changeTopology</code>；克隆组装 <code>overlapAndInsert</code>、<code>ligateFragments</code>、<code>insertFragments</code>；片段处理 <code>amplify</code>、<code>digest</code>（<code>enzymes</code> 为 <code>[酶名, 位点数]</code> 对的数组）。环形跨起点的编辑存为 val1 &gt; val2 的环绕区间。</p>
+                    <p>快照侧：<code>seq_type=1</code> 的压缩 DNA 在 GenePad 打开 .dna 时已解码为可读序列落库；<code>seq_type=29</code> 的「仅修饰符」快照没有序列载荷，序列由父状态经修饰符反推后同样落为可读序列。<code>nested_base64</code> 只做原样透传（打开快照时才惰性解码其中的时点标注），<code>annotations_json</code> 则是 GenePad 自己记录编辑时捕获的结构化时点标注——两者并存互不覆盖，解析时结构化 annotations 优先。</p>
+                    <p class="doc-note">格式间流转：<strong>.gen ↔ .dna 互转（另存为）时历史随文件自动携带</strong>（.gen 两表 ↔ .dna Block 7/11）；<code>.gjson</code>、GenBank、FASTA 没有历史字段，另存为这些格式会丢弃历史。</p>
+                </section>
+
                 <section class="doc-section" id="persistence">
                     <div class="section-heading">
                         <p class="eyebrow">Behavior</p>
@@ -398,11 +653,11 @@ ReplaceBasesDiff = Snapshot &amp; { start: number, oldBases?: string, newBases?:
                     <table class="doc-table">
                         <thead><tr><th>行为</th><th>规则</th></tr></thead>
                         <tbody>
-                            <tr><td>保存策略</td><td>内容表（<code>sequence_blocks</code>、<code>features</code>、<code>base_color_ranges</code>、<code>primers</code>、<code>primer_binding_sites</code>、<code>chromatogram_data</code>，及已加载比对的 <code>alignment_entries</code>）<strong>全删全写</strong>；<code>project_meta</code> 按 key upsert；<code>undo_entries</code>、<code>edit_history</code>、<code>attachments</code> 从不清空。没有「精简导出」选项——历史随文件走</td></tr>
-                            <tr><td>批量写入</td><td>sequence_blocks 每 100 行一条多值 INSERT，features 每 40 行一条（13 列 × 40 = 520 参数）；无显式事务，逐条语句自动提交</td></tr>
-                            <tr><td>序列实时写</td><td>编辑过程中序列整表重建（从位置 0 重写全部分块），不做块级增量更新</td></tr>
-                            <tr><td>工作副本</td><td>打开 <code>.gen</code> 时先整体复制到临时目录（<code>genepad-&lt;random&gt;.gen</code>）再编辑，保存时 checkpoint 后把临时库字节整体写回目标路径</td></tr>
-                            <tr><td>损坏容错</td><td>所有 JSON 列解析失败一律降级为 undefined/空，不报错；Android 导入路径会先校验 16 字节魔头 <code>SQLite format 3\0</code></td></tr>
+                            <tr><td>保存策略</td><td>内容表（<code>sequence_blocks</code>、<code>features</code>、<code>base_color_ranges</code>、<code>primers</code>、<code>primer_binding_sites</code>、<code>chromatogram_data</code>、<code>history_tree</code>、<code>history_snapshots</code>，及已加载比对的 <code>alignment_entries</code>）保存时<strong>全删全写</strong>；<code>project_meta</code> 按 key upsert；<code>undo_entries</code>、<code>attachments</code> 从不清空，<code>edit_history</code> 滚动保留 500 条。没有「精简导出」选项——历史随文件走</td></tr>
+                            <tr><td>编辑期增量写</td><td>编辑过程中序列整表重建（<code>writeSequence</code> 从位置 0 重写全部分块，不做块级增量）；每次序列编辑同时 upsert 一条历史快照（25 行/批多值 upsert）并整行重写 <code>history_tree.tree</code>；实体操作（feature/引物增删改）走单行 INSERT/UPDATE/DELETE</td></tr>
+                            <tr><td>批量写入</td><td>sequence_blocks 每 100 行一条多值 INSERT，features 每 40 行一条（13 列 × 40 = 520 参数），history_snapshots 每 25 行一条；无显式事务，逐条语句自动提交</td></tr>
+                            <tr><td>工作副本</td><td>打开 <code>.gen</code> 时先整体复制到临时目录（<code>genepad-&lt;random&gt;.gen</code>）再编辑，保存时 <code>commitWorkingCopy</code>（全量重写 + <code>isDirty='0'</code> + checkpoint）后把临时库字节整体写回目标路径</td></tr>
+                            <tr><td>损坏容错</td><td>所有 JSON 列解析失败一律降级为 undefined/空，不报错（历史树 JSON 损坏则视为无历史）；Android 导入路径会先校验 16 字节魔头 <code>SQLite format 3\0</code></td></tr>
                             <tr><td>大小写</td><td>碱基大小写按原样存取（不强制大写）；字符集为 IUPAC 扩展字母</td></tr>
                             <tr><td>加密</td><td>无——标准未加密 SQLite 文件，任何工具可读</td></tr>
                         </tbody>
@@ -429,9 +684,13 @@ def gen_to_gjson(path):
     def segs_of(raw):                          # 多段（&gt;1）feature 才带 segments 键
         if not raw: return {}
         segs = json.loads(raw)
-        return {"segments": [{"start": s["start"], "end": s["end"],
-                              **({"strand": s["strand"]} if s.get("strand") else {})}
-                             for s in segs]} if len(segs) &gt; 1 else {}
+        if len(segs) &lt;= 1: return {}
+        def seg(s):                            # 段级 strand/name/color 逐段可选
+            out = {"start": s["start"], "end": s["end"]}
+            for k in ("strand", "name", "color"):
+                if s.get(k): out[k] = s[k]
+            return out
+        return {"segments": [seg(s) for s in segs]}
 
     # .gen 里这两个 JSON 列是 camelCase，.gjson 里是 snake_case
     comp  = lambda c: [{"hybridized_range": x.get("hybridizedRange"),
@@ -498,7 +757,7 @@ def gen_to_gjson(path):
 with open("plasmid.gjson", "w", encoding="utf-8", newline="\n") as f:
     json.dump(gen_to_gjson("plasmid.gen"), f, ensure_ascii=False, indent=2)</code></pre>
                     <p>此脚本已与 GenePad 自身导出的同项目 <code>.gjson</code> 逐一核对：除两处原理性差异外完全一致——<code>id</code>（写出时刻的毫秒时间戳）与 feature 顺序（GenePad 按导出时的内存顺序，重开 <code>.gen</code> 后只能得到 <code>start_pos</code> 顺序）。可以用本页提供的两个样本文件自行复核：<a href="samples/41-pPUR-P2A-BFPnls-sgRNA1-RNF2_4AtoG_MS2-MA.gen">.gen 源文件</a>、<a href="samples/41-pPUR-P2A-BFPnls-sgRNA1-RNF2_4AtoG_MS2-MA.gjson">GenePad 导出的 .gjson</a>。</p>
-                    <p class="doc-note">转换要点：<code>organism</code> 等 GenBank 元数据在 .gen 里是空串 <code>''</code>、在 .gjson 里写 <code>null</code>（空串等同未设置）；结合位点 JSON 的键名从 camelCase 转为 snake_case；<code>primers[].visible</code> 恒为 <code>null</code>；<code>baseColorRanges</code>/<code>primers</code>/<code>alignmentEntries</code> 为空时整个键省略；测序图谱（chromatogram）不进 .gjson。完整规则见 <a href="tech-gjson-format.html">.gjson 文件定义</a>。</p>
+                    <p class="doc-note">转换要点：<code>organism</code> 等 GenBank 元数据在 .gen 里是空串 <code>''</code>、在 .gjson 里写 <code>null</code>（空串等同未设置）；结合位点 JSON 的键名从 camelCase 转为 snake_case；<code>primers[].visible</code> 恒为 <code>null</code>；<code>baseColorRanges</code>/<code>primers</code>/<code>alignmentEntries</code> 为空时整个键省略；segments 的段级 <code>name</code>/<code>color</code> 与 <code>.gen</code> JSON 列同形、直接透传即可；测序图谱（chromatogram）与编辑历史（history_* 两表）不进 .gjson。完整规则见 <a href="tech-gjson-format.html">.gjson 文件定义</a>。</p>
                 </section>
 
                 <section class="doc-section" id="write-back">
@@ -524,6 +783,16 @@ con.executemany("INSERT INTO sequence_blocks VALUES (?, ?)",
                  for i in range(0, len(new_seq), 10000)])
 con.commit()</code></pre>
                     <p class="doc-note">注意：改动碱基长度后要同步修正受影响 feature 的坐标（GenePad 不会自动重算）；<code>isDirty</code> 只是保存簿记，加载时不读取，外部改动无需维护它。用 Python 默认 journal 写出的文件即为自包含单文件。</p>
+                    <p><strong>常用配方——给带历史的 .gen 瘦身：</strong>历史快照可能占掉文件九成体积（见<a href="#itr">ITR 解剖</a>的 36 MB 例子）。不需要克隆谱系时，外部清空两张历史表再 VACUUM 回收空间即可，GenePad 重新打开一切正常（无历史 = 普通文件）：</p>
+                    <pre class="code-block"><code>import sqlite3
+
+con = sqlite3.connect("ITR-CMV-AAV5-AfeI.gen")
+con.execute("DELETE FROM history_tree")       # 等价于应用内「清空历史」
+con.execute("DELETE FROM history_snapshots")
+con.commit()
+con.execute("VACUUM")                          # 关键：真正把字节还给文件系统
+con.close()
+# 实测：37,810,176 B → 151,552 B（约 148 KB），序列与注释完好</code></pre>
                 </section>
 
                 <section class="doc-section" id="create">
@@ -600,6 +869,12 @@ SELECT name, type, start_pos, end_pos, strand FROM features ORDER BY start_pos L
 # 看绑定位点 / 编辑历史
 SELECT primer_id, start_pos, end_pos, bound_strand FROM primer_binding_sites LIMIT 5;
 SELECT timestamp, description FROM edit_history ORDER BY id DESC LIMIT 5;
+
+# 编辑历史树：根节点元数据 + 各快照长度（详见「编辑历史树」与「实例解剖」两节）
+SELECT json_extract(tree, '$.id'), json_extract(tree, '$.operation'),
+       json_extract(tree, '$.seqLen'), json_extract(tree, '$.circular')
+FROM history_tree WHERE id = 1;
+SELECT node_id, length(sequence), seq_type FROM history_snapshots ORDER BY node_id LIMIT 5;
 
 # 解码主序列测序图谱的 A 通道（BLOB 里是 UTF-8 JSON 数组）
 SELECT CAST(trace_a AS TEXT) FROM chromatogram_data WHERE id = 'primary';

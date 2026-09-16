@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#f4f7fb" media="(prefers-color-scheme: light)" />
         <meta name="theme-color" content="#0b111d" media="(prefers-color-scheme: dark)" />
-        <meta name="description" content="GenePad .gjson 文件格式完整定义：顶层字段写出/读取行为、Feature、Primer、结合位点、BaseColorRange、AlignmentEntry 与 GenBankRef 结构，键名命名规则、null 语义与容错解析。" />
+        <meta name="description" content="GenePad .gjson 文件格式完整定义：顶层字段写出/读取行为、Feature（含段级 name/color 的多段 segments）、Primer、结合位点、BaseColorRange、AlignmentEntry 与 GenBankRef 结构，键名命名规则、null 语义与容错解析。" />
         <title>.gjson 文件定义 - GenePad 开发者文档</title>
         <link rel="canonical" href="https://genepad.cn/tech-gjson-format.html" />
         <!-- 手绘 SVG 导出图，暂不启用 <link rel="icon" href="icon.png" type="image/png" /> -->
@@ -60,8 +60,8 @@
                         <li>显示名解析链：<code>custom_name</code>（非空白）→ <code>id</code>（有意义时）→ <code>"Unnamed"</code>。占位 id（如 <code>"."</code>、空串、去掉非字母数字后为空）不作为名字。</li>
                         <li><code>length</code> 缺失或为 0 时按 <code>sequence</code> 实际长度计算；<code>isCircular</code> 缺省 <code>false</code>；<code>isDoubleStranded</code> 缺省 <code>true</code>。</li>
                         <li><strong>分段容错</strong>：<code>features</code> / <code>primers</code> / <code>baseColorRanges</code> / <code>alignmentEntries</code> / <code>references</code> 任何一段反序列化失败，只丢弃该段并记入 warnings——序列本体不受影响。例如某个 feature 的 <code>start</code> 写成了字符串，整个 features 数组被跳过，但序列照常加载。</li>
-                        <li>feature 的 <code>segments</code> 段数 ≤ 1 时直接忽略（单段 feature 只用顶层 start/end）。</li>
-                        <li>不持久化的内容：限制酶位点（加载后重新检测）、Dam/Dcm 甲基化状态、测序图谱（chromatogram）。</li>
+                        <li>feature 的 <code>segments</code> 段数 ≤ 1 时直接忽略（单段 feature 只用顶层 start/end）；多段 feature 每段 <code>{ start, end, strand?, name?, color? }</code>——<strong>段级名称与颜色随文件落盘并在读回时保留</strong>，与 .gen 的 segments JSON 列同形。</li>
+                        <li>不持久化的内容：限制酶位点（加载后重新检测）、Dam/Dcm 甲基化状态、测序图谱（chromatogram）、编辑历史（.gen 的 history_tree / history_snapshots 两表）。</li>
                         <li>坐标为 <strong>1-based inclusive</strong>；环形序列跨原点时 <code>start &gt; end</code>，与 <code>.gen</code> 相同。</li>
                     </ul>
                 </section>
@@ -189,7 +189,13 @@ Primer 1 forward 73.0 °C</code></pre>
   "visible": true,
   "qualifiers": null
 }</code></pre>
-                            <p class="schema-note">前 11 个字段恒写出：<code>color/label/note/frame</code> 缺失时写 <code>null</code>，<code>visible</code> 缺省按 <code>true</code> 写。<code>segments</code> 仅在段数 &gt; 1 时写出，且每段<strong>只有</strong> <code>start/end/strand?</code>（.gen 段上可选的 name/color 不导出）：<code>"segments": [{ "start": 5627, "end": 5643 }, …]</code>。<code>qualifiers</code> 为 <code>Record&lt;string, string[]&gt;</code> 或 <code>null</code>。坐标 1-based inclusive，环形跨原点时 start &gt; end。</p>
+                            <p class="schema-note">前 11 个字段恒写出：<code>color/label/note/frame</code> 缺失时写 <code>null</code>，<code>visible</code> 缺省按 <code>true</code> 写。<code>qualifiers</code> 为 <code>Record&lt;string, string[]&gt;</code> 或 <code>null</code>。坐标 1-based inclusive，环形跨原点时 start &gt; end。<code>segments</code> 仅在段数 &gt; 1 时写出，每段字段与 .gen 的 segments JSON 列完全同形（可选键省略而非写 null）：</p>
+                            <pre class="code-block"><code>"segments": [
+  { "start": 5627, "end": 5643, "strand": "forward",
+    "name": "sgRNA", "color": "#22c55e" },
+  { "start": 5700, "end": 5716, "strand": "forward",
+    "name": "PAM",   "color": "#f97316" }
+]</code></pre>
                         </div>
                     </details>
 
@@ -285,9 +291,9 @@ Primer 1 forward 73.0 °C</code></pre>
                         <tbody>
                             <tr><td>序列化</td><td>pretty JSON，2 空格缩进，<strong>LF 换行</strong>，UTF-8（非 ASCII 字符不转义）。键序固定（即上方骨架的顺序），便于逐行 diff</td></tr>
                             <tr><td>恒定值</td><td><code>version = "1.9"</code>、<code>type_of_display = "file_name"</code>、<code>id = "gjson-{Unix毫秒}"</code>、<code>custom_name</code> = 项目名、<code>primers[].visible = null</code></td></tr>
-                            <tr><td>省略策略</td><td><code>baseColorRanges</code> / <code>primers</code> / <code>alignmentEntries</code> 为空时整个键省略；feature 的 <code>segments</code> 段数 ≤ 1 时省略；GenBankRef 的可选字段省略键。其余可选值（organism、gbVersion、feature.qualifiers…）写<strong>显式 null</strong></td></tr>
+                            <tr><td>省略策略</td><td><code>baseColorRanges</code> / <code>primers</code> / <code>alignmentEntries</code> 为空时整个键省略；feature 的 <code>segments</code> 段数 ≤ 1 时省略（段内的 strand/name/color 缺失时省略键）；GenBankRef 的可选字段省略键。其余可选值（organism、gbVersion、feature.qualifiers…）写<strong>显式 null</strong></td></tr>
                             <tr><td>命名规则</td><td>顶层 <code>type_of_display</code> / <code>custom_name</code> 为 snake_case；常规字段 camelCase（isCircular、moleculeType、gbVersion、bindingSites、boundStrand、annealedBases、meltingTemperature、baseColorRanges、alignmentEntries）；<strong>结合位点内层</strong> <code>components</code> / <code>alignment</code> 的字段为 snake_case（hybridized_range、primer_bases、template_bases、template_start、template_end）</td></tr>
-                            <tr><td>与 .gen 互转</td><td>除键名改名外，注意 <code>''</code> ↔ <code>null</code>（.gen 的 GenBank 元数据空串在 .gjson 里是 null）、引物 <code>visible</code> 丢失、segments 段的 name/color 丢失。现成脚本见 <a href="tech-gen-format.html#export">.gen 页的导出配方</a>（已用真实文件核对，逐字段一致）</td></tr>
+                            <tr><td>与 .gen 互转</td><td>除键名改名外，注意 <code>''</code> ↔ <code>null</code>（.gen 的 GenBank 元数据空串在 .gjson 里是 null）、引物 <code>visible</code> 丢失；segments（含段级 name/color）与 qualifiers 两边同形、直接透传。现成脚本见 <a href="tech-gen-format.html#export">.gen 页的导出配方</a>（已用真实文件核对，逐字段一致）</td></tr>
                         </tbody>
                     </table>
                 </section>
@@ -297,7 +303,7 @@ Primer 1 forward 73.0 °C</code></pre>
                         <p class="eyebrow">Fidelity</p>
                         <h2>与 .gen 的保真差异</h2>
                     </div>
-                    <p class="doc-note"><strong>.gjson 不存储：</strong>撤销/重做栈（undo_entries）、编辑审计（edit_history）、附件（attachments）、主序列与比对条目的测序图谱（chromatogram）、Dam/Dcm 甲基化、引物可见性（写出时写 null）、feature 多段注释里的段级 name/color、显示名策略（typeOfDisplay）。需要完整工程快照请使用 <code>.gen</code>；两者坐标体系（1-based inclusive、跨原点 start &gt; end）完全一致，互转不涉及坐标换算。</p>
+                    <p class="doc-note"><strong>.gjson 不存储：</strong>撤销/重做栈（undo_entries）、编辑审计（edit_history）、附件（attachments）、编辑历史（history_tree / history_snapshots——克隆谱系与快照，.gen ↔ .dna 互转时随行）、主序列与比对条目的测序图谱（chromatogram）、Dam/Dcm 甲基化、引物可见性（写出时写 null）、显示名策略（typeOfDisplay）。需要完整工程快照请使用 <code>.gen</code>；两者坐标体系（1-based inclusive、跨原点 start &gt; end）完全一致，互转不涉及坐标换算。</p>
                 </section>
 
                 <section class="doc-section" id="see-also">
