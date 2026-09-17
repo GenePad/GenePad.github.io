@@ -167,8 +167,8 @@ It also shows, per platform:
 - **Linux** — single x86_64 card (ARM64 自 0.7.1 停发,仅 deb);Spark Store note.
 - **Windows / Android** — direct installer rows only (Windows 为 zip 包裹的 NSIS
   安装器 `GenePad_<v>_Windows_amd64.zip`——内含 setup exe,防浏览器直下裸 exe 被
-  拦截,应用内 updater 下载同一 zip 自动解压静默安装;2026-09-09 于 0.7.1 周期内
-  从裸 exe 中途切换,更早为裸 exe;Android 为
+  拦截;0.7.3 起应用内 updater 改下**签名的裸 exe** `GenePad_<v>_Windows_amd64.exe`,
+  exe 与 zip 都上传服务器与 Release,但**下载页只展示 zip**;Android 为
   `GenePad-v<v>-android-universal-release.apk`).
 
 ## Release Checklist
@@ -182,34 +182,36 @@ if the proxy is down.
 
 ### 1. Copy new release files from build outputs
 
-Copy the latest built binaries from the Gene Editor source project into `docs/release/`. Look for files in these locations:
+Primary source: the **app repo's rolling `prerelease`** on
+`Masterchiefm/GenePad` (`gh release download prerelease --repo Masterchiefm/GenePad`
+via the proxy) — it is rebuilt on every manual run of the Build workflow and holds
+the exact `GenePad_<v>_...` names below. Legacy local build paths (old project
+`Gene_Editor-master`) and the hand-over drop folder (e.g.
+`C:\Users\moqiq\Downloads\新建文件夹` with `windows-x64.zip` / `linux-x86_64.zip` /
+`macos-arm64.zip` / `android-release.zip`) remain alternatives; extract and rename
+to the convention above. Windows 上 exe 与 zip 同物(zip 内含同一 setup exe)。
 
-| Platform | Source build output directory |
-|---|---|
-| Windows | `C:\Users\moqiq\PycharmProjects\Gene_Editor-master\src-tauri\target\release\bundle\nsis` |
-| Linux | `\\wsl.localhost\Ubuntu-24.04\home\chief\Gene_Editor\src-tauri\target\release\bundle` |
-| Android | `C:\Users\moqiq\PycharmProjects\Gene_Editor-master\src-tauri\gen\android\app\build\outputs\apk\universal\release` |
+Copy the latest version files to `docs/release/` (Windows 自 0.7.3 起为 **exe+zip
+双产物**:exe(+`.exe.sig`,bundler 签名)给应用内 updater;zip(+`.zip.sig`)给人用
+下载,下载页只展示 zip。渠道裁撤见 app 仓 docs/distribution.md:mac dmg+app.tar.gz、
+Linux x86_64 deb、Android 版本化 apk;`.sig` 一并入库,小文件):
 
-Copy the latest version files to `docs/release/` (naming since the 2026-09-09
-zip switch during 0.7.1 — 渠道裁撤
-见 app 仓 docs/distribution.md:Windows zip 包裹 NSIS exe、mac dmg+app.tar.gz、
-Linux x86_64 deb、Android 版本化 apk;updater `.sig` 一并入库——windows 的
-`.zip.sig` 签的是 **zip 本体**而非内部 exe,来自 CI 的 Sign Windows zip 步):
 ```
-docs/release/windows/GenePad_x.x.x_Windows_amd64.zip (+ .zip.sig)
+docs/release/windows/GenePad_x.x.x_Windows_amd64.exe (+ .exe.sig)   ← updater 直链(latest.json)
+docs/release/windows/GenePad_x.x.x_Windows_amd64.zip (+ .zip.sig)   ← 人用下载(下载页/update.json,只展示这个)
 docs/release/linux/GenePad_x.x.x_Linux_amd64.deb     (+ .deb.sig)
 docs/release/android/GenePad-vx.x.x-android-universal-release.apk
 docs/release/mac/GenePad_x.x.x_Darwin_arm64.dmg
 docs/release/mac/GenePad_x.x.x_Darwin_arm64.app.tar.gz (+ .app.tar.gz.sig)
 ```
 
-**Windows zip 回归(2026-09-09,0.7.1 周期内切换,未另发版)**:人用下载与 updater
-直链同为一个 zip(内含 NSIS setup exe)——浏览器直下裸 exe 会被 SmartScreen/下载
-拦截,zip 不会;应用内 updater
-(tauri-plugin-updater 2.11,0.7.0 起所有客户端内置)下载 zip→minisign 验签→自动
-解压临时目录→静默安装,存量客户端无需任何改动。mac 的 `.app.zip`/`macos-*.zip`
-伪装扩展名惯例仍废。旧版本 0.6.9 的 rpm/tar.gz/arm64 包与 0.7.1 的裸 exe(+sig)
-保留作存档(install.sh 的停发提示指向它们),勿删。
+**Windows zip 回归与 exe/zip 分工(2026-09-09 切 zip,2026-09-18 v0.7.3 起双产物)**:
+人用下载为 zip(内含 NSIS setup exe)——浏览器直下裸 exe 会被 SmartScreen/下载
+拦截,zip 不会;应用内 updater(tauri-plugin-updater)自 0.7.3 起改下**签名的裸
+exe**(bundler minisign 签名,标准 updater 产物,改规范名不改字节签名仍有效),
+zip 转人用下载专用,`.zip.sig` 存档备用(清单不再引用)。旧版本 0.6.9 的
+rpm/tar.gz/arm64 包与 0.7.1 的裸 exe(+sig)保留作存档(install.sh 的停发提示指向
+它们),勿删。
 
 **macOS notes:** the app is unsigned, so browser downloads get flagged by
 Gatekeeper — the site steers macOS users to `brew install genepad/tap/genepad`
@@ -224,7 +226,8 @@ rename to the convention above:
 
 | Inside the drop zips | Destination in `docs/release/` |
 |---|---|
-| `GenePad_x.x.x_Windows_amd64.zip` + `.zip.sig` (exe already zipped by CI) | `windows/…amd64.zip` — copy both as-is, no re-zip needed |
+| `GenePad_x.x.x_Windows_amd64.exe` + `.exe.sig`(updater 产物,CI exe 已带 bundler 签名) | `windows/…amd64.exe` — copy both as-is |
+| `GenePad_x.x.x_Windows_amd64.zip` + `.zip.sig`(exe 已由 CI 压好) | `windows/…amd64.zip` — copy both as-is, no re-zip needed |
 | `GenePad_x.x.x_Linux_amd64.deb` (+ `.deb.sig`) | `linux/…` — names already final |
 | `apk/universal/release/GenePad-vX.Y.Z-android-universal-release.apk` | `android/…` — versioned name already final, copy as-is |
 | `GenePad_x.x.x_Darwin_arm64.dmg` | `mac/…` — copy as-is |
@@ -267,8 +270,8 @@ node <app-repo>/scripts/generate-updater-manifest.js \
   --notes-from-json <GenePad-free>/docs/update.json
 ```
 
-Requires step 1's files in `docs/release/`: windows `GenePad_<v>_Windows_amd64.zip`
-(+ `.zip.sig`,zip 内含 NSIS exe——updater 下载 zip 自动解压安装,2026-09-09 起)、
+Requires step 1's files in `docs/release/`: windows `GenePad_<v>_Windows_amd64.exe`
+(+ `.exe.sig`,bundler 签名——updater 直链,0.7.3 起从 zip 切回)、
 mac `app.tar.gz`(+sig)、linux deb(+sig);android 不进 latest.json。任一产物或
 `.sig` 缺失时脚本直接报错退出(勿加 `--allow-missing` 掩盖,那是 CI 的容错口径)。
 Full runbook: app 仓 `docs/distribution.md`「内置 updater」.
@@ -311,6 +314,7 @@ git push origin main
 
 # Create GitHub Release with all assets (filenames per step 1)
 gh release create vx.x.x \
+  "docs/release/windows/GenePad_x.x.x_Windows_amd64.exe" \
   "docs/release/windows/GenePad_x.x.x_Windows_amd64.zip" \
   "docs/release/linux/GenePad_x.x.x_Linux_amd64.deb" \
   "docs/release/android/GenePad-vx.x.x-android-universal-release.apk" \
@@ -347,6 +351,7 @@ curl -s -X POST "https://gitee.com/api/v5/repos/GenePad/GenePad.github.io/releas
 # Upload assets to Gitee Release (replace <release_id> from previous response)
 # The download panel's Gitee URLs expect tag v<x.x.x> and the exact filenames from step 1.
 for f in \
+  "docs/release/windows/GenePad_x.x.x_Windows_amd64.exe" \
   "docs/release/windows/GenePad_x.x.x_Windows_amd64.zip" \
   "docs/release/linux/GenePad_x.x.x_Linux_amd64.deb" \
   "docs/release/android/GenePad-vx.x.x-android-universal-release.apk" \
@@ -435,9 +440,10 @@ https://genepad.pages.dev/update.json
 The app checks this manifest in the background once per week. Keep the metadata small and valid JSON.
 `docs/latest.json` is a **separate** manifest consumed only by the in-app updater
 of 0.7.0+ clients — regenerate it with the app repo script (step 3b), never
-hand-edit; its `version` must match `update.json`. Since the 2026-09-09 switch
-(during 0.7.1) the windows entry of both manifests points at
-`GenePad_<v>_Windows_amd64.zip`.
+hand-edit; its `version` must match `update.json`. The two manifests' windows
+entries **differ by design since v0.7.3**: `update.json`(人用下载/浏览器回落)指
+`GenePad_<v>_Windows_amd64.zip`(防拦截),`latest.json`(应用内 updater)指
+`GenePad_<v>_Windows_amd64.exe`(bundler 签名的裸安装器)。
 
 Required shape:
 
