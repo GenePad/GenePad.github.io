@@ -4,7 +4,7 @@
   "pub_date": "2026-09-18T04:18:47.000+08:00",
   "platforms": {
     "windows-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRK20xNzladkFOWkY4M0Ntenl4MGlBeFRHVW5CbFZaZExCbkJaR2g5ZlE3NVhacFRYc29MNWVwWmVFUElpbVVjdXVLV2xmUGxwYW5rNG1pWEsyVzc5eVl4SFgzNmpYd3cwPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg5Njc4Mzg5CWZpbGU6R2VuZVBhZF8wLjcuM194NjQtc2V0dXAuZXhlCkJDdXFCQ3l1dk1Ld01RcHpwTjI5ZEIrQk53cWttK3g2bldheU1HZVVSdVdyNUJJbUZNN0gzZTg0cWVnbkQ5RTl5eGovVFJkTmh3ZmR4aEkzemU5NkJBPT0K",
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRK20xNzladkFOWkEwdzdrUjJBQ1BhTkdHREJhMlYvbWd3MCtsbDVMTFNrc2t6elY0M04zS2VqaWkvZkF5b015SkFPSGcwMjJtdndIUWZ1VFVFZ0pyT2pDNjh4aWI4WUE0PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg5Njk2OTQ0CWZpbGU6R2VuZVBhZF8wLjcuM194NjQtc2V0dXAuZXhlCiswdzZoeVhKUndsU01QUWVEVTRFcytKM2hvYU0vaHlocEZ5SlF4U3U3QzJOZ3ZXLzZtTnl4WFNBeEpVL1MvelFSRjNpSm5ZR1VSTlBNa054QVpkYUJBPT0K",
       "url": "https://genepad.pages.dev/release/windows/GenePad_0.7.3_Windows_amd64.exe"
     },
     "darwin-aarch64": {
