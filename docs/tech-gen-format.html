@@ -7,14 +7,28 @@
         <meta name="theme-color" content="#0b111d" media="(prefers-color-scheme: dark)" />
         <meta name="description" content="GenePad .gen 项目文件格式完整定义：SQLite 全部 14 张表结构、project_meta 键参考、JSON 字段形状、坐标与环形序列规则、编辑历史树（history_tree + history_snapshots）、保存/兼容行为，Python 与 sqlite3 CLI 的读取、导出、写回、创建示例，并附 ITR-CMV-AAV5-AfeI.gen 真实文件逐表解剖。" />
         <title>.gen 文件定义 - GenePad 开发者文档</title>
-        <link rel="canonical" href="https://genepad.cn/tech-gen-format.html" />
+        <link rel="canonical" href="https://genepad.cn/tech-gen-format" />
+        <!-- Open Graph / Twitter 卡片 -->
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="GenePad" />
+        <meta property="og:locale" content="zh_CN" />
+        <meta property="og:title" content=".gen 文件定义 - GenePad 开发者文档" />
+        <meta property="og:description" content="GenePad .gen 项目文件格式完整定义：SQLite 全部 14 张表结构、project_meta 键参考、JSON 字段形状、坐标与环形序列规则、编辑历史树（history_tree + history_snapshots）、保存/兼容行为，Python 与 sqlite3 CLI 的读取、导出、写回、创建示例，并附 ITR-CMV-AAV5-AfeI.gen 真实文件逐表解剖。" />
+        <meta property="og:url" content="https://genepad.cn/tech-gen-format" />
+        <meta property="og:image" content="https://genepad.cn/og.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content=".gen 文件定义 - GenePad 开发者文档" />
+        <meta name="twitter:description" content="GenePad .gen 项目文件格式完整定义：SQLite 全部 14 张表结构、project_meta 键参考、JSON 字段形状、坐标与环形序列规则、编辑历史树（history_tree + history_snapshots）、保存/兼容行为，Python 与 sqlite3 CLI 的读取、导出、写回、创建示例，并附 ITR-CMV-AAV5-AfeI.gen 真实文件逐表解剖。" />
+        <meta name="twitter:image" content="https://genepad.cn/og.png" />
         <!-- 手绘 SVG 导出图，暂不启用 <link rel="icon" href="icon.png" type="image/png" /> -->
         <link rel="icon" href="icon.ico" sizes="any" />
         <link rel="stylesheet" href="styles.css" />
     </head>
     <body>
         <header class="site-header">
-            <a class="brand" href="index.html" aria-label="GenePad 首页">
+            <a class="brand" href="/" aria-label="GenePad 首页">
                 <span class="brand-mark"><img src="icon.png" alt="" /></span>
                 <span><strong>基因工坊</strong><small>GenePad</small></span>
             </a>
@@ -24,16 +38,16 @@
          <div class="doc-layout">
             <aside class="doc-toc" id="doc-toc">
                 <button class="doc-toc-toggle" type="button">目录</button>
-                <a class="doc-toc-home" href="tech-support.html">文档首页</a>
+                <a class="doc-toc-home" href="tech-support">文档首页</a>
                 <p class="doc-toc-group">文件格式</p>
-                <a class="current" href="tech-gen-format.html">.gen 定义</a>
-                <a href="tech-gjson-format.html">.gjson 定义</a>
-                <a href="tech-dna-conversion.html">.dna 转换</a>
+                <a class="current" href="tech-gen-format">.gen 定义</a>
+                <a href="tech-gjson-format">.gjson 定义</a>
+                <a href="tech-dna-conversion">.dna 转换</a>
                 <p class="doc-toc-group">代码示例</p>
-                <a href="tech-rust-readers.html">Rust 读取</a>
+                <a href="tech-rust-readers">Rust 读取</a>
             </aside>
             <div class="doc-content doc-prose">
-                <nav class="doc-breadcrumb"><a href="tech-support.html">文档首页</a> › 文件格式 › .gen 定义</nav>
+                <nav class="doc-breadcrumb"><a href="tech-support">文档首页</a> › 文件格式 › .gen 定义</nav>
                 <div class="doc-head">
                     <h1>.gen 文件定义</h1>
                     <p class="lead">
@@ -669,7 +683,7 @@ ReplaceBasesDiff = Snapshot &amp; { start: number, oldBases?: string, newBases?:
                         <p class="eyebrow">Recipe</p>
                         <h2>导出为 .gjson</h2>
                     </div>
-                    <p>把整个项目导出成 <a href="tech-gjson-format.html"><code>.gjson</code></a>——GenePad 的文本 JSON 交换格式。下面这个脚本复刻了 GenePad 写出器的全部行为（键名、null 语义、空数组省略规则都一致），可直接交给 GenePad 或任何工具读回：</p>
+                    <p>把整个项目导出成 <a href="tech-gjson-format"><code>.gjson</code></a>——GenePad 的文本 JSON 交换格式。下面这个脚本复刻了 GenePad 写出器的全部行为（键名、null 语义、空数组省略规则都一致），可直接交给 GenePad 或任何工具读回：</p>
                     <pre class="code-block"><code>import json, sqlite3, time
 
 def gen_to_gjson(path):
@@ -757,7 +771,7 @@ def gen_to_gjson(path):
 with open("plasmid.gjson", "w", encoding="utf-8", newline="\n") as f:
     json.dump(gen_to_gjson("plasmid.gen"), f, ensure_ascii=False, indent=2)</code></pre>
                     <p>此脚本已与 GenePad 自身导出的同项目 <code>.gjson</code> 逐一核对：除两处原理性差异外完全一致——<code>id</code>（写出时刻的毫秒时间戳）与 feature 顺序（GenePad 按导出时的内存顺序，重开 <code>.gen</code> 后只能得到 <code>start_pos</code> 顺序）。可以用本页提供的两个样本文件自行复核：<a href="samples/41-pPUR-P2A-BFPnls-sgRNA1-RNF2_4AtoG_MS2-MA.gen">.gen 源文件</a>、<a href="samples/41-pPUR-P2A-BFPnls-sgRNA1-RNF2_4AtoG_MS2-MA.gjson">GenePad 导出的 .gjson</a>。</p>
-                    <p class="doc-note">转换要点：<code>organism</code> 等 GenBank 元数据在 .gen 里是空串 <code>''</code>、在 .gjson 里写 <code>null</code>（空串等同未设置）；结合位点 JSON 的键名从 camelCase 转为 snake_case；<code>primers[].visible</code> 恒为 <code>null</code>；<code>baseColorRanges</code>/<code>primers</code>/<code>alignmentEntries</code> 为空时整个键省略；segments 的段级 <code>name</code>/<code>color</code> 与 <code>.gen</code> JSON 列同形、直接透传即可；测序图谱（chromatogram）与编辑历史（history_* 两表）不进 .gjson。完整规则见 <a href="tech-gjson-format.html">.gjson 文件定义</a>。</p>
+                    <p class="doc-note">转换要点：<code>organism</code> 等 GenBank 元数据在 .gen 里是空串 <code>''</code>、在 .gjson 里写 <code>null</code>（空串等同未设置）；结合位点 JSON 的键名从 camelCase 转为 snake_case；<code>primers[].visible</code> 恒为 <code>null</code>；<code>baseColorRanges</code>/<code>primers</code>/<code>alignmentEntries</code> 为空时整个键省略；segments 的段级 <code>name</code>/<code>color</code> 与 <code>.gen</code> JSON 列同形、直接透传即可；测序图谱（chromatogram）与编辑历史（history_* 两表）不进 .gjson。完整规则见 <a href="tech-gjson-format">.gjson 文件定义</a>。</p>
                 </section>
 
                 <section class="doc-section" id="write-back">
@@ -881,7 +895,7 @@ SELECT CAST(trace_a AS TEXT) FROM chromatogram_data WHERE id = 'primary';
 
 # 顺手验证魔头：应为 "SQLite format 3" + \0
 xxd -l 16 example.gen</code></pre>
-                    <p class="doc-note">只读场景请用 <code>sqlite3 "file:example.gen?immutable=1"</code> 打开——避免在文件旁产生 <code>-wal</code>/<code>-shm</code> 副产品（GenePad 自带的质粒库扫描器就是这么做的，Rust 示例见<a href="tech-rust-readers.html">Rust 读取</a>）。</p>
+                    <p class="doc-note">只读场景请用 <code>sqlite3 "file:example.gen?immutable=1"</code> 打开——避免在文件旁产生 <code>-wal</code>/<code>-shm</code> 副产品（GenePad 自带的质粒库扫描器就是这么做的，Rust 示例见<a href="tech-rust-readers">Rust 读取</a>）。</p>
                 </section>
 
                 <section class="doc-section" id="see-also">
@@ -890,16 +904,16 @@ xxd -l 16 example.gen</code></pre>
                         <h2>延伸</h2>
                     </div>
                     <ul style="color:var(--lead);line-height:1.9;padding-left:1.3em">
-                        <li><a href="tech-gjson-format.html">.gjson 文件定义</a>——单文件 JSON 交换格式，适合脚本生成与轻量共享。</li>
-                        <li><a href="tech-dna-conversion.html">.dna 转换</a>——SnapGene <code>.dna</code> 的读取与转换说明。</li>
-                        <li><a href="tech-rust-readers.html">Rust 读取示例</a>——rusqlite 依赖配置、只读（immutable）打开与 .gjson 读取。</li>
+                        <li><a href="tech-gjson-format">.gjson 文件定义</a>——单文件 JSON 交换格式，适合脚本生成与轻量共享。</li>
+                        <li><a href="tech-dna-conversion">.dna 转换</a>——SnapGene <code>.dna</code> 的读取与转换说明。</li>
+                        <li><a href="tech-rust-readers">Rust 读取示例</a>——rusqlite 依赖配置、只读（immutable）打开与 .gjson 读取。</li>
                     </ul>
                 </section>
             </div>
          </div>
         </main>
 
-        <footer class="site-footer"><p><a href="tech-support.html">返回开发者文档</a></p></footer>
+        <footer class="site-footer"><p><a href="tech-support">返回开发者文档</a></p></footer>
         <script>
             var tocToggle = document.querySelector(".doc-toc-toggle");
             var docToc = document.querySelector(".doc-toc");

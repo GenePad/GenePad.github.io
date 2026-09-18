@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode, type CSSProperties, type RefObject } from "react";
 import { useLightboxImage } from "../lightbox";
 import { useLang } from "../i18n";
-import { isEnHost, otherLangHref } from "../links";
+import { homeHref, isEnHost, otherLangHref } from "../links";
 
 /* ── 滚动显现容器：进入视口时给自身与子级加 .rv-in ── */
 export function Reveal({
@@ -304,7 +304,7 @@ export function SubpageNav({ tag }: { tag: string }) {
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-paper/90 backdrop-blur-md">
       <div className="mx-auto flex h-14 max-w-[1400px] items-center justify-between px-5 md:px-8">
-        <a href="index.html" className="flex items-center gap-2.5">
+        <a href={homeHref()} className="flex items-center gap-2.5">
           <PlasmidGlyph className="h-5 w-5 text-pine" />
           <span className="font-display text-[17px] font-bold tracking-tight">GenePad</span>
           <span className="mt-0.5 hidden font-mono text-[10px] tracking-[0.2em] text-ink/50 sm:inline">
@@ -331,7 +331,7 @@ export function SubpageNav({ tag }: { tag: string }) {
             </button>
           )}
           <a
-            href="index.html"
+            href={homeHref()}
             className="group flex items-center gap-2 bg-ink px-4 py-2 font-mono text-[12px] tracking-[0.12em] text-paper transition-colors hover:bg-gfp-deep"
           >
             {t("sub.back")}

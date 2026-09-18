@@ -43,7 +43,7 @@ export default function LibraryPromo() {
             <Reveal delay={300}>
               <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
                 <a
-                  href="library.html"
+                  href="library"
                   className="group inline-flex items-center gap-3 bg-ink px-6 py-3.5 font-mono text-[13px] tracking-[0.12em] text-paper transition-colors hover:bg-gfp-deep"
                 >
                   {t("lp.cta")}

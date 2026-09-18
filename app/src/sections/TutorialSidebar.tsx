@@ -16,7 +16,7 @@ export default function TutorialSidebar({ current }: { current: string | null })
     <aside className="hidden lg:block">
       <div className="sticky top-20 space-y-8">
         <a
-          href="tutorial.html"
+          href="tutorial"
           aria-current={current === null ? "page" : undefined}
           className={`-ml-px block border-l-2 py-1.5 pl-4 font-mono text-[12px] tracking-[0.18em] transition-colors ${
             current === null

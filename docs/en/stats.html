@@ -10,7 +10,9 @@
       content="GenePad live usage statistics: total installs, active users in the last 30 days, cumulative usage time, and weekly install trends. Aggregated automatically by in-app anonymous telemetry and open to the public — no personal information is included."
     />
     <title>Live Stats - GenePad | Public Usage Statistics</title>
-    <meta name="robots" content="index, follow" />
+    <!-- Live stats stays out of the index via noindex, not via robots.txt (blocked URLs can still
+         be indexed from external links, and blocking prevents crawlers from reading noindex). -->
+    <meta name="robots" content="noindex, follow" />
     <link rel="canonical" href="https://en.genepad.cn/stats" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="GenePad" />
@@ -21,8 +23,11 @@
       content="Total installs, active users, and cumulative usage time — aggregated automatically from anonymous in-app telemetry and open to the public."
     />
     <meta property="og:url" content="https://en.genepad.cn/stats" />
-    <meta property="og:image" content="https://genepad.cn/icon.png" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content="https://genepad.cn/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://genepad.cn/og.png" />
     <meta name="twitter:title" content="Live Stats - GenePad | Public Usage Statistics" />
     <meta
       name="twitter:description"
@@ -52,9 +57,9 @@
         #boot .sp { border-color: rgba(246, 246, 244, 0.22); border-top-color: #45c51f; }
       }
     </style>
-    <script type="module" crossorigin src="../assets/boot-BJ_ltION.js"></script>
-    <script type="module" crossorigin src="../assets/stats-main-1S1DXyZs.js"></script>
-    <link rel="stylesheet" crossorigin href="../assets/boot-DpSgcm48.css">
+    <script type="module" crossorigin src="../assets/boot-zEAKlWzN.js"></script>
+    <script type="module" crossorigin src="../assets/stats-main-CucAKTVM.js"></script>
+    <link rel="stylesheet" crossorigin href="../assets/boot-C70YOxuG.css">
   </head>
   <body>
     <div id="boot">

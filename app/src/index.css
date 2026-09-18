@@ -120,14 +120,20 @@
 }
 
 @layer utilities {
-  /* 滚动显现 */
+  /* 滚动显现：初始隐藏态只在「浏览器确实会执行 JS」时生效（scripting: enabled）。
+     预渲染后的静态 HTML 会被不执行 JS 的抓取器与读取器直接消耗，正文不能被 CSS 藏起来；
+     支持该媒体特性的浏览器都是有 JS 的现代浏览器，动画行为与之前完全一致。 */
   .rv {
-    opacity: 0;
-    transform: translateY(26px);
     transition:
       opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
       transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
     transition-delay: var(--rvd, 0ms);
+  }
+  @media (scripting: enabled) {
+    .rv {
+      opacity: 0;
+      transform: translateY(26px);
+    }
   }
   .rv.rv-in {
     opacity: 1;
@@ -135,9 +141,13 @@
   }
   /* 截图揭幕 */
   .rv-clip {
-    clip-path: inset(0 0 100% 0);
     transition: clip-path 1s cubic-bezier(0.65, 0, 0.15, 1);
     transition-delay: var(--rvd, 0ms);
+  }
+  @media (scripting: enabled) {
+    .rv-clip {
+      clip-path: inset(0 0 100% 0);
+    }
   }
   .rv-in .rv-clip {
     clip-path: inset(0 0 0% 0);

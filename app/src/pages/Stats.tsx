@@ -3,6 +3,7 @@ import { Reveal, SectionHead, SubpageNav, ArrowRight } from "../sections/shared"
 import Footer from "../sections/Footer";
 import { useLang, usePageTitle } from "../i18n";
 import { dismissBoot } from "../boot";
+import { homeHref } from "../links";
 
 /* 实时数据页：公开的匿名使用统计聚合（总装机 / 活跃 / 时长 / 每周新增）
    数据来自 /api/telemetry/stats（仅聚合计数，无任何 uuid 明细），
@@ -303,7 +304,7 @@ export default function Stats() {
               )}
             </div>
             <a
-              href="./index.html#download"
+              href={`${homeHref()}#download`}
               className="group inline-flex shrink-0 items-center gap-3 bg-ink px-6 py-3.5 font-mono text-[13px] tracking-[0.12em] text-paper transition-colors hover:bg-gfp-deep"
             >
               {t("st.cta")}

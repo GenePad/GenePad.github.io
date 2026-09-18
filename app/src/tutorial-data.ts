@@ -202,9 +202,10 @@ export const TUTORIALS: TutorialEntry[] = [
   },
 ];
 
-/** 教程详情页地址（相对链接，中文主机 / en 镜像 / GitHub Pages 均适用） */
+/** 教程详情页地址（相对链接，中文主机 / en 镜像 / GitHub Pages 均适用；
+    无扩展名——.html 在 Cloudflare Pages 上会 308 跳一次，见站点 SEO 约定） */
 export function tutorialHref(tut: TutorialEntry): string {
-  return `tutorial-${tut.id}.html`;
+  return `tutorial-${tut.id}`;
 }
 
 /* ── 教程分类：目录页分区与侧边导航的骨架 ── */

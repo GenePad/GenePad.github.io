@@ -7,14 +7,28 @@
         <meta name="theme-color" content="#0b111d" media="(prefers-color-scheme: dark)" />
         <meta name="description" content="GenePad .gjson 文件格式完整定义：顶层字段写出/读取行为、Feature（含段级 name/color 的多段 segments）、Primer、结合位点、BaseColorRange、AlignmentEntry 与 GenBankRef 结构，键名命名规则、null 语义与容错解析。" />
         <title>.gjson 文件定义 - GenePad 开发者文档</title>
-        <link rel="canonical" href="https://genepad.cn/tech-gjson-format.html" />
+        <link rel="canonical" href="https://genepad.cn/tech-gjson-format" />
+        <!-- Open Graph / Twitter 卡片 -->
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="GenePad" />
+        <meta property="og:locale" content="zh_CN" />
+        <meta property="og:title" content=".gjson 文件定义 - GenePad 开发者文档" />
+        <meta property="og:description" content="GenePad .gjson 文件格式完整定义：顶层字段写出/读取行为、Feature（含段级 name/color 的多段 segments）、Primer、结合位点、BaseColorRange、AlignmentEntry 与 GenBankRef 结构，键名命名规则、null 语义与容错解析。" />
+        <meta property="og:url" content="https://genepad.cn/tech-gjson-format" />
+        <meta property="og:image" content="https://genepad.cn/og.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content=".gjson 文件定义 - GenePad 开发者文档" />
+        <meta name="twitter:description" content="GenePad .gjson 文件格式完整定义：顶层字段写出/读取行为、Feature（含段级 name/color 的多段 segments）、Primer、结合位点、BaseColorRange、AlignmentEntry 与 GenBankRef 结构，键名命名规则、null 语义与容错解析。" />
+        <meta name="twitter:image" content="https://genepad.cn/og.png" />
         <!-- 手绘 SVG 导出图，暂不启用 <link rel="icon" href="icon.png" type="image/png" /> -->
         <link rel="icon" href="icon.ico" sizes="any" />
         <link rel="stylesheet" href="styles.css" />
     </head>
     <body>
         <header class="site-header">
-            <a class="brand" href="index.html" aria-label="GenePad 首页">
+            <a class="brand" href="/" aria-label="GenePad 首页">
                 <span class="brand-mark"><img src="icon.png" alt="" /></span>
                 <span><strong>基因工坊</strong><small>GenePad</small></span>
             </a>
@@ -24,16 +38,16 @@
          <div class="doc-layout">
             <aside class="doc-toc" id="doc-toc">
                 <button class="doc-toc-toggle" type="button">目录</button>
-                <a class="doc-toc-home" href="tech-support.html">文档首页</a>
+                <a class="doc-toc-home" href="tech-support">文档首页</a>
                 <p class="doc-toc-group">文件格式</p>
-                <a href="tech-gen-format.html">.gen 定义</a>
-                <a class="current" href="tech-gjson-format.html">.gjson 定义</a>
-                <a href="tech-dna-conversion.html">.dna 转换</a>
+                <a href="tech-gen-format">.gen 定义</a>
+                <a class="current" href="tech-gjson-format">.gjson 定义</a>
+                <a href="tech-dna-conversion">.dna 转换</a>
                 <p class="doc-toc-group">代码示例</p>
-                <a href="tech-rust-readers.html">Rust 读取</a>
+                <a href="tech-rust-readers">Rust 读取</a>
             </aside>
             <div class="doc-content doc-prose">
-                <nav class="doc-breadcrumb"><a href="tech-support.html">文档首页</a> › 文件格式 › .gjson 定义</nav>
+                <nav class="doc-breadcrumb"><a href="tech-support">文档首页</a> › 文件格式 › .gjson 定义</nav>
                 <div class="doc-head">
                     <h1>.gjson 文件定义</h1>
                     <p class="lead">
@@ -293,7 +307,7 @@ Primer 1 forward 73.0 °C</code></pre>
                             <tr><td>恒定值</td><td><code>version = "1.9"</code>、<code>type_of_display = "file_name"</code>、<code>id = "gjson-{Unix毫秒}"</code>、<code>custom_name</code> = 项目名、<code>primers[].visible = null</code></td></tr>
                             <tr><td>省略策略</td><td><code>baseColorRanges</code> / <code>primers</code> / <code>alignmentEntries</code> 为空时整个键省略；feature 的 <code>segments</code> 段数 ≤ 1 时省略（段内的 strand/name/color 缺失时省略键）；GenBankRef 的可选字段省略键。其余可选值（organism、gbVersion、feature.qualifiers…）写<strong>显式 null</strong></td></tr>
                             <tr><td>命名规则</td><td>顶层 <code>type_of_display</code> / <code>custom_name</code> 为 snake_case；常规字段 camelCase（isCircular、moleculeType、gbVersion、bindingSites、boundStrand、annealedBases、meltingTemperature、baseColorRanges、alignmentEntries）；<strong>结合位点内层</strong> <code>components</code> / <code>alignment</code> 的字段为 snake_case（hybridized_range、primer_bases、template_bases、template_start、template_end）</td></tr>
-                            <tr><td>与 .gen 互转</td><td>除键名改名外，注意 <code>''</code> ↔ <code>null</code>（.gen 的 GenBank 元数据空串在 .gjson 里是 null）、引物 <code>visible</code> 丢失；segments（含段级 name/color）与 qualifiers 两边同形、直接透传。现成脚本见 <a href="tech-gen-format.html#export">.gen 页的导出配方</a>（已用真实文件核对，逐字段一致）</td></tr>
+                            <tr><td>与 .gen 互转</td><td>除键名改名外，注意 <code>''</code> ↔ <code>null</code>（.gen 的 GenBank 元数据空串在 .gjson 里是 null）、引物 <code>visible</code> 丢失；segments（含段级 name/color）与 qualifiers 两边同形、直接透传。现成脚本见 <a href="tech-gen-format#export">.gen 页的导出配方</a>（已用真实文件核对，逐字段一致）</td></tr>
                         </tbody>
                     </table>
                 </section>
@@ -312,16 +326,16 @@ Primer 1 forward 73.0 °C</code></pre>
                         <h2>延伸</h2>
                     </div>
                     <ul style="color:var(--lead);line-height:1.9;padding-left:1.3em">
-                        <li><a href="tech-gen-format.html">.gen 文件定义</a>——完整项目格式（SQLite），含 .gen → .gjson 导出脚本。</li>
-                        <li><a href="tech-dna-conversion.html">.dna 转换</a>——SnapGene <code>.dna</code> 的读取与转换说明。</li>
-                        <li><a href="tech-rust-readers.html">Rust 读取示例</a>——rusqlite 依赖配置与 .gen / .gjson 读取代码。</li>
+                        <li><a href="tech-gen-format">.gen 文件定义</a>——完整项目格式（SQLite），含 .gen → .gjson 导出脚本。</li>
+                        <li><a href="tech-dna-conversion">.dna 转换</a>——SnapGene <code>.dna</code> 的读取与转换说明。</li>
+                        <li><a href="tech-rust-readers">Rust 读取示例</a>——rusqlite 依赖配置与 .gen / .gjson 读取代码。</li>
                     </ul>
                 </section>
             </div>
          </div>
         </main>
 
-        <footer class="site-footer"><p><a href="tech-support.html">返回开发者文档</a></p></footer>
+        <footer class="site-footer"><p><a href="tech-support">返回开发者文档</a></p></footer>
         <script>
             var tocToggle = document.querySelector(".doc-toc-toggle");
             var docToc = document.querySelector(".doc-toc");

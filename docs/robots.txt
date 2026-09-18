@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
-Disallow: /stats
+
+# /stats 不在这里屏蔽：屏蔽会让爬虫读不到该页的 noindex 标签，页面反而可能因外链被收录。
+# 实时数据页改用 <meta name="robots" content="noindex, follow"> 控制。
 
 Sitemap: https://genepad.cn/sitemap.xml

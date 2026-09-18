@@ -12,6 +12,7 @@ import {
   type TutorialEntry,
 } from "../tutorial-data";
 import { dismissBoot } from "../boot";
+import { homeHref } from "../links";
 
 /* 使用教程目录页：左侧分类侧边导航，右侧按分类分区列出教程卡片；
    每篇教程独立成页（tutorial-<id>.html，见 TutorialDetail.tsx）。
@@ -122,7 +123,7 @@ export default function Tutorial() {
                 </p>
                 <div className="mt-8 flex flex-wrap items-center gap-4">
                   <a
-                    href="index.html"
+                    href={homeHref()}
                     className="group inline-flex items-center gap-3 bg-gfp px-6 py-3.5 font-mono text-[13px] tracking-[0.12em] text-on-gfp transition-colors hover:bg-white"
                   >
                     {t("tut.final.cta")}

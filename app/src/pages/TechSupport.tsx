@@ -20,19 +20,19 @@ export default function TechSupport() {
       en: t("ts.group.formatsEn") as string,
       docs: [
         {
-          href: rootHref("tech-gen-format.html"),
+          href: rootHref("tech-gen-format"),
           title: t("ts.gen.title"),
           desc: t("ts.gen.desc"),
           tag: ".GEN · SQLITE 3",
         },
         {
-          href: rootHref("tech-gjson-format.html"),
+          href: rootHref("tech-gjson-format"),
           title: t("ts.gjson.title"),
           desc: t("ts.gjson.desc"),
           tag: ".GJSON · JSON",
         },
         {
-          href: rootHref("tech-dna-conversion.html"),
+          href: rootHref("tech-dna-conversion"),
           title: t("ts.dna.title"),
           desc: t("ts.dna.desc"),
           tag: ".DNA · SNAPGENE",
@@ -45,7 +45,7 @@ export default function TechSupport() {
       en: t("ts.group.codeEn") as string,
       docs: [
         {
-          href: rootHref("tech-rust-readers.html"),
+          href: rootHref("tech-rust-readers"),
           title: t("ts.rust.title"),
           desc: t("ts.rust.desc"),
           tag: "RUST · RUSQLITE + SERDE_JSON",
@@ -58,7 +58,7 @@ export default function TechSupport() {
     <div className="min-h-screen bg-paper font-sans text-ink">
       <SubpageNav tag="DEV DOCS" />
       <main className="mx-auto max-w-[1400px] px-5 py-16 md:px-8 md:py-24">
-        <SectionHead index="D" eyebrow={t("ts.eyebrow") as string} title={t("ts.title")}>
+        <SectionHead index="D" eyebrow={t("ts.eyebrow") as string} title={t("ts.title")} titleTag="h1">
           {t("ts.lead")}
         </SectionHead>
 

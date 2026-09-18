@@ -7,6 +7,7 @@ import { LightboxProvider } from "../lightbox";
 import { useLang, usePageTitle } from "../i18n";
 import { TUTORIALS, tutorialHref, type TutorialEntry, type TutorialStep } from "../tutorial-data";
 import { dismissBoot } from "../boot";
+import { homeHref } from "../links";
 
 /* 教程详情页：一篇教程一页，由 tutorial-detail-main.tsx 按壳页的
    data-tutorial 属性选中对应条目渲染；左侧分类侧边导航（当前页高亮），
@@ -82,7 +83,7 @@ function Pager({ current }: { current: TutorialEntry }) {
       <Reveal>
         <div className="mt-6 flex justify-center">
           <a
-            href="tutorial.html"
+            href="tutorial"
             className="group inline-flex items-center gap-2 font-mono text-[12px] tracking-[0.16em] text-ink/60 transition-colors hover:text-gfp-deep"
           >
             <ArrowRight className="h-3.5 w-3.5 rotate-180" />
@@ -110,7 +111,7 @@ export default function TutorialDetail({ tut }: { tut: TutorialEntry }) {
               {/* 面包屑：教程目录 / 本篇 */}
               <Reveal>
                 <nav className="mb-10 flex items-center gap-3 font-mono text-[11px] tracking-[0.2em] uppercase text-ink/45 md:-mt-6">
-                  <a href="tutorial.html" className="transition-colors hover:text-gfp-deep">
+                  <a href="tutorial" className="transition-colors hover:text-gfp-deep">
                     {t("nav.tutorial")}
                   </a>
                   <span className="text-ink/30">/</span>
@@ -203,7 +204,7 @@ export default function TutorialDetail({ tut }: { tut: TutorialEntry }) {
                   </p>
                   <div className="mt-8 flex flex-wrap items-center gap-4">
                     <a
-                      href="index.html"
+                      href={homeHref()}
                       className="group inline-flex items-center gap-3 bg-gfp px-6 py-3.5 font-mono text-[13px] tracking-[0.12em] text-on-gfp transition-colors hover:bg-white"
                     >
                       {t("tut.final.cta")}

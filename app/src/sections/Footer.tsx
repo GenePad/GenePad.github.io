@@ -45,7 +45,7 @@ export default function Footer() {
       links: [
         { label: "GitHub Releases", href: RELEASES_URL, external: true },
         { label: t("ft.giteeMirror"), href: GITEE_RELEASES_URL, external: true },
-        { label: t("ft.changelog"), href: rootHref("changelog.html"), external: false },
+        { label: t("ft.changelog"), href: rootHref("changelog"), external: false },
       ],
     },
     {
@@ -53,17 +53,17 @@ export default function Footer() {
       links: [
         { label: "GitHub Issues", href: "https://github.com/GenePad/GenePad.github.io/issues", external: true },
         { label: "Gitee Issues", href: "https://gitee.com/GenePad/GenePad.github.io/issues", external: true },
-        { label: t("nav.tutorial"), href: "tutorial.html", external: false },
-        { label: t("ft.docs"), href: "tech-support.html", external: false },
+        { label: t("nav.tutorial"), href: "tutorial", external: false },
+        { label: t("ft.docs"), href: "tech-support", external: false },
       ],
     },
     {
       title: t("ft.col.more"),
       links: [
-        { label: t("ft.projects"), href: "projects.html", external: false },
-        { label: t("ft.library"), href: "library.html", external: false },
-        { label: t("ft.ngs"), href: "ngs.html", external: false },
-        { label: t("nav.stats"), href: "stats.html", external: false },
+        { label: t("ft.projects"), href: "projects", external: false },
+        { label: t("ft.library"), href: "library", external: false },
+        { label: t("ft.ngs"), href: "ngs", external: false },
+        { label: t("nav.stats"), href: "stats", external: false },
         { label: t("ft.sponsor"), href: "https://ifdian.net/a/geneeditor", external: true },
       ],
     },

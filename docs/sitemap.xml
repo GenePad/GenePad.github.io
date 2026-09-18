@@ -10,55 +10,55 @@
     </url>
     <url>
         <loc>https://genepad.cn/library</loc>
-        <lastmod>2026-09-08</lastmod>
+        <lastmod>2026-09-18</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://genepad.cn/ngs</loc>
-        <lastmod>2026-09-08</lastmod>
+        <lastmod>2026-09-18</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://genepad.cn/tutorial</loc>
-        <lastmod>2026-09-14</lastmod>
+        <lastmod>2026-09-18</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://genepad.cn/tutorial-ai</loc>
-        <lastmod>2026-09-14</lastmod>
+        <lastmod>2026-09-18</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://genepad.cn/tutorial-library</loc>
-        <lastmod>2026-09-14</lastmod>
+        <lastmod>2026-09-18</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://genepad.cn/tutorial-ngs</loc>
-        <lastmod>2026-09-14</lastmod>
+        <lastmod>2026-09-18</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://genepad.cn/tutorial-lang</loc>
-        <lastmod>2026-09-15</lastmod>
+        <lastmod>2026-09-18</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://genepad.cn/tech-support</loc>
-        <lastmod>2026-09-08</lastmod>
+        <lastmod>2026-09-18</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://genepad.cn/projects</loc>
-        <lastmod>2026-09-08</lastmod>
+        <lastmod>2026-09-18</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
@@ -70,25 +70,25 @@
     </url>
     <url>
         <loc>https://genepad.cn/tech-gen-format</loc>
-        <lastmod>2026-09-15</lastmod>
+        <lastmod>2026-09-18</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://genepad.cn/tech-gjson-format</loc>
-        <lastmod>2026-09-15</lastmod>
+        <lastmod>2026-09-18</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://genepad.cn/tech-rust-readers</loc>
-        <lastmod>2026-09-07</lastmod>
+        <lastmod>2026-09-18</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://genepad.cn/tech-dna-conversion</loc>
-        <lastmod>2026-09-07</lastmod>
+        <lastmod>2026-09-18</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>

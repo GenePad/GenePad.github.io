@@ -10,7 +10,9 @@
       content="GenePad 实时使用数据：总装机数、近 30 天活跃用户、累计使用时长与每周新增装机趋势。数据由应用内匿名使用统计自动汇总，公开可查，不包含任何个人信息。"
     />
     <title>实时数据 - GenePad | 公开使用统计</title>
-    <meta name="robots" content="index, follow" />
+    <!-- 实时数据页不进索引：靠 noindex 而不是 robots.txt 屏蔽（被屏蔽的页面仍可能因外链出现在
+         索引里，且屏蔽后搜索引擎读不到 noindex）。robots.txt 已放开 /stats 以便抓取到这个标签。 -->
+    <meta name="robots" content="noindex, follow" />
     <link rel="canonical" href="https://genepad.cn/stats" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="GenePad" />
@@ -21,8 +23,11 @@
       content="总装机数、活跃用户与累计使用时长——由 GenePad 应用内匿名使用统计自动汇总，公开可查。"
     />
     <meta property="og:url" content="https://genepad.cn/stats" />
-    <meta property="og:image" content="https://genepad.cn/icon.png" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content="https://genepad.cn/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://genepad.cn/og.png" />
     <meta name="twitter:title" content="实时数据 - GenePad | 公开使用统计" />
     <meta
       name="twitter:description"
@@ -52,9 +57,9 @@
         #boot .sp { border-color: rgba(246, 246, 244, 0.22); border-top-color: #45c51f; }
       }
     </style>
-    <script type="module" crossorigin src="./assets/boot-BJ_ltION.js"></script>
-    <script type="module" crossorigin src="./assets/stats-main-1S1DXyZs.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/boot-DpSgcm48.css">
+    <script type="module" crossorigin src="./assets/boot-zEAKlWzN.js"></script>
+    <script type="module" crossorigin src="./assets/stats-main-CucAKTVM.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/boot-C70YOxuG.css">
   </head>
   <body>
     <div id="boot">

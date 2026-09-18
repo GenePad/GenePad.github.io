@@ -50,31 +50,31 @@ export default function Nav() {
             </a>
           ))}
           <a
-            href="library.html"
+            href="library"
             className="font-mono text-[12px] tracking-[0.12em] text-ink/70 transition-colors hover:text-gfp-deep"
           >
             {t("nav.library")}
           </a>
           <a
-            href="ngs.html"
+            href="ngs"
             className="hidden font-mono text-[12px] tracking-[0.12em] text-ink/70 transition-colors hover:text-gfp-deep lg:inline"
           >
             {t("nav.ngs")}
           </a>
           <a
-            href="tutorial.html"
+            href="tutorial"
             className="hidden font-mono text-[12px] tracking-[0.12em] text-ink/70 transition-colors hover:text-gfp-deep lg:inline"
           >
             {t("nav.tutorial")}
           </a>
           <a
-            href="tech-support.html"
+            href="tech-support"
             className="font-mono text-[12px] tracking-[0.12em] text-ink/70 transition-colors hover:text-gfp-deep"
           >
             {t("nav.docs")}
           </a>
           <a
-            href="projects.html"
+            href="projects"
             className="hidden font-mono text-[12px] tracking-[0.12em] text-ink/70 transition-colors hover:text-gfp-deep lg:inline"
           >
             {t("nav.projects")}

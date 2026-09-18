@@ -5,6 +5,7 @@ import Footer from "../sections/Footer";
 import { LightboxProvider } from "../lightbox";
 import { useLang, usePageTitle, type TKey } from "../i18n";
 import { dismissBoot } from "../boot";
+import { homeHref } from "../links";
 
 /* 基因文件库宣传页：痛点 → 三种管理方式 → AI 标签 / AI 助手 → 上手步骤 → 日常工作流 */
 
@@ -211,7 +212,7 @@ export default function Library() {
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <a
-                  href="index.html"
+                  href={homeHref()}
                   className="group inline-flex items-center gap-3 bg-gfp px-6 py-3.5 font-mono text-[13px] tracking-[0.12em] text-on-gfp transition-colors hover:bg-white"
                 >
                   {t("lib.final.cta")}

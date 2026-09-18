@@ -5,6 +5,7 @@ import Footer from "../sections/Footer";
 import { LightboxProvider } from "../lightbox";
 import { useLang, usePageTitle, type TKey } from "../i18n";
 import { dismissBoot } from "../boot";
+import { homeHref } from "../links";
 
 /* NGS 数据查看宣传页：打开方式 → 双端配对 → 逐条浏览 → AA 搜索 → 锚点裁切 → 丰度分析 */
 
@@ -263,7 +264,7 @@ export default function Ngs() {
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <a
-                  href="index.html"
+                  href={homeHref()}
                   className="group inline-flex items-center gap-3 bg-gfp px-6 py-3.5 font-mono text-[13px] tracking-[0.12em] text-on-gfp transition-colors hover:bg-white"
                 >
                   {t("ngs.final.cta")}
