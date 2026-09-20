@@ -357,9 +357,22 @@ case "$PKG_TYPE" in
   deb)
     say "使用 ${PM} 安装 ..." "Installing with ${PM} ..."
     if [ "$PM" = "apt-get" ] || [ "$PM" = "apt" ]; then
-      $SUDO "$PM" install -y "$OUT" \
-        || die "${PM} 安装失败，请把上方报错反馈到 ${SITE}" \
-               "${PM} install failed; please report the error above at ${SITE}"
+      if $SUDO "$PM" install -y "$OUT"; then
+        :
+      else
+        # 本地 deb 安装不依赖包索引，平时不跑 update（快）；失败多因索引
+        # 陈旧补不出依赖，此时先 update 一次再重试。
+        # A local deb needs no package index (fast); a failure usually means
+        # a stale index can't resolve deps — refresh once and retry.
+        warn "安装失败，尝试刷新包索引（${PM} update）后重试一次 ..." \
+             "install failed; refreshing the package index (${PM} update) and retrying once ..."
+        $SUDO "$PM" update \
+          || warn "${PM} update 也失败了，仍尝试重试安装 ..." \
+                  "${PM} update failed too; retrying the install anyway ..."
+        $SUDO "$PM" install -y "$OUT" \
+          || die "${PM} 安装失败（已尝试 ${PM} update 后重试），请把上方报错反馈到 ${SITE}" \
+                 "${PM} install failed (after a ${PM} update retry); please report the error above at ${SITE}"
+      fi
     else
       $SUDO dpkg -i "$OUT" \
         || die "dpkg 安装失败，请把上方报错反馈到 ${SITE}" \
