@@ -32,7 +32,7 @@ export default function Stats() {
   usePageTitle("title.stats");
   const [data, setData] = useState<StatsData | null>(null);
   const [failed, setFailed] = useState(false);
-  const [mode, setMode] = useState<"weekly" | "daily">("weekly");
+  const [mode, setMode] = useState<"weekly" | "daily">("daily");
 
   useEffect(() => dismissBoot(), []);
 
