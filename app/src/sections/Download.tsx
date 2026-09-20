@@ -429,6 +429,7 @@ export default function Download({ index = "06" }: { index?: string }) {
             <div className="border-l-2 border-gfp bg-paper/[0.04] px-5 py-4">
               <p className="font-mono text-[10px] tracking-[0.22em] text-gfp">{t("dl.licenseTag")}</p>
               <p className="mt-2.5 text-[13px] leading-7 text-paper/70">{t("dl.license")}</p>
+              <p className="mt-2 text-[13px] leading-7 text-paper/70">{t("dl.license.academic")}</p>
             </div>
           </Reveal>
         </div>

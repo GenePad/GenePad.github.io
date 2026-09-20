@@ -219,7 +219,9 @@ const dict = {
     "dl.releasesGitee": "全部版本（Gitee 镜像）",
     "dl.licenseTag": "LICENSE · 授权",
     "dl.license":
-      "GenePad Free 面向个人评估与学习免费，涵盖日常的图谱查看、编辑与保存；商业、机构及长期科研使用，将由后续发布的 GenePad Pro 授权支持。",
+      "GenePad Free 面向个人评估与学习免费，涵盖日常的图谱查看、编辑与保存；商业使用将由后续发布的 GenePad Pro 授权支持。",
+    "dl.license.academic":
+      "学术免费授权：2026 年至 2027 年 12 月 31 日期间，高校、医院课题组、iGEM 选手、科研工作者与学生等学术用户，下载本程序即自动获得免费使用权限，无需申请、无需联系作者。该权限仅限学术科研用途，不得用于任何商业使用。",
 
     // Footer
     "ft.blurb":
@@ -875,7 +877,9 @@ const dict = {
     "dl.releasesGitee": "All releases (Gitee mirror)",
     "dl.licenseTag": "LICENSE",
     "dl.license":
-      "GenePad Free is free for personal evaluation and learning, covering everyday map viewing, editing and saving. Commercial, institutional and long-term research use will be covered by the upcoming GenePad Pro license.",
+      "GenePad Free is free for personal evaluation and learning, covering everyday map viewing, editing and saving. Commercial use will be covered by the upcoming GenePad Pro license.",
+    "dl.license.academic":
+      "Academic free license: from 2026 through December 31, 2027, academic users — universities, hospital research groups, iGEM teams, researchers and students — are granted free use automatically upon download, no application or permission required. This license is limited to academic research and may not be used for any commercial purpose.",
 
     // Footer
     "ft.blurb":
