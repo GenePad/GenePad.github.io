@@ -5,7 +5,7 @@ import { useLang, usePageTitle } from "../i18n";
 import { dismissBoot } from "../boot";
 import { homeHref } from "../links";
 
-/* 实时数据页：公开的匿名使用统计聚合（总装机 / 活跃 / 时长 / 每周新增）
+/* 实时数据页：公开的匿名使用统计聚合（总装机 / 活跃 / 时长 / 每周·每日新增、分系统堆叠）
    数据来自 /api/telemetry/stats（仅聚合计数，无任何 uuid 明细），
    该接口托管在 genepad.pages.dev，跨域调用（genepad.cn / GitHub Pages 镜像）依赖其 CORS 头 */
 
@@ -15,17 +15,32 @@ const DAYS_SHOWN = 30;
 const DAY_MS = 24 * 60 * 60 * 1000;
 const WEEK_MS = 7 * DAY_MS;
 
+type OsKey = "windows" | "linux" | "macos" | "android" | "other";
+
 interface StatsData {
   installs: number;
   active30d: number;
   active7d: number;
   totalHours: number;
-  byOs?: Partial<Record<"windows" | "linux" | "macos" | "android" | "other", number>>;
+  byOs?: Partial<Record<OsKey, number>>;
   weekly: { w: number; n: number }[];
   /* 近 30 个 UTC 自然日；接口尚未返回 daily 时（老 worker / 缓存响应）只保留每周视图 */
   daily?: { d: number; n: number }[];
+  /* 分系统时间序列（桶键与 weekly/daily 逐一对齐）；接口尚未返回时图表退回单色合计柱 */
+  weeklyByOs?: { w: number; os: Partial<Record<OsKey, number>> }[];
+  dailyByOs?: { d: number; os: Partial<Record<OsKey, number>> }[];
   updatedAt: number;
 }
+
+/* 柱内堆叠顺序（自下而上）与配色：windows 压底沿用原合计柱的 gfp-deep，向上渐浅；
+   全部走语义 token，深色模式跟随 CSS 变量自动翻转 */
+const OS_STACK: { key: OsKey; fill: string; swatch: string }[] = [
+  { key: "windows", fill: "fill-gfp-deep", swatch: "bg-gfp-deep" },
+  { key: "macos", fill: "fill-ink", swatch: "bg-ink" },
+  { key: "linux", fill: "fill-pine", swatch: "bg-pine" },
+  { key: "android", fill: "fill-sage", swatch: "bg-sage" },
+  { key: "other", fill: "fill-ink/40", swatch: "bg-ink/40" },
+];
 
 export default function Stats() {
   const { t, lang } = useLang();
@@ -122,6 +137,18 @@ export default function Stats() {
     .sort((a, b) => b.n - a.n || a.key.localeCompare(b.key));
   const osTotal = osRows.reduce((sum, row) => sum + row.n, 0);
 
+  /* 分系统时间序列：当前粒度的 byOs 桶折成「桶起点 → 各系统计数」表；
+     接口尚未返回（老 worker / 缓存响应）时 osBuckets 为 null，图表退回单色合计柱 */
+  const osRaw: { at: number; os: Partial<Record<OsKey, number>> }[] =
+    granularity === "daily"
+      ? (data?.dailyByOs ?? []).map((b) => ({ at: b.d, os: b.os }))
+      : (data?.weeklyByOs ?? []).map((b) => ({ at: b.w, os: b.os }));
+  const osBuckets = osRaw.length ? new Map(osRaw.map((b) => [b.at, b.os])) : null;
+  const legendRows = OS_STACK.filter((s) =>
+    series.some((d) => (osBuckets?.get(d.at)?.[s.key] ?? 0) > 0),
+  );
+  const stacked = !!osBuckets && legendRows.length > 0;
+
   /* 图表绘制区：viewBox 固定宽度，柱高按最大值归一 */
   const CHART_W = 780;
   const CHART_H = 200;
@@ -190,7 +217,7 @@ export default function Stats() {
           </Reveal>
         )}
 
-        {/* 新增装机柱状图（每周 / 每日可切换） */}
+        {/* 新增装机柱状图（每周 / 每日可切换；有分系统数据时柱内按系统堆叠着色） */}
         <Reveal delay={200}>
           <figure className="mt-14 border border-line">
             <figcaption className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-6 py-4 md:px-8">
@@ -230,6 +257,26 @@ export default function Stats() {
               </div>
             </figcaption>
 
+            {/* 分系统图例：仅堆叠视图显示，只列可见范围内出现过的系统 */}
+            {stacked && (
+              <div
+                role="list"
+                aria-label={t("st.chart.legend.aria") as string}
+                className="flex flex-wrap items-center gap-x-5 gap-y-1.5 border-b border-line px-6 py-3 md:px-8"
+              >
+                {legendRows.map((s) => (
+                  <span
+                    key={s.key}
+                    role="listitem"
+                    className="flex items-center gap-2 font-mono text-[10px] tracking-[0.14em] text-ink/60"
+                  >
+                    <span aria-hidden className={`h-2.5 w-2.5 ${s.swatch}`} />
+                    {osLabels[s.key] ?? s.key}
+                  </span>
+                ))}
+              </div>
+            )}
+
             {failed ? (
               <div className="flex h-[220px] items-center justify-center px-6 text-[13px] text-ink/60">
                 {t("st.error")}
@@ -248,23 +295,54 @@ export default function Stats() {
                 {/* 基准线 */}
                 <line x1="0" y1={CHART_H} x2={CHART_W} y2={CHART_H} stroke="currentColor" strokeWidth="1" className="text-line-strong" />
                 {series.map((d, i) => {
-                  const h = d.n > 0 ? Math.max(3, (CHART_H - 18) * (d.n / maxN)) : 0;
+                  const barH = d.n > 0 ? Math.max(3, (CHART_H - 18) * (d.n / maxN)) : 0;
+                  const os = stacked ? osBuckets?.get(d.at) : undefined;
+                  const segs =
+                    os && d.n > 0
+                      ? OS_STACK.map((s) => ({ ...s, n: os[s.key] ?? 0 })).filter((s) => s.n > 0)
+                      : [];
+                  let acc = 0;
                   return (
                     <g key={d.at}>
-                      <title>{`${bucketLabel(d.at)} · ${fmt(d.n)}`}</title>
-                      {d.n > 0 && (
+                      {barH > 0 && segs.length === 0 && (
+                        <title>{`${bucketLabel(d.at)} · ${fmt(d.n)}`}</title>
+                      )}
+                      {/* 单色合计柱：接口未提供分系统数据时的回落 */}
+                      {barH > 0 && segs.length === 0 && (
                         <rect
                           x={i * BAR_SLOT + (BAR_SLOT - BAR_W) / 2}
-                          y={CHART_H - h}
+                          y={CHART_H - barH}
                           width={BAR_W}
-                          height={h}
+                          height={barH}
                           fill="currentColor"
                           className="text-gfp-deep"
                         >
-                          <animate attributeName="height" from="0" to={h} dur="0.5s" fill="freeze" />
-                          <animate attributeName="y" from={CHART_H} to={CHART_H - h} dur="0.5s" fill="freeze" />
+                          <animate attributeName="height" from="0" to={barH} dur="0.5s" fill="freeze" />
+                          <animate attributeName="y" from={CHART_H} to={CHART_H - barH} dur="0.5s" fill="freeze" />
                         </rect>
                       )}
+                      {/* 分系统堆叠：自下而上按 OS_STACK 顺序着色，段悬停给出该系统数值 */}
+                      {segs.map((s) => {
+                        const h = Math.max(2, (CHART_H - 18) * (s.n / maxN));
+                        acc += h;
+                        const y = CHART_H - acc;
+                        return (
+                          <rect
+                            key={s.key}
+                            x={i * BAR_SLOT + (BAR_SLOT - BAR_W) / 2}
+                            y={y}
+                            width={BAR_W}
+                            height={h}
+                            className={s.fill}
+                          >
+                            <title>
+                              {[bucketLabel(d.at), `${osLabels[s.key] ?? s.key} ${fmt(s.n)}`, `${t("st.chart.total")} ${fmt(d.n)}`].join("\n")}
+                            </title>
+                            <animate attributeName="height" from="0" to={h} dur="0.5s" fill="freeze" />
+                            <animate attributeName="y" from={CHART_H} to={y} dur="0.5s" fill="freeze" />
+                          </rect>
+                        );
+                      })}
                       <text
                         x={i * BAR_SLOT + BAR_SLOT / 2}
                         y={CHART_H + 17}
@@ -284,6 +362,11 @@ export default function Stats() {
             <p className="border-t border-line px-6 py-3 font-mono text-[10px] tracking-[0.14em] text-ink/45 md:px-8">
               {chartCaption}
             </p>
+            {data && stacked && (
+              <p className="border-t border-line px-6 py-3 font-mono text-[10px] tracking-[0.14em] text-ink/40 md:px-8">
+                {t("st.chart.note.byos")}
+              </p>
+            )}
             {data && granularity === "daily" && (
               <p className="border-t border-line px-6 py-3 font-mono text-[10px] tracking-[0.14em] text-ink/40 md:px-8">
                 {t("st.chart.note.daily")}

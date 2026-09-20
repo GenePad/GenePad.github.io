@@ -73,15 +73,21 @@ no data loss). Legacy rows with NULL `os` are derived from the `platform` prefix
 time; no backfill is needed.
 
 It also exposes `GET /api/telemetry/stats` — aggregate-only counters (installs, active 7d/30d,
-total hours, `byOs` OS distribution, 26-week install histogram) consumed by the public
-`stats.html` subpage; no per-uuid rows are ever exposed. Dashboard binding changes take
+total hours, `byOs` OS distribution, 26-week install histogram) plus per-OS time series
+`weeklyByOs` / `dailyByOs` (same buckets as `weekly` / `daily`, each item
+`{ w | d, os: {windows?, linux?, macos?, android?, other?} }` with zero counts omitted)
+consumed by the public `stats.html` subpage; no per-uuid rows are ever exposed. The three
+os-derivation SQL expressions (totals / weekly / daily) must stay identical so the per-OS
+series sums equal the totals. Dashboard binding changes take
 effect only after a redeploy (push an empty commit if needed).
 
 ## Stats Subpage (`stats.html`)
 
 `app/stats.html` + `app/src/stats-main.tsx` + `app/src/pages/Stats.tsx` render the public
-live-stats page (big-number cards + OS distribution bars + weekly install bar chart, pure
-SVG/divs, no chart library). Data is fetched client-side from
+live-stats page (big-number cards + OS distribution bars + weekly/daily install bar chart
+stacked by OS, pure SVG/divs, no chart library). The chart falls back to single-color total
+bars when the payload lacks `weeklyByOs` / `dailyByOs` (old worker / cached response). Data
+is fetched client-side from
 `https://genepad.pages.dev/api/telemetry/stats` (absolute URL so genepad.cn / GitHub Pages
 mirrors work; CORS handled by `_worker.js`). Copy lives in `app/src/i18n.tsx` under `st.*`
 and `nav.stats` (zh + en). Remember: `docs/stats.html` is build output — never hand-edit.

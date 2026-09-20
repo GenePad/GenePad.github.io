@@ -152,14 +152,56 @@ export function route(url) {
 /* 公开聚合统计：只输出计数/总和,不含任何 uuid 明细。
    时间序列两条：weekly(近 26 周,周一 00:00 UTC 起)与 daily(近 30 个 UTC 自然日,
    最后一项是当天、仍在累计)——前端 stats 页按同一份数据切换视图,
-   日/周分桶都补齐空桶,不依赖前端补零 */
+   日/周分桶都补齐空桶,不依赖前端补零。
+   另有 weeklyByOs / dailyByOs：同一批桶按系统拆分的装机数,桶键与合计序列逐一对齐,
+   os 只保留非零键——前端把每根柱按系统堆叠着色 */
+const OS_KEYS = ['windows', 'linux', 'macos', 'android', 'other'];
+/* os 归一表达式:历史行 os 为 NULL(旧客户端载荷)时按 platform 前缀回退推导。
+   总计 / 按周 / 按日三处查询必须共用它,拆分序列求和才严格等于合计序列 */
+const OS_KEY_SQL = `COALESCE(os, CASE
+             WHEN platform LIKE 'windows%' THEN 'windows'
+             WHEN platform LIKE 'darwin%' THEN 'macos'
+             WHEN platform LIKE 'linux%' THEN 'linux'
+             WHEN platform = 'android' THEN 'android'
+             ELSE 'other'
+           END) AS os_key`;
+
+/* 把 GROUP BY 桶,os_key 的行折成 桶起点ms -> {os: n} */
+function collectOsBuckets(rows, field) {
+  const map = new Map();
+  for (const row of rows.results ?? []) {
+    const at = Number(row[field]);
+    const key = String(row.os_key ?? 'other');
+    if (!OS_KEYS.includes(key)) continue;
+    const m = map.get(at) ?? {};
+    m[key] = (m[key] ?? 0) + Number(row.n);
+    map.set(at, m);
+  }
+  return map;
+}
+
+/* 补齐空桶并按固定键序输出非零计数;field 为 'w'/'d',与合计序列桶键一致 */
+function osSeries(map, nowBucket, count, stepMs, field) {
+  const series = [];
+  for (let i = count - 1; i >= 0; i -= 1) {
+    const at = nowBucket - i * stepMs;
+    const m = map.get(at) ?? {};
+    const os = {};
+    for (const k of OS_KEYS) {
+      if (m[k]) os[k] = m[k];
+    }
+    series.push({ [field]: at, os });
+  }
+  return series;
+}
+
 async function handleStats(env) {
   if (!env.DB) {
     return json({ error: 'd1 binding missing' }, 503);
   }
 
   const now = Date.now();
-  const [totals, weeklyRows, dailyRows, osRows] = await Promise.all([
+  const [totals, weeklyRows, dailyRows, osRows, weeklyOsRows, dailyOsRows] = await Promise.all([
     env.DB.prepare(
       `SELECT COUNT(*) AS installs,
               COALESCE(SUM(CASE WHEN last_seen_at > ?1 THEN 1 ELSE 0 END), 0) AS active30d,
@@ -189,16 +231,30 @@ async function handleStats(env) {
       .all(),
     // 分系统装机数;历史行 os 为 NULL(旧客户端载荷)时按 platform 前缀回退推导
     env.DB.prepare(
-      `SELECT COALESCE(os, CASE
-               WHEN platform LIKE 'windows%' THEN 'windows'
-               WHEN platform LIKE 'darwin%' THEN 'macos'
-               WHEN platform LIKE 'linux%' THEN 'linux'
-               WHEN platform = 'android' THEN 'android'
-               ELSE 'other'
-             END) AS os_key, COUNT(*) AS n
+      `SELECT ${OS_KEY_SQL}, COUNT(*) AS n
        FROM usage_reports
        GROUP BY os_key`,
     ).all(),
+    // 分系统 × 按周新增(桶定义与合计 weekly 完全一致)
+    env.DB.prepare(
+      `SELECT ((first_seen_at - ${WEEK_ALIGN_MS}) / ${WEEK_MS}) * ${WEEK_MS} + ${WEEK_ALIGN_MS} AS wk,
+              ${OS_KEY_SQL}, COUNT(*) AS n
+       FROM usage_reports
+       WHERE first_seen_at > ?1
+       GROUP BY wk, os_key`,
+    )
+      .bind(now - STATS_WEEKS * WEEK_MS)
+      .all(),
+    // 分系统 × 按日新增(桶定义与合计 daily 完全一致)
+    env.DB.prepare(
+      `SELECT (first_seen_at / ${DAY_MS}) * ${DAY_MS} AS d,
+              ${OS_KEY_SQL}, COUNT(*) AS n
+       FROM usage_reports
+       WHERE first_seen_at > ?1
+       GROUP BY d, os_key`,
+    )
+      .bind(now - STATS_DAYS * DAY_MS)
+      .all(),
   ]);
 
   const counts = new Map(
@@ -227,6 +283,21 @@ async function handleStats(env) {
     if (key in byOs) byOs[key] = Number(row.n);
   }
 
+  const weeklyByOs = osSeries(
+    collectOsBuckets(weeklyOsRows, 'wk'),
+    currentWeekStart,
+    STATS_WEEKS,
+    WEEK_MS,
+    'w',
+  );
+  const dailyByOs = osSeries(
+    collectOsBuckets(dailyOsRows, 'd'),
+    currentDayStart,
+    STATS_DAYS,
+    DAY_MS,
+    'd',
+  );
+
   return new Response(
     JSON.stringify({
       ok: true,
@@ -237,6 +308,8 @@ async function handleStats(env) {
       byOs,
       weekly,
       daily,
+      weeklyByOs,
+      dailyByOs,
       updatedAt: now,
     }),
     {
