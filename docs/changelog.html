@@ -52,7 +52,8 @@
                 <button class="doc-toc-toggle" type="button">目录</button>
                 <a class="doc-toc-home" href="/">← 返回首页</a>
                 <p class="doc-toc-group">版本</p>
-                <a class="current" href="#v0-7-3">v0.7.3</a>
+                <a class="current" href="#v0-7-5">v0.7.5</a>
+                <a href="#v0-7-3">v0.7.3</a>
                 <a href="#v0-7-2">v0.7.2</a>
                 <a href="#v0-7-1">v0.7.1</a>
                 <a href="#v0-6-9">v0.6.9</a>
@@ -72,7 +73,37 @@
                     </p>
                 </div>
 
-                                <section class="doc-section" id="v0-7-3">
+                                <section class="doc-section" id="v0-7-5">
+                    <div class="section-heading">
+                        <p class="eyebrow">2026-09-21</p>
+                        <h2>v0.7.5</h2>
+                    </div>
+                    <p>本次为 <strong>修复版</strong>：解决 v0.7.4 Windows 安装版启动即报「s is not a function」无法使用的严重问题，<strong>0.7.4 用户请务必升级</strong>（官网已直接提供 0.7.5）；同时 Android 安装包进一步减小，崩溃提示界面可展开技术详情，便于问题反馈。</p>
+
+                    <h3>🐛 问题修复</h3>
+                    <ul>
+                        <li><strong>修复 v0.7.4 Windows 安装版启动即崩溃</strong>（窗口只显示「s is not a function」）：打包时懒加载分包与内部 API 的动态 / 静态导入混用产生了循环依赖，模块未初始化即被调用；本版已收敛全部导入并重构分包，装机实测恢复正常</li>
+                    </ul>
+
+                    <h3>✨ 改进</h3>
+                    <ul>
+                        <li>异常 / 崩溃提示界面新增「技术详情」折叠区：展开可见完整错误堆栈与版本号，反馈问题时截图该区域可大幅加快定位</li>
+                        <li>提示与错误文案补全中英双语</li>
+                    </ul>
+
+                    <h3>⚡ 性能 / 体积</h3>
+                    <ul>
+                        <li>Android 安装包 25.14MB → 24.59MB：计算引擎（限制酶 / 通用元件检测 / FASTQ 流式解析）维持全速编译，其余代码按体积优化</li>
+                        <li>Windows 安装包同步受益：10.16MB → 8.87MB</li>
+                    </ul>
+
+                    <h3>📦 分发</h3>
+                    <ul>
+                        <li>Windows 统一为 NSIS 安装器（不再产出 MSI）；Android APK 恢复官网直发</li>
+                    </ul>
+                </section>
+
+                <section class="doc-section" id="v0-7-3">
                     <div class="section-heading">
                         <p class="eyebrow">2026-09-18</p>
                         <h2>v0.7.3</h2>

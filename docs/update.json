@@ -1,16 +1,16 @@
 {
-  "version": "0.7.3",
-  "pub_date": "2026-09-18T04:18:47.000+08:00",
-  "notes": "# GenePad v0.7.3\n\n本次更新以 AI 助手与保存、更新链路为主：新增文档内嵌 AI 面板，保存时显示「正在保存」并能识别文件占用进程，修复 Windows 应用内更新失败；另有多项比对、FASTQ 与编辑历史的改进和修复。\n\n## ✨ 新功能\n\n**AI 助手**\n- 新增文档内嵌 AI 面板：打开文档后点「AI 工具」，在当前窗口右侧直接展开对话，支持调节宽度、与属性/比对/历史面板互斥、一键「打开为新窗口」接续同段对话\n- 「思考」开关移至面板标题旁，输入区新增「新对话」按钮\n- 会话记忆按文档隔离，切换文档不再看到上一个文档的对话；面板标题实时跟随会话重命名\n- 消息右键「复制」只复制所选文本\n\n**编辑历史**\n- 历史树方向可切换：缺省最新在下并自动滚到底部，可切回经典左上布局\n- 可见节点超 200 自动折叠更旧层级，总节点超 50 红字建议裁切\n- 卡片常驻展开/收起提示；分支裁切按钮改为红色垃圾桶图标\n\n**保存**\n- 保存/另存为立即显示「正在保存」提示；文件被其他程序占用时识别占用进程，可直接重试或另存\n\n**FASTQ（NGS）**\n- 超长读段图形视图行尾可「再显示10% / 完全显示」，按需逐次放开\n- 打开询问框按钮收为一行\n\n**线性图谱**\n- 测序轨道移到轴与 feature 之间，标签移到条上方不再重叠\n\n## ⚡ 性能\n\n- 打开带编辑历史的 .dna / .gen 文件显著提速（历史数据按需读取）\n\n## 🐛 问题修复\n\n- 修复 Windows 应用内更新失败的问题（更新包压缩方式不被存量客户端识别）\n- 修复 ONT 超长读段质量柱显示为裂图\n- 修复比对多项问题：插入列改紫色且选区精确到插入格、接缝重叠分段丢失、BLAST 分段不按原序列顺序\n- 修复历史面板关闭后切回同屏报错\n- 修复色谱偶发尖峰顶出画布\n- 修复 Ctrl+R 无选区时无法唤起添加引物\n- 修复 AI 内嵌面板布局溢出、跨文档会话串记忆、标题不同步等\n- 修复 MCP 界面工具请求双执行\n- .gen 临时工作副本治理，崩溃恢复更可靠",
+  "version": "0.7.5",
+  "pub_date": "2026-09-21T15:16:40+08:00",
+  "notes": "# GenePad v0.7.5\n\n修复 v0.7.4 Windows 安装版启动即报「s is not a function」无法使用的严重问题——**0.7.4 用户请务必升级**。同时 Android 安装包体积进一步减小,崩溃界面可展开技术详情,方便问题反馈。\n\n## 🐛 问题修复\n\n- **修复 v0.7.4 Windows 安装版启动即崩溃**(窗口只显示「s is not a function」):打包时懒加载分包与 API 动态/静态导入混用产生了循环依赖,模块未初始化即被调用。本版已收敛全部导入并重构分包,装机实测正常\n\n## ✨ 改进\n\n- 异常/崩溃提示界面新增「技术详情」折叠区:展开可见完整错误堆栈与版本号,反馈问题时截图该区域可大幅加快定位\n- 提示与错误文案补全中英双语\n\n## ⚡ 性能 / 体积\n\n- Android 安装包 25.14MB → 24.59MB:计算引擎(限制酶/通用元件检测/FASTQ 流式解析)维持全速编译,其余代码按体积优化\n- Windows 安装包同步受益:10.16MB → 8.87MB",
   "platforms": {
     "windows-x86_64": {
-      "url": "https://genepad.pages.dev/release/windows/GenePad_0.7.3_Windows_amd64.zip"
+      "url": "https://genepad.pages.dev/release/windows/GenePad_0.7.5_Windows_amd64.zip"
     },
     "linux-x86_64-deb": {
-      "url": "https://genepad.pages.dev/release/linux/GenePad_0.7.3_Linux_amd64.deb"
+      "url": "https://genepad.pages.dev/release/linux/GenePad_0.7.5_Linux_amd64.deb"
     },
     "android": {
-      "url": "https://genepad.pages.dev/release/android/GenePad-v0.7.3-android-universal-release.apk"
+      "url": "https://genepad.pages.dev/release/android/GenePad-v0.7.5-android-universal-release.apk"
     }
   }
 }
