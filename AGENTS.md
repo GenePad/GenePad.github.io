@@ -176,13 +176,14 @@ It also shows, per platform:
   拦截;0.7.3 起应用内 updater 改下**签名的裸 exe** `GenePad_<v>_Windows_amd64.exe`,
   exe 与 zip 都上传服务器与 Release,但**下载页只展示 zip**;Android 为
   `GenePad-v<v>-android-universal-release.apk`).
-  **⚠️ Android apk 与 Cloudflare 25MiB 单文件上限**(0.7.4 教训):Cloudflare Pages
-  对部署内单文件有 **25 MiB 硬限制**;universal apk 已达 24.8~25.1MiB——0.7.4 的
-  25.14MiB 超限,导致 Pages 构建失败、全站停在旧版(GitHub 上该 commit 的
-  「Cloudflare Pages | failure」check-run 可诊断)。**apk 一律不进 `docs/release/`**:
-  下载面板「本站直链」与 `docs/update.json` 的 android URL 改指 **Gitee Release 附件**
-  (`download-data.ts` 的 `withSources` 已对 `.apk` 特例指向 `GITEE_TAG`),push 后必须
-  确认该 commit 的 Cloudflare Pages check-run 为 success。
+  **⚠️ Android apk 与 Cloudflare 25MiB 单文件上限**(0.7.4 教训,0.7.5 复核):
+  Cloudflare Pages 对部署内单文件有 **25 MiB 硬限制**;0.7.4 的 25.14MiB 超限,
+  导致 Pages 构建失败、全站停在旧版(GitHub 上该 commit 的「Cloudflare Pages |
+  failure」check-run 可诊断)。**apk ≤25MiB 时进 `docs/release/android/` 本站直发**:
+  0.7.3(24.83MiB)长期在站、0.7.5(24.59MiB)部署 success 已实证;仅当 apk >25MiB
+  才不进 `docs/release/`,下载面板「本站直链」与 `docs/update.json` 的 android URL
+  改指 **Gitee Release 附件**(`download-data.ts` 的 `withSources` 对 `.apk` 改走
+  `GITEE_TAG`)。push 后必须确认该 commit 的 Cloudflare Pages check-run 为 success。
 
 ## Release Checklist
 
