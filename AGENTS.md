@@ -188,8 +188,8 @@ It also shows, per platform:
 
 When updating to a new version, all of the following files must be touched:
 
-**Network: all uploads go through the local proxy** `http://127.0.0.1:10801`
-(`export http_proxy=http://127.0.0.1:10801 https_proxy=http://127.0.0.1:10801`
+**Network: all uploads go through the local proxy** `http://127.0.0.1:10809`
+(`export http_proxy=http://127.0.0.1:10809 https_proxy=http://127.0.0.1:10809`
 before `git push` / `gh` / Gitee `curl`). Gitee also works direct (`--noproxy '*'`)
 if the proxy is down.
 
@@ -412,7 +412,7 @@ git commit -am "genepad x.x.x" && git push origin main
 verify the live file first, otherwise `brew` users hit a sha mismatch:
 
 ```bash
-curl -sL -x http://127.0.0.1:10801 -o /tmp/deployed.tgz "https://genepad.cn/release/mac/GenePad_<v>_Darwin_arm64.app.tar.gz"
+curl -sL -x http://127.0.0.1:10809 -o /tmp/deployed.tgz "https://genepad.cn/release/mac/GenePad_<v>_Darwin_arm64.app.tar.gz"
 sha256sum /tmp/deployed.tgz   # must equal the sha written into the cask
 ```
 
