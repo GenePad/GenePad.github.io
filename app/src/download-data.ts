@@ -25,11 +25,15 @@ export interface PlatformDownloads {
 }
 
 function withSources(f: DownloadFile) {
+  /* universal apk 自 0.7.4 起超过 Cloudflare Pages 单文件 25MiB 硬限制(0.7.3 为 24.83MiB 贴线通过,
+     0.7.4 25.14MiB 直接构建失败),不再入库:apk 的本站直链改指 Gitee Release 附件(与 Gitee 源同址) */
+  const direct = f.name.endsWith(".apk")
+    ? `${GITEE_TAG}${f.name}`
+    : `/release/${f.name.endsWith(".apk") ? "android" : f.name.includes("Windows") ? "windows" : f.name.includes("Darwin") ? "mac" : "linux"}/${f.name}`;
   return {
     ...f,
     sources: {
-      /* 根相对路径：en.genepad.cn 镜像页与本地 dev 的 /en/ 路径下也不会 404（解析结果与原相对写法一致） */
-      direct: `/release/${f.name.endsWith(".apk") ? "android" : f.name.includes("Windows") ? "windows" : f.name.includes("Darwin") ? "mac" : "linux"}/${f.name}`,
+      direct,
       github: `${GITHUB_LATEST}${f.name}`,
       gitee: `${GITEE_TAG}${f.name}`,
     },

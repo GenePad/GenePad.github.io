@@ -10,7 +10,7 @@
       "url": "https://genepad.pages.dev/release/linux/GenePad_0.7.4_Linux_amd64.deb"
     },
     "android": {
-      "url": "https://genepad.pages.dev/release/android/GenePad-v0.7.4-android-universal-release.apk"
+      "url": "https://gitee.com/GenePad/GenePad.github.io/releases/download/v0.7.4/GenePad-v0.7.4-android-universal-release.apk"
     }
   }
 }
