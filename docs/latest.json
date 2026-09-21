@@ -1,19 +1,19 @@
 {
-  "version": "0.7.4",
-  "notes": "# GenePad v0.7.4\n\n本次更新以性能与比对视图体验为主：基因文件库大库快速滚动不再白屏、冷启动更快，AI 多轮对话 token 消耗显著降低；分屏色谱图支持手型平移，并修复多处选区问题。\n\n## ⚡ 性能优化\n\n- 基因文件库大库：快速滚动不再白屏、文本不再空白（行减重、滚动状态下沉、速度自适应预渲染），冷启动更快\n- AI 助手会话前缀缓存：多轮对话命中缓存，token 消耗显著降低\n\n## ✨ 新功能\n\n**比对视图**\n- 单行分屏色谱图禁用拖选，改为手型光标各向平移（悬停虚线与数值提示保留）\n- 滚轮分流：上块（读段区）横向滚动，下块恢复纵向滚动\n- 泳道内单击/微动空白处即清空全部选区\n- 参考行标签加大居中显示（Original / 原序列）\n\n**AI 助手**\n- 统计弹层新增「缓存命中率」与「当前对话」用量区块\n\n**FASTQ（NGS）**\n- 打开双端文件时若上次配对校验仍有效，直接复用不再弹选择框；校验不过会当场弹框改选\n\n**界面**\n- 长文本（最近打开的文件名/路径等）滚动改为无缝循环跑马灯，不再到头弹跳\n\n## 🐛 问题修复\n\n- 比对：读段插入段（如 INDEL）不再被静默丢弃，全覆盖连续显示\n- 比对：插入块内起止的拖拽选区不再偏移\n- 比对：泳道选区不再整条全亮，纯插入选区松开后保持选中且可复制\n- 比对：纯插入选区不再把锚碱基高亮到参考行（拖拽过程中也不亮）\n- 比对：粘滞标签浮层不再盖住横向滚动条与分割拖杆",
-  "pub_date": "2026-09-21T04:30:00.000+08:00",
+  "version": "0.7.3",
+  "notes": "# GenePad v0.7.3\n\n本次更新以 AI 助手与保存、更新链路为主：新增文档内嵌 AI 面板，保存时显示「正在保存」并能识别文件占用进程，修复 Windows 应用内更新失败；另有多项比对、FASTQ 与编辑历史的改进和修复。\n\n## ✨ 新功能\n\n**AI 助手**\n- 新增文档内嵌 AI 面板：打开文档后点「AI 工具」，在当前窗口右侧直接展开对话，支持调节宽度、与属性/比对/历史面板互斥、一键「打开为新窗口」接续同段对话\n- 「思考」开关移至面板标题旁，输入区新增「新对话」按钮\n- 会话记忆按文档隔离，切换文档不再看到上一个文档的对话；面板标题实时跟随会话重命名\n- 消息右键「复制」只复制所选文本\n\n**编辑历史**\n- 历史树方向可切换：缺省最新在下并自动滚到底部，可切回经典左上布局\n- 可见节点超 200 自动折叠更旧层级，总节点超 50 红字建议裁切\n- 卡片常驻展开/收起提示；分支裁切按钮改为红色垃圾桶图标\n\n**保存**\n- 保存/另存为立即显示「正在保存」提示；文件被其他程序占用时识别占用进程，可直接重试或另存\n\n**FASTQ（NGS）**\n- 超长读段图形视图行尾可「再显示10% / 完全显示」，按需逐次放开\n- 打开询问框按钮收为一行\n\n**线性图谱**\n- 测序轨道移到轴与 feature 之间，标签移到条上方不再重叠\n\n## ⚡ 性能\n\n- 打开带编辑历史的 .dna / .gen 文件显著提速（历史数据按需读取）\n\n## 🐛 问题修复\n\n- 修复 Windows 应用内更新失败的问题（更新包压缩方式不被存量客户端识别）\n- 修复 ONT 超长读段质量柱显示为裂图\n- 修复比对多项问题：插入列改紫色且选区精确到插入格、接缝重叠分段丢失、BLAST 分段不按原序列顺序\n- 修复历史面板关闭后切回同屏报错\n- 修复色谱偶发尖峰顶出画布\n- 修复 Ctrl+R 无选区时无法唤起添加引物\n- 修复 AI 内嵌面板布局溢出、跨文档会话串记忆、标题不同步等\n- 修复 MCP 界面工具请求双执行\n- .gen 临时工作副本治理，崩溃恢复更可靠",
+  "pub_date": "2026-09-18T04:18:47.000+08:00",
   "platforms": {
     "windows-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRK20xNzladkFOWkpRdWxMUEI2SXN0elkvZ2xsRkU5Z3M5UnR4ckt3eFkvNEYvY0F2MGVhTG1ncldxZWFxZ05GNDI0TEJYYktwTXZBMDBHM29Qc2tKWGRwN1NiRnJCNHcwPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg5OTMzMDc0CWZpbGU6R2VuZVBhZF8wLjcuNF94NjQtc2V0dXAuZXhlClhOazZaais0MWFtTzU3enJhUFNNTmNLT1cwOC84YTg0dkdLSGdaNkd6WWFVai9uWGJPeVl3SEMySlF0SVIxZCtIWUNwZEhPNHFpZ0VZTXB1VFk1MEF3PT0K",
-      "url": "https://genepad.pages.dev/release/windows/GenePad_0.7.4_Windows_amd64.exe"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRK20xNzladkFOWkEwdzdrUjJBQ1BhTkdHREJhMlYvbWd3MCtsbDVMTFNrc2t6elY0M04zS2VqaWkvZkF5b015SkFPSGcwMjJtdndIUWZ1VFVFZ0pyT2pDNjh4aWI4WUE0PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg5Njk2OTQ0CWZpbGU6R2VuZVBhZF8wLjcuM194NjQtc2V0dXAuZXhlCiswdzZoeVhKUndsU01QUWVEVTRFcytKM2hvYU0vaHlocEZ5SlF4U3U3QzJOZ3ZXLzZtTnl4WFNBeEpVL1MvelFSRjNpSm5ZR1VSTlBNa054QVpkYUJBPT0K",
+      "url": "https://genepad.pages.dev/release/windows/GenePad_0.7.3_Windows_amd64.exe"
     },
     "darwin-aarch64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRK20xNzladkFOWkNzYzhjL2FwN2JhMG0wYzNidlJ5VnVNVzB6bDhMQ1laOWNyck05eTAyU1hEWHNyQ3psSnVrUFRTc2ZzNU1pb1dVaVZPdXZDdXNLdDIyYUIwR2xoT1FBPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg5OTMyNzQ2CWZpbGU6R2VuZVBhZC5hcHAudGFyLmd6ClZXMDlDYThSWUR1L2w0TTN4WGpScTdNL0ppeUE4UVN5SUN2QTFoZStobmU4d015RHB2eWtEU3E4d2xTays1SGhTRDA0RFVVbkpFQWlmMUx3akc4VURBPT0K",
-      "url": "https://genepad.pages.dev/release/mac/GenePad_0.7.4_Darwin_arm64.app.tar.gz"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRK20xNzladkFOWkhseWVqOXFmTllERlB0amtPc0gvS0FTYVh4ZFBodE5OVFV5Q0MxSHptNUlGTlllMm5OZGMxRCtnZDdvQ2xVMVBhK0hyL2djZHlPdGh4VXBTdDNhZlF3PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg5Njk4MTk3CWZpbGU6R2VuZVBhZC5hcHAudGFyLmd6Cm5STXhPOEM2MC9aN3k3Mk1IWFpwZ0lHbldrQUQwQnpKdDN2OXJncUFsQlRSeWRJdjBuYk1yeS91dFp5SCsxZ0VxUWlERVFvZ0RLZEhFQzFVNENoUEF3PT0K",
+      "url": "https://genepad.pages.dev/release/mac/GenePad_0.7.3_Darwin_arm64.app.tar.gz"
     },
     "linux-x86_64-deb": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRK20xNzladkFOWkplMEFPS0NHVG5OTHV5SmliNDlHY2V3Y0MvV2JMaUY4eU8veEtpYVhoeWloOWRBSlJnV2xBNjBSZUpCWWQ1RmxPMGxaS1NJZXRvVndaRDljWFBQTndZPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg5OTMzNzA0CWZpbGU6R2VuZVBhZF8wLjcuNF9hbWQ2NC5kZWIKbVU0WERwajZ6L1FvYVY0amk4ZkFxS0lHa1gybDMwWk9GMmdObEowejVzVUg2TkJHRmZTQzByUzZjMFJmRHJtRGpMQW9vTEVZQkZsYjhrQnErcnhGQmc9PQo=",
-      "url": "https://genepad.pages.dev/release/linux/GenePad_0.7.4_Linux_amd64.deb"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRK20xNzladkFOWkE4ZWd4amhNeUcxQzV4YU5pVjdTNE1vYUQ3TmZyZmRRbWZWVUdaYVVQaWZTSVljNldrMU5xSnZ5eG84ZGlaV0RQUWRPVm1qNkdweW9zM0Z1TnAxeWc0PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg5Njk4NDIxCWZpbGU6R2VuZVBhZF8wLjcuM19hbWQ2NC5kZWIKbXdrczN2NStWTXJEek9HMThRemJkVERpSTFQUU1uVGpPQzBEMTYrTG5DMmhNZG81UG9IcDVUc1BBa05FTy92VURLVjN1eHFzNUYySHAzbS9FQXJ6Q1E9PQo=",
+      "url": "https://genepad.pages.dev/release/linux/GenePad_0.7.3_Linux_amd64.deb"
     }
   }
 }
