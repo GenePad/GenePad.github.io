@@ -1,7 +1,7 @@
 /* 安装包下载数据：三个来源 = 本站直链 / Gitee / GitHub
    发新版本时只需更新 VERSION 与各文件的 name/size（size 单位 MB） */
 
-export const VERSION = "0.7.4";
+export const VERSION = "0.7.3";
 
 const GITHUB_LATEST =
   "https://github.com/GenePad/GenePad.github.io/releases/latest/download/";
@@ -25,15 +25,11 @@ export interface PlatformDownloads {
 }
 
 function withSources(f: DownloadFile) {
-  /* universal apk 自 0.7.4 起超过 Cloudflare Pages 单文件 25MiB 硬限制(0.7.3 为 24.83MiB 贴线通过,
-     0.7.4 25.14MiB 直接构建失败),不再入库:apk 的本站直链改指 Gitee Release 附件(与 Gitee 源同址) */
-  const direct = f.name.endsWith(".apk")
-    ? `${GITEE_TAG}${f.name}`
-    : `/release/${f.name.endsWith(".apk") ? "android" : f.name.includes("Windows") ? "windows" : f.name.includes("Darwin") ? "mac" : "linux"}/${f.name}`;
   return {
     ...f,
     sources: {
-      direct,
+      /* 根相对路径：en.genepad.cn 镜像页与本地 dev 的 /en/ 路径下也不会 404（解析结果与原相对写法一致） */
+      direct: `/release/${f.name.endsWith(".apk") ? "android" : f.name.includes("Windows") ? "windows" : f.name.includes("Darwin") ? "mac" : "linux"}/${f.name}`,
       github: `${GITHUB_LATEST}${f.name}`,
       gitee: `${GITEE_TAG}${f.name}`,
     },
@@ -46,26 +42,26 @@ export const PLATFORMS: (Omit<PlatformDownloads, "files"> & {
   {
     id: "windows",
     files: [
-      { name: `GenePad_${VERSION}_Windows_amd64.zip`, size: "9.7 MB" },
+      { name: `GenePad_${VERSION}_Windows_amd64.zip`, size: "9.5 MB" },
     ].map(withSources),
   },
   {
     id: "mac",
     files: [
-      { name: `GenePad_${VERSION}_Darwin_arm64.dmg`, size: "11.9 MB" },
+      { name: `GenePad_${VERSION}_Darwin_arm64.dmg`, size: "11.8 MB" },
     ].map(withSources),
   },
   {
     id: "linux-x64",
     files: [
-      { name: `GenePad_${VERSION}_Linux_amd64.deb`, size: "12.8 MB" },
+      { name: `GenePad_${VERSION}_Linux_amd64.deb`, size: "12.6 MB" },
     ].map(withSources),
     sparkStore: true,
   },
   {
     id: "android",
     files: [
-      { name: `GenePad-v${VERSION}-android-universal-release.apk`, size: "25.1 MB" },
+      { name: `GenePad-v${VERSION}-android-universal-release.apk`, size: "24.8 MB" },
     ].map(withSources),
   },
 ];
