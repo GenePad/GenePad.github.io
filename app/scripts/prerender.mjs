@@ -1,4 +1,4 @@
-/* 构建后预渲染：把 docs/ 下 20 个构建页在无头浏览器里渲染成静态 HTML 再写回。
+/* 构建后预渲染：把 docs/ 下 30 个构建页在无头浏览器里渲染成静态 HTML 再写回。
  *
  * 为什么需要：站点的构建页正文完全由 React 在浏览器里生成，静态 HTML 只有 boot 骨架。
  * Google 能靠 JS 渲染索引，但 Bing/百度 与 AI 抓取器（GPTBot、ClaudeBot 等）读不到内容。
@@ -6,10 +6,11 @@
  *
  * 设计要点：
  * - 静态服务用 Node 内置 http，零 web 依赖；路径解析规则与 Cloudflare Pages 一致
- *   （/x → x.html、/en/x → en/x.html），因此渲染出来的内链与实际线上行为相同。
+ *   （/x → x.html、/en/x → en/x.html、/cn/x → cn/x.html），因此渲染出来的内链与实际线上行为相同。
  * - 浏览器用系统已装的 Chrome/Edge（puppeteer-core 不下载浏览器），找不到就报错退出。
  * - 中文页先写入 localStorage:genepad-lang=zh，避免无头浏览器的 navigator.language
- *   把中文页渲染成英文；英文页靠 /en/ 路径前缀判定（见 src/i18n.tsx isEnContext）。
+ *   把中文页渲染成英文；英文页靠 en.genepad.cn 主机名判定、cn 镜像页靠 cn.genepad.cn
+ *   主机名锁定中文（见 src/i18n.tsx isEnContext / isCnContext）。
  * - 全部页面渲染成功后才统一写盘，失败不落地半成品。
  * - stats 页（noindex、依赖实时接口，会把加载态固化进 HTML）与 404 页不在预渲染之列。
  *
@@ -25,9 +26,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DOCS_DIR = path.resolve(__dirname, "../../docs");
 const SETTLE_MS = 300;
 
-/* 待预渲染页面：path 是请求路径，file 是 docs/ 下要写回的产物，en 表示走英文主机。
+/* 待预渲染页面：path 是请求路径，file 是 docs/ 下要写回的产物；en/cn 表示走对应镜像主机。
    英文页必须用 en.genepad.cn 主机名渲染（靠 --host-resolver-rules 指到本地服务），
-   否则 isEnHost() 为假，产物里的语言切换 / 仅中文页链接会指向错误的主机。 */
+   否则 isEnHost() 为假，产物里的语言切换 / 仅中文页链接会指向错误的主机；cn 镜像页同理。 */
 const PAGES = [
   { path: "/", file: "index.html" },
   { path: "/tech-support", file: "tech-support.html" },
@@ -49,10 +50,20 @@ const PAGES = [
   { path: "/tutorial-library", file: "en/tutorial-library.html", en: true },
   { path: "/tutorial-ngs", file: "en/tutorial-ngs.html", en: true },
   { path: "/tutorial-lang", file: "en/tutorial-lang.html", en: true },
+  { path: "/", file: "cn/index.html", cn: true },
+  { path: "/tech-support", file: "cn/tech-support.html", cn: true },
+  { path: "/projects", file: "cn/projects.html", cn: true },
+  { path: "/library", file: "cn/library.html", cn: true },
+  { path: "/ngs", file: "cn/ngs.html", cn: true },
+  { path: "/tutorial", file: "cn/tutorial.html", cn: true },
+  { path: "/tutorial-ai", file: "cn/tutorial-ai.html", cn: true },
+  { path: "/tutorial-library", file: "cn/tutorial-library.html", cn: true },
+  { path: "/tutorial-ngs", file: "cn/tutorial-ngs.html", cn: true },
+  { path: "/tutorial-lang", file: "cn/tutorial-lang.html", cn: true },
 ];
 
-/* 英文主机不前缀的共享路径（与 _worker.js 的 EN_SHARED_PREFIXES 保持一致） */
-const EN_SHARED_PREFIXES = [
+/* 镜像主机不前缀的共享路径（与 _worker.js 的 MIRROR_SHARED_PREFIXES 保持一致） */
+const MIRROR_SHARED_PREFIXES = [
   "/assets/",
   "/shots/",
   "/release/",
@@ -64,7 +75,11 @@ const EN_SHARED_PREFIXES = [
   "/sitemap.xml",
 ];
 
-const EN_HOST_PATTERN = /(^|\.)en\.genepad\.cn$/i;
+/* 镜像主机名 → 构建输出子树前缀（与 _worker.js 的 MIRROR_PREFIX_BY_HOST 保持一致） */
+const MIRROR_PREFIX_BY_HOST = {
+  "en.genepad.cn": "/en",
+  "cn.genepad.cn": "/cn",
+};
 
 const MIME = {
   ".html": "text/html; charset=utf-8",
@@ -102,12 +117,14 @@ function resolveAsset(pathname) {
 function startServer() {
   const server = http.createServer((req, res) => {
     const url = new URL(req.url, "http://localhost");
-    const host = req.headers.host ?? "";
-    // 复刻 _worker.js：英文主机下非共享路径映射到 /en 子树
+    const host = (req.headers.host ?? "").split(":")[0];
+    // 复刻 _worker.js：镜像主机下非共享路径映射到各自的 /en、/cn 子树
+    const mirrorPrefix = Object.entries(MIRROR_PREFIX_BY_HOST).find(([mirror]) =>
+      (host === mirror || host.endsWith("." + mirror))
+    )?.[1];
     const pathname =
-      EN_HOST_PATTERN.test(host.split(":")[0]) &&
-      !EN_SHARED_PREFIXES.some((p) => url.pathname.startsWith(p))
-        ? `/en${url.pathname}`
+      mirrorPrefix && !MIRROR_SHARED_PREFIXES.some((p) => url.pathname.startsWith(p))
+        ? `${mirrorPrefix}${url.pathname}`
         : url.pathname;
     const file = resolveAsset(pathname);
     if (!file) {
@@ -150,7 +167,8 @@ async function main() {
   const { server, port } = await startServer();
   const origin = `http://127.0.0.1:${port}`;
   const enOrigin = `http://en.genepad.cn:${port}`;
-  const headless = await launchBrowser({ hostMap: ["en.genepad.cn"] });
+  const cnOrigin = `http://cn.genepad.cn:${port}`;
+  const headless = await launchBrowser({ hostMap: ["en.genepad.cn", "cn.genepad.cn"] });
   const browser = headless.browser;
 
   const rendered = [];
@@ -167,9 +185,9 @@ async function main() {
       }
     });
 
-    for (const { path: pagePath, file, en } of PAGES) {
+    for (const { path: pagePath, file, en, cn } of PAGES) {
       const startedAt = Date.now();
-      const url = `${en ? enOrigin : origin}${pagePath}`;
+      const url = `${en ? enOrigin : cn ? cnOrigin : origin}${pagePath}`;
       await page.goto(url, { waitUntil: "load", timeout: 60000 });
       await page.waitForSelector("#root > *", { timeout: 30000 });
       // 让 useEffect（document.title、IntersectionObserver）与图片解码跑完

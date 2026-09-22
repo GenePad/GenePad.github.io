@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f6f6f4" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1c3a13" media="(prefers-color-scheme: dark)" />
+    <meta
+      name="description"
+      content="GenePad 组织的生态项目：质粒构建通用元件序列库（266 个元件、20 个分类、NCBI 可溯源、MIT 协议）与基于 GTEx/GENCODE 的人类组织特异性密码子使用图谱（源码公开），为科研工作者与开发者提供便利。"
+    />
+    <title>生态项目 - GenePad | 质粒元件库与密码子图谱</title>
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://cn.genepad.cn/projects" />
+    <link rel="alternate" hreflang="zh-CN" href="https://cn.genepad.cn/projects" />
+    <link rel="alternate" hreflang="en" href="https://en.genepad.cn/projects" />
+    <link rel="alternate" hreflang="x-default" href="https://genepad.cn/projects" />
+    <!-- Open Graph / Twitter 卡片 -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="GenePad" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:title" content="生态项目 - GenePad | 质粒元件库与密码子图谱" />
+    <meta
+      property="og:description"
+      content="质粒构建通用元件序列库（266 元件、NCBI 可溯源、MIT）与人类组织特异性密码子使用图谱（GTEx/GENCODE，源码公开）——GenePad 组织为科研工作者与开发者维护的生态小项目。"
+    />
+    <meta property="og:url" content="https://cn.genepad.cn/projects" />
+    <meta property="og:image" content="https://genepad.cn/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://genepad.cn/og.png" />
+    <meta name="twitter:title" content="生态项目 - GenePad | 质粒元件库与密码子图谱" />
+    <meta
+      name="twitter:description"
+      content="质粒构建通用元件序列库与人类组织特异性密码子使用图谱——GenePad 组织的生态小项目。"
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "GenePad 生态项目",
+        "description": "GenePad 组织围绕分子克隆工具链维护的生态项目集合，为科研工作者与开发者提供便利。",
+        "url": "https://cn.genepad.cn/projects",
+        "isPartOf": { "@type": "WebSite", "name": "GenePad", "url": "https://genepad.cn/" },
+        "mainEntity": {
+          "@type": "ItemList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@type": "Dataset",
+                "name": "genepad-commonfeatures",
+                "alternateName": "质粒构建通用元件序列库",
+                "description": "266 个质粒构建通用元件、20 个分类，每条序列可溯源至 NCBI 登录号与参考质粒。输出 GenBank 与 FASTA 双格式，可导入 SnapGene、Benchling 作为 common features 库，FASTA 可用于 BLAST。",
+                "url": "https://github.com/GenePad/genepad-commonfeatures/",
+                "license": "https://opensource.org/licenses/MIT",
+                "keywords": ["plasmid", "common features", "SnapGene", "Benchling", "GenBank", "分子克隆", "质粒元件"],
+                "creator": { "@type": "Organization", "name": "GenePad", "url": "https://github.com/GenePad" }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "item": {
+                "@type": "SoftwareSourceCode",
+                "name": "GenePadCodonAtlas",
+                "alternateName": "人类组织特异性密码子图谱",
+                "description": "源码公开的人类组织特异性密码子使用统计构建管线：基于 GTEx v8 基因中位 TPM 与 GENCODE release 50 注释，按组织表达加权计数密码子，输出 Frequency/1000、同义分数、RSCU、CAI 权重与偏好密码子。",
+                "url": "https://github.com/GenePad/GenePadCodonAtlas",
+                "programmingLanguage": "Python",
+                "license": "https://github.com/GenePad/GenePadCodonAtlas/blob/main/LICENSE",
+                "keywords": ["codon usage", "GTEx", "GENCODE", "RSCU", "CAI", "密码子优化", "组织特异性"],
+                "creator": { "@type": "Organization", "name": "GenePad", "url": "https://github.com/GenePad" }
+              }
+            }
+          ]
+        }
+      }
+    </script>
+    <!-- 手绘 SVG 导出图，暂不启用 <link rel="icon" type="image/png" href="/icon.png" /> -->
+    <link rel="icon" href="/icon.ico" sizes="any" />
+    <style>
+      /* 首屏骨架：JS 与样式表就绪前先出文字；React 挂载后淡出移除（见 src/boot.ts） */
+      html { background: #f6f6f4; }
+      #boot {
+        position: fixed; inset: 0; z-index: 9999;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 16px; padding: 24px; text-align: center;
+        background: #f6f6f4; color: #1c3a13;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+          "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+      }
+      #boot .bt { font-size: clamp(2.2rem, 7vw, 4.2rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; }
+      #boot .bt small { display: block; margin-top: 10px; font-size: clamp(1rem, 2.4vw, 1.5rem); font-weight: 700; letter-spacing: 0.1em; color: #2f9a10; }
+      #boot .bd { max-width: 620px; font-size: 14.5px; line-height: 1.9; color: rgba(28, 58, 19, 0.72); }
+      #boot .sp { width: 26px; height: 26px; margin-top: 6px; border: 2.5px solid rgba(28, 58, 19, 0.2); border-top-color: #2f9a10; border-radius: 50%; animation: gp-spin 0.9s linear infinite; }
+      @keyframes gp-spin { to { transform: rotate(360deg); } }
+      @media (prefers-color-scheme: dark) {
+        html { background: #101a0c; }
+        #boot { background: #101a0c; color: #f6f6f4; }
+        #boot .bd { color: rgba(246, 246, 244, 0.72); }
+        #boot .sp { border-color: rgba(246, 246, 244, 0.22); border-top-color: #45c51f; }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="boot">
+      <div class="bt">GenePad<small>生态项目 · ECOSYSTEM</small></div>
+      <p class="bd">GenePad 生态项目：质粒通用元件库、功能扩展与周边工具。</p>
+      <div class="sp" role="status" aria-label="加载中"></div>
+    </div>
+    <div id="root"></div>
+    <script type="module" src="/src/projects-main.tsx"></script>
+  </body>
+</html>

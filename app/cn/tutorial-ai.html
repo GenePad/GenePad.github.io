@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f6f6f4" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1c3a13" media="(prefers-color-scheme: dark)" />
+    <meta
+      name="description"
+      content="GenePad 配置 AI 图文教程：五步接入 DeepSeek——打开设置、新建配置、填写模型，在 DeepSeek 开放平台创建并立即复制 API key，粘贴测试连接后保存，解锁 AI 助手与质粒自动标签。每步均配实际界面截图。"
+    />
+    <title>配置 AI 教程 - GenePad | DeepSeek API 密钥获取与设置</title>
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://cn.genepad.cn/tutorial-ai" />
+    <link rel="alternate" hreflang="zh-CN" href="https://cn.genepad.cn/tutorial-ai" />
+    <link rel="alternate" hreflang="en" href="https://en.genepad.cn/tutorial-ai" />
+    <link rel="alternate" hreflang="x-default" href="https://genepad.cn/tutorial-ai" />
+    <!-- Open Graph / Twitter 卡片 -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="GenePad" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:title" content="配置 AI 教程 - GenePad | DeepSeek API 密钥获取与设置" />
+    <meta
+      property="og:description"
+      content="五步接入 DeepSeek：打开设置、新建配置、获取 API 密钥、测试连接并保存——解锁 GenePad 的 AI 助手与质粒自动标签。"
+    />
+    <meta property="og:url" content="https://cn.genepad.cn/tutorial-ai" />
+    <meta property="og:image" content="https://genepad.cn/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://genepad.cn/og.png" />
+    <meta name="twitter:title" content="配置 AI 教程 - GenePad | DeepSeek API 密钥获取与设置" />
+    <meta
+      name="twitter:description"
+      content="五步接入 DeepSeek，解锁 GenePad 的 AI 助手与质粒自动标签——按步图解教程。"
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "GenePad 配置 AI 教程",
+        "description": "五步接入 DeepSeek：打开设置、新建配置、填写模型，在 DeepSeek 开放平台创建并复制 API key，粘贴测试连接后保存，解锁 GenePad 的 AI 助手与质粒自动标签。",
+        "url": "https://cn.genepad.cn/tutorial-ai",
+        "isPartOf": { "@type": "WebSite", "name": "GenePad", "url": "https://genepad.cn/" },
+        "about": {
+          "@type": "SoftwareApplication",
+          "name": "GenePad",
+          "applicationCategory": "ScienceApplication",
+          "operatingSystem": "Windows, macOS, Linux, Android",
+          "url": "https://genepad.cn/",
+          "featureList": "DeepSeek API 配置, AI 助手, 质粒自动标签, 连接测试"
+        },
+        "keywords": ["DeepSeek API 配置", "DeepSeek API key", "AI 配置教程", "GenePad 教程", "质粒自动标签"]
+      }
+    </script>
+    <!-- 手绘 SVG 导出图，暂不启用 <link rel="icon" type="image/png" href="/icon.png" /> -->
+    <link rel="icon" href="/icon.ico" sizes="any" />
+    <style>
+      /* 首屏骨架：JS 与样式表就绪前先出文字；React 挂载后淡出移除（见 src/boot.ts） */
+      html { background: #f6f6f4; }
+      #boot {
+        position: fixed; inset: 0; z-index: 9999;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 16px; padding: 24px; text-align: center;
+        background: #f6f6f4; color: #1c3a13;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+          "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+      }
+      #boot .bt { font-size: clamp(2.2rem, 7vw, 4.2rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; }
+      #boot .bt small { display: block; margin-top: 10px; font-size: clamp(1rem, 2.4vw, 1.5rem); font-weight: 700; letter-spacing: 0.1em; color: #2f9a10; }
+      #boot .bd { max-width: 620px; font-size: 14.5px; line-height: 1.9; color: rgba(28, 58, 19, 0.72); }
+      #boot .sp { width: 26px; height: 26px; margin-top: 6px; border: 2.5px solid rgba(28, 58, 19, 0.2); border-top-color: #2f9a10; border-radius: 50%; animation: gp-spin 0.9s linear infinite; }
+      @keyframes gp-spin { to { transform: rotate(360deg); } }
+      @media (prefers-color-scheme: dark) {
+        html { background: #101a0c; }
+        #boot { background: #101a0c; color: #f6f6f4; }
+        #boot .bd { color: rgba(246, 246, 244, 0.72); }
+        #boot .sp { border-color: rgba(246, 246, 244, 0.22); border-top-color: #45c51f; }
+      }
+    </style>
+  </head>
+  <body data-tutorial="ai">
+    <div id="boot">
+      <div class="bt">配置 AI 教程<small>SET UP DEEPSEEK AI</small></div>
+      <p class="bd">五步接入 DeepSeek：打开设置、新建配置、获取 API 密钥、测试连接并保存，解锁 AI 助手与质粒自动标签。</p>
+      <div class="sp" role="status" aria-label="加载中"></div>
+    </div>
+    <div id="root"></div>
+    <script type="module" src="/src/tutorial-detail-main.tsx"></script>
+  </body>
+</html>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { PlasmidGlyph } from "./shared";
 import { useLang } from "../i18n";
-import { isEnHost, otherLangHref } from "../links";
+import { isMirrorHost, otherLangHref } from "../links";
 import { VERSION } from "../download-data";
 
 export default function Nav() {
@@ -82,8 +82,8 @@ export default function Nav() {
         </nav>
 
         <div className="flex items-center gap-3">
-          {/* genepad.cn：原地切换文案；en.genepad.cn 镜像：跳回中文主机的同一页 */}
-          {isEnHost() ? (
+          {/* genepad.cn：原地切换文案；en / cn 镜像主机：跳到另一语言站点的同一页 */}
+          {isMirrorHost() ? (
             <a
               href={otherLangHref()}
               aria-label="Switch language"

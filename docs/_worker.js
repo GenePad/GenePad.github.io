@@ -114,12 +114,17 @@ const STATS_CACHE_SECONDS = 300;
 const dayStart = (t) => Math.floor(t / DAY_MS) * DAY_MS;
 const weekStart = (t) => Math.floor((t - WEEK_ALIGN_MS) / WEEK_MS) * WEEK_MS + WEEK_ALIGN_MS;
 
-// ── en.genepad.cn 英文镜像路由 ──
-// 英文主机的路径映射到构建输出的 /en 子树（docs/en/*.html）；哈希产物、截图、安装包、
-// 接口等共享资源仍取根路径。genepad.cn 上的 /en/* 308 到子域名（容错历史路径）；
-// genepad.pages.dev 的 /en/* 静态直出，作为子域名 DNS 配好前的预览入口。
-const EN_HOST_PATTERN = /(^|\.)en\.genepad\.cn$/;
-const EN_SHARED_PREFIXES = [
+// ── en / cn 语言镜像路由 ──
+// en.genepad.cn / cn.genepad.cn 分别是面向搜索引擎的纯英文 / 纯中文镜像：
+// 镜像主机的路径映射到构建输出的 /en、/cn 子树（docs/en/*.html、docs/cn/*.html）；
+// 哈希产物、截图、安装包、接口等共享资源仍取根路径。任何主机上的 /en/*、/cn/*
+// 一律 308 到对应子域名（容错历史路径）；genepad.pages.dev 的 /en/*、/cn/* 静态直出，
+// 作为子域名 DNS 配好前的预览入口。
+const MIRROR_PREFIX_BY_HOST = {
+  'en.genepad.cn': '/en',
+  'cn.genepad.cn': '/cn',
+};
+const MIRROR_SHARED_PREFIXES = [
   '/assets/',
   '/shots/',
   '/release/',
@@ -131,20 +136,34 @@ const EN_SHARED_PREFIXES = [
   '/sitemap.xml',
 ];
 
+function hostMatches(hostname, mirror) {
+  return hostname === mirror || hostname.endsWith('.' + mirror);
+}
+
+/* 前缀路径（/en、/en/ 形式）重定向到拥有该前缀的镜像子域名 */
+function prefixRedirect(pathname, search) {
+  for (const [host, prefix] of Object.entries(MIRROR_PREFIX_BY_HOST)) {
+    if (pathname === prefix || pathname.startsWith(prefix + '/')) {
+      return { redirect: 'https://' + host + pathname.slice(prefix.length) + search };
+    }
+  }
+  return null;
+}
+
 /* 纯函数，便于 node 单测：返回 { redirect } 或 { assetPath }（null 表示原样交给 ASSETS） */
 export function route(url) {
-  const enPath = url.pathname === '/en' || url.pathname.startsWith('/en/');
-  if (EN_HOST_PATTERN.test(url.hostname)) {
-    if (enPath) {
-      return { redirect: 'https://en.genepad.cn' + url.pathname.slice(3) + url.search };
-    }
-    if (!EN_SHARED_PREFIXES.some((p) => url.pathname.startsWith(p))) {
-      return { assetPath: '/en' + url.pathname };
+  for (const [mirror, prefix] of Object.entries(MIRROR_PREFIX_BY_HOST)) {
+    if (!hostMatches(url.hostname, mirror)) continue;
+    const redirected = prefixRedirect(url.pathname, url.search);
+    if (redirected) return redirected;
+    if (!MIRROR_SHARED_PREFIXES.some((p) => url.pathname.startsWith(p))) {
+      return { assetPath: prefix + url.pathname };
     }
     return { assetPath: null };
   }
-  if (url.hostname === 'genepad.cn' && enPath) {
-    return { redirect: 'https://en.genepad.cn' + url.pathname.slice(3) + url.search };
+  if (url.hostname === 'genepad.cn') {
+    const redirected = prefixRedirect(url.pathname, url.search);
+    if (redirected) return redirected;
   }
   return { assetPath: null };
 }

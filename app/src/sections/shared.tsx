@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode, type CSSProperties, type RefObject } from "react";
 import { useLightboxImage } from "../lightbox";
 import { useLang } from "../i18n";
-import { homeHref, isEnHost, otherLangHref } from "../links";
+import { homeHref, isMirrorHost, otherLangHref } from "../links";
 
 /* ── 滚动显现容器：进入视口时给自身与子级加 .rv-in ── */
 export function Reveal({
@@ -312,8 +312,8 @@ export function SubpageNav({ tag }: { tag: string }) {
           </span>
         </a>
         <div className="flex items-center gap-3">
-          {/* genepad.cn：原地切换文案；en.genepad.cn 镜像：跳回中文主机的同一页 */}
-          {isEnHost() ? (
+          {/* genepad.cn：原地切换文案；en / cn 镜像主机：跳到另一语言站点的同一页 */}
+          {isMirrorHost() ? (
             <a
               href={otherLangHref()}
               aria-label="Switch language"

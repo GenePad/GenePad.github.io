@@ -1347,7 +1347,8 @@ const LangContext = createContext<{
   t: (k) => k,
 });
 
-/* en.genepad.cn 是纯英文镜像：语言锁定英文，不读缓存/浏览器语言；本地 dev 的 /en/ 路径同样按英文渲染 */
+/* en.genepad.cn / cn.genepad.cn 是纯英文 / 纯中文镜像：语言分别锁定英文、中文，
+   不读缓存/浏览器语言；本地 dev 的 /en/、/cn/ 路径同样按对应语言渲染 */
 function isEnContext(): boolean {
   if (typeof window === "undefined") return false;
   return (
@@ -1357,8 +1358,18 @@ function isEnContext(): boolean {
   );
 }
 
+function isCnContext(): boolean {
+  if (typeof window === "undefined") return false;
+  return (
+    window.location.hostname === "cn.genepad.cn" ||
+    window.location.hostname.endsWith(".cn.genepad.cn") ||
+    window.location.pathname.startsWith("/cn/")
+  );
+}
+
 function detectLang(): Lang {
   if (isEnContext()) return "en";
+  if (isCnContext()) return "zh";
   try {
     const saved = localStorage.getItem("genepad-lang");
     if (saved === "zh" || saved === "en") return saved;
