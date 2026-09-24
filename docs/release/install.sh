@@ -13,8 +13,10 @@
 #  result stays visible; add -q / --quiet (or GENEPAD_QUIET=1) to skip the
 #  wait for unattended runs.
 #
-#  Linux:  自动识别架构（仅 x86_64）与包管理器（apt / dpkg 安装
-#          deb 包；自 0.7.1 起不再提供 rpm / tar.gz / ARM64 安装包）
+#  Linux:  自动识别架构（仅 x86_64）。有 apt / dpkg 时用包管理器安装
+#          deb；其他发行版（Fedora / Arch / openSUSE 等）自动解包 deb，
+#          把二进制释放到用户目录并登记桌面入口与文件关联
+#          （自 0.7.1 起不再提供 rpm / tar.gz / ARM64 安装包）
 #  macOS:  检测 Homebrew——已安装则直接用 brew 安装；未安装则先
 #          自动安装 Homebrew（按网络环境自动选择官方源或国内
 #          USTC 镜像）再安装；任一步失败则报错退出，不做兜底。
@@ -22,6 +24,14 @@
 #  可选环境变量 / Optional env vars:
 #    GENEPAD_VERSION=x.y.z    指定版本（默认自动读取最新版，仅 Linux）
 #                             / Pin a version (latest by default, Linux only)
+#    GENEPAD_PREFIX=<dir>     解包安装的目标前缀（默认：root 为 /usr/local，
+#                             普通用户为 ~/.local；仅 Linux 走解包安装时生效）
+#                             / Install prefix for the unpacked layout
+#                             (default: /usr/local as root, ~/.local
+#                             otherwise; used by the Linux unpacked install)
+#    GENEPAD_EXTRACT=1        检测到 apt/dpkg 也强制走解包安装（调试用）
+#                             / Force the unpacked install even when
+#                             apt/dpkg exists (debugging)
 #    GENEPAD_BREW_MIRROR=1|0  强制开启/关闭 Homebrew 国内镜像（默认自动探测）
 #                             / Force the Homebrew CN mirror on/off (auto)
 #    GENEPAD_DRY_RUN=1        只打印将执行的操作，不下载不安装
@@ -293,20 +303,184 @@ case "$(uname -m)" in
 esac
 say "检测到架构: ${ARCH}" "Detected architecture: ${ARCH}"
 
-# ---------- 2. 识别包管理器 / detect package manager ----------
-PKG_TYPE="" PM=""
-if has apt-get;       then PKG_TYPE="deb"; PM="apt-get"
-elif has apt;         then PKG_TYPE="deb"; PM="apt"
-elif has dpkg;        then PKG_TYPE="deb"; PM="dpkg"
-else PKG_TYPE=""; PM=""
+# ---------- 2. 识别安装方式 / pick install mode ----------
+# 有 apt / dpkg 时用包管理器安装（依赖自动解决）；其他发行版（Fedora /
+# Arch / openSUSE 等）自动解包 deb，释放到标准前缀并登记桌面入口。
+# GENEPAD_EXTRACT=1 可在 apt 系统上强制走解包路径（调试用）。
+# Debian-family installs via the package manager (deps handled for us);
+# every other distro gets the deb unpacked into a standard prefix.
+# GENEPAD_EXTRACT=1 forces the unpacked path even when apt/dpkg exists.
+PM=""
+INSTALL_MODE="extract"
+if [ "${GENEPAD_EXTRACT:-0}" != "1" ]; then
+  if     has apt-get; then PM="apt-get"
+  elif   has apt;     then PM="apt"
+  elif   has dpkg;    then PM="dpkg"
+  fi
+  [ -n "$PM" ] && INSTALL_MODE="apt"
+fi
+if [ "$INSTALL_MODE" = "apt" ]; then
+  say "检测到包管理器: ${PM}（deb 包）" \
+      "Detected package manager: ${PM} (deb package)"
+else
+  say "未检测到 apt/dpkg，将解包 deb 安装（二进制 + 桌面入口）" \
+      "no apt/dpkg found; the deb will be unpacked (binary + desktop entries)"
 fi
 
-if [ -z "$PKG_TYPE" ]; then
-  die "自 0.7.1 起仅提供 deb 安装包（rpm / tar.gz 已停发），且本机未检测到 apt/dpkg。请到 ${SITE} 下载页手动获取 deb 包；旧版 rpm / tar.gz（0.6.9）仍可下载" \
-      "Only deb packages are published since 0.7.1 (rpm / tar.gz discontinued), and no apt/dpkg was found on this machine. Grab the deb from the download page at ${SITE}; legacy rpm / tar.gz (0.6.9) remain downloadable"
+# 解包安装的目标前缀 / target prefix for the unpacked layout
+if [ -n "${GENEPAD_PREFIX:-}" ]; then
+  PREFIX="$GENEPAD_PREFIX"
+elif [ "$(id -u)" = "0" ]; then
+  PREFIX="/usr/local"
+else
+  PREFIX="${HOME}/.local"
 fi
-say "检测到包管理器: ${PM}（deb 包）" \
-    "Detected package manager: ${PM} (deb package)"
+
+# ---------- 2b. 解包安装辅助 / unpacked-install helpers ----------
+# deb = ar 归档，data 成员是 tar 包（现为 gzip）。按能力逐级回退：
+# dpkg-deb → ar + tar → python3（纯标准库）。临时变量统一 x_ 前缀，
+# 不污染全局。A deb is an ar archive whose data member is a tarball
+# (gzip today); try, in order: dpkg-deb → ar + tar → python3 (stdlib).
+extract_deb() {  # extract_deb <deb> <目标目录/dest dir>
+  x_deb="$1"; x_dest="$2"
+  x_name="$(basename "$x_deb")"
+  rm -rf "$x_dest"
+  mkdir -p "$x_dest" \
+    || die "无法创建解包目录 ${x_dest}" "cannot create the extraction dir ${x_dest}"
+
+  # ① dpkg-deb（最忠实 / most faithful）
+  if has dpkg-deb; then
+    say "使用 dpkg-deb 解包 ${x_name} ..." "Unpacking ${x_name} with dpkg-deb ..."
+    if dpkg-deb -x "$x_deb" "$x_dest"; then return 0; fi
+    warn "dpkg-deb 解包失败，改用 ar + tar ..." "dpkg-deb failed; falling back to ar + tar ..."
+  fi
+
+  # ② ar + tar（ar 来自 binutils；tar 自动识别 gzip / xz 压缩）
+  #    ar from binutils; tar auto-detects the gzip / xz compression
+  if has ar; then
+    say "使用 ar + tar 解包 ${x_name} ..." "Unpacking ${x_name} with ar + tar ..."
+    x_work="${TMP}/deb-ar"
+    rm -rf "$x_work"; mkdir -p "$x_work"
+    ( cd "$x_work" && ar x "$x_deb" ) \
+      || warn "ar 解档失败" "ar extraction failed"
+    x_data="$(cd "$x_work" 2>/dev/null && ls data.tar.* 2>/dev/null | head -n 1)"
+    if [ -n "$x_data" ] && tar -xf "${x_work}/${x_data}" -C "$x_dest"; then
+      return 0
+    fi
+    warn "ar + tar 解包失败，改用 python3 ..." "ar + tar failed; falling back to python3 ..."
+  fi
+
+  # ③ python3 纯标准库：手写 ar 头解析 + tarfile
+  #    python3 with stdlib only: hand-rolled ar member scan + tarfile
+  if has python3; then
+    say "使用 python3 解包 ${x_name} ..." "Unpacking ${x_name} with python3 ..."
+    if python3 - "$x_deb" "$x_dest" <<'PYEOF'
+import io, sys, tarfile
+
+deb, dest = sys.argv[1], sys.argv[2]
+with open(deb, "rb") as f:
+    if f.read(8) != b"!<arch>\n":
+        sys.exit("not an ar archive: " + deb)
+    data = None
+    while True:
+        hdr = f.read(60)
+        if len(hdr) < 60:
+            break
+        name = hdr[0:16].decode("ascii", "replace").strip().rstrip("/")
+        size = int(hdr[48:58].decode("ascii").strip())
+        body = f.read(size)
+        if size % 2:
+            f.read(1)  # ar 成员按 2 字节对齐 / members are 2-byte aligned
+        if name == "data.tar" or name.startswith("data.tar."):
+            data = body
+            break
+if data is None:
+    sys.exit("data.tar member not found in " + deb)
+with tarfile.open(fileobj=io.BytesIO(data)) as tf:
+    try:
+        tf.extractall(dest, filter="data")
+    except TypeError:  # python < 3.12 没有 filter 参数 / no filter kwarg
+        tf.extractall(dest)
+PYEOF
+    then return 0; fi
+    warn "python3 解包失败" "python3 extraction failed"
+  fi
+
+  die "本机缺少可用的解包工具（dpkg-deb / ar / python3 均不可用）。请先安装 binutils 或 python3 再重试，或到 ${SITE} 下载页手动获取 deb 包" \
+      "no usable unpacker found (dpkg-deb / ar / python3 all missing); install binutils or python3 and retry, or grab the deb from the download page at ${SITE}"
+}
+
+# 解包安装主体：释放到 PREFIX + 桌面入口指向实际路径 + 刷新缓存 + 依赖体检
+# unpacked-install main line: unpack into PREFIX, point the desktop entries
+# at the installed binary, refresh caches, then check the runtime libraries
+install_extract() {
+  say "解包安装到 ${PREFIX} ..." "Installing (unpacked) into ${PREFIX} ..."
+  x_root="${TMP}/deb-root"
+  extract_deb "$OUT" "$x_root"
+  [ -f "${x_root}/usr/bin/genepad" ] \
+    || die "解包结果缺少 usr/bin/genepad，安装中止" "extraction is missing usr/bin/genepad; aborting"
+  # 归档内本就是 0755，这里显式兜底（个别文件系统会丢权限位）
+  # the archive already says 0755; enforce it (some filesystems drop modes)
+  chmod 755 "${x_root}/usr/bin/genepad" 2>/dev/null || true
+
+  mkdir -p "$PREFIX" \
+    || die "无法创建安装目录 ${PREFIX}。可用 GENEPAD_PREFIX=<可写目录> 指定其他位置" \
+           "cannot create ${PREFIX}; set GENEPAD_PREFIX=<writable dir> to install elsewhere"
+  cp -a "${x_root}/usr/." "$PREFIX/" \
+    || die "向 ${PREFIX} 释放文件失败" "failed to copy files into ${PREFIX}"
+
+  # .desktop 的 Exec 改写为绝对路径——前缀的 bin 不在 PATH 里也能从菜单启动
+  # rewrite Exec= to the absolute binary path so the menu launcher works
+  # even when the prefix's bin directory is not on PATH
+  x_bin="${PREFIX}/bin/genepad"
+  x_sed_bin="$(printf '%s' "$x_bin" | sed 's/[&|]/\\&/g')"
+  for x_d in "$PREFIX/share/applications"/*.desktop; do
+    [ -f "$x_d" ] || continue
+    if grep -q '^Exec=genepad' "$x_d" 2>/dev/null; then
+      sed -i "s|^Exec=genepad|Exec=${x_sed_bin}|" "$x_d" \
+        || warn "桌面入口 Exec 改写失败: ${x_d}" "failed to rewrite Exec in ${x_d}"
+    fi
+  done
+
+  # 刷新桌面 / 图标 / MIME 缓存——工具存在才调用，失败不致命
+  # best-effort desktop / icon / mime cache refresh (failures are harmless)
+  if has update-desktop-database; then
+    update-desktop-database "$PREFIX/share/applications" 2>/dev/null || true
+  fi
+  if [ -d "$PREFIX/share/mime" ] && has update-mime-database; then
+    update-mime-database "$PREFIX/share/mime" 2>/dev/null || true
+  fi
+  if has gtk-update-icon-cache; then
+    gtk-update-icon-cache -qtf "$PREFIX/share/icons/hicolor" 2>/dev/null || true
+  fi
+
+  # 依赖体检：解包不会自动安装 libwebkit2gtk / gtk3，也不校验 glibc 版本；
+  # 用 ldd 列出缺失项并按发行版给出安装提示。只警告，不回滚——文件已就位，
+  # 装齐依赖后即可启动。The unpacked install brings no libwebkit2gtk / gtk3
+  # and no glibc guarantee — list what ldd misses and hint per distro.
+  # Warn only; the files stay in place.
+  if has ldd; then
+    x_missing="$(ldd "$x_bin" 2>/dev/null | grep 'not found' || true)"
+    if [ -n "$x_missing" ]; then
+      warn "检测到缺失的运行库，应用可能无法启动（解包安装不处理依赖）:" \
+           "missing runtime libraries detected; the app may not start (an unpacked install handles no dependencies):"
+      printf '%s\n' "$x_missing" | sed 's/^/    /'
+      if has pacman; then
+        warn "Arch / Manjaro 可先执行: sudo pacman -S --needed webkit2gtk-4.1 gtk3" \
+             "on Arch / Manjaro run first: sudo pacman -S --needed webkit2gtk-4.1 gtk3"
+      elif has dnf; then
+        warn "Fedora / RHEL 可先执行: sudo dnf install webkit2gtk4.1 gtk3" \
+             "on Fedora / RHEL run first: sudo dnf install webkit2gtk4.1 gtk3"
+      elif has zypper; then
+        warn "openSUSE 可先执行: sudo zypper install libwebkit2gtk-4_1-0 gtk3" \
+             "on openSUSE run first: sudo zypper install libwebkit2gtk-4_1-0 gtk3"
+      else
+        warn "请用所用发行版的包管理器安装 libwebkit2gtk-4.1 与 gtk3 后再启动" \
+             "install libwebkit2gtk-4.1 and gtk3 with your distro's package manager, then start the app"
+      fi
+    fi
+  fi
+}
 
 # ---------- 3. 确定版本 / resolve version ----------
 resolve_version \
@@ -327,7 +501,13 @@ if [ "$DRY_RUN" = "1" ]; then
   say "DRY RUN — 将执行以下操作:" "DRY RUN — planned actions:"
   echo "    $(bi "文件" "File"): ${FILE}"
   for u in "${urls[@]}"; do echo "    $(bi "下载" "Download"): $u"; done
-  echo "    $(bi "安装" "Install"): sudo ${PM} install ${FILE}"
+  if [ "$INSTALL_MODE" = "apt" ]; then
+    echo "    $(bi "安装" "Install"): sudo ${PM} install ${FILE}"
+  else
+    echo "    $(bi "解包安装" "Unpacked install"): ${PREFIX}"
+    echo "    $(bi "登记桌面入口（Exec 指向 ${PREFIX}/bin/genepad），并检查 libwebkit2gtk / gtk3 依赖" \
+           "register desktop entries (Exec -> ${PREFIX}/bin/genepad) and check the libwebkit2gtk / gtk3 runtime deps")"
+  fi
   exit 0
 fi
 
@@ -345,16 +525,20 @@ if [ "$SKIP_INSTALL" = "1" ]; then
 fi
 
 # ---------- 6. 安装 / install ----------
-if [ "$(id -u)" = "0" ]; then
-  SUDO=""
-else
-  has sudo || die "当前不是 root 且未安装 sudo，无法提权安装" \
-                  "not running as root and sudo is missing; cannot elevate to install"
-  SUDO="sudo"
-fi
-
-case "$PKG_TYPE" in
-  deb)
+case "$INSTALL_MODE" in
+  extract)
+    # 无需提权：默认装到用户目录（~/.local），root 自动落到 /usr/local
+    # no elevation needed: the user prefix by default; /usr/local when root
+    install_extract
+    ;;
+  apt)
+    if [ "$(id -u)" = "0" ]; then
+      SUDO=""
+    else
+      has sudo || die "当前不是 root 且未安装 sudo，无法提权安装" \
+                      "not running as root and sudo is missing; cannot elevate to install"
+      SUDO="sudo"
+    fi
     say "使用 ${PM} 安装 ..." "Installing with ${PM} ..."
     if [ "$PM" = "apt-get" ] || [ "$PM" = "apt" ]; then
       if $SUDO "$PM" install -y "$OUT"; then
@@ -381,8 +565,29 @@ case "$PKG_TYPE" in
     ;;
 esac
 
-ok "GenePad v${VERSION} 已安装（${ARCH} / ${PKG_TYPE}）" \
-   "GenePad v${VERSION} installed (${ARCH} / ${PKG_TYPE})"
-echo
-echo "  启动: 终端运行 ${B}genepad${N}，或在应用菜单中找到 GenePad"
-echo "  Launch: run ${B}genepad${N} in a terminal, or find GenePad in your app menu"
+if [ "$INSTALL_MODE" = "apt" ]; then
+  ok "GenePad v${VERSION} 已安装（${ARCH} · ${PM}）" \
+     "GenePad v${VERSION} installed (${ARCH} via ${PM})"
+  echo
+  echo "  启动: 终端运行 ${B}genepad${N}，或在应用菜单中找到 GenePad"
+  echo "  Launch: run ${B}genepad${N} in a terminal, or find GenePad in your app menu"
+else
+  ok "GenePad v${VERSION} 已解包安装到 ${PREFIX}（${ARCH}）" \
+     "GenePad v${VERSION} unpacked into ${PREFIX} (${ARCH})"
+  echo
+  echo "  启动: 在应用菜单中找到 GenePad，或运行 ${B}${PREFIX}/bin/genepad${N}"
+  echo "  Launch: find GenePad in your app menu, or run ${B}${PREFIX}/bin/genepad${N}"
+  case ":${PATH}:" in
+    *":${PREFIX}/bin:"*) ;;
+    *)
+      warn "命令行入口不在 PATH 中: 把 ${B}${PREFIX}/bin${N} 加入 PATH 后才能直接运行 ${B}genepad${N}（菜单启动不受影响）" \
+           "the command-line entry is not on PATH; add ${PREFIX}/bin to PATH to run ${B}genepad${N} directly (the menu launcher works regardless)"
+      ;;
+  esac
+  echo
+  echo "  卸载: 删除以下文件即可 / to uninstall, remove:"
+  echo "    rm -f '${PREFIX}/bin/genepad'"
+  echo "    rm -f '${PREFIX}/share/applications/GenePad.desktop' '${PREFIX}/share/applications/genepad-plasmid-library.desktop'"
+  echo "    rm -f '${PREFIX}/share/mime/packages/genepad.xml'"
+  echo "    find '${PREFIX}/share/icons/hicolor' -name 'genepad*' -delete"
+fi
