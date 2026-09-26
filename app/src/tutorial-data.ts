@@ -59,6 +59,71 @@ export type TutorialEntry = {
 
 export const TUTORIALS: TutorialEntry[] = [
   {
+    id: "snapgene",
+    pageTitle: "title.tutorial.snapgene",
+    toc: {
+      name: "tut.toc.snapgene.name",
+      desc: "tut.toc.snapgene.desc",
+      en: "tut.toc.snapgene.en",
+    },
+    head: "tut.snapgene.head",
+    headEn: "tut.snapgene.headEn",
+    title: "tut.snapgene.title",
+    lead: "tut.snapgene.lead",
+    steps: [
+      {
+        name: "tut.snapgene.1.name",
+        desc: "tut.snapgene.1.desc",
+        shots: [{ src: "shots/atlas-overview.webp", shot: "tut.snapgene.1.shot" }],
+      },
+      {
+        name: "tut.snapgene.2.name",
+        desc: "tut.snapgene.2.desc",
+        shots: [
+          { src: "shots/map-to-seq.webp", shot: "tut.snapgene.2.shot1" },
+          { src: "shots/enzyme-sites.webp", shot: "tut.snapgene.2.shot2" },
+        ],
+      },
+      {
+        name: "tut.snapgene.3.name",
+        desc: "tut.snapgene.3.desc",
+        shots: [{ src: "shots/sanger-1.webp", shot: "tut.snapgene.3.shot" }],
+      },
+      {
+        name: "tut.snapgene.4.name",
+        desc: "tut.snapgene.4.desc",
+        shots: [{ src: "shots/crispr.webp", shot: "tut.snapgene.4.shot" }],
+      },
+      {
+        name: "tut.snapgene.5.name",
+        desc: "tut.snapgene.5.desc",
+        shots: [
+          { src: "shots/dna-gel.webp", shot: "tut.snapgene.5.shot1" },
+          { src: "shots/protein-props.webp", shot: "tut.snapgene.5.shot2" },
+        ],
+      },
+      {
+        name: "tut.snapgene.6.name",
+        desc: "tut.snapgene.6.desc",
+        shots: [{ src: "shots/ngs-01.webp", shot: "tut.snapgene.6.shot" }],
+      },
+      {
+        name: "tut.snapgene.7.name",
+        desc: "tut.snapgene.7.desc",
+        shots: [{ src: "shots/file-library.webp", shot: "tut.snapgene.7.shot" }],
+      },
+      {
+        name: "tut.snapgene.8.name",
+        desc: "tut.snapgene.8.desc",
+        shots: [
+          { src: "shots/i18n.webp", shot: "tut.snapgene.8.shot1" },
+          { src: "shots/open-with.webp", shot: "tut.snapgene.8.shot2" },
+        ],
+      },
+    ],
+    note: "tut.snapgene.note",
+  },
+  {
     id: "ai",
     pageTitle: "title.tutorial.ai",
     toc: { name: "tut.toc.ai.name", desc: "tut.toc.ai.desc", en: "tut.toc.ai.en" },
@@ -290,6 +355,13 @@ export type TutorialCategory = {
 };
 
 export const TUTORIAL_CATEGORIES: TutorialCategory[] = [
+  {
+    id: "switching",
+    name: "tut.cat.switch.name",
+    en: "tut.cat.switch.en",
+    desc: "tut.cat.switch.desc",
+    tutorials: ["snapgene"],
+  },
   {
     id: "getting-started",
     name: "tut.cat.gs.name",

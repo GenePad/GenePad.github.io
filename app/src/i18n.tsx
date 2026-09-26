@@ -536,6 +536,10 @@ const zhDict = {
     "tut.toc.langpack.en": "UI LANGUAGE",
 
     // 教程分类（目录页分区 + 侧边导航）
+    "tut.cat.switch.name": "迁移指南",
+    "tut.cat.switch.en": "SWITCHING GUIDES",
+    "tut.cat.switch.desc": "从 SnapGene 等常用工具把日常工作流迁到 GenePad：文件互通、逐项对齐、不必二选一",
+
     "tut.cat.gs.name": "快速上手",
     "tut.cat.gs.en": "GETTING STARTED",
     "tut.cat.gs.desc": "新手建议按顺序完成：先接入 AI，再把质粒文件管起来。",
@@ -543,9 +547,9 @@ const zhDict = {
     "tut.cat.analysis.en": "DATA ANALYSIS",
     "tut.cat.analysis.desc": "测序数据的查看、检索与定量分析。",
 
-    // 教程一：配置 AI
-    "tut.ai.head": "教程一 · 配置 AI",
-    "tut.ai.headEn": "TUTORIAL 1 · SET UP DEEPSEEK",
+    // 教程二：配置 AI
+    "tut.ai.head": "教程二 · 配置 AI",
+    "tut.ai.headEn": "TUTORIAL 2 · SET UP DEEPSEEK",
     "tut.ai.title": "五步接入 DeepSeek，解锁 AI 助手与自动标签",
     "tut.ai.lead":
       "AI 助手与质粒自动标签由大模型驱动，推荐使用 DeepSeek。完成以下五步后，即可用自然语言操作序列与标注，质粒在入库与打开时也会自动生成性质标签。",
@@ -568,9 +572,9 @@ const zhDict = {
     "tut.ai.note":
       "配置一次即可长期使用，密钥仅保存在本机。此后欢迎页与工作界面的 AI 图标可直接对话；打开或入库的质粒也会自动生成性质标签。",
 
-    // 教程二：基因文件库
-    "tut.lib.head": "教程二 · 基因文件库",
-    "tut.lib.headEn": "TUTORIAL 2 · GENE FILE LIBRARY",
+    // 教程三：基因文件库
+    "tut.lib.head": "教程三 · 基因文件库",
+    "tut.lib.headEn": "TUTORIAL 3 · GENE FILE LIBRARY",
     "tut.lib.title": "把数百份质粒，管成一个可检索的文库",
     "tut.lib.lead":
       "基因文件库位于工具箱中：不移动、不复制任何文件，仅为分散在各处的质粒建立统一索引。以下步骤从自动入库开始，直到按属性一句话定位目标质粒。",
@@ -592,9 +596,9 @@ const zhDict = {
     "tut.lib.note":
       "文件库仅为索引，不改动原始文件；暂不配置 AI 也不影响入库与浏览，仅自动标签与 AI 检索不可用。",
 
-    // 教程三：NGS 文件分析
-    "tut.ngs.head": "教程三 · NGS 文件分析",
-    "tut.ngs.headEn": "TUTORIAL 3 · NGS ANALYSIS",
+    // 教程四：NGS 文件分析
+    "tut.ngs.head": "教程四 · NGS 文件分析",
+    "tut.ngs.headEn": "TUTORIAL 4 · NGS ANALYSIS",
     "tut.ngs.title": "从 fastq.gz 到文库丰度报告",
     "tut.ngs.lead":
       "无需命令行，把测序文件拖入窗口即可开始。以下六步覆盖打开、配对、质检、搜索、裁切与丰度分析的完整流程，文末附完整操作视频。",
@@ -617,9 +621,9 @@ const zhDict = {
     "tut.ngs.6.desc":
       "点击 Sequence analysis：统计整个文件中每条唯一序列的出现次数与频率，生成 Top 序列直方图与逐条明细，完整表格导出为 CSV，可直接用 Excel 打开。一份简单的文库丰度报告就此完成。",
 
-    // 教程四：配置任意语言
-    "tut.lang.head": "教程四 · 配置任意语言",
-    "tut.lang.headEn": "TUTORIAL 4 · ANY LANGUAGE",
+    // 教程五：配置任意语言
+    "tut.lang.head": "教程五 · 配置任意语言",
+    "tut.lang.headEn": "TUTORIAL 5 · ANY LANGUAGE",
     "tut.lang.title": "用 AI 翻译，把界面换成任意语言",
     "tut.lang.lead":
       "GenePad 内置中文与英文界面，其他语言无需等待官方支持：打开设置 → Language，点击 AI Translate，输入目标语言即可自动生成语言包并应用。请先按教程一完成 AI 配置。",
@@ -644,9 +648,9 @@ const zhDict = {
     "tut.lang.note":
       "AI 翻译以内置中文语言文件为源；个别词条若不准确，可导出语言文件手动修改后再导入。",
 
-    // 教程五：设置界面语言（内置切换 + 官方语言包导入）
-    "tut.langpack.head": "教程五 · 设置界面语言",
-    "tut.langpack.headEn": "TUTORIAL 5 · UI LANGUAGE",
+    // 教程六：设置界面语言（内置切换 + 官方语言包导入）
+    "tut.langpack.head": "教程六 · 设置界面语言",
+    "tut.langpack.headEn": "TUTORIAL 6 · UI LANGUAGE",
     "tut.langpack.title": "两步把界面换成你的语言",
     "tut.langpack.lead":
       "GenePad 内置中文与英文界面；德语、俄语、日语、韩语、法语由官方语言包提供——下载后无需任何配置，在设置中导入即可整体切换。本教程同样适用于 AI 翻译生成的自定义语言包。",
@@ -676,6 +680,55 @@ const zhDict = {
     "tut.langpack.dl.btn": "下载",
     "tut.langpack.note":
       "语言包仅包含界面文本，不涉及序列与文件数据；官方语言包会随版本持续更新，重新导入即可升级。想接入其他语言？参见教程四，用 AI 翻译生成任意语言包。",
+
+    // 教程二：SnapGene 替代指南（迁移指南分类，目录页置顶推荐）
+    "title.tutorial.snapgene": "SnapGene 替代指南 - GenePad | 免费的跨平台质粒图谱软件",
+    "tut.toc.snapgene.name": "SnapGene 替代指南",
+    "tut.toc.snapgene.desc":
+      "既有 .dna 文件直接读写，图谱、酶切、Sanger 比对逐项对齐，另有 NGS、基因文件库等独有能力",
+    "tut.toc.snapgene.en": "SWITCH FROM SNAPGENE",
+    "tut.snapgene.head": "教程一 · SnapGene 替代指南",
+    "tut.snapgene.headEn": "TUTORIAL 1 · SNAPGENE ALTERNATIVE",
+    "tut.snapgene.title": "从 SnapGene 到 GenePad：工作流迁移指南",
+    "tut.snapgene.lead":
+      "已经在用 SnapGene？这篇指南讲清楚 GenePad 能接住哪些日常工作：既有 .dna 文件直接读写，图谱、酶切、引物、Sanger 比对逐项对齐，另有一批它没有的能力——NGS 数据查看、基因文件库与 AI 助手。两个工具不必二选一：GenePad 内置「打开方式」，随时把文件交回 SnapGene。",
+    "tut.snapgene.1.name": "直接打开既有 .dna 文件",
+    "tut.snapgene.1.desc":
+      "把 SnapGene 的 .dna 质粒文件拖进 GenePad 即可打开：主序列、拓扑、features、引物与 notes 原样读入；编辑后仍可存回 .dna，传回给仍用 SnapGene 的导师或同事不会有格式障碍。",
+    "tut.snapgene.1.shot": "Addgene 下载的 .dna 质粒直接打开：环形/线性一键切换，元件按类别分层着色",
+    "tut.snapgene.2.name": "图谱、序列与酶切位点",
+    "tut.snapgene.2.desc":
+      "图谱与序列双向联动：标注表中选定条目，序列视图即定位到对应碱基区间，同步显示选区长度、GC 含量与 Tm 值。酶切位点直接标注在双链序列上，悬停即可查看识别序列、链方向与上下切口位置，5′ 突出末端明确标示。",
+    "tut.snapgene.2.shot1": "标注表中选中条目，序列视图自动定位并显示选区长度、GC 含量与 Tm",
+    "tut.snapgene.2.shot2": "酶切位点悬停详情：识别序列、切口位置与 5′ 突出末端",
+    "tut.snapgene.3.name": "Sanger 测序比对",
+    "tut.snapgene.3.desc":
+      "导入 AB1 峰图文件，色谱、reads 与参考序列按碱基逐一对齐，结果给出比对一致率与 E-value，错配位点红色标示，逐个反应判断质量与错配位置。",
+    "tut.snapgene.3.shot": "AB1 峰图与参考序列逐碱基对齐，错配位点以红色标出",
+    "tut.snapgene.4.name": "通用元件识别与 sgRNA 设计",
+    "tut.snapgene.4.desc":
+      "打开图谱即自动标出启动子、抗性基因、复制子等常见元件，内置元件库覆盖 20 个大类、逐条记录 NCBI 登录号；选中序列右键即可设计 sgRNA，支持 SpCas9、xCas9、Cas12a/b、TnpB 等 12 种识别布局，PAM 方向、种子区长度与脱靶过滤可配置，候选一键标注回图谱。",
+    "tut.snapgene.4.shot": "右键菜单直接调出 sgRNA 设计：12 种识别布局，候选可一键标注回图谱",
+    "tut.snapgene.5.name": "电泳模拟与蛋白属性",
+    "tut.snapgene.5.desc":
+      "电泳模拟覆盖 DNA 琼脂糖凝胶与 SDS-PAGE 蛋白凝胶：内置 Trans2K® 等主流分子量标准，跑胶前预估条带位置；选中 CDS 还可实时计算分子量、等电点（内置 19 种算法）、GRAVY、脂肪族指数与消光系数。",
+    "tut.snapgene.5.shot1": "DNA 电泳模拟：Trans2K® 分子量标准，酶切或 PCR 产物直接上样",
+    "tut.snapgene.5.shot2": "蛋白属性面板：分子量、等电点、GRAVY、脂肪族指数与消光系数",
+    "tut.snapgene.6.name": "NGS 数据查看",
+    "tut.snapgene.6.desc":
+      "直接打开 fastq.gz / fastq / fq.gz / fq 文件（gzip 无需解压），双端 R1/R2 自动配对拼接，每个碱基按 Phred 质量着色；支持按氨基酸片段检索、锚点批量裁切，并一键生成文库丰度报告（可导出 CSV）。",
+    "tut.snapgene.6.shot": "双端 reads 逐条拼接，逐碱基按测序质量着色，右侧汇总统计",
+    "tut.snapgene.7.name": "基因文件库与 AI 助手",
+    "tut.snapgene.7.desc":
+      "把散落各处的质粒文件统一建索引（只建索引，不改动原始文件），AI 依据序列与标注自动生成性质标签，监视文件夹自动收录；AI 助手可用一句话检索定位文件，也能查询通用元件的信息。",
+    "tut.snapgene.7.shot": "基因文件库：AI 批量生成标签，按标签或项目检索质粒",
+    "tut.snapgene.8.name": "多语言与「打开方式」",
+    "tut.snapgene.8.desc":
+      "内置中、英、日、法、德、俄六种界面语言，还可用 AI 翻译接入任意语言；右键随时把文件交给 SnapGene、VS Code 等指定工具——GenePad 补位而不接管，两个工具共存不冲突。",
+    "tut.snapgene.8.shot1": "语言设置：内置六种语言，支持导入与 AI 生成语言包",
+    "tut.snapgene.8.shot2": "「使用其它程序打开」：一键交给 SnapGene、VS Code 等工具",
+    "tut.snapgene.note":
+      "授权说明：GenePad 当前免费公测；公测结束后，图谱查看、编辑、保存等已有功能依旧免费。学术用户（高校、医院课题组、iGEM、学生）在 2026 年至 2027 年 12 月 31 日期间自动获得免费使用权限，无需申请；商业使用将由后续发布的 GenePad Pro 授权支持。工具箱中的分子克隆（Molecular Cloning）已上线部分功能，完整流程仍在开发中。",
 
     "tut.final.title": "教程涉及的功能均内置于 GenePad，并非独立软件",
     "tut.final.desc":
@@ -1245,6 +1298,10 @@ const dict: Record<Lang, Record<TKey, ReactNode>> = {
     "tut.toc.langpack.en": "UI LANGUAGE",
 
     // Tutorial categories (hub sections + sidebar navigation)
+    "tut.cat.switch.name": "Switching guides",
+    "tut.cat.switch.en": "SWITCHING GUIDES",
+    "tut.cat.switch.desc": "Bring your SnapGene workflow over to GenePad: files interoperate, the daily workflow carries over, no need to pick one",
+
     "tut.cat.gs.name": "Getting started",
     "tut.cat.gs.en": "GETTING STARTED",
     "tut.cat.gs.desc": "Start here in order: connect DeepSeek first, then bring your plasmids into the library.",
@@ -1253,8 +1310,8 @@ const dict: Record<Lang, Record<TKey, ReactNode>> = {
     "tut.cat.analysis.desc": "View, search, and quantify sequencing data.",
 
     // Tutorial 1: set up AI
-    "tut.ai.head": "Tutorial 1 · Set up AI",
-    "tut.ai.headEn": "TUTORIAL 1 · SET UP DEEPSEEK",
+    "tut.ai.head": "Tutorial 2 · Set up AI",
+    "tut.ai.headEn": "TUTORIAL 2 · SET UP DEEPSEEK",
     "tut.ai.title": "Connect DeepSeek in five steps to unlock the AI assistant and auto-tagging",
     "tut.ai.lead":
       "The AI assistant and automatic plasmid tags are powered by a large language model; DeepSeek is recommended. After the five steps below you can drive sequences and annotations in plain language, and plasmids are tagged automatically when opened or imported.",
@@ -1277,9 +1334,9 @@ const dict: Record<Lang, Record<TKey, ReactNode>> = {
     "tut.ai.note":
       "Configure once and you're set — the key is stored locally. The AI icon on the welcome screen and in the workspace opens the assistant, and plasmids are tagged automatically when opened or imported.",
 
-    // Tutorial 2: gene file library
-    "tut.lib.head": "Tutorial 2 · Gene file library",
-    "tut.lib.headEn": "TUTORIAL 2 · GENE FILE LIBRARY",
+    // Tutorial 1: gene file library
+    "tut.lib.head": "Tutorial 3 · Gene file library",
+    "tut.lib.headEn": "TUTORIAL 3 · GENE FILE LIBRARY",
     "tut.lib.title": "Turn hundreds of plasmids into one searchable library",
     "tut.lib.lead":
       "The gene file library lives in the toolbox: it never moves or copies files — it only builds a single index over the plasmids scattered across your disks. The steps below go from automatic import to finding a plasmid by describing it in one sentence.",
@@ -1301,9 +1358,9 @@ const dict: Record<Lang, Record<TKey, ReactNode>> = {
     "tut.lib.note":
       "The library is only an index — your files stay untouched. AI is optional: without it, import and browsing still work; only automatic tags and AI search are unavailable.",
 
-    // Tutorial 3: NGS analysis
-    "tut.ngs.head": "Tutorial 3 · NGS data analysis",
-    "tut.ngs.headEn": "TUTORIAL 3 · NGS ANALYSIS",
+    // Tutorial 1: NGS analysis
+    "tut.ngs.head": "Tutorial 4 · NGS data analysis",
+    "tut.ngs.headEn": "TUTORIAL 4 · NGS ANALYSIS",
     "tut.ngs.title": "From fastq.gz to a library abundance report",
     "tut.ngs.lead":
       "No command line required — drag your sequencing files into the window to begin. The six steps below cover the full pipeline: opening, pairing, quality checks, searching, trimming, and the abundance report, with a full video walkthrough at the end.",
@@ -1326,9 +1383,9 @@ const dict: Record<Lang, Record<TKey, ReactNode>> = {
     "tut.ngs.6.desc":
       "Click Sequence analysis: GenePad counts the occurrences and frequency of every unique sequence across the whole file, produces a Top-sequences histogram with per-sequence details, and exports the full table as CSV that opens directly in Excel. A simple library abundance report, done.",
 
-    // Tutorial 4: use any language
-    "tut.lang.head": "Tutorial 4 · Use any language",
-    "tut.lang.headEn": "TUTORIAL 4 · ANY LANGUAGE",
+    // Tutorial 1: use any language
+    "tut.lang.head": "Tutorial 5 · Use any language",
+    "tut.lang.headEn": "TUTORIAL 5 · ANY LANGUAGE",
     "tut.lang.title": "Translate the interface into any language with AI",
     "tut.lang.lead":
       "GenePad ships with Chinese and English interfaces — every other language starts here: open Settings → Language, click AI Translate, and type the target language to generate and apply a language pack automatically. Finish Tutorial 1 first so the AI is configured.",
@@ -1353,9 +1410,9 @@ const dict: Record<Lang, Record<TKey, ReactNode>> = {
     "tut.lang.note":
       "AI translation uses the built-in Chinese language file as its source; if a term reads oddly, export the language file, edit it by hand, and import it again.",
 
-    // Tutorial 5: set the UI language (built-in switching + official language packs)
-    "tut.langpack.head": "Tutorial 5 · Set the UI language",
-    "tut.langpack.headEn": "TUTORIAL 5 · UI LANGUAGE",
+    // Tutorial 1: set the UI language (built-in switching + official language packs)
+    "tut.langpack.head": "Tutorial 6 · Set the UI language",
+    "tut.langpack.headEn": "TUTORIAL 6 · UI LANGUAGE",
     "tut.langpack.title": "Switch the interface to your language in two steps",
     "tut.langpack.lead":
       "GenePad ships with Chinese and English interfaces; German, Russian, Japanese, Korean and French come as official language packs — download one, import it in Settings, no configuration needed. The same steps apply to custom packs generated by AI translation.",
@@ -1385,6 +1442,55 @@ const dict: Record<Lang, Record<TKey, ReactNode>> = {
     "tut.langpack.dl.btn": "Download",
     "tut.langpack.note":
       "Language packs contain interface text only — never sequences or file data. Official packs are updated with each release; import the new file to upgrade. Want another language? Tutorial 4 generates packs for any language with AI translation.",
+
+    // Tutorial 1: switch from SnapGene (migration category, featured first on the hub)
+    "title.tutorial.snapgene": "SnapGene Alternative Guide - GenePad | Free Cross-platform Plasmid Map Editor",
+    "tut.toc.snapgene.name": "Switch from SnapGene",
+    "tut.toc.snapgene.desc":
+      "Read and write your existing .dna files directly, cover the daily cloning workflow, plus NGS, a gene file library and other abilities SnapGene doesn't have",
+    "tut.toc.snapgene.en": "SWITCH FROM SNAPGENE",
+    "tut.snapgene.head": "Tutorial 1 · Switch from SnapGene",
+    "tut.snapgene.headEn": "TUTORIAL 1 · SNAPGENE ALTERNATIVE",
+    "tut.snapgene.title": "From SnapGene to GenePad: a workflow migration guide",
+    "tut.snapgene.lead":
+      "Already using SnapGene? This guide shows how much of your daily work GenePad takes over: existing .dna files open and save directly, maps, restriction sites, primers and Sanger alignment all behave the way you expect — plus abilities SnapGene doesn't have: NGS data viewing, a gene file library and an AI assistant. No need to pick one: GenePad's built-in \"Open with\" hands files back to SnapGene at any time.",
+    "tut.snapgene.1.name": "Open your existing .dna files",
+    "tut.snapgene.1.desc":
+      "Drag a SnapGene .dna plasmid file into GenePad and it opens: main sequence, topology, features, primers and notes are read as-is; edits still save back to .dna, so files sent to SnapGene-using colleagues keep working.",
+    "tut.snapgene.1.shot": "A .dna plasmid from Addgene opened directly: circular/linear toggle, features colored by category",
+    "tut.snapgene.2.name": "Maps, sequences and restriction sites",
+    "tut.snapgene.2.desc":
+      "Map and sequence views are linked both ways: select an entry in the annotations table and the sequence view jumps to the bases, showing selection length, GC content and Tm. Restriction sites are drawn on the double-stranded sequence — hover to see the recognition sequence, strand, top/bottom cut positions and 5′ overhangs.",
+    "tut.snapgene.2.shot1": "Selecting an entry in the annotations table jumps the sequence view and shows length, GC content and Tm",
+    "tut.snapgene.2.shot2": "Restriction site hover detail: recognition sequence, cut positions and 5′ overhang",
+    "tut.snapgene.3.name": "Sanger trace alignment",
+    "tut.snapgene.3.desc":
+      "Import AB1 trace files: chromatogram, reads and the reference sequence align base by base, with alignment identity and E-value reported and mismatches highlighted in red — judge every reaction at a glance.",
+    "tut.snapgene.3.shot": "AB1 trace aligned base by base against the reference, mismatches in red",
+    "tut.snapgene.4.name": "Common features and sgRNA design",
+    "tut.snapgene.4.desc":
+      "Open a map and promoters, resistance genes and origins are annotated automatically — the built-in feature library covers 20 categories, each entry traceable to its NCBI accession. Select a sequence, right-click, design sgRNAs: 12 recognition layouts including SpCas9, xCas9, Cas12a/b and TnpB, with PAM direction, seed length and off-target filtering configurable; candidates annotate back onto the map in one click.",
+    "tut.snapgene.4.shot": "sgRNA design straight from the context menu: 12 recognition layouts, one-click annotation back to the map",
+    "tut.snapgene.5.name": "Gel simulation and protein properties",
+    "tut.snapgene.5.desc":
+      "Simulate both agarose gels and SDS-PAGE: common ladders such as Trans2K® are built in, so band positions are predictable before you run. Selecting a CDS also computes molecular weight, isoelectric point (19 algorithms), GRAVY, aliphatic index and extinction coefficient in real time.",
+    "tut.snapgene.5.shot1": "DNA gel simulation: Trans2K® ladder, digest or PCR products loaded as lanes",
+    "tut.snapgene.5.shot2": "Protein properties: molecular weight, pI, GRAVY, aliphatic index and extinction coefficient",
+    "tut.snapgene.6.name": "NGS data viewing",
+    "tut.snapgene.6.desc":
+      "Open fastq.gz / fastq / fq.gz / fq files directly (no need to decompress): paired-end R1/R2 are paired and merged read by read, every base is colored by Phred quality; search by amino-acid fragment, batch-trim with anchors and generate a library abundance report (CSV export).",
+    "tut.snapgene.6.shot": "Paired reads merged one by one, bases colored by quality, summary statistics on the right",
+    "tut.snapgene.7.name": "Gene file library and AI assistant",
+    "tut.snapgene.7.desc":
+      "Index plasmid files scattered across folders (index only — original files are never touched), let AI generate property tags automatically, and watch folders to pick up new files. The AI assistant finds files from a one-sentence description and answers questions about common features.",
+    "tut.snapgene.7.shot": "Gene file library: AI-generated tags, search plasmids by tag or project",
+    "tut.snapgene.8.name": "Languages and \"Open with\"",
+    "tut.snapgene.8.desc":
+      "Six built-in interface languages (Chinese, English, Japanese, French, German, Russian) plus AI-translated packs for any language; right-click to hand the current file to SnapGene, VS Code or any designated tool at any time — GenePad fills the gaps without taking over.",
+    "tut.snapgene.8.shot1": "Language settings: six built-in languages, import or AI-generate language packs",
+    "tut.snapgene.8.shot2": "\"Open with\": hand files to SnapGene, VS Code and other tools in one click",
+    "tut.snapgene.note":
+      "Licensing: GenePad is in a free public beta; after the beta, existing features such as map viewing, editing and saving remain free. Academic users (universities, hospital groups, iGEM, students) automatically have free usage through December 31, 2027 — no application needed; commercial use will be covered by the upcoming GenePad Pro. Molecular cloning in the toolbox already ships with partial functionality, with the full workflow still in development.",
 
     "tut.final.title": "Everything in these tutorials is built into GenePad — no separate software",
     "tut.final.desc":

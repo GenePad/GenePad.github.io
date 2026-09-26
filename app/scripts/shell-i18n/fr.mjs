@@ -65,7 +65,12 @@ export default {
       description:
         "Tutoriel GenePad pas à pas : ouvrez Réglages → Language → AI Translate, saisissez une langue cible (français, russe, et plus encore) et l’IA configurée génère le paquet de langue puis bascule toute l’interface — les textes longs sont traduits par segments avec relances automatiques, et les paquets s’exportent et se corrigent à la main. Chaque étape illustrée par de véritables captures d’écran.",
     },
-    "tutorial-langpack": {
+        "tutorial-snapgene": {
+      title: "Alternative à SnapGene - GenePad | Éditeur de cartes plasmidiques gratuit et multiplateforme",
+      description:
+        "Guide GenePad pour quitter SnapGene : vos fichiers .dna s’ouvrent et s’enregistrent directement ; cartes, sites de restriction, amorces et alignement Sanger fonctionnent comme attendu — plus la consultation NGS, la bibliothèque de fichiers, l’assistant IA et une interface en six langues. Bêta publique gratuite sur Windows, macOS, Linux et Android, avec « Ouvrir avec » pour rendre la main à SnapGene à tout moment.",
+    },
+"tutorial-langpack": {
       title: "Tutoriel langue de l’interface - GenePad | Langues intégrées et paquets officiels",
       description:
         "Tutoriel GenePad sur la langue de l’interface : ouvrez Réglages → Language pour basculer entre le chinois et l’anglais intégrés, ou importez via « Import Language File » un paquet officiel (allemand, russe, japonais, coréen, français) — toute l’interface bascule aussitôt, sans configuration. Pas à pas illustré, les cinq paquets officiels en téléchargement.",

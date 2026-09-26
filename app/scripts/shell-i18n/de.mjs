@@ -65,7 +65,12 @@ export default {
       description:
         "GenePad-Tutorial Schritt für Schritt: Einstellungen → Language → AI Translate öffnen, eine Zielsprache eingeben (Französisch, Russisch und mehr), und die konfigurierte KI erzeugt das Sprachpaket und stellt die gesamte Oberfläche um — lange Texte werden abschnittsweise mit automatischen Wiederholungen übersetzt, Pakete lassen sich exportieren und von Hand bearbeiten. Jeder Schritt mit echten Screenshots illustriert.",
     },
-    "tutorial-langpack": {
+        "tutorial-snapgene": {
+      title: "SnapGene-Alternative - GenePad | Kostenloser Plasmidkarten-Editor für alle Plattformen",
+      description:
+        "GenePad-Leitfaden für den Wechsel von SnapGene: SnapGene-.dna-Plasmiddateien lassen sich direkt öffnen und speichern; Karten, Restriktionsschnitte, Primer und Sanger-Alignment verhalten sich wie gewohnt — dazu NGS-Datenansicht, Gen-Dateibibliothek, KI-Assistent und eine sechssprachige Oberfläche. Kostenlose öffentliche Beta für Windows, macOS, Linux und Android, mit „Öffnen mit“ jederzeit zurück zu SnapGene.",
+    },
+"tutorial-langpack": {
       title: "Sprache der Oberfläche einstellen - GenePad | Eingebaute Sprachen & offizielle Sprachpakete",
       description:
         "GenePad-Tutorial zur Sprache der Oberfläche: Öffnen Sie Einstellungen → Language, um zwischen den eingebauten Sprachen Chinesisch/Englisch zu wechseln, oder importieren Sie über „Import Language File“ ein offizielles Sprachpaket (Deutsch, Russisch, Japanisch, Koreanisch, Französisch) — die gesamte Oberfläche wechselt sofort, ohne Konfiguration. Schritt für Schritt mit Screenshots; alle fünf offiziellen Pakete stehen zum Download bereit.",

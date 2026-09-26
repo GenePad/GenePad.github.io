@@ -520,6 +520,10 @@ const ko: Record<TKey, ReactNode> = {
   "tut.toc.langpack.desc":
     "설정 → Language 열기: 내장 중국어·영어는 한 번의 클릭으로 전환하고, 공식 언어 팩을 가져오면 독일어·러시아어·일본어·한국어·프랑스어 화면을 쓸 수 있습니다.",
   "tut.toc.langpack.en": "UI LANGUAGE",
+  "tut.cat.switch.name": "전환 가이드",
+  "tut.cat.switch.en": "SWITCHING GUIDES",
+  "tut.cat.switch.desc": "SnapGene 등에서 GenePad로 워크플로를 옮기는 방법: 파일이 호환되고 일상 작업도 그대로 — 둘 중 하나만 쓸 필요는 없습니다",
+
   "tut.cat.gs.name": "빠른 시작",
   "tut.cat.gs.en": "GETTING STARTED",
   "tut.cat.gs.desc": "처음이라면 순서대로 진행하세요. 먼저 AI를 연결하고, 그다음 플라스미드 파일을 라이브러리로 관리합니다.",
@@ -528,8 +532,8 @@ const ko: Record<TKey, ReactNode> = {
   "tut.cat.analysis.desc": "시퀀싱 데이터의 열람, 검색, 정량 분석.",
 
   // 튜토리얼 1: AI 설정
-  "tut.ai.head": "튜토리얼 1 · AI 설정",
-  "tut.ai.headEn": "TUTORIAL 1 · SET UP DEEPSEEK",
+  "tut.ai.head": "튜토리얼 2 · AI 설정",
+  "tut.ai.headEn": "TUTORIAL 2 · SET UP DEEPSEEK",
   "tut.ai.title": "다섯 단계로 DeepSeek를 연결해 AI 어시스턴트와 자동 태그 열기",
   "tut.ai.lead":
     "AI 어시스턴트와 플라스미드 자동 태그는 대형 언어 모델이 구동하며 DeepSeek를 권장합니다. 아래 다섯 단계를 마치면 자연어로 서열과 주석을 다룰 수 있고, 플라스미드를 라이브러리에 넣거나 열 때도 특성 태그가 자동 생성됩니다.",
@@ -553,8 +557,8 @@ const ko: Record<TKey, ReactNode> = {
     "한 번만 설정하면 계속 쓸 수 있고 키는 로컬에만 저장됩니다. 이후 환영 화면과 작업 화면의 AI 아이콘으로 바로 대화할 수 있으며, 열거나 라이브러리에 넣은 플라스미드에도 특성 태그가 자동 생성됩니다.",
 
   // 튜토리얼 2: 유전자 파일 라이브러리
-  "tut.lib.head": "튜토리얼 2 · 유전자 파일 라이브러리",
-  "tut.lib.headEn": "TUTORIAL 2 · GENE FILE LIBRARY",
+  "tut.lib.head": "튜토리얼 3 · 유전자 파일 라이브러리",
+  "tut.lib.headEn": "TUTORIAL 3 · GENE FILE LIBRARY",
   "tut.lib.title": "수백 개 플라스미드를 검색 가능한 하나의 라이브러리로",
   "tut.lib.lead":
     "유전자 파일 라이브러리는 도구 상자에 있습니다. 파일을 이동하거나 복사하지 않고 흩어진 플라스미드에 통합 색인만 만들어 줍니다. 아래 단계는 자동 수집부터 속성 한마디로 목표 플라스미드를 찾는 것까지 이어집니다.",
@@ -577,8 +581,8 @@ const ko: Record<TKey, ReactNode> = {
     "파일 라이브러리는 색인일 뿐 원본 파일을 수정하지 않습니다. AI를 설정하지 않아도 수집과 열람에는 영향이 없으며 자동 태그와 AI 검색만 사용할 수 없습니다.",
 
   // 튜토리얼 3: NGS 파일 분석
-  "tut.ngs.head": "튜토리얼 3 · NGS 파일 분석",
-  "tut.ngs.headEn": "TUTORIAL 3 · NGS ANALYSIS",
+  "tut.ngs.head": "튜토리얼 4 · NGS 파일 분석",
+  "tut.ngs.headEn": "TUTORIAL 4 · NGS ANALYSIS",
   "tut.ngs.title": "fastq.gz부터 라이브러리 풍부도 리포트까지",
   "tut.ngs.lead":
     "명령줄 없이 시퀀싱 파일을 창으로 끌어다 놓으면 시작됩니다. 아래 여섯 단계가 열기, 페어링, 품질 검사, 검색, 절단, 풍부도 분석의 전 과정을 커버하며, 글 끝에는 전체 조작 비디오가 붙어 있습니다.",
@@ -602,8 +606,8 @@ const ko: Record<TKey, ReactNode> = {
     "'Sequence analysis'를 클릭합니다. 파일 전체에서 고유 서열마다 출현 횟수와 빈도를 집계하고 Top 서열 히스토그램과 항목별 상세를 생성하며, 전체 표는 CSV로 내보내 Excel에서 바로 열 수 있습니다. 간단한 라이브러리 풍부도 리포트가 이것으로 완성됩니다.",
 
   // 튜토리얼 4: 원하는 언어 설정
-  "tut.lang.head": "튜토리얼 4 · 원하는 언어 설정",
-  "tut.lang.headEn": "TUTORIAL 4 · ANY LANGUAGE",
+  "tut.lang.head": "튜토리얼 5 · 원하는 언어 설정",
+  "tut.lang.headEn": "TUTORIAL 5 · ANY LANGUAGE",
   "tut.lang.title": "AI 번역으로 인터페이스를 원하는 언어로",
   "tut.lang.lead":
     "GenePad는 중국어와 영어 인터페이스가 내장되어 있으며, 다른 언어는 공식 지원을 기다릴 필요가 없습니다. 설정 → Language를 열고 'AI Translate'를 클릭한 뒤 목표 언어를 입력하면 언어 팩이 자동 생성되어 적용됩니다. 먼저 튜토리얼 1로 AI 설정을 마쳐 주세요.",
@@ -629,8 +633,8 @@ const ko: Record<TKey, ReactNode> = {
     "AI 번역은 내장 중국어 언어 파일을 원본으로 사용합니다. 일부 항목이 부정확하면 언어 파일을 내보내 수동으로 수정한 뒤 다시 가져올 수 있습니다.",
 
   // 튜토리얼 5: UI 언어 설정(내장 언어 전환 + 공식 언어 팩 가져오기)
-  "tut.langpack.head": "튜토리얼 5 · UI 언어 설정",
-  "tut.langpack.headEn": "TUTORIAL 5 · UI LANGUAGE",
+  "tut.langpack.head": "튜토리얼 6 · UI 언어 설정",
+  "tut.langpack.headEn": "TUTORIAL 6 · UI LANGUAGE",
   "tut.langpack.title": "두 단계로 화면을 원하는 언어로 바꾸기",
   "tut.langpack.lead":
     "GenePad에는 중국어와 영어 화면이 내장되어 있습니다. 독일어·러시아어·일본어·한국어·프랑스어는 공식 언어 팩으로 제공됩니다 — 다운로드 후 설정에서 가져오기만 하면 되며 추가 설정이 필요 없습니다. AI 번역으로 만든 사용자 지정 언어 팩도 같은 절차로 사용할 수 있습니다.",
@@ -660,6 +664,55 @@ const ko: Record<TKey, ReactNode> = {
   "tut.langpack.dl.btn": "내려받기",
   "tut.langpack.note":
     "언어 팩에는 화면 텍스트만 들어 있으며 서열이나 파일 데이터는 포함되지 않습니다. 공식 팩은 버전마다 갱신되므로 새 파일을 다시 가져오면 최신 상태가 됩니다. 다른 언어가 필요하신가요? 튜토리얼 4에서 AI 번역으로 어떤 언어의 팩이든 만들 수 있습니다.",
+
+  // 튜토리얼 1: SnapGene에서 전환 (마이그레이션 카테고리, 허브 페이지 최상단)
+  "title.tutorial.snapgene": "SnapGene 대안 가이드 - GenePad | 무료 크로스플랫폼 플라스미드 지도 편집기",
+  "tut.toc.snapgene.name": "SnapGene에서 갈아타기",
+  "tut.toc.snapgene.desc":
+    "기존 .dna 파일을 바로 읽고 쓰고, 지도·제한효소 부위·Sanger 정렬까지 일상 워크플로를 그대로 커버 — NGS, 유전자 파일 라이브러리 등 고유 기능도",
+  "tut.toc.snapgene.en": "SWITCH FROM SNAPGENE",
+  "tut.snapgene.head": "튜토리얼 1 · SnapGene 대안 가이드",
+  "tut.snapgene.headEn": "TUTORIAL 1 · SNAPGENE ALTERNATIVE",
+  "tut.snapgene.title": "SnapGene에서 GenePad로: 워크플로 마이그레이션 가이드",
+  "tut.snapgene.lead":
+    "SnapGene을 쓰고 계신가요? 이 가이드는 GenePad가 일상 업무를 어디까지 대신할 수 있는지 정리합니다. 기존 .dna 파일을 그대로 읽고 저장하며, 지도·제한효소 부위·프라이머·Sanger 정렬도 익숙하게 동작합니다. 게다가 NGS 데이터 보기·유전자 파일 라이브러리·AI 어시스턴트 같은 SnapGene에 없는 기능도 있습니다. 둘 중 하나만 쓸 필요는 없습니다 — GenePad의 「다른 프로그램으로 열기」로 언제든 파일을 SnapGene에 넘길 수 있습니다.",
+  "tut.snapgene.1.name": "기존 .dna 파일 바로 열기",
+  "tut.snapgene.1.desc":
+    "SnapGene의 .dna 플라스미드 파일을 GenePad로 끌어다 놓기만 하면 열립니다: 주 서열·토폴로지·feature·프라이머·notes를 그대로 읽어 들이고, 편집 후에도 .dna로 저장할 수 있어 SnapGene을 계속 쓰는 선생님이나 동료에게 넘겨도 형식 문제가 없습니다.",
+  "tut.snapgene.1.shot": "Addgene에서 내려받은 .dna 플라스미드를 바로 연 화면: 원형/선형 전환, feature를 카테고리별로 착색",
+  "tut.snapgene.2.name": "지도·서열·제한효소 부위",
+  "tut.snapgene.2.desc":
+    "지도와 서열 뷰가 양방향으로 연동됩니다: 주석 표에서 항목을 선택하면 서열 뷰가 해당 염기 구간으로 이동하며 선택 길이·GC 함량·Tm을 함께 보여줍니다. 제한효소 부위는 이중가닥 서열 위에 직접 표시되고, 호버하면 인식 서열·가닥 방향·위아래 절단 위치·5′ 점진 말단을 확인할 수 있습니다.",
+  "tut.snapgene.2.shot1": "주석 표에서 항목을 선택하면 서열 뷰가 이동하며 길이·GC 함량·Tm 표시",
+  "tut.snapgene.2.shot2": "제한효소 부위 호버 정보: 인식 서열·절단 위치·5′ 점진 말단",
+  "tut.snapgene.3.name": "Sanger 시퀀싱 비교",
+  "tut.snapgene.3.desc":
+    "AB1 피크 파일을 가져오면 크로마토그램·리드·참조 서열을 염기 단위로 정렬하고, 일치율과 E값을 보여주며 미스매치 부위를 빨간색으로 표시합니다.",
+  "tut.snapgene.3.shot": "AB1 트레이스를 참조 서열과 염기 단위로 정렬, 미스매치는 빨간색 표시",
+  "tut.snapgene.4.name": "공통 엘리먼트 인식과 sgRNA 설계",
+  "tut.snapgene.4.desc":
+    "지도를 열면 프로모터·내성 유전자·복제 시작점 등이 자동으로 주석됩니다(내장 엘리먼트 라이브러리는 20개 카테고리, 모든 항목에 NCBI 등록번호 기록). 서열을 선택하고 오른쪽 클릭만으로 sgRNA를 설계할 수 있습니다: SpCas9·xCas9·Cas12a/b·TnpB 등 12가지 인식 레이아웃, PAM 방향·시드 길이·오프타깃 필터를 설정할 수 있고 후보는 원클릭으로 지도에 주석으로 돌아옵니다.",
+  "tut.snapgene.4.shot": "오른쪽 클릭 메뉴에서 바로 sgRNA 설계: 12가지 인식 레이아웃, 후보는 원클릭으로 지도에 주석",
+  "tut.snapgene.5.name": "전기영동 시뮬레이션과 단백질 특성",
+  "tut.snapgene.5.desc":
+    "아가로스 젤과 SDS-PAGE를 모두 시뮬레이션합니다: Trans2K® 등 주요 분자량 마커가 내장되어 전기영동 전에 밴드 위치를 예측할 수 있습니다. CDS를 선택하면 분자량·등전점(19가지 알고리즘)·GRAVY·지방족 지수·소광계수를 실시간으로 계산합니다.",
+  "tut.snapgene.5.shot1": "DNA 전기영동 시뮬레이션: Trans2K® 마커, 제한효소 소화나 PCR 산물을 레인으로 추가",
+  "tut.snapgene.5.shot2": "단백질 특성 패널: 분자량·등전점·GRAVY·지방족 지수·소광계수",
+  "tut.snapgene.6.name": "NGS 데이터 보기",
+  "tut.snapgene.6.desc":
+    "fastq.gz / fastq / fq.gz / fq 파일을 바로 열 수 있습니다(gzip 압축 해제 불필요). 페어엔드 R1/R2를 자동으로 페어링해 리드 단위로 이어 붙이고, 염기마다 Phred 품질로 착색합니다. 아미노산 단위 검색·앵커 일괄 절단·라이브러리 풍도 보고서(CSV 내보내기)도 지원합니다.",
+  "tut.snapgene.6.shot": "페어 리드를 하나씩 이어 붙이고 염기별로 품질 착색, 오른쪽에 통계 요약",
+  "tut.snapgene.7.name": "유전자 파일 라이브러리와 AI 어시스턴트",
+  "tut.snapgene.7.desc":
+    "여기저기 흩어진 플라스미드 파일을 하나의 인덱스로 묶습니다(인덱스만 만들고 원본 파일은 건드리지 않습니다). AI가 서열과 주석으로 성질 태그를 자동 생성하고, 감시 폴더가 새 파일을 자동 수집합니다. AI 어시스턴트는 한 문장으로 파일을 찾아 주고 공통 엘리먼트에 대한 질문에도 답합니다.",
+  "tut.snapgene.7.shot": "유전자 파일 라이브러리: AI가 태그 일괄 생성, 태그나 프로젝트로 플라스미드 검색",
+  "tut.snapgene.8.name": "다국어와 「다른 프로그램으로 열기」",
+  "tut.snapgene.8.desc":
+    "중국어·영어·일본어·프랑스어·독일어·러시아어 6개 언어가 내장되어 있고 AI 번역으로 임의 언어를 추가할 수 있습니다. 오른쪽 클릭으로 언제든 파일을 SnapGene·VS Code 등 지정한 프로그램에 넘길 수 있습니다 — GenePad는 대체가 아니라 보완입니다.",
+  "tut.snapgene.8.shot1": "언어 설정: 6개 언어 내장, 언어 팩 가져오기 및 AI 생성 지원",
+  "tut.snapgene.8.shot2": "「다른 프로그램으로 열기」: SnapGene·VS Code 등으로 원클릭 전달",
+  "tut.snapgene.note":
+    "라이선스: GenePad는 현재 무료 공개 베타입니다. 베타가 끝난 뒤에도 지도 보기·편집·저장 등 기존 기능은 계속 무료입니다. 학술 사용자(대학·병원 연구실·iGEM·학생)는 2027년 12월 31일까지 자동으로 무료 이용이 허가되며 신청이 필요 없습니다. 상업적 이용은 추후 출시될 GenePad Pro가 담당합니다. 툴박스의 Molecular Cloning은 일부 기능이 먼저 공개되어 있으며 전체 워크플로는 개발 중입니다.",
 
   "tut.final.title": "튜토리얼의 기능은 모두 GenePad에 내장되어 있으며 별도 소프트웨어가 아닙니다",
   "tut.final.desc":

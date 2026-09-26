@@ -35,6 +35,7 @@ const ROOT_PATHS = [
   "/library",
   "/ngs",
   "/tutorial",
+  "/tutorial-snapgene",
   "/tutorial-ai",
   "/tutorial-library",
   "/tutorial-ngs",

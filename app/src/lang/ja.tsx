@@ -524,6 +524,10 @@ const ja: Record<TKey, ReactNode> = {
   "tut.toc.langpack.desc":
     "設定 → Language を開く：内蔵の中国語・英語はワンクリックで切り替え、公式言語パックを読み込めばドイツ語・ロシア語・日本語・韓国語・フランス語の画面になります。",
   "tut.toc.langpack.en": "UI LANGUAGE",
+  "tut.cat.switch.name": "移行ガイド",
+  "tut.cat.switch.en": "SWITCHING GUIDES",
+  "tut.cat.switch.desc": "SnapGene などからの移行を解説：ファイルは相互運用、日々の作業もそのまま。どちらか一方だけを選ぶ必要はありません",
+
   "tut.cat.gs.name": "はじめに",
   "tut.cat.gs.en": "GETTING STARTED",
   "tut.cat.gs.desc": "初心者は順番に進めるのがおすすめ：まず AI に接続し、次にプラスミッドファイルを管理します。",
@@ -531,9 +535,9 @@ const ja: Record<TKey, ReactNode> = {
   "tut.cat.analysis.en": "DATA ANALYSIS",
   "tut.cat.analysis.desc": "配列データの閲覧・検索・定量解析。",
 
-  // チュートリアル 1：AI を設定
-  "tut.ai.head": "チュートリアル 1 · AI を設定する",
-  "tut.ai.headEn": "TUTORIAL 1 · SET UP DEEPSEEK",
+  // チュートリアル 2：AI を設定
+  "tut.ai.head": "チュートリアル 2 · AI を設定する",
+  "tut.ai.headEn": "TUTORIAL 2 · SET UP DEEPSEEK",
   "tut.ai.title": "5 つの手順で DeepSeek に接続し、AI アシスタントと自動タグを使えるようにする",
   "tut.ai.lead":
     "AI アシスタントとプラスミッド自動タグは大規模言語モデルによって動いており、DeepSeek の利用をおすすめします。以下の 5 つの手順を終えれば、自然言語で配列や注釈を操作でき、プラスミッドも取り込み時や開いたときに自動で性質タグが付けられます。",
@@ -556,9 +560,9 @@ const ja: Record<TKey, ReactNode> = {
   "tut.ai.note":
     "1 回設定すれば長く使え、キーはローカルにのみ保存されます。以後、ようこそ画面と作業画面の AI アイコンから直接対話でき、開いたり取り込んだりしたプラスミッドにも自動で性質タグが付けられます。",
 
-  // チュートリアル 2：遺伝子ファイルライブラリ
-  "tut.lib.head": "チュートリアル 2 · 遺伝子ファイルライブラリ",
-  "tut.lib.headEn": "TUTORIAL 2 · GENE FILE LIBRARY",
+  // チュートリアル 3：遺伝子ファイルライブラリ
+  "tut.lib.head": "チュートリアル 3 · 遺伝子ファイルライブラリ",
+  "tut.lib.headEn": "TUTORIAL 3 · GENE FILE LIBRARY",
   "tut.lib.title": "数百件のプラスミッドを、検索可能なライブラリとして管理する",
   "tut.lib.lead":
     "遺伝子ファイルライブラリはツールボックスにあります：ファイルを移動もコピーもせず、各所に散在するプラスミッドの統一索引を作るだけです。以下の手順は、自動取り込みから、属性を一言で伝えて目的のプラスミッドを特定するところまでを扱います。",
@@ -580,9 +584,9 @@ const ja: Record<TKey, ReactNode> = {
   "tut.lib.note":
     "ファイルライブラリは索引に過ぎず、元のファイルは変更しません。AI を設定しなくても取り込みと閲覧には影響せず、自動タグと AI 検索だけが使えなくなります。",
 
-  // チュートリアル 3：NGS ファイル解析
-  "tut.ngs.head": "チュートリアル 3 · NGS ファイル解析",
-  "tut.ngs.headEn": "TUTORIAL 3 · NGS ANALYSIS",
+  // チュートリアル 4：NGS ファイル解析
+  "tut.ngs.head": "チュートリアル 4 · NGS ファイル解析",
+  "tut.ngs.headEn": "TUTORIAL 4 · NGS ANALYSIS",
   "tut.ngs.title": "fastq.gz からライブラリ豊度レポートまで",
   "tut.ngs.lead":
     "コマンドライン不要。シークエンスファイルをウィンドウにドラッグするだけで開始できます。以下の 6 つの手順で、開く・ペアリング・品質確認・検索・トリミング・豊度解析の完全な流れを扱い、ページ末尾に完全な操作動画を付けています。",
@@ -605,9 +609,9 @@ const ja: Record<TKey, ReactNode> = {
   "tut.ngs.6.desc":
     "Sequence analysis をクリック：ファイル全体で各ユニーク配列の出現回数と頻度を集計し、上位配列のヒストグラムと各配列の明細を生成、完全な表は CSV として書き出され、Excel でそのまま開けます。これで簡単なライブラリ豊度レポートが完成です。",
 
-  // チュートリアル 4：任意の言語を設定
-  "tut.lang.head": "チュートリアル 4 · 任意の言語を設定",
-  "tut.lang.headEn": "TUTORIAL 4 · ANY LANGUAGE",
+  // チュートリアル 5：任意の言語を設定
+  "tut.lang.head": "チュートリアル 5 · 任意の言語を設定",
+  "tut.lang.headEn": "TUTORIAL 5 · ANY LANGUAGE",
   "tut.lang.title": "AI 翻訳で UI を任意の言語に切り替える",
   "tut.lang.lead":
     "GenePad には中国語と英語の UI が内蔵されていますが、他の言語は公式対応を待つ必要がありません：設定 → Language を開き、「AI Translate」をクリックし、目的の言語を入力するだけで、言語パックを自動生成して適用します。先にチュートリアル 1 で AI の設定を終えてください。",
@@ -632,9 +636,9 @@ const ja: Record<TKey, ReactNode> = {
   "tut.lang.note":
     "AI 翻訳は内蔵の中国語言語ファイルを原文とします。個々の語句が正確でない場合は、言語ファイルを書き出して手元で修正し、再度読み込んでください。",
 
-  // チュートリアル 5：UI 言語の設定（内蔵言語の切り替え + 公式言語パックの読み込み）
-  "tut.langpack.head": "チュートリアル 5 · UI 言語を設定",
-  "tut.langpack.headEn": "TUTORIAL 5 · UI LANGUAGE",
+  // チュートリアル 6：UI 言語の設定（内蔵言語の切り替え + 公式言語パックの読み込み）
+  "tut.langpack.head": "チュートリアル 6 · UI 言語を設定",
+  "tut.langpack.headEn": "TUTORIAL 6 · UI LANGUAGE",
   "tut.langpack.title": "2 つの手順で UI をあなたの言語に",
   "tut.langpack.lead":
     "GenePad には中国語と英語の画面が内蔵されています。ドイツ語・ロシア語・日本語・韓国語・フランス語は公式言語パックで提供 — ダウンロードして設定から読み込むだけで、追加の設定は不要です。AI 翻訳で作った独自の言語パックも同じ手順で使えます。",
@@ -664,6 +668,55 @@ const ja: Record<TKey, ReactNode> = {
   "tut.langpack.dl.btn": "ダウンロード",
   "tut.langpack.note":
     "言語パックには画面の文字列のみが含まれ、配列やファイルのデータは含まれません。公式パックはバージョンごとに更新されるため、新しいファイルを読み込み直せば最新になります。他の言語が必要ですか？チュートリアル 4 で AI 翻訳により任意の言語パックを生成できます。",
+
+  // チュートリアル 2：SnapGene からの移行（移行カテゴリー、ハブページの先頭）
+  "title.tutorial.snapgene": "SnapGene 代替ガイド - GenePad | 無料のクロスプラットフォーム プラスミッドマップ編集ツール",
+  "tut.toc.snapgene.name": "SnapGene から乗り換える",
+  "tut.toc.snapgene.desc":
+    "既存の .dna ファイルを直接読み書きし、マップ・制限酵素部位・Sanger 比較まで日々の作業をカバー。さらに NGS や遺伝子ファイルライブラリなど独自機能も",
+  "tut.toc.snapgene.en": "SWITCH FROM SNAPGENE",
+  "tut.snapgene.head": "チュートリアル 1 · SnapGene 代替ガイド",
+  "tut.snapgene.headEn": "TUTORIAL 1 · SNAPGENE ALTERNATIVE",
+  "tut.snapgene.title": "SnapGene から GenePad へ：作業の流れの移行ガイド",
+  "tut.snapgene.lead":
+    "SnapGene を使っていますか？このガイドでは、GenePad が日々の作業のどこまで引き受けられるかを解説します：既存の .dna ファイルはそのまま読み書きでき、マップ・制限酵素部位・プライマー・Sanger 比較も直感的に操作できます。さらに NGS データ閲覧・遺伝子ファイルライブラリ・AI アシスタントなど、SnapGene にない機能も。両者は排他的ではありません — GenePad の「Open with」から、いつでもファイルを SnapGene に渡せます。",
+  "tut.snapgene.1.name": "既存の .dna ファイルをそのまま開く",
+  "tut.snapgene.1.desc":
+    "SnapGene の .dna プラスミドファイルを GenePad にドラッグするだけで開けます：主配列・トポロジー・注釈・プライマー・notes をそのまま読み込み、編集後も .dna として保存できるため、SnapGene を使い続ける先生や同僚に渡しても形式の問題はありません。",
+  "tut.snapgene.1.shot": "Addgene から入手した .dna プラスミドを直接開いた画面：環状/線状の切り替え、注釈は分類ごとに色分け",
+  "tut.snapgene.2.name": "マップ・配列・制限酵素サイト",
+  "tut.snapgene.2.desc":
+    "マップと配列は双方向に連動：注釈表で項目を選ぶと配列ビューが該当塩基へ移動し、選択範囲の長さ・GC 含量・Tm を表示します。制限酵素部位は二本鎖配列上に直接表示され、カーソルを合わせると認識配列・鎖の向き・上下の鎖の切断位置・5′ 突出末端を確認できます。",
+  "tut.snapgene.2.shot1": "注釈表で選択すると配列ビューが移動し、長さ・GC 含量・Tm を表示",
+  "tut.snapgene.2.shot2": "制限酵素部位にカーソルを合わせたときの情報：認識配列・切断位置・5′ 突出末端",
+  "tut.snapgene.3.name": "Sanger シークエンシングの比較",
+  "tut.snapgene.3.desc":
+    "AB1 トレースファイルを読み込むと、クロマトグラム・reads・参照配列を塩基ごとに整列。一致率と E-value を表示し、ミスマッチ部位は赤で強調します。",
+  "tut.snapgene.3.shot": "AB1 トレースを参照配列と塩基ごとに整列、ミスマッチは赤表示",
+  "tut.snapgene.4.name": "共通要素の認識と sgRNA 設計",
+  "tut.snapgene.4.desc":
+    "マップを開くとプロモーター・耐性遺伝子・複製起点などが自動で注釈されます（内蔵要素ライブラリは 20 分類、全エントリーに NCBI アクセッション番号を記録）。配列を選んで右クリックするだけで sgRNA を設計：SpCas9・xCas9・Cas12a/b・TnpB など 12 種類の認識様式に対応し、PAM の向き・シード領域の長さ・オフターゲットの除外条件を設定でき、候補はワンクリックでマップに注釈として書き戻せます。",
+  "tut.snapgene.4.shot": "右クリックメニューから直接 sgRNA 設計：12 種類の認識様式、候補はワンクリックでマップへ",
+  "tut.snapgene.5.name": "電気泳動シミュレーションとタンパク質の物性",
+  "tut.snapgene.5.desc":
+    "アガロースゲルと SDS-PAGE の両方に対応：Trans2K® などの分子量マーカーを内蔵し、泳動前にバンド位置を予測できます。CDS を選ぶと分子量・等電点（19 種類の計算法）・GRAVY・脂肪族指数・モル吸光係数をリアルタイムに計算します。",
+  "tut.snapgene.5.shot1": "DNA 電気泳動シミュレーション：Trans2K® マーカー、制限消化や PCR 産物をレーンに追加",
+  "tut.snapgene.5.shot2": "タンパク質の物性欄：分子量・等電点・GRAVY・脂肪族指数・モル吸光係数",
+  "tut.snapgene.6.name": "NGS データの閲覧",
+  "tut.snapgene.6.desc":
+    "fastq.gz / fastq / fq.gz / fq を直接開けます（gzip 展開不要）。ペアエンドの R1/R2 を自動ペアリングして 1 read ずつ結合し、各塩基を Phred 品質で色分け。アミノ酸配列での検索・アンカーによる一括トリミング・ライブラリ豊度レポート（CSV 出力）にも対応します。",
+  "tut.snapgene.6.shot": "ペア read を 1 本ずつ結合、塩基ごとに品質で色分け、右側はファイル統計",
+  "tut.snapgene.7.name": "遺伝子ファイルライブラリと AI アシスタント",
+  "tut.snapgene.7.desc":
+    "フォルダに散らばったプラスミドファイルを一つの索引にまとめます（索引を作るだけで元のファイルは変更しません）。AI が配列と注釈から性質タグを自動生成し、監視フォルダは新しいファイルを自動で取り込みます。AI アシスタントは一文でファイルを検索し、共通要素についての質問にも答えます。",
+  "tut.snapgene.7.shot": "遺伝子ファイルライブラリ：AI がタグを一括生成、タグやプロジェクトでプラスミドを検索",
+  "tut.snapgene.8.name": "多言語と「別のプログラムで開く」",
+  "tut.snapgene.8.desc":
+    "中国語・英語・日本語・フランス語・ドイツ語・ロシア語の 6 か国語を内蔵し、AI 翻訳で任意の言語を追加可能。右クリックからいつでもファイルを SnapGene・VS Code など指定したアプリに渡せます — GenePad は奪うのではなく補完します。",
+  "tut.snapgene.8.shot1": "言語設定：6 か国語を内蔵、言語パックの読み込みと AI 生成に対応",
+  "tut.snapgene.8.shot2": "「別のプログラムで開く」：SnapGene・VS Code などへワンクリックで受け渡し",
+  "tut.snapgene.note":
+    "ライセンス：GenePad は現在無料の公開ベータです。ベータ終了後も、マップの閲覧・編集・保存など既存機能は引き続き無料でご利用いただけます。学術ユーザー（大学・病院の研究室・iGEM・学生）は 2027 年 12 月 31 日まで自動的に無料で利用でき、申請は不要です。商用利用は今後提供予定の GenePad Pro が対象になります。ツールボックスの「Molecular Cloning」は一部機能を先行提供中で、作業の流れ全体は開発中です。",
 
   "tut.final.title": "チュートリアルで扱う機能はすべて GenePad に内蔵されており、単体のソフトウェアではありません",
   "tut.final.desc":

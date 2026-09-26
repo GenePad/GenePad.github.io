@@ -522,6 +522,10 @@ const de: Record<TKey, ReactNode> = {
   "tut.toc.langpack.desc":
     "Einstellungen → Language öffnen: zwischen den eingebauten Sprachen Chinesisch/Englisch per Klick wechseln oder ein offizielles Sprachpaket für Deutsch, Russisch, Japanisch, Koreanisch oder Französisch importieren.",
   "tut.toc.langpack.en": "UI LANGUAGE",
+  "tut.cat.switch.name": "Umstieg",
+  "tut.cat.switch.en": "SWITCHING GUIDES",
+  "tut.cat.switch.desc": "Bestehende SnapGene-Workflows zu GenePad übertragen: Dateien interoperabel, Alltag übernommen, kein Entweder-oder",
+
   "tut.cat.gs.name": "Erste Schritte",
   "tut.cat.gs.en": "ERSTE SCHRITTE",
   "tut.cat.gs.desc": "Der Reihe nach starten: erst die KI anbinden, dann die Plasmid-Dateien in die Bibliothek bringen.",
@@ -529,9 +533,9 @@ const de: Record<TKey, ReactNode> = {
   "tut.cat.analysis.en": "DATENANALYSE",
   "tut.cat.analysis.desc": "Sequenzdaten ansehen, durchsuchen und quantifizieren.",
 
-  // 教程一：配置 AI
-  "tut.ai.head": "Tutorial 1 · KI einrichten",
-  "tut.ai.headEn": "TUTORIAL 1 · DEEPSEEK EINRICHTEN",
+  // 教程二：配置 AI
+  "tut.ai.head": "Tutorial 2 · KI einrichten",
+  "tut.ai.headEn": "TUTORIAL 2 · DEEPSEEK EINRICHTEN",
   "tut.ai.title": "DeepSeek in fünf Schritten anbinden — für KI-Assistenten und automatische Tags",
   "tut.ai.lead":
     "KI-Assistent und automatische Plasmid-Tags werden von einem großen Sprachmodell angetrieben; empfohlen ist DeepSeek. Nach den fünf Schritten unten steuern Sie Sequenzen und Annotationen in natürlicher Sprache, und Plasmide erhalten beim Öffnen oder Aufnehmen automatisch ihre Eigenschafts-Tags.",
@@ -554,9 +558,9 @@ const de: Record<TKey, ReactNode> = {
   "tut.ai.note":
     "Einmal konfiguriert, dauerhaft einsatzbereit — der Schlüssel bleibt ausschließlich auf dem eigenen Rechner. Das KI-Symbol auf der Willkommensseite und im Arbeitsbereich öffnet den Assistenten, und geöffnete oder aufgenommene Plasmide erhalten automatisch ihre Eigenschafts-Tags.",
 
-  // 教程二：基因文件库
-  "tut.lib.head": "Tutorial 2 · Dateibibliothek",
-  "tut.lib.headEn": "TUTORIAL 2 · DATEIBIBLIOTHEK",
+  // 教程三：基因文件库
+  "tut.lib.head": "Tutorial 3 · Dateibibliothek",
+  "tut.lib.headEn": "TUTORIAL 3 · DATEIBIBLIOTHEK",
   "tut.lib.title": "Hunderte Plasmide in einer durchsuchbaren Bibliothek ordnen",
   "tut.lib.lead":
     "Die Dateibibliothek steckt in der Toolbox: Sie verschiebt und kopiert nie etwas, sondern legt über die verstreuten Plasmide einen einzigen Index. Die Schritte unten führen von der automatischen Aufnahme bis zum Auffinden des Zielplasmids mit einem einzigen Satz.",
@@ -578,9 +582,9 @@ const de: Record<TKey, ReactNode> = {
   "tut.lib.note":
     "Die Bibliothek ist nur ein Index — Ihre Dateien bleiben unangetastet. Die KI ist optional: Auch ohne sie funktionieren Aufnahme und Stöbern; nur automatische Tags und KI-Suche entfallen.",
 
-  // 教程三：NGS 文件分析
-  "tut.ngs.head": "Tutorial 3 · NGS-Datenanalyse",
-  "tut.ngs.headEn": "TUTORIAL 3 · NGS-ANALYSE",
+  // 教程四：NGS 文件分析
+  "tut.ngs.head": "Tutorial 4 · NGS-Datenanalyse",
+  "tut.ngs.headEn": "TUTORIAL 4 · NGS-ANALYSE",
   "tut.ngs.title": "Von fastq.gz zum Häufigkeitsbericht der Bibliothek",
   "tut.ngs.lead":
     "Keine Kommandozeile nötig — Sequenzierdateien ins Fenster ziehen und loslegen. Die sechs Schritte unten decken den kompletten Ablauf ab: Öffnen, Paaren, Qualitätsprüfung, Suchen, Trimmen und Häufigkeitsanalyse; am Ende folgt ein vollständiges Video.",
@@ -603,9 +607,9 @@ const de: Record<TKey, ReactNode> = {
   "tut.ngs.6.desc":
     "Auf „Sequence analysis“ klicken: GenePad zählt Vorkommen und Häufigkeit jeder eindeutigen Sequenz über die gesamte Datei, erzeugt ein Histogramm der Top-Sequenzen samt Einzeldetails und exportiert die vollständige Tabelle als CSV, die sich direkt in Excel öffnen lässt. Ein einfacher Häufigkeitsbericht der Bibliothek, fertig.",
 
-  // 教程四：配置任意语言
-  "tut.lang.head": "Tutorial 4 · Beliebige Sprache nutzen",
-  "tut.lang.headEn": "TUTORIAL 4 · BELIEBIGE SPRACHE",
+  // 教程五：配置任意语言
+  "tut.lang.head": "Tutorial 5 · Beliebige Sprache nutzen",
+  "tut.lang.headEn": "TUTORIAL 5 · BELIEBIGE SPRACHE",
   "tut.lang.title": "Die Oberfläche per KI in jede Sprache übersetzen",
   "tut.lang.lead":
     "GenePad bringt chinesische und englische Oberflächen mit — jede weitere Sprache beginnt hier: Einstellungen → Language öffnen, auf „AI Translate“ klicken und die Zielsprache eingeben; das Sprachpaket wird automatisch erzeugt und angewendet. Bitte zuerst Tutorial 1 abschließen, damit die KI konfiguriert ist.",
@@ -630,9 +634,9 @@ const de: Record<TKey, ReactNode> = {
   "tut.lang.note":
     "Die KI-Übersetzung nimmt die eingebaute chinesische Sprachdatei als Quelle; liest sich ein Begriff seltsam, exportieren Sie die Sprachdatei, korrigieren Sie ihn von Hand und importieren Sie sie erneut.",
 
-  // Tutorial 5: Oberflächensprache einstellen (eingebaute Sprachen + offizielle Sprachpakete)
-  "tut.langpack.head": "Tutorial 5 · Sprache der Oberfläche einstellen",
-  "tut.langpack.headEn": "TUTORIAL 5 · UI LANGUAGE",
+  // Tutorial 1: Oberflächensprache einstellen (eingebaute Sprachen + offizielle Sprachpakete)
+  "tut.langpack.head": "Tutorial 6 · Sprache der Oberfläche einstellen",
+  "tut.langpack.headEn": "TUTORIAL 6 · UI LANGUAGE",
   "tut.langpack.title": "In zwei Schritten zur eigenen Sprache",
   "tut.langpack.lead":
     "GenePad bringt chinesische und englische Oberflächen mit; Deutsch, Russisch, Japanisch, Koreanisch und Französisch werden über offizielle Sprachpakete bereitgestellt — herunterladen, in den Einstellungen importieren, fertig. Dieselben Schritte gelten für eigene, per KI-Übersetzung erzeugte Sprachpakete.",
@@ -662,6 +666,55 @@ const de: Record<TKey, ReactNode> = {
   "tut.langpack.dl.btn": "Herunterladen",
   "tut.langpack.note":
     "Sprachpakete enthalten nur Oberflächentexte — niemals Sequenzen oder Dateidaten. Offizielle Pakete werden mit jeder Version aktualisiert; zum Aktualisieren einfach die neue Datei importieren. Weitere Sprache gewünscht? Tutorial 4 erzeugt Sprachpakete für beliebige Sprachen per KI-Übersetzung.",
+
+  // Tutorial 1: Von SnapGene wechseln (Migrationskategorie, auf der Hub-Seite zuerst)
+  "title.tutorial.snapgene": "SnapGene-Alternative - GenePad | Kostenloser Plasmidkarten-Editor für alle Plattformen",
+  "tut.toc.snapgene.name": "Von SnapGene wechseln",
+  "tut.toc.snapgene.desc":
+    "Vorhandene .dna-Dateien direkt öffnen und speichern, den Klonierungs-Alltag vollständig abdecken — dazu NGS, Dateibibliothek und mehr",
+  "tut.toc.snapgene.en": "SWITCH FROM SNAPGENE",
+  "tut.snapgene.head": "Tutorial 1 · Von SnapGene wechseln",
+  "tut.snapgene.headEn": "TUTORIAL 1 · SNAPGENE ALTERNATIVE",
+  "tut.snapgene.title": "Von SnapGene zu GenePad: Leitfaden für den Workflow-Wechsel",
+  "tut.snapgene.lead":
+    "Schon mit SnapGene unterwegs? Dieser Leitfaden zeigt, wie viel Alltag GenePad übernimmt: vorhandene .dna-Dateien lassen sich direkt öffnen und speichern, Karten, Restriktionsschnitte, Primer und Sanger-Alignment verhalten sich wie gewohnt — dazu Fähigkeiten, die SnapGene nicht hat: NGS-Datenansicht, Gen-Dateibibliothek und KI-Assistent. Beide Tools schließen sich nicht aus: Mit „Öffnen mit“ gibt GenePad Dateien jederzeit an SnapGene zurück.",
+  "tut.snapgene.1.name": "Vorhandene .dna-Dateien direkt öffnen",
+  "tut.snapgene.1.desc":
+    "SnapGene-.dna-Plasmiddateien einfach in GenePad ziehen: Hauptsequenz, Topologie, Features, Primer und Notizen werden unverändert eingelesen; bearbeitete Dateien lassen sich wieder als .dna speichern — für Kollegen, die weiter mit SnapGene arbeiten, gibt es kein Formatproblem.",
+  "tut.snapgene.1.shot": "Eine .dna-Plasmiddatei von Addgene direkt geöffnet: Ring/linear per Klick, Features nach Kategorie gefärbt",
+  "tut.snapgene.2.name": "Karte, Sequenz und Restriktionsstellen",
+  "tut.snapgene.2.desc":
+    "Karte und Sequenz sind bidirektional verknüpft: Eintrag in der Annotationstabelle wählen, und die Sequenzansicht springt zum Abschnitt — Länge, GC-Gehalt und Tm werden angezeigt. Schnittstellen liegen direkt auf der Doppelstrang-Sequenz; per Hover erkennt man Erkennungssequenz, Strang, Schnittpositionen und 5′-Überhang.",
+  "tut.snapgene.2.shot1": "Eintrag in der Annotationstabelle gewählt — die Sequenzansicht springt und zeigt Länge, GC-Gehalt und Tm",
+  "tut.snapgene.2.shot2": "Schnitt-Hover-Details: Erkennungssequenz, Schnittpositionen und 5′-Überhang",
+  "tut.snapgene.3.name": "Sanger-Sequenzierung vergleichen",
+  "tut.snapgene.3.desc":
+    "AB1-Chromatogrammdateien importieren: Chromatogramm, Reads und Referenzsequenz werden basenweise ausgerichtet; Übereinstimmungsrate und E-Wert werden angezeigt, Mismatchstellen rot markiert.",
+  "tut.snapgene.3.shot": "AB1-Chromatogramm basenweise mit der Referenz ausgerichtet, Mismatches rot markiert",
+  "tut.snapgene.4.name": "Gängige Elemente und sgRNA-Design",
+  "tut.snapgene.4.desc":
+    "Beim Öffnen der Karte werden Promotoren, Resistenzgene und Origins automatisch markiert — die integrierte Elementbibliothek umfasst 20 Kategorien, jeder Eintrag mit NCBI-Zugangsnummer nachvollziehbar. Sequenz markieren, Rechtsklick, sgRNA entwerfen: 12 Erkennungslayouts inklusive SpCas9, xCas9, Cas12a/b und TnpB; PAM-Richtung, Seed-Länge und Off-Target-Filter sind konfigurierbar, Kandidaten gelangen mit einem Klick zurück auf die Karte.",
+  "tut.snapgene.4.shot": "sgRNA-Design direkt aus dem Kontextmenü: 12 Erkennungslayouts, Kandidaten per Klick auf die Karte",
+  "tut.snapgene.5.name": "Gelelektrophorese-Simulation und Proteineigenschaften",
+  "tut.snapgene.5.desc":
+    "Simulation für Agarosegele und SDS-PAGE: gängige Größenstandards wie Trans2K® sind integriert, Banden lassen sich vor dem Lauf abschätzen. Mit gewählter CDS werden Molekulargewicht, isoelektrischer Punkt (19 Algorithmen), GRAVY, aliphatischer Index und Extinktionskoeffizient in Echtzeit berechnet.",
+  "tut.snapgene.5.shot1": "DNA-Gel-Simulation: Trans2K®-Standard, Verdau- oder PCR-Produkte als Spur",
+  "tut.snapgene.5.shot2": "Proteineigenschaften: Molekulargewicht, pI, GRAVY, aliphatischer Index und Extinktionskoeffizient",
+  "tut.snapgene.6.name": "NGS-Daten ansehen",
+  "tut.snapgene.6.desc":
+    "fastq.gz / fastq / fq.gz / fq direkt öffnen (ohne vorheriges Entpacken): Paired-end R1/R2 werden automatisch gepaart und Read für Read zusammengefügt, jede Base nach Phred-Qualität gefärbt; Suche über Aminosäurefragmente, Trimmen mit Ankern und Bibliotheks-Anreicherungsbericht (CSV-Export).",
+  "tut.snapgene.6.shot": "Paired Reads werden einzeln zusammengefügt, Basen nach Qualität gefärbt, Statistiken rechts",
+  "tut.snapgene.7.name": "Gen-Dateibibliothek und KI-Assistent",
+  "tut.snapgene.7.desc":
+    "Überall verstreute Plasmiddateien in einem Index bündeln (nur Index — Originaldateien bleiben unberührt), die KI erzeugt Eigenschafts-Tags, überwachte Ordner nehmen neue Dateien automatisch auf. Der KI-Assistent findet Dateien nach einem Satz und beantwortet Fragen zu gängigen Elementen.",
+  "tut.snapgene.7.shot": "Gen-Dateibibliothek: KI-Tags, Plasmide nach Tag oder Projekt suchen",
+  "tut.snapgene.8.name": "Sprachen und „Öffnen mit“",
+  "tut.snapgene.8.desc":
+    "Sechs Sprachen bereits integriert (Chinesisch, Englisch, Japanisch, Französisch, Deutsch, Russisch) plus KI-übersetzte Pakete für jede weitere Sprache; per Rechtsklick lassen sich Dateien jederzeit an SnapGene, VS Code oder andere Programme übergeben — GenePad ergänzt, statt zu ersetzen.",
+  "tut.snapgene.8.shot1": "Spracheinstellungen: sechs integrierte Sprachen, Sprachpakete importieren oder per KI erzeugen",
+  "tut.snapgene.8.shot2": "„Öffnen mit“: Dateien per Klick an SnapGene, VS Code und andere Tools übergeben",
+  "tut.snapgene.note":
+    "Lizenz: GenePad befindet sich in der kostenlosen öffentlichen Beta; nach der Beta bleiben bestehende Funktionen wie Ansehen, Bearbeiten und Speichern von Karten kostenlos. Akademische Nutzer (Hochschulen, Krankenhausgruppen, iGEM, Studierende) haben bis zum 31. Dezember 2027 automatisch freien Zugang — keine Anmeldung nötig; die kommerzielle Nutzung wird durch das kommende GenePad Pro abgedeckt. Molekulares Klonen im Werkzeugkasten ist bereits mit Teilen der Funktionalität verfügbar, der komplette Workflow befindet sich noch in Entwicklung.",
 
   "tut.final.title": "Alles aus diesen Tutorials steckt in GenePad — keine Zusatzsoftware",
   "tut.final.desc":

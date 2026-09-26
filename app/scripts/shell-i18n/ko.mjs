@@ -65,7 +65,12 @@ export default {
       description:
         "GenePad 단계별 튜토리얼: 설정 → Language → AI Translate를 열고 목표 언어(프랑스어, 러시아어 등)를 입력하면 설정된 AI가 언어 팩을 생성해 인터페이스 전체를 전환합니다. 긴 텍스트는 구간별 번역과 자동 재시도로 처리되며, 언어 팩은 내보내 수동 편집할 수도 있습니다. 모든 단계를 실제 스크린샷으로 그림 해설합니다.",
     },
-    "tutorial-langpack": {
+        "tutorial-snapgene": {
+      title: "SnapGene 대안 가이드 - GenePad | 무료 크로스플랫폼 플라스미드 지도 편집기",
+      description:
+        "GenePad SnapGene 전환 가이드: SnapGene의 .dna 플라스미드 파일을 그대로 읽고 저장하며, 지도·제한효소 부위·프라이머·Sanger 정렬도 익숙하게 동작합니다. NGS 데이터 보기·유전자 파일 라이브러리·AI 어시스턴트·6개 언어 UI를 갖추고 Windows/macOS/Linux/Android에서 무료 공개 베타 중입니다. 「다른 프로그램으로 열기」로 언제든 SnapGene에 파일을 넘길 수 있습니다.",
+    },
+"tutorial-langpack": {
       title: "UI 언어 설정 튜토리얼 - GenePad | 내장 언어와 공식 언어 팩",
       description:
         "GenePad UI 언어 설정 튜토리얼: 설정 → Language를 열어 내장 중국어·영어를 전환하거나, 'Import Language File'로 공식 언어 팩(독일어·러시아어·일본어·한국어·프랑스어)을 가져오면 화면 전체가 즉시 전환됩니다. 추가 설정이 필요 없습니다. 실제 스크린숏이 있는 단계별 설명과 5개 공식 팩 다운로드 제공.",
