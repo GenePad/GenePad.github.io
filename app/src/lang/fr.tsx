@@ -18,7 +18,7 @@ const fr: Record<TKey, ReactNode> = {
   "nav.cta": "Téléchargement / mise à niveau gratuits",
   "nav.lang": "EN",
 
-  // Titres de page (le titre d'exécution suit la langue de l'interface ; le <title> statique
+  // Titres de page (le titre d’exécution suit la langue de l’interface ; le <title> statique
   // des pages HTML correspond à la langue de la page, ici le français pour fr.genepad.cn)
   "title.home": "GenePad - Éditeur de cartes géniques léger et multiplateforme",
   "title.library":
@@ -34,8 +34,8 @@ const fr: Record<TKey, ReactNode> = {
   "title.tutorial.ngs":
     "Tutoriel d’analyse NGS - GenePad | Consultation fastq.gz et rapport d’abondance",
   "title.tutorial.lang":
-    "Tutoriel toutes langues - GenePad | Traduire des packs de langue avec l’IA",
-  "title.tutorial.langpack": "Langue de l'interface - GenePad | langues intégrées et paquets officiels",
+    "Tutoriel toutes langues - GenePad | Traduire des paquets de langue avec l’IA",
+  "title.tutorial.langpack": "Tutoriel langue de l’interface - GenePad | Langues intégrées et paquets officiels",
   "title.projects":
     "Projets - GenePad | Bibliothèques d’éléments plasmidiques et cartes de codons",
   "title.tech": "Documentation développeur - GenePad",
@@ -67,7 +67,7 @@ const fr: Record<TKey, ReactNode> = {
     "La sélection d’une entrée dans le tableau des annotations positionne la vue de séquence sur la plage de bases correspondante, en affichant la longueur de la sélection, la teneur en GC et la valeur Tm ; carte et séquence restent liées dans les deux sens.",
   "wb.3.name": "Sites de restriction",
   "wb.3.desc":
-    "Les sites de restriction sont annotés directement sur la séquence double brin ; le survol révèle la séquence de reconnaissance, l’orientation du brin et les positions de coupure décalées, avec marquage explicite des extrémités 5′ proéminentes, pour vérifier en un instant un schéma de clonage.",
+    "Les sites de restriction sont annotés directement sur la séquence double brin ; le survol révèle la séquence de reconnaissance, l’orientation du brin et les positions de coupure sur les deux brins, avec marquage explicite des extrémités cohésives 5′, pour vérifier en un instant un schéma de clonage.",
   "wb.4.name": "Propriétés protéiques",
   "wb.4.desc":
     "La sélection d’un CDS calcule en temps réel la masse moléculaire, le point isoélectrique, l’indice GRAVY, l’indice aliphatique et le coefficient d’extinction ; 19 algorithmes de pI sont intégrés pour comparaison, le résultat affiché par défaut suivant l’algorithme recommandé par la littérature.",
@@ -82,7 +82,7 @@ const fr: Record<TKey, ReactNode> = {
     </>
   ),
   "dn.lead":
-    "Une même interface de recherche déclinée en deux palettes complètes : le thème clair convient à la projection, aux présentations et aux environnements diurnes ; le thème sombre allège la fatigue visuelle lors des longues sessions nocturnes.",
+    "Une même interface de recherche déclinée en deux palettes complètes : le thème clair convient à la projection, aux présentations et aux environnements diurnes ; le thème sombre réduit la fatigue visuelle lors des longues sessions nocturnes.",
   "dn.day": "JOUR",
   "dn.night": "NUIT",
   "dn.state.day": "▸ THÈME CLAIR — thème clair actif",
@@ -112,7 +112,7 @@ const fr: Record<TKey, ReactNode> = {
   "tb.eyebrow": "Boîte à outils",
   "tb.title": <>Une boîte à outils complète</>,
   "tb.lead":
-    "Une séquence sélectionnée, la simulation d’électrophorèse et la conception de sgRNA se lancent directement depuis le menu contextuel ; la boîte à outils globale donne accès à l’assistant IA et à la bibliothèque de fichiers géniques ; l’interface multilingue et la fonction « Open with » facilitent l’intégration aux flux de travail existants.",
+    "Une fois une séquence sélectionnée, la simulation d’électrophorèse et la conception de sgRNA se lancent directement depuis le menu contextuel ; la boîte à outils globale donne accès à l’assistant IA et à la bibliothèque de fichiers géniques ; l’interface multilingue et la fonction « Open with » facilitent l’intégration aux flux de travail existants.",
   "tb.groupA": "Menu contextuel",
   "tb.groupB": "Boîte à outils globale",
   "tb.groupC": "Ouverture",
@@ -124,7 +124,7 @@ const fr: Record<TKey, ReactNode> = {
     "Simulation SDS-PAGE : sélectionnez un CDS ou un segment d’acides aminés pour déposer l’échantillon, avec les marqueurs précolorés du type PageRuler comme références de masse moléculaire ; la position des bandes est calculée en temps réel.",
   "tb.c3.name": "Conception de sgRNA CRISPR",
   "tb.c3.desc":
-    "Douze architectures de reconnaissance dont SpCas9, xCas9, Cas12a/b et TnpB, avec orientation du PAM, longueur de la région semence et filtrage des sites hors cible configurables ; les séquences candidates peuvent être annotées sur la carte en un clic.",
+    "Douze profils de reconnaissance dont SpCas9, xCas9, Cas12a/b et TnpB, avec orientation du PAM, longueur de la région seed et filtrage des sites hors-cible configurables ; les séquences candidates peuvent être annotées sur la carte en un clic.",
   "tb.t1.name": "Assistant IA",
   "tb.t1.desc":
     "Il lit et écrit directement la séquence, les annotations et les amorces du fichier courant ; l’ajout de features, le calcul de Tm, la traduction des protéines ou la prédiction d’ORF s’effectuent en langage naturel.",
@@ -133,7 +133,7 @@ const fr: Record<TKey, ReactNode> = {
     "Les vecteurs ouverts sont indexés automatiquement, avec étiquettes générées en lot par l’IA et prise en charge des dossiers surveillés ; localisez les fichiers d’après les attributs du plasmide, sans avoir à mémoriser de noms, ou retrouvez-les via l’assistant IA. Indexation seule : les fichiers originaux ne sont jamais modifiés.",
   "tb.o1.name": "Multilingue",
   "tb.o1.desc":
-    "Les interfaces chinoise, anglaise, japonaise, française, allemande et russe sont intégrées ; les packs de langue peuvent être exportés et des langues personnalisées ajoutées grâce à la traduction assistée par IA.",
+    "Les interfaces chinoise, anglaise, japonaise, française, allemande et russe sont intégrées ; les paquets de langue peuvent être exportés et des langues personnalisées ajoutées grâce à la traduction assistée par IA.",
   "tb.o2.name": "« Open with »",
   "tb.o2.desc":
     "La fonction « Open with » intégrée confie les fichiers en un clic à SnapGene, VS Code ou tout autre outil désigné, en synergie avec vos flux de travail existants, sans restreindre l’usage des fichiers.",
@@ -159,7 +159,7 @@ const fr: Record<TKey, ReactNode> = {
     </>
   ),
   "dl.lead":
-    "Disponible sur Windows, macOS et Linux au bureau comme sur Android en mobilité, avec des fonctionnalités identiques sur toutes les plateformes. Pour une première installation, il suffit de télécharger le programme d’installation ; les utilisateurs existants téléchargent la dernière version et l’installent par-dessus l’ancienne pour mettre à niveau, sans désinstallation préalable.",
+    "Disponible sur ordinateur (Windows, macOS et Linux) comme sur mobile (Android), avec des fonctionnalités identiques sur toutes les plateformes. Pour une première installation, il suffit de télécharger le programme d’installation ; les utilisateurs existants téléchargent la dernière version et l’installent par-dessus l’ancienne pour mettre à niveau, sans désinstallation préalable.",
   "dl.note.desktop": "Bureau",
   "dl.note.linuxX64": "Bureau · x86_64",
   "dl.note.mobile": "Mobile",
@@ -185,7 +185,7 @@ const fr: Record<TKey, ReactNode> = {
 1. Recommandé : exécutez le script officiel d’installation en un clic (il détecte et installe Homebrew automatiquement, en basculant vers un miroir chinois selon l’état du réseau). Ajoutez impérativement l’option -q : par défaut, le script attend l’appui sur Entrée avant de se terminer ; avec -q, cette attente est sautée, ce qui permet une exécution sans surveillance :
    curl -fsSL https://genepad.cn/release/install.sh | bash -s -- -q
    Une fois l’installation terminée, exécutez : open -a GenePad.
-2. Alternative : installez via Homebrew (l’application est ajoutée automatiquement aux Applications) :
+2. Alternative : installez via Homebrew (l’application est ajoutée automatiquement au dossier Applications) :
    brew install genepad/tap/genepad
    Une fois l’installation terminée, exécutez : open -a GenePad. Si Homebrew n’est pas installé, installez-le d’abord :
    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -205,7 +205,7 @@ const fr: Record<TKey, ReactNode> = {
   "dl.mac.other":
     "Autres méthodes d’installation / mise à niveau (Homebrew / npm / IA / téléchargements directs)",
   "dl.mac.unsigned":
-    "Avis fichiers non signés : les fichiers .dmg / .app téléchargés directement via un navigateur sont marqués « endommagé » par Gatekeeper. Ouvrez-les par clic droit → Ouvrir, ou exécutez xattr -cr pour retirer l’attribut de quarantaine ; l’installation / mise à niveau en ligne de commande ci-dessus reste recommandée.",
+    "Avertissement : fichiers non signés : les fichiers .dmg / .app téléchargés directement via un navigateur sont marqués « endommagé » par Gatekeeper. Ouvrez-les par clic droit → Ouvrir, ou exécutez xattr -cr pour retirer l’attribut de quarantaine ; l’installation / mise à niveau en ligne de commande ci-dessus reste recommandée.",
   "dl.copy": "Copier",
   "dl.copied": "Copié ✓",
   "dl.filesTitle": "Télécharger directement les programmes d’installation",
@@ -288,8 +288,8 @@ const fr: Record<TKey, ReactNode> = {
   "pr.ca.head": "Atlas des codons spécifique aux tissus",
   "pr.ca.title": "Atlas humain des codons spécifique aux tissus",
   "pr.ca.desc":
-    "Un pipeline statistique d’implémentation indépendante : à partir des données publiques d’expression génique GTEx et des annotations GENCODE, pondérées par l’expression tissulaire, il reconstruit une table d’usage des codons pour chaque tissu humain — une référence tissu-spécifique reproductible et vérifiable pour l’optimisation des codons et la conception d’expression hétérologue, sans dépendre de tables tierces à la licence restrictive.",
-  "pr.ca.metricsTitle": "Indicateurs produits",
+    "Un pipeline statistique implémenté de façon indépendante : à partir des données publiques d’expression génique GTEx et des annotations GENCODE, pondérées par l’expression tissulaire, il reconstruit une table d’usage des codons pour chaque tissu humain — une référence spécifique aux tissus reproductible et vérifiable pour l’optimisation des codons et la conception d’expression hétérologue, sans dépendre de tables tierces à la licence restrictive.",
+  "pr.ca.metricsTitle": "Indicateurs de sortie",
   "pr.ca.usage":
     "python scripts/build_atlas.py reconstruit toutes les tables tissulaires à partir des entrées GTEx / GENCODE ; check_release.py et package_release.py assurent la validation avant publication et l’empaquetage.",
   "pr.org.text":
@@ -368,7 +368,7 @@ const fr: Record<TKey, ReactNode> = {
   "lib.setup.2.shot": "Réglages IA — créer un profil, choisir DeepSeek, cliquer sur « Get »",
   "lib.setup.3.name": "Obtenir une clé API DeepSeek",
   "lib.setup.3.desc":
-    "Votre navigateur ouvre la plateforme DeepSeek : inscrivez-vous, rechargez votre crédit, puis cliquez sur « Create API key » ; la clé n’est affichée qu’une seule fois — copiez-la immédiatement après sa création.",
+    "Votre navigateur ouvre la plateforme DeepSeek : inscrivez-vous, créditez votre compte, puis cliquez sur « Create API key » ; la clé n’est affichée qu’une seule fois — copiez-la immédiatement après sa création.",
   "lib.setup.3.shot": "Plateforme DEEPSEEK — créer une clé API et la copier immédiatement",
   "lib.setup.4.name": "Coller la clé et enregistrer",
   "lib.setup.4.desc":
@@ -376,11 +376,11 @@ const fr: Record<TKey, ReactNode> = {
   "lib.setup.4.shot": "Test de connexion réussi — enregistrer le profil courant",
   "lib.setup.5.name": "Configurer les dossiers surveillés",
   "lib.setup.5.desc":
-    "Cliquez sur « Watch folders » et ajoutez les dossiers où sont stockés vos plasmides. À chaque lancement, ils sont analysés automatiquement : les nouveaux plasmides entrent à la bibliothèque, les supprimés en sortent, sans maintenance manuelle.",
+    "Cliquez sur « Watch folders » et ajoutez les dossiers où sont stockés vos plasmides. À chaque lancement, ils sont analysés automatiquement : les nouveaux plasmides entrent dans la bibliothèque, les supprimés en sortent, sans maintenance manuelle.",
   "lib.setup.5.shot":
     "Dossiers surveillés — ajouts intégrés, suppressions retirées, synchronisation automatique",
   "lib.setup.note":
-    "L’IA configurée, les plasmides entrés à la bibliothèque reçoivent leurs étiquettes automatiquement ; passer cette configuration n’empêche pas l’import, seules les étiquettes et l’assistant IA restent indisponibles.",
+    "L’IA configurée, les plasmides entrés dans la bibliothèque reçoivent leurs étiquettes automatiquement ; passer cette configuration n’empêche pas l’import, seules les étiquettes et l’assistant IA restent indisponibles.",
 
   "lib.daily.head": "Flux de travail quotidien",
   "lib.daily.headEn": "DAILY WORKFLOW",
@@ -394,7 +394,7 @@ const fr: Record<TKey, ReactNode> = {
   "lib.daily.shot":
     "Menu contextuel — ouvrir, ouvrir le dossier, confier à SnapGene / VS Code ; le panneau de détails à droite permet d’ajouter ou retirer des étiquettes",
 
-  "lib.final.title": "La bibliothèque de fichiers géniques est un module intégré de GenePad, non un logiciel autonome",
+  "lib.final.title": "La bibliothèque de fichiers géniques est un module intégré de GenePad, et non un logiciel autonome",
   "lib.final.desc":
     "La bibliothèque de fichiers géniques est intégrée à l’éditeur de cartes géniques GenePad : installez ou mettez à niveau GenePad, puis retrouvez-la dans la boîte à outils. Actuellement en bêta publique gratuite, sur toutes les plateformes.",
   "lib.final.cta": "Retour à l’accueil",
@@ -403,7 +403,7 @@ const fr: Record<TKey, ReactNode> = {
 
   // Section NGS de la page d’accueil
   "np.lead":
-    "Ouvrez directement les fichiers de séquençage fastq.gz / fastq / fq.gz / fq : clic droit ou glisser-déposer, les fichiers double extrémité étant appariés et fusionnés automatiquement ; consultez la qualité de séquençage base à base, localisez les régions variables en recherchant un fragment d’acides aminés, posez des ancres de rognage pour rogner en lot, et générez le rapport d’abondance de banque en un clic.",
+    "Ouvrez directement les fichiers de séquençage fastq.gz / fastq / fq.gz / fq : clic droit ou glisser-déposer, les fichiers à extrémités appariées étant reconnus et fusionnés automatiquement ; consultez la qualité de séquençage base à base, localisez les régions variables en recherchant un fragment d’acides aminés, posez des ancres de rognage pour rogner en lot, et générez le rapport d’abondance de banque en un clic.",
   "np.c1": "fastq.gz · fq.gz sans décompression",
   "np.c2": "Appariement et fusion automatiques des paires",
   "np.c3": "Qualité de séquençage base à base",
@@ -417,13 +417,13 @@ const fr: Record<TKey, ReactNode> = {
     <>
       Les données de séquençage deuxième génération (NGS) s’ouvrent directement,
       <br />
-      à parcourir, rechercher et compter une à une
+      à parcourir, rechercher et compter un à un
     </>
   ),
   "ngs.lead":
-    "GenePad ouvre directement les fichiers de séquençage fastq.gz / fastq / fq.gz / fq : clic droit → « Open with » → GenePad dans l’explorateur de fichiers, ou glissement des fichiers directement dans la fenêtre du programme ; pour un séquençage double extrémité, déposez ensemble les fichiers R1 et R2, l’appariement étant reconnu automatiquement. Une fois le fichier ouvert, parcourez les reads une à une, contrôlez la qualité de chaque base et la qualité de la fusion des paires ; localisez la région variable visée en recherchant un fragment d’acides aminés, posez des ancres de rognage pour rogner tout le fichier en lot, puis générez en un clic le rapport d’abondance de banque.",
+    "GenePad ouvre directement les fichiers de séquençage fastq.gz / fastq / fq.gz / fq : clic droit → « Open with » → GenePad dans l’explorateur de fichiers, ou glissement des fichiers directement dans la fenêtre du programme ; pour un séquençage à extrémités appariées, déposez ensemble les fichiers R1 et R2, l’appariement étant reconnu automatiquement. Une fois le fichier ouvert, parcourez les reads un à un, contrôlez la qualité de chaque base et la qualité de la fusion des paires ; localisez la région variable visée en recherchant un fragment d’acides aminés, posez des ancres de rognage pour rogner tout le fichier en lot, puis générez en un clic le rapport d’abondance de banque.",
   "ngs.hero.shot":
-    "FASTQ VIEWER — reads double extrémité fusionnés automatiquement, bases colorées selon la qualité, statistiques du fichier à droite",
+    "FASTQ VIEWER — reads à extrémités appariées fusionnés automatiquement, bases colorées selon la qualité, statistiques du fichier à droite",
 
   "ngs.open.head": "Ouvrir les fichiers de séquençage",
   "ngs.open.headEn": "OPENING FASTQ FILES",
@@ -441,11 +441,11 @@ const fr: Record<TKey, ReactNode> = {
     "« Choose another app » — sélectionner GenePad dans la liste du système, éventuellement par défaut",
   "ngs.open.2.shot": "Glisser-déposer — plusieurs fichiers de séquençage déposés ensemble",
 
-  "ngs.pair.head": "Séquençage double extrémité",
+  "ngs.pair.head": "Séquençage à extrémités appariées",
   "ngs.pair.headEn": "PAIRED-END",
-  "ngs.pair.title": "Fichiers appariés reconnus et appariés automatiquement",
+  "ngs.pair.title": "Reconnaissance et appariement automatiques des fichiers appariés",
   "ngs.pair.desc":
-    "Déposez ensemble les fichiers R1 et R2 dans la fenêtre : le programme reconnaît l’appariement d’après l’identifiant du premier read ; si plusieurs paires arrivent d’un coup, une boîte de confirmation permet d’ajuster les groupes à la main ou de tout apparier d’un clic avec « Auto-pair ». Une fois confirmé, chaque paire s’ouvre comme un jeu de données double extrémité — signalé « Paired-end » dans le panneau de propriétés, avec l’échange R1/R2 en un clic (« Swap R1/R2 ») dans la barre d’outils.",
+    "Déposez ensemble les fichiers R1 et R2 dans la fenêtre : le programme reconnaît l’appariement d’après l’identifiant du premier read ; si plusieurs paires arrivent d’un coup, une boîte de confirmation permet d’ajuster les groupes à la main ou de tout apparier d’un clic avec « Auto-pair ». Une fois confirmé, chaque paire s’ouvre comme un jeu de données à extrémités appariées — signalé « Paired-end » dans le panneau de propriétés, avec l’échange R1/R2 en un clic (« Swap R1/R2 ») dans la barre d’outils.",
   "ngs.pair.shot":
     "PAIR NGS FILES — appariement automatique d’après l’identifiant du premier read, ajustable à la main",
 
@@ -456,7 +456,7 @@ const fr: Record<TKey, ReactNode> = {
     "La vue principale liste de haut en bas chaque read obtenu par séquençage, le panneau de propriétés à droite résumant les statistiques de l’ensemble du fichier :",
   "ngs.reads.1.name": "Fusion automatique des paires",
   "ngs.reads.1.desc":
-    "Les données double extrémité sont fusionnées read par read, chaque read affichant la longueur de chevauchement et l’identité (p. ex. Overlap 135bp · 99% identity) : la qualité de la fusion se voit d’un coup d’œil.",
+    "Les données à extrémités appariées sont fusionnées read par read, chaque read affichant la longueur de chevauchement et l’identité (p. ex. Overlap 135bp · 99% identity) : la qualité de la fusion se voit d’un coup d’œil.",
   "ngs.reads.2.name": "Qualité de séquençage base à base",
   "ngs.reads.2.desc":
     "Chaque base est colorée selon la qualité Phred : ≥ 30 en vert, 20–29 en orange, < 20 en rouge ; les régions de faible qualité sautent aux yeux dans les barres de qualité, sans avoir à lire chaque valeur.",
@@ -470,9 +470,9 @@ const fr: Record<TKey, ReactNode> = {
   "ngs.aa.headEn": "SEARCH BY AMINO ACIDS",
   "ngs.aa.title": "Localiser la région variable visée par un fragment protéique",
   "ngs.aa.desc":
-    "Basculez la zone de recherche en mode « AA » et saisissez un fragment d’acides aminés (p. ex. MATNNQ) : le programme traduit les reads fusionnés en protéines et les compare un à un, chaque peptide touché étant encadré directement dans la séquence. En séquençage de banque, les flancs sont conservés et le centre variable : en interrogeant avec une protéine conservée connue, on retrouve en quelques instants la région variable cible au milieu de milliers de reads.",
+    "Basculez la zone de recherche en mode « AA » et saisissez un fragment d’acides aminés (p. ex. MATNNQ) : le programme traduit les reads fusionnés en protéines et les compare un à un, chaque peptide correspondant étant encadré directement dans la séquence. En séquençage de banque, les flancs sont conservés et le centre variable : en interrogeant avec une protéine conservée connue, on retrouve en quelques instants la région variable cible au milieu de milliers de reads.",
   "ngs.aa.shot":
-    "AA SEARCH — saisissez un fragment d’acides aminés ; les peptides touchés sont encadrés dans la traduction",
+    "AA SEARCH — saisissez un fragment d’acides aminés ; les peptides correspondants sont encadrés dans la traduction",
 
   "ngs.trim.head": "Rognage par ancres",
   "ngs.trim.headEn": "TRIM ANCHORS",
@@ -486,7 +486,7 @@ const fr: Record<TKey, ReactNode> = {
   "ngs.report.headEn": "LIBRARY ANALYSIS",
   "ngs.report.title": "Le rapport d’abondance de tout le fichier en un clic",
   "ngs.report.desc":
-    "Cliquez sur « Sequence analysis » pour traiter les données rognées : par défaut, tout le fichier est analysé (des dizaines de millions de reads n’ont pas besoin d’être chargés entièrement en mémoire), chaque séquence unique étant comptée avec son nombre d’occurrences et sa fréquence, avec possibilité de conserver ou de retirer les ancres aux extrémités. À l’issue de l’analyse, un rapport illustré est généré — histogramme des séquences les plus fréquentes (comptage DNA ou AA) et, pour chaque séquence, longueur, nombre d’occurrences, fréquence et traduction en cadre +1 — et la table complète est exportée en CSV, ouvrable directement dans Excel. Un rapport d’abondance de banque simple, voilà qui est fait.",
+    "Cliquez sur « Sequence analysis » pour traiter les données rognées : par défaut, tout le fichier est analysé (des dizaines de millions de reads n’ont pas besoin d’être chargés entièrement en mémoire), chaque séquence unique étant comptée avec son nombre d’occurrences et sa fréquence, avec possibilité de conserver ou de retirer les ancres aux extrémités. À l’issue de l’analyse, un rapport illustré est généré — histogramme des séquences les plus fréquentes (comptage ADN ou AA) et, pour chaque séquence, longueur, nombre d’occurrences, fréquence et traduction dans le cadre de lecture +1 — et la table complète est exportée en CSV, ouvrable directement dans Excel. Un rapport d’abondance de banque simple, voilà qui est fait.",
   "ngs.report.shot1":
     "SEQUENCE ANALYSIS — tout le fichier par défaut, ancres conservées ou retirées au choix",
   "ngs.report.shot2":
@@ -495,12 +495,12 @@ const fr: Record<TKey, ReactNode> = {
   "ngs.video.head": "Tutoriel vidéo",
   "ngs.video.headEn": "VIDEO TUTORIAL",
   "ngs.video.lead":
-    "Les images ne suffisent pas ? Voici une démonstration complète : de l’ouverture des fichiers de séquençage et de l’appariement des paires au rognage par ancres et au rapport d’abondance, tout le flux est rejoué pas à pas sur des données réelles, directement lisible dans la page.",
+    "Les images ne suffisent pas ? Voici une démonstration complète : de l’ouverture des fichiers de séquençage et de l’appariement des paires au rognage par ancres et au rapport d’abondance, tout le flux est rejoué pas à pas sur des données réelles, la vidéo se jouant directement dans la page.",
   "ngs.video.caption":
     "VIDEO TUTORIAL — démonstration du flux complet : ouvrir → apparier → parcourir → chercher → rogner → rapport d’abondance",
 
   "ngs.final.title":
-    "La consultation des données NGS est une fonction intégrée de GenePad, non un logiciel autonome",
+    "La consultation des données NGS est une fonction intégrée de GenePad, et non un logiciel autonome",
   "ngs.final.desc":
     "La consultation des données NGS est intégrée à l’éditeur de cartes géniques GenePad : installez ou mettez à niveau GenePad et les fichiers de séquençage s’ouvrent directement, en complément de l’édition de cartes, de l’alignement des chromatogrammes Sanger et des autres fonctions dans un même programme. Actuellement en bêta publique gratuite, sur toutes les plateformes.",
   "ngs.final.cta": "Retour à l’accueil",
@@ -537,13 +537,13 @@ const fr: Record<TKey, ReactNode> = {
   "tut.toc.ngs.en": "NGS ANALYSIS",
   "tut.toc.lang.name": "Configurer n’importe quelle langue",
   "tut.toc.lang.desc":
-    "Settings → Language → AI Translate : saisissez la langue cible et un pack de langue est généré automatiquement, basculant toute l’interface en français, en russe ou dans la langue de votre choix.",
+    "Réglages → Language → AI Translate : saisissez la langue cible et un paquet de langue est généré automatiquement, basculant toute l’interface en français, en russe ou dans la langue de votre choix.",
   "tut.toc.lang.en": "ANY LANGUAGE",
 
   // Catégories de tutoriels (sections du sommaire + navigation latérale)
-  "tut.toc.langpack.name": "Langue de l'interface",
+  "tut.toc.langpack.name": "Langue de l’interface",
   "tut.toc.langpack.desc":
-    "Ouvrez Paramètres → Language : basculez en un clic entre le chinois et l'anglais intégrés, ou importez un paquet officiel pour l'allemand, le russe, le japonais, le coréen ou le français.",
+    "Ouvrez Réglages → Language : basculez en un clic entre le chinois et l’anglais intégrés, ou importez un paquet officiel pour l’allemand, le russe, le japonais, le coréen ou le français.",
   "tut.toc.langpack.en": "UI LANGUAGE",
   "tut.cat.gs.name": "Premiers pas",
   "tut.cat.gs.en": "GETTING STARTED",
@@ -574,22 +574,22 @@ const fr: Record<TKey, ReactNode> = {
   "tut.ai.3.shot": "Nom et modèle — cliquez sur « Get » à côté du champ API Key",
   "tut.ai.4.name": "Obtenir une clé API DeepSeek",
   "tut.ai.4.desc":
-    "Sur la plateforme DeepSeek, créez un compte et rechargez votre crédit, cliquez sur « Create API key », nommez la clé puis confirmez ; la clé n’est affichée qu’une seule fois — copiez-la immédiatement.",
+    "Sur la plateforme DeepSeek, créez un compte et créditez-le, cliquez sur « Create API key », nommez la clé puis confirmez ; la clé n’est affichée qu’une seule fois — copiez-la immédiatement.",
   "tut.ai.5.name": "Coller la clé et enregistrer",
   "tut.ai.5.desc":
     "Revenez dans GenePad et collez la clé, cliquez sur « Test connection » ; une fois la connexion confirmée, cliquez sur « Save current config » pour enregistrer. La configuration de l’IA est alors terminée.",
   "tut.ai.note":
-    "Une seule configuration vaut pour toujours, la clé restant stockée sur votre machine. Dès lors, l’icône IA de la page d’accueil et de l’espace de travail ouvre directement la conversation, et les plasmides ouverts ou importés reçoivent automatiquement leurs étiquettes de propriétés.",
+    "Une seule configuration suffit, une fois pour toutes, la clé restant stockée sur votre machine. Dès lors, l’icône IA de la page d’accueil et de l’espace de travail ouvre directement la conversation, et les plasmides ouverts ou importés reçoivent automatiquement leurs étiquettes de propriétés.",
 
   // Tutoriel 2 : bibliothèque de fichiers géniques
   "tut.lib.head": "Tutoriel 2 · Bibliothèque de fichiers géniques",
   "tut.lib.headEn": "TUTORIAL 2 · GENE FILE LIBRARY",
-  "tut.lib.title": "Gouverner des centaines de plasmides comme une bibliothèque consultable",
+  "tut.lib.title": "Gérer des centaines de plasmides en une bibliothèque consultable",
   "tut.lib.lead":
     "La bibliothèque de fichiers géniques se trouve dans la boîte à outils : sans déplacer ni copier le moindre fichier, elle dresse un index unifié des plasmides dispersés çà et là. Les étapes ci-dessous vont de l’import automatique jusqu’à la localisation d’un plasmide par ses attributs, en une phrase.",
   "tut.lib.1.name": "Régler les dossiers surveillés : les plasmides entrent tout seuls",
   "tut.lib.1.desc":
-    "Ouvrez la bibliothèque de fichiers géniques → « Watch folders » → ajoutez les dossiers où sont stockés les plasmides. À chaque lancement, l’analyse est automatique : les nouveaux plasmides entrent à la bibliothèque, les supprimés en sont retirés, sans maintenance manuelle.",
+    "Ouvrez la bibliothèque de fichiers géniques → « Watch folders » → ajoutez les dossiers où sont stockés les plasmides. À chaque lancement, l’analyse est automatique : les nouveaux plasmides entrent dans la bibliothèque, les supprimés en sont retirés, sans maintenance manuelle.",
   "tut.lib.2.name": "Chercher par projet, chemin ou étiquette",
   "tut.lib.2.desc":
     "Créez un projet et glissez-y les plasmides pour les classer ; ou parcourez les fichiers tels quels par chemin de stockage ; l’IA configurée, chaque plasmide porte un jeu d’étiquettes de propriétés — cliquez sur une étiquette pour extraire tous les plasmides concernés.",
@@ -603,7 +603,7 @@ const fr: Record<TKey, ReactNode> = {
   "tut.lib.5.desc":
     "Clic droit sur un plasmide → « Open with » pour le confier à SnapGene (carte), VS Code (séquence) et autres outils ; le panneau de détails permet aussi d’ajouter ou retirer des étiquettes, avec vos étiquettes personnalisées telles que « vérifié ».",
   "tut.lib.note":
-    "La bibliothèque n’est qu’un index et ne modifie pas les fichiers originaux ; sans configuration de l’IA, l’import et la consultation restent entiers — seuls l’étiquetage automatique et la recherche par IA sont indisponibles.",
+    "La bibliothèque n’est qu’un index et ne modifie pas les fichiers originaux ; sans configuration de l’IA, l’import et la consultation continuent de fonctionner — seuls l’étiquetage automatique et la recherche par IA sont indisponibles.",
 
   // Tutoriel 3 : analyse de fichiers NGS
   "tut.ngs.head": "Tutoriel 3 · Analyse de fichiers NGS",
@@ -614,15 +614,15 @@ const fr: Record<TKey, ReactNode> = {
   "tut.ngs.1.name": "Ouvrir les fichiers de séquençage",
   "tut.ngs.1.desc":
     "Glissez un ou plusieurs fichiers de séquençage directement dans la fenêtre GenePad ; ou faites un clic droit sur le fichier dans l’explorateur et choisissez « Open with » → GenePad. Les formats fastq.gz, fastq, fq.gz et fq sont pris en charge, sans décompression des fichiers gzip.",
-  "tut.ngs.2.name": "Appariement automatique des fichiers double extrémité",
+  "tut.ngs.2.name": "Appariement automatique des fichiers à extrémités appariées",
   "tut.ngs.2.desc":
-    "Déposez ensemble les fichiers R1 et R2 : le programme reconnaît l’appariement d’après l’identifiant du premier read ; si plusieurs paires arrivent d’un coup, une boîte de confirmation apparaît, avec « Auto-pair » pour tout apparier d’un clic — chaque paire s’ouvre ensuite comme un jeu de données double extrémité.",
+    "Déposez ensemble les fichiers R1 et R2 : le programme reconnaît l’appariement d’après l’identifiant du premier read ; si plusieurs paires arrivent d’un coup, une boîte de confirmation apparaît, avec « Auto-pair » pour tout apparier d’un clic — chaque paire s’ouvre ensuite comme un jeu de données à extrémités appariées.",
   "tut.ngs.3.name": "Parcourir les reads et contrôler la qualité",
   "tut.ngs.3.desc":
-    "La vue principale liste les reads un à un : chaque base est colorée selon la qualité Phred, les données double extrémité sont fusionnées automatiquement avec affichage de la longueur de chevauchement et de l’identité ; le panneau de droite résume le nombre de reads, la teneur en GC et les autres statistiques du fichier.",
+    "La vue principale liste les reads un à un : chaque base est colorée selon la qualité Phred, les données à extrémités appariées sont fusionnées automatiquement avec affichage de la longueur de chevauchement et de l’identité ; le panneau de droite résume le nombre de reads, la teneur en GC et les autres statistiques du fichier.",
   "tut.ngs.4.name": "Localiser les régions variables par recherche d’acides aminés",
   "tut.ngs.4.desc":
-    "Basculez la zone de recherche en bas en mode « AA » et saisissez une protéine conservée connue (p. ex. MATNNQ) : le programme traduit les reads fusionnés en protéines et les compare un à un, chaque peptide touché étant encadré — la région variable cible se retrouve au milieu de milliers de reads.",
+    "Basculez la zone de recherche en bas en mode « AA » et saisissez une protéine conservée connue (p. ex. MATNNQ) : le programme traduit les reads fusionnés en protéines et les compare un à un, chaque peptide correspondant étant encadré — la région variable cible se retrouve au milieu de milliers de reads.",
   "tut.ngs.5.name": "Poser des ancres et rogner en lot",
   "tut.ngs.5.desc":
     "Définissez les séquences conservées de part et d’autre du segment visé comme ancres gauche et droite, cliquez sur « Trim » : tout le fichier est rogné en lot et seule la région variable entre les deux ancres est conservée ; le panneau de propriétés affiche en direct le taux de réussite, et les reads rognés s’exportent en un clic.",
@@ -635,7 +635,7 @@ const fr: Record<TKey, ReactNode> = {
   "tut.lang.headEn": "TUTORIAL 4 · ANY LANGUAGE",
   "tut.lang.title": "Traduire l’interface dans la langue de votre choix grâce à l’IA",
   "tut.lang.lead":
-    "GenePad s’accompagne d’interfaces chinoise et anglaise ; pour les autres langues, point besoin d’attendre le soutien officiel : ouvrez Settings → Language, cliquez sur AI Translate et saisissez la langue cible — le pack de langue est généré puis appliqué automatiquement. Terminez d’abord le tutoriel 1 pour que l’IA soit configurée.",
+    "GenePad s’accompagne d’interfaces chinoise et anglaise ; pour les autres langues, nul besoin d’attendre une prise en charge officielle : ouvrez Réglages → Language, cliquez sur AI Translate et saisissez la langue cible — le paquet de langue est généré puis appliqué automatiquement. Terminez d’abord le tutoriel 1 pour que l’IA soit configurée.",
   "tut.lang.1.name": "Ouvrir les réglages",
   "tut.lang.1.desc":
     "Comme au tutoriel 1 : lancez GenePad, puis cliquez sur l’icône d’engrenage en haut à droite de la page d’accueil pour ouvrir la fenêtre des réglages.",
@@ -653,46 +653,46 @@ const fr: Record<TKey, ReactNode> = {
   "tut.lang.4.shot": "L’interface basculée en français",
   "tut.lang.5.name": "Ajouter d’autres langues de la même façon",
   "tut.lang.5.desc":
-    "Le même procédé génère le russe, l’espagnol et toute autre langue ; les packs de langue importés se choisissent, se gèrent ou se suppriment dans la page Language.",
+    "Le même procédé génère le russe, l’espagnol et toute autre langue ; les paquets de langue importés se choisissent, se gèrent ou se suppriment dans la page Language.",
   "tut.lang.5.shot": "L’interface russe ajoutée de la même façon",
   "tut.lang.note":
     "La traduction par l’IA prend pour source le fichier de langue chinois intégré ; si quelques termes manquent de justesse, exportez le fichier de langue, corrigez-le à la main, puis importez-le de nouveau.",
 
-  // Tutoriel 5 : langue de l'interface (langues intégrées + paquets officiels)
-  "tut.langpack.head": "Tutoriel 5 · Langue de l'interface",
+  // Tutoriel 5 : langue de l’interface (langues intégrées + paquets officiels)
+  "tut.langpack.head": "Tutoriel 5 · Langue de l’interface",
   "tut.langpack.headEn": "TUTORIAL 5 · UI LANGUAGE",
   "tut.langpack.title": "Votre langue en deux étapes",
   "tut.langpack.lead":
-    "GenePad intègre les interfaces chinoise et anglaise ; l'allemand, le russe, le japonais, le coréen et le français sont fournis sous forme de paquets officiels — téléchargez le fichier, importez-le dans les paramètres, sans aucune configuration. La même procédure vaut pour les paquets personnalisés générés par traduction IA.",
-  "tut.langpack.1.name": "Ouvrir les paramètres",
-  "tut.langpack.1.desc": "Lancez GenePad et cliquez sur l'icône d'engrenage en haut à droite de l'écran d'accueil.",
-  "tut.langpack.1.shot": "Écran d'accueil — cliquez sur l'icône d'engrenage en haut à droite",
+    "GenePad intègre les interfaces chinoise et anglaise ; l’allemand, le russe, le japonais, le coréen et le français sont fournis sous forme de paquets officiels — téléchargez le fichier, importez-le dans les paramètres, sans aucune configuration. La même procédure vaut pour les paquets personnalisés générés par traduction IA.",
+  "tut.langpack.1.name": "Ouvrir les réglages",
+  "tut.langpack.1.desc": "Lancez GenePad et cliquez sur l’icône d’engrenage en haut à droite de l’écran d’accueil.",
+  "tut.langpack.1.shot": "Écran d’accueil — cliquez sur l’icône d’engrenage en haut à droite",
   "tut.langpack.2.name": "Ouvrir les réglages de langue",
   "tut.langpack.2.desc":
-    "Choisissez « Language » dans la barre latérale gauche de la fenêtre de paramètres : un clic sur English ou 中文 bascule la langue intégrée ; les paquets importés apparaissent dans la même liste.",
+    "Choisissez « Language » dans la barre latérale gauche de la fenêtre des réglages : un clic sur English ou 中文 bascule la langue intégrée ; les paquets importés apparaissent dans la même liste.",
   "tut.langpack.2.shot": "Réglages de langue — un clic sur une langue bascule aussitôt ; les boutons dessous importent / exportent les fichiers de langue",
-  "tut.langpack.3.name": "Télécharger un paquet et l'importer",
+  "tut.langpack.3.name": "Télécharger un paquet et l’importer",
   "tut.langpack.3.desc":
-    "Téléchargez ci-dessous le paquet .json de votre langue, cliquez sur « Import Language File » et sélectionnez le fichier téléchargé. Une fois importée, la langue apparaît dans la liste — un clic bascule toute l'interface ; l'icône de corbeille à droite supprime un paquet importé.",
+    "Téléchargez ci-dessous le paquet .json de votre langue, cliquez sur « Import Language File » et sélectionnez le fichier téléchargé. Une fois importée, la langue apparaît dans la liste — un clic bascule toute l’interface ; l’icône de corbeille à droite supprime un paquet importé.",
   "tut.langpack.3.shot": "Importé — la nouvelle langue figure dans la liste ; un clic suffit",
-  "tut.langpack.4.name": "Toute l'interface bascule",
+  "tut.langpack.4.name": "Toute l’interface bascule",
   "tut.langpack.4.desc":
-    "Le choix d'une langue bascule immédiatement toute l'interface : menus, réglages et messages sont localisés. Les cinq paquets officiels en action :",
+    "Le choix d’une langue bascule immédiatement toute l’interface : menus, réglages et messages sont localisés. Les cinq paquets officiels en action :",
   "tut.langpack.4.shot1": "Interface en français",
   "tut.langpack.4.shot2": "Interface en coréen",
   "tut.langpack.4.shot3": "Interface en russe",
   "tut.langpack.4.shot4": "Interface en allemand",
   "tut.langpack.4.shot5": "Interface en japonais",
   "tut.lang.dl.hint":
-    "Pas envie de configurer l'IA ? Téléchargez simplement un paquet officiel (allemand, russe, japonais, coréen, français) et importez-le ; compatible avec GenePad 0.7.x.",
+    "Pas envie de configurer l’IA ? Téléchargez simplement un paquet officiel (allemand, russe, japonais, coréen, français) et importez-le ; compatible avec GenePad 0.7.x.",
   "tut.langpack.dl.title": "Télécharger les paquets officiels (.json)",
-  "tut.langpack.dl.hint": "Compatible avec GenePad 0.7.x ; pas de décompression — importez le fichier directement comme à l'étape 3.",
+  "tut.langpack.dl.hint": "Compatible avec GenePad 0.7.x ; pas de décompression — importez le fichier directement comme à l’étape 3.",
   "tut.langpack.dl.btn": "Télécharger",
   "tut.langpack.note":
-    "Les paquets de langue ne contiennent que le texte de l'interface — jamais de séquences ni de données de fichiers. Les paquets officiels sont mis à jour à chaque version ; importez le nouveau fichier pour mettre à jour. Une autre langue ? Le tutoriel 4 génère des paquets pour n'importe quelle langue par traduction IA.",
+    "Les paquets de langue ne contiennent que le texte de l’interface — jamais de séquences ni de données de fichiers. Les paquets officiels sont mis à jour à chaque version ; importez le nouveau fichier pour mettre à jour. Une autre langue ? Le tutoriel 4 génère des paquets pour n’importe quelle langue par traduction IA.",
 
   "tut.final.title":
-    "Toutes les fonctions des tutoriels sont intégrées à GenePad, non des logiciels distincts",
+    "Toutes les fonctions des tutoriels sont intégrées à GenePad, et non des logiciels distincts",
   "tut.final.desc":
     "Installez ou mettez à niveau GenePad, puis suivez les tutoriels : l’assistant IA, la bibliothèque de fichiers géniques et la consultation des données NGS œuvrent de concert dans un même programme. Actuellement en bêta publique gratuite, sur toutes les plateformes.",
   "tut.final.cta": "Retour à l’accueil",
@@ -720,7 +720,7 @@ const fr: Record<TKey, ReactNode> = {
   "st.chart.caption":
     "NOUVELLES INSTALLATIONS HEBDOMADAIRES — d’après le premier lancement de chaque installation (lundi à dimanche, UTC)",
   "st.chart.caption.daily":
-    "NOUVELLES INSTALLATIONS QUOTIDIENNES — d’après la date du premier lancement de chaque installation (jours naturels UTC)",
+    "NOUVELLES INSTALLATIONS QUOTIDIENNES — d’après la date du premier lancement de chaque installation (jours calendaires UTC)",
   "st.chart.note.daily":
     "La dernière barre est celle du jour, encore incomplète : le chiffre continuera de monter.",
   "st.chart.note.byos":

@@ -38,7 +38,7 @@ export default {
     "ngs": {
       title: "Visualiseur NGS - GenePad | Consultation de données FASTQ et analyse d’abondance de banques",
       description:
-        "Le visualiseur de données NGS intégré à GenePad : ouvrez directement les fichiers fastq.gz / fastq / fq.gz / fq par clic droit « Open With » ou glisser-déposer ; fichiers double extrémité reconnus et fusionnés automatiquement, qualité de séquençage base à base, recherche par fragment d’acides aminés pour localiser les régions variables, ancres de rognage pour une capture en lot et rapports d’abondance de banque en un clic.",
+        "Le visualiseur de données NGS intégré à GenePad : ouvrez directement les fichiers fastq.gz / fastq / fq.gz / fq par clic droit « Open With » ou glisser-déposer ; fichiers à extrémités appariées reconnus et fusionnés automatiquement, qualité de séquençage base à base, recherche par fragment d’acides aminés pour localiser les régions variables, ancres de rognage pour une capture en lot et rapports d’abondance de banque en un clic.",
     },
     "tutorial": {
       title: "Tutoriels - GenePad | Configuration IA · Bibliothèque de fichiers · Analyse NGS",
@@ -58,17 +58,17 @@ export default {
     "tutorial-ngs": {
       title: "Tutoriel d’analyse NGS - GenePad | Consultation fastq.gz et rapport d’abondance",
       description:
-        "Tutoriel GenePad pas à pas : ouvrez un fastq.gz par glisser-déposer, appariez automatiquement les fichiers double extrémité, contrôlez la qualité base à base, cherchez par acides aminés, rognez avec des ancres et générez un rapport d’abondance de banque — avec une vidéo complète pas à pas. Chaque étape illustrée par de véritables captures d’écran.",
+        "Tutoriel GenePad pas à pas : ouvrez un fastq.gz par glisser-déposer, appariez automatiquement les fichiers à extrémités appariées, contrôlez la qualité base à base, cherchez par acides aminés, rognez avec des ancres et générez un rapport d’abondance de banque — avec une vidéo complète pas à pas. Chaque étape illustrée par de véritables captures d’écran.",
     },
     "tutorial-lang": {
-      title: "Tutoriel toutes langues - GenePad | Traduire des packs de langue avec l’IA",
+      title: "Tutoriel toutes langues - GenePad | Traduire des paquets de langue avec l’IA",
       description:
-        "Tutoriel GenePad pas à pas : ouvrez Settings → Language → AI Translate, saisissez une langue cible (français, russe, et plus encore) et l’IA configurée génère le pack de langue puis bascule toute l’interface — les textes longs sont traduits par segments avec relances automatiques, et les packs s’exportent et se corrigent à la main. Chaque étape illustrée par de véritables captures d’écran.",
+        "Tutoriel GenePad pas à pas : ouvrez Réglages → Language → AI Translate, saisissez une langue cible (français, russe, et plus encore) et l’IA configurée génère le paquet de langue puis bascule toute l’interface — les textes longs sont traduits par segments avec relances automatiques, et les paquets s’exportent et se corrigent à la main. Chaque étape illustrée par de véritables captures d’écran.",
     },
     "tutorial-langpack": {
-      title: "Langue de l'interface - GenePad | langues intégrées et paquets officiels",
+      title: "Tutoriel langue de l’interface - GenePad | Langues intégrées et paquets officiels",
       description:
-        "Tutoriel GenePad sur la langue de l'interface : ouvrez Paramètres → Language pour basculer entre le chinois et l'anglais intégrés, ou importez via « Import Language File » un paquet officiel (allemand, russe, japonais, coréen, français) — toute l'interface bascule aussitôt, sans configuration. Pas à pas illustré, les cinq paquets officiels en téléchargement.",
+        "Tutoriel GenePad sur la langue de l’interface : ouvrez Réglages → Language pour basculer entre le chinois et l’anglais intégrés, ou importez via « Import Language File » un paquet officiel (allemand, russe, japonais, coréen, français) — toute l’interface bascule aussitôt, sans configuration. Pas à pas illustré, les cinq paquets officiels en téléchargement.",
     },
     "stats": {
       title: "Données en direct - GenePad | Statistiques d’utilisation publiques",
