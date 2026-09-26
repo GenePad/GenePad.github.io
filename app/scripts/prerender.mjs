@@ -1,4 +1,4 @@
-/* 构建后预渲染：把 docs/ 下 30 个构建页在无头浏览器里渲染成静态 HTML 再写回。
+/* 构建后预渲染：把 docs/ 下全部构建页（主站 + 7 套语言镜像）在无头浏览器里渲染成静态 HTML 再写回。
  *
  * 为什么需要：站点的构建页正文完全由 React 在浏览器里生成，静态 HTML 只有 boot 骨架。
  * Google 能靠 JS 渲染索引，但 Bing/百度 与 AI 抓取器（GPTBot、ClaudeBot 等）读不到内容。
@@ -6,11 +6,10 @@
  *
  * 设计要点：
  * - 静态服务用 Node 内置 http，零 web 依赖；路径解析规则与 Cloudflare Pages 一致
- *   （/x → x.html、/en/x → en/x.html、/cn/x → cn/x.html），因此渲染出来的内链与实际线上行为相同。
+ *   （/x → x.html、/<镜像>/x → <镜像>/x.html），因此渲染出来的内链与实际线上行为相同。
  * - 浏览器用系统已装的 Chrome/Edge（puppeteer-core 不下载浏览器），找不到就报错退出。
  * - 中文页先写入 localStorage:genepad-lang=zh，避免无头浏览器的 navigator.language
- *   把中文页渲染成英文；英文页靠 en.genepad.cn 主机名判定、cn 镜像页靠 cn.genepad.cn
- *   主机名锁定中文（见 src/i18n.tsx isEnContext / isCnContext）。
+ *   把中文页渲染成英文；各镜像页靠镜像主机名锁定语言（见 src/i18n.tsx detectLang）。
  * - 全部页面渲染成功后才统一写盘，失败不落地半成品。
  * - stats 页（noindex、依赖实时接口，会把加载态固化进 HTML）与 404 页不在预渲染之列。
  *
@@ -26,43 +25,45 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DOCS_DIR = path.resolve(__dirname, "../../docs");
 const SETTLE_MS = 300;
 
-/* 待预渲染页面：path 是请求路径，file 是 docs/ 下要写回的产物；en/cn 表示走对应镜像主机。
-   英文页必须用 en.genepad.cn 主机名渲染（靠 --host-resolver-rules 指到本地服务），
-   否则 isEnHost() 为假，产物里的语言切换 / 仅中文页链接会指向错误的主机；cn 镜像页同理。 */
-const PAGES = [
-  { path: "/", file: "index.html" },
-  { path: "/tech-support", file: "tech-support.html" },
-  { path: "/projects", file: "projects.html" },
-  { path: "/library", file: "library.html" },
-  { path: "/ngs", file: "ngs.html" },
-  { path: "/tutorial", file: "tutorial.html" },
-  { path: "/tutorial-ai", file: "tutorial-ai.html" },
-  { path: "/tutorial-library", file: "tutorial-library.html" },
-  { path: "/tutorial-ngs", file: "tutorial-ngs.html" },
-  { path: "/tutorial-lang", file: "tutorial-lang.html" },
-  { path: "/", file: "en/index.html", en: true },
-  { path: "/tech-support", file: "en/tech-support.html", en: true },
-  { path: "/projects", file: "en/projects.html", en: true },
-  { path: "/library", file: "en/library.html", en: true },
-  { path: "/ngs", file: "en/ngs.html", en: true },
-  { path: "/tutorial", file: "en/tutorial.html", en: true },
-  { path: "/tutorial-ai", file: "en/tutorial-ai.html", en: true },
-  { path: "/tutorial-library", file: "en/tutorial-library.html", en: true },
-  { path: "/tutorial-ngs", file: "en/tutorial-ngs.html", en: true },
-  { path: "/tutorial-lang", file: "en/tutorial-lang.html", en: true },
-  { path: "/", file: "cn/index.html", cn: true },
-  { path: "/tech-support", file: "cn/tech-support.html", cn: true },
-  { path: "/projects", file: "cn/projects.html", cn: true },
-  { path: "/library", file: "cn/library.html", cn: true },
-  { path: "/ngs", file: "cn/ngs.html", cn: true },
-  { path: "/tutorial", file: "cn/tutorial.html", cn: true },
-  { path: "/tutorial-ai", file: "cn/tutorial-ai.html", cn: true },
-  { path: "/tutorial-library", file: "cn/tutorial-library.html", cn: true },
-  { path: "/tutorial-ngs", file: "cn/tutorial-ngs.html", cn: true },
-  { path: "/tutorial-lang", file: "cn/tutorial-lang.html", cn: true },
+/* 待预渲染页面：path 是请求路径，file 是 docs/ 下要写回的产物；mirror 是对应镜像主机。
+   镜像页必须用镜像主机名渲染（靠 --host-resolver-rules 指到本地服务），
+   否则 detectLang() 为假，产物里的语言菜单 / 仅中文页链接会指向错误的主机。 */
+const ROOT_PATHS = [
+  "/",
+  "/tech-support",
+  "/projects",
+  "/library",
+  "/ngs",
+  "/tutorial",
+  "/tutorial-ai",
+  "/tutorial-library",
+  "/tutorial-ngs",
+  "/tutorial-lang",
+  "/tutorial-langpack",
 ];
 
-/* 镜像主机不前缀的共享路径（与 _worker.js 的 MIRROR_SHARED_PREFIXES 保持一致） */
+/* 镜像主机名 → 构建输出子树（与 _worker.js 的 MIRROR_PREFIX_BY_HOST、src/links.ts 的 MIRRORS 保持一致） */
+const MIRRORS = [
+  { host: "en.genepad.cn", dir: "en" },
+  { host: "cn.genepad.cn", dir: "cn" },
+  { host: "de.genepad.cn", dir: "de" },
+  { host: "ru.genepad.cn", dir: "ru" },
+  { host: "jp.genepad.cn", dir: "jp" },
+  { host: "kr.genepad.cn", dir: "kr" },
+  { host: "fr.genepad.cn", dir: "fr" },
+];
+
+const fileFor = (p) => (p === "/" ? "index.html" : `${p.slice(1)}.html`);
+
+const PAGES = [
+  ...ROOT_PATHS.map((p) => ({ path: p, file: fileFor(p) })),
+  ...MIRRORS.flatMap((m) =>
+    ROOT_PATHS.map((p) => ({ path: p, file: `${m.dir}/${fileFor(p)}`, mirror: m })),
+  ),
+];
+
+/* 镜像主机不前缀的共享路径（与 _worker.js 的 MIRROR_SHARED_PREFIXES 保持一致；
+   /sitemap.xml 各镜像主机走各自的 /<dir>/sitemap.xml，本脚本只渲染 HTML 页，不受影响） */
 const MIRROR_SHARED_PREFIXES = [
   "/assets/",
   "/shots/",
@@ -72,14 +73,9 @@ const MIRROR_SHARED_PREFIXES = [
   "/icon.ico",
   "/icon.png",
   "/robots.txt",
-  "/sitemap.xml",
 ];
 
-/* 镜像主机名 → 构建输出子树前缀（与 _worker.js 的 MIRROR_PREFIX_BY_HOST 保持一致） */
-const MIRROR_PREFIX_BY_HOST = {
-  "en.genepad.cn": "/en",
-  "cn.genepad.cn": "/cn",
-};
+const MIRROR_PREFIX_BY_HOST = Object.fromEntries(MIRRORS.map((m) => [m.host, `/${m.dir}`]));
 
 const MIME = {
   ".html": "text/html; charset=utf-8",
@@ -166,16 +162,15 @@ function finalize(html, url) {
 async function main() {
   const { server, port } = await startServer();
   const origin = `http://127.0.0.1:${port}`;
-  const enOrigin = `http://en.genepad.cn:${port}`;
-  const cnOrigin = `http://cn.genepad.cn:${port}`;
-  const headless = await launchBrowser({ hostMap: ["en.genepad.cn", "cn.genepad.cn"] });
+  const mirrorOrigins = new Map(MIRRORS.map((m) => [m.dir, `http://${m.host}:${port}`]));
+  const headless = await launchBrowser({ hostMap: MIRRORS.map((m) => m.host) });
   const browser = headless.browser;
 
   const rendered = [];
   try {
     const page = await browser.newPage();
 
-    // 预热 localStorage：中文页的 detectLang() 优先读它，保证渲染语言确定
+    // 预热 localStorage：主站中文页的 detectLang() 优先读它，保证渲染语言确定
     await page.goto(`${origin}/404.html`, { waitUntil: "domcontentloaded" });
     await page.evaluate(() => {
       try {
@@ -185,9 +180,9 @@ async function main() {
       }
     });
 
-    for (const { path: pagePath, file, en, cn } of PAGES) {
+    for (const { path: pagePath, file, mirror } of PAGES) {
       const startedAt = Date.now();
-      const url = `${en ? enOrigin : cn ? cnOrigin : origin}${pagePath}`;
+      const url = `${mirror ? mirrorOrigins.get(mirror.dir) : origin}${pagePath}`;
       await page.goto(url, { waitUntil: "load", timeout: 60000 });
       await page.waitForSelector("#root > *", { timeout: 30000 });
       // 让 useEffect（document.title、IntersectionObserver）与图片解码跑完

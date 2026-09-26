@@ -5,9 +5,12 @@ import { useLang, usePageTitle, type Lang } from "../i18n";
 import { dismissBoot } from "../boot";
 
 /* 生态项目页：GenePad 组织的两个独立小项目（commonfeatures / CodonAtlas）
-   叙述文案走 i18n（pr.*），规格表与分类 chips 属于结构化数据，按语言记录在本文件内 */
+   叙述文案走 i18n（pr.*），规格表与分类 chips 属于结构化数据，按语言记录在本文件内。
+   这批术语性短标签只录了 zh/en：镜像语言回落英文（pick），要做翻译时补对应键即可 */
 
-type L = Record<Lang, string>;
+type L = { zh: string; en: string } & Partial<Record<"de" | "ru" | "ja" | "ko" | "fr", string>>;
+
+const pick = (l: L, lang: Lang): string => l[lang] ?? l.en;
 
 const CF_REPO = "https://github.com/GenePad/genepad-commonfeatures/";
 const CF_FEATURES = "https://github.com/GenePad/genepad-commonfeatures/blob/main/docs/FEATURES.md";
@@ -139,9 +142,9 @@ function SpecTable({ rows, lang }: { rows: { k: L; v: L }[]; lang: Lang }) {
           className="grid grid-cols-[76px_1fr] gap-4 border-b border-line py-3 last:border-b-0 md:grid-cols-[104px_1fr]"
         >
           <dt className="pt-0.5 font-mono text-[10px] uppercase tracking-[0.14em] text-ink/45">
-            {r.k[lang]}
+            {pick(r.k, lang)}
           </dt>
-          <dd className="text-[13px] leading-6 text-ink/75">{r.v[lang]}</dd>
+          <dd className="text-[13px] leading-6 text-ink/75">{pick(r.v, lang)}</dd>
         </div>
       ))}
     </dl>
@@ -219,7 +222,7 @@ export default function Projects() {
                         key={c.name.en}
                         className="border border-line-strong bg-ink/[0.02] px-2.5 py-1 text-[12px] text-ink/70"
                       >
-                        {c.name[lang]}
+                        {pick(c.name, lang)}
                         <span className="ml-1.5 font-mono text-[10px] text-ink/40">{c.n}</span>
                       </li>
                     ))}

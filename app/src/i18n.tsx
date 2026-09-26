@@ -5,12 +5,20 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { mirrorOf, type MirrorLang } from "./links";
+import de from "./lang/de";
+import ru from "./lang/ru";
+import ja from "./lang/ja";
+import ko from "./lang/ko";
+import fr from "./lang/fr";
 
-export type Lang = "zh" | "en";
+/* Lang 与镜像表的 zh/en/de/ru/ja/ko/fr 对应；zh/en 是主站可切换的两种语言，
+   其余五种仅在各自的纯语言镜像站点（de/ru/jp/kr/fr.genepad.cn）上出现 */
+export type Lang = MirrorLang;
 
-/* ── 文案词典：zh 为基准，en 逐条对照 ── */
-const dict = {
-  zh: {
+/* ── 文案词典：zh 为基准，en 逐条对照，其余语言见 src/lang/ ── */
+/* zh 单独成常量：TKey 从它取 key，避免 dict（含 extraDicts → Record<TKey,…>）与 TKey 循环引用 */
+const zhDict = {
     // Nav
     "nav.workbench": "图谱工作台",
     "nav.daynight": "昼夜模式",
@@ -35,6 +43,7 @@ const dict = {
     "title.tutorial.library": "基因文件库教程 - GenePad | 质粒入库、检索与 AI 标签",
     "title.tutorial.ngs": "NGS 数据分析教程 - GenePad | fastq.gz 查看与文库丰度报告",
     "title.tutorial.lang": "配置任意语言教程 - GenePad | AI 翻译生成语言包",
+    "title.tutorial.langpack": "设置界面语言教程 - GenePad | 内置语言与官方语言包导入",
     "title.projects": "生态项目 - GenePad | 质粒元件库与密码子图谱",
     "title.tech": "开发者技术文档 - GenePad",
     "title.stats": "实时数据 - GenePad | 公开使用统计",
@@ -520,6 +529,10 @@ const dict = {
     "tut.toc.lang.desc":
       "设置 → Language → AI Translate：输入目标语言自动生成语言包，界面整体切换为法语、俄语等任意语言。",
     "tut.toc.lang.en": "ANY LANGUAGE",
+    "tut.toc.langpack.name": "设置界面语言",
+    "tut.toc.langpack.desc":
+      "打开设置 → Language：内置中文/英文一键切换，导入官方语言包即可使用德语、俄语、日语、韩语、法语界面。",
+    "tut.toc.langpack.en": "UI LANGUAGE",
 
     // 教程分类（目录页分区 + 侧边导航）
     "tut.cat.gs.name": "快速上手",
@@ -630,6 +643,37 @@ const dict = {
     "tut.lang.note":
       "AI 翻译以内置中文语言文件为源；个别词条若不准确，可导出语言文件手动修改后再导入。",
 
+    // 教程五：设置界面语言（内置切换 + 官方语言包导入）
+    "tut.langpack.head": "教程五 · 设置界面语言",
+    "tut.langpack.headEn": "TUTORIAL 5 · UI LANGUAGE",
+    "tut.langpack.title": "两步把界面换成你的语言",
+    "tut.langpack.lead":
+      "GenePad 内置中文与英文界面；德语、俄语、日语、韩语、法语由官方语言包提供——下载后无需任何配置，在设置中导入即可整体切换。本教程同样适用于 AI 翻译生成的自定义语言包。",
+    "tut.langpack.1.name": "打开设置",
+    "tut.langpack.1.desc": "启动 GenePad，点击欢迎页右上角的齿轮图标，打开设置窗口。",
+    "tut.langpack.1.shot": "欢迎页 — 点击右上角齿轮图标",
+    "tut.langpack.2.name": "进入 Language 设置",
+    "tut.langpack.2.desc":
+      "在设置窗口左侧选择「Language」：列表中直接点击 English 或 中文 即可切换内置语言；导入的语言包也会出现在这张列表里。",
+    "tut.langpack.2.shot": "Language 设置 — 点击语言即切换，下方按钮可导入 / 导出语言文件",
+    "tut.langpack.3.name": "下载语言包并导入",
+    "tut.langpack.3.desc":
+      "在本页下方下载所需语言的 .json 语言包，点击「Import Language File」，在文件对话框中选中下载的语言包即可。导入成功后语言列表会出现新语言，点击即整体切换；右侧垃圾桶图标可删除已导入的语言包。",
+    "tut.langpack.3.shot": "导入成功 — 语言列表出现已导入的语言，点击即切换",
+    "tut.langpack.4.name": "界面整体切换",
+    "tut.langpack.4.desc":
+      "选择语言后界面立即整体切换：所有菜单、设置与提示均完成本地化。以下为五种官方语言包的实际效果。",
+    "tut.langpack.4.shot1": "法语界面",
+    "tut.langpack.4.shot2": "韩语界面",
+    "tut.langpack.4.shot3": "俄语界面",
+    "tut.langpack.4.shot4": "德语界面",
+    "tut.langpack.4.shot5": "日语界面",
+    "tut.langpack.dl.title": "下载官方语言包（.json）",
+    "tut.langpack.dl.hint": "与 GenePad 0.7.x 兼容；下载后无需解压，直接按步骤 3 导入。",
+    "tut.langpack.dl.btn": "下载",
+    "tut.langpack.note":
+      "语言包仅包含界面文本，不涉及序列与文件数据；官方语言包会随版本持续更新，重新导入即可升级。想接入其他语言？参见教程四，用 AI 翻译生成任意语言包。",
+
     "tut.final.title": "教程涉及的功能均内置于 GenePad，并非独立软件",
     "tut.final.desc":
       "下载安装/升级 GenePad 后即可按教程操作：AI 助手、基因文件库与 NGS 数据查看在同一程序内配合使用。当前为免费公测阶段，覆盖全部平台。",
@@ -670,7 +714,15 @@ const dict = {
     "st.note": "统计口径：以随机安装标识聚合，关闭统计或卸载后不再计数。",
     "st.error": "统计数据暂时取不到，请稍后刷新重试。",
     "st.cta": "免费下载，成为下一位用户",
-  },
+} as const;
+
+export type TKey = keyof typeof zhDict;
+
+/* 额外语言的词典放在 src/lang/<code>.tsx（Record<TKey, ReactNode>，key 与 zh 一一对应） */
+const extraDicts = { de, ru, ja, ko, fr };
+
+const dict: Record<Lang, Record<TKey, ReactNode>> = {
+  zh: zhDict,
   en: {
     // Nav
     "nav.workbench": "Workbench",
@@ -696,6 +748,7 @@ const dict = {
     "title.tutorial.library": "File Library Tutorial - GenePad | Plasmid Import, Search & AI Tags",
     "title.tutorial.ngs": "NGS Analysis Tutorial - GenePad | fastq.gz Viewing & Abundance Report",
     "title.tutorial.lang": "Any-Language Tutorial - GenePad | Translate Language Packs with AI",
+    "title.tutorial.langpack": "UI Language Tutorial - GenePad | Built-in Languages & Official Language Packs",
     "title.projects": "Projects - GenePad | Plasmid Part Libraries & Codon Maps",
     "title.tech": "Developer Documentation - GenePad",
     "title.stats": "Live Stats - GenePad | Public Usage Statistics",
@@ -1182,6 +1235,10 @@ const dict = {
     "tut.toc.lang.desc":
       "Settings → Language → AI Translate: type a target language and GenePad generates the language pack and switches the whole interface — French, Russian, and more.",
     "tut.toc.lang.en": "ANY LANGUAGE",
+    "tut.toc.langpack.name": "Set the UI language",
+    "tut.toc.langpack.desc":
+      "Open Settings → Language: switch between the built-in Chinese/English in one click, or import an official language pack for German, Russian, Japanese, Korean or French.",
+    "tut.toc.langpack.en": "UI LANGUAGE",
 
     // Tutorial categories (hub sections + sidebar navigation)
     "tut.cat.gs.name": "Getting started",
@@ -1292,6 +1349,37 @@ const dict = {
     "tut.lang.note":
       "AI translation uses the built-in Chinese language file as its source; if a term reads oddly, export the language file, edit it by hand, and import it again.",
 
+    // Tutorial 5: set the UI language (built-in switching + official language packs)
+    "tut.langpack.head": "Tutorial 5 · Set the UI language",
+    "tut.langpack.headEn": "TUTORIAL 5 · UI LANGUAGE",
+    "tut.langpack.title": "Switch the interface to your language in two steps",
+    "tut.langpack.lead":
+      "GenePad ships with Chinese and English interfaces; German, Russian, Japanese, Korean and French come as official language packs — download one, import it in Settings, no configuration needed. The same steps apply to custom packs generated by AI translation.",
+    "tut.langpack.1.name": "Open Settings",
+    "tut.langpack.1.desc": "Launch GenePad and click the gear icon in the top-right corner of the welcome screen.",
+    "tut.langpack.1.shot": "Welcome screen — click the gear icon in the top-right corner",
+    "tut.langpack.2.name": "Open the Language settings",
+    "tut.langpack.2.desc":
+      "Choose \"Language\" in the left sidebar of the Settings window: click English or 中文 to switch between the built-in languages; imported language packs appear in the same list.",
+    "tut.langpack.2.shot": "Language settings — click a language to switch; the buttons below import / export language files",
+    "tut.langpack.3.name": "Download a language pack and import it",
+    "tut.langpack.3.desc":
+      "Download the .json pack for your language below, click \"Import Language File\" and pick the downloaded file. Once imported, the language appears in the list — click it to switch the whole interface; the trash icon on the right removes an imported pack.",
+    "tut.langpack.3.shot": "Imported — the new language appears in the list; click to switch",
+    "tut.langpack.4.name": "The whole interface switches over",
+    "tut.langpack.4.desc":
+      "Picking a language switches the entire interface immediately — every menu, setting, and message is localized. The five official language packs in action:",
+    "tut.langpack.4.shot1": "French interface",
+    "tut.langpack.4.shot2": "Korean interface",
+    "tut.langpack.4.shot3": "Russian interface",
+    "tut.langpack.4.shot4": "German interface",
+    "tut.langpack.4.shot5": "Japanese interface",
+    "tut.langpack.dl.title": "Download the official language packs (.json)",
+    "tut.langpack.dl.hint": "Compatible with GenePad 0.7.x. No unzipping needed — import the file directly as in step 3.",
+    "tut.langpack.dl.btn": "Download",
+    "tut.langpack.note":
+      "Language packs contain interface text only — never sequences or file data. Official packs are updated with each release; import the new file to upgrade. Want another language? Tutorial 4 generates packs for any language with AI translation.",
+
     "tut.final.title": "Everything in these tutorials is built into GenePad — no separate software",
     "tut.final.desc":
       "Install or upgrade GenePad and follow along: the AI assistant, gene file library, and NGS viewer work together in the same app. Free during the public beta, on every platform.",
@@ -1333,9 +1421,8 @@ const dict = {
     "st.error": "Stats are temporarily unavailable — please refresh and try again later.",
     "st.cta": "Download free — become the next user",
   },
-} as const;
-
-export type TKey = keyof (typeof dict)["zh"];
+  ...extraDicts,
+};
 
 const LangContext = createContext<{
   lang: Lang;
@@ -1347,42 +1434,35 @@ const LangContext = createContext<{
   t: (k) => k,
 });
 
-/* en.genepad.cn / cn.genepad.cn 是纯英文 / 纯中文镜像：语言分别锁定英文、中文，
-   不读缓存/浏览器语言；本地 dev 的 /en/、/cn/ 路径同样按对应语言渲染 */
-function isEnContext(): boolean {
-  if (typeof window === "undefined") return false;
-  return (
-    window.location.hostname === "en.genepad.cn" ||
-    window.location.hostname.endsWith(".en.genepad.cn") ||
-    window.location.pathname.startsWith("/en/")
-  );
-}
-
-function isCnContext(): boolean {
-  if (typeof window === "undefined") return false;
-  return (
-    window.location.hostname === "cn.genepad.cn" ||
-    window.location.hostname.endsWith(".cn.genepad.cn") ||
-    window.location.pathname.startsWith("/cn/")
-  );
-}
-
+/* 纯语言镜像站点（en/cn/de/ru/jp/kr/fr.genepad.cn）各自锁定界面语言，
+   不读缓存/浏览器语言；本地 dev 与 pages.dev 预览的 /<dir>/ 子树同样按对应语言渲染 */
 function detectLang(): Lang {
-  if (isEnContext()) return "en";
-  if (isCnContext()) return "zh";
+  const mirror = mirrorOf();
+  if (mirror) return mirror.lang;
   try {
     const saved = localStorage.getItem("genepad-lang");
     if (saved === "zh" || saved === "en") return saved;
   } catch {
     /* localStorage 不可用时忽略 */
   }
-  // 按系统/浏览器首选语言判断：首选是中文（zh-CN/zh-TW/zh-HK…）就用中文，否则一律英文
+  // 主站按系统/浏览器首选语言判断：首选是中文（zh-CN/zh-TW/zh-HK…）就用中文，否则一律英文
   const primary =
     typeof navigator !== "undefined"
       ? navigator.language || navigator.languages?.[0] || ""
       : "";
   return primary.toLowerCase().startsWith("zh") ? "zh" : "en";
 }
+
+/* 各语言对应的 <html lang>（与 gen-shells 生成壳页的 lang 属性保持一致） */
+const HTML_LANG: Record<Lang, string> = {
+  zh: "zh-CN",
+  en: "en",
+  de: "de-DE",
+  ru: "ru-RU",
+  ja: "ja-JP",
+  ko: "ko-KR",
+  fr: "fr-FR",
+};
 
 export function LangProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>(detectLang);
@@ -1397,7 +1477,7 @@ export function LangProvider({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
-    document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
+    document.documentElement.lang = HTML_LANG[lang];
   }, [lang]);
 
   const t = (key: TKey): ReactNode => dict[lang][key] ?? dict.zh[key] ?? key;

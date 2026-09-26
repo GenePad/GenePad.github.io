@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f6f6f4" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1c3a13" media="(prefers-color-scheme: dark)" />
+    <meta
+      name="description"
+      content="GenePad 设置界面语言图文教程：打开设置 → Language，内置中文/英文一键切换；下载官方语言包（德语、俄语、日语、韩语、法语），点击 Import Language File 导入后界面整体切换，无需任何配置。每步均配实际界面截图，附五种官方语言包下载。"
+    />
+    <title>设置界面语言教程 - GenePad | 内置语言与官方语言包导入</title>
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://cn.genepad.cn/tutorial-langpack" />
+    <link rel="alternate" hreflang="zh-CN" href="https://cn.genepad.cn/tutorial-langpack" />
+    <link rel="alternate" hreflang="en" href="https://en.genepad.cn/tutorial-langpack" />
+    <link rel="alternate" hreflang="de" href="https://de.genepad.cn/tutorial-langpack" />
+    <link rel="alternate" hreflang="ru" href="https://ru.genepad.cn/tutorial-langpack" />
+    <link rel="alternate" hreflang="ja" href="https://jp.genepad.cn/tutorial-langpack" />
+    <link rel="alternate" hreflang="ko" href="https://kr.genepad.cn/tutorial-langpack" />
+    <link rel="alternate" hreflang="fr" href="https://fr.genepad.cn/tutorial-langpack" />
+    <link rel="alternate" hreflang="x-default" href="https://genepad.cn/tutorial-langpack" />
+    <!-- Open Graph / Twitter 卡片 -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="GenePad" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:title" content="设置界面语言教程 - GenePad | 内置语言与官方语言包导入" />
+    <meta
+      property="og:description"
+      content="打开设置 → Language：内置中文/英文一键切换，导入官方语言包即可使用德语、俄语、日语、韩语、法语界面——GenePad 按步图解教程。"
+    />
+    <meta property="og:url" content="https://cn.genepad.cn/tutorial-langpack" />
+    <meta property="og:image" content="https://genepad.cn/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://genepad.cn/og.png" />
+    <meta name="twitter:title" content="设置界面语言教程 - GenePad | 内置语言与官方语言包导入" />
+    <meta
+      name="twitter:description"
+      content="两步把 GenePad 界面换成你的语言——官方语言包免费下载，按步图解教程。"
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "GenePad 设置界面语言教程",
+        "description": "打开设置 → Language，内置中文/英文一键切换；下载官方语言包（德语、俄语、日语、韩语、法语）后点击 Import Language File 导入，界面整体切换，无需任何配置。",
+        "url": "https://genepad.cn/tutorial-langpack",
+        "isPartOf": { "@type": "WebSite", "name": "GenePad", "url": "https://genepad.cn/" },
+        "about": {
+          "@type": "SoftwareApplication",
+          "name": "GenePad",
+          "applicationCategory": "ScienceApplication",
+          "operatingSystem": "Windows, macOS, Linux, Android",
+          "url": "https://genepad.cn/",
+          "featureList": "界面语言设置, 中文界面, 英文界面, 德语语言包, 俄语语言包, 日语语言包, 韩语语言包, 法语语言包, 多语言界面"
+        },
+        "keywords": ["GenePad 语言设置", "语言包下载", "德语界面", "俄语界面", "日语界面", "韩语界面", "法语界面", "多语言界面", "GenePad 教程"]
+      }
+    </script>
+    <!-- 手绘 SVG 导出图，暂不启用 <link rel="icon" type="image/png" href="/icon.png" /> -->
+    <link rel="icon" href="/icon.ico" sizes="any" />
+    <style>
+      /* 首屏骨架：JS 与样式表就绪前先出文字；React 挂载后淡出移除（见 src/boot.ts） */
+      html { background: #f6f6f4; }
+      #boot {
+        position: fixed; inset: 0; z-index: 9999;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 16px; padding: 24px; text-align: center;
+        background: #f6f6f4; color: #1c3a13;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+          "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+      }
+      #boot .bt { font-size: clamp(2.2rem, 7vw, 4.2rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; }
+      #boot .bt small { display: block; margin-top: 10px; font-size: clamp(1rem, 2.4vw, 1.5rem); font-weight: 700; letter-spacing: 0.1em; color: #2f9a10; }
+      #boot .bd { max-width: 620px; font-size: 14.5px; line-height: 1.9; color: rgba(28, 58, 19, 0.72); }
+      #boot .sp { width: 26px; height: 26px; margin-top: 6px; border: 2.5px solid rgba(28, 58, 19, 0.2); border-top-color: #2f9a10; border-radius: 50%; animation: gp-spin 0.9s linear infinite; }
+      @keyframes gp-spin { to { transform: rotate(360deg); } }
+      @media (prefers-color-scheme: dark) {
+        html { background: #101a0c; }
+        #boot { background: #101a0c; color: #f6f6f4; }
+        #boot .bd { color: rgba(246, 246, 244, 0.72); }
+        #boot .sp { border-color: rgba(246, 246, 244, 0.22); border-top-color: #45c51f; }
+      }
+    </style>
+  </head>
+  <body data-tutorial="langpack">
+    <div id="boot">
+      <div class="bt">语言设置教程<small>UI LANGUAGE</small></div>
+      <p class="bd">打开设置 → Language：内置中文/英文一键切换；下载官方语言包（德语、俄语、日语、韩语、法语），导入后界面整体切换。</p>
+      <div class="sp" role="status" aria-label="加载中"></div>
+    </div>
+    <div id="root"></div>
+    <script type="module" src="/src/tutorial-detail-main.tsx"></script>
+  </body>
+</html>

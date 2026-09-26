@@ -4,4 +4,14 @@ Allow: /
 # /stats 不在这里屏蔽：屏蔽会让爬虫读不到该页的 noindex 标签，页面反而可能因外链被收录。
 # 实时数据页改用 <meta name="robots" content="noindex, follow"> 控制。
 
+# 本文件为全部主机共用（/robots.txt 在 _worker.js 的镜像共享前缀里）；
+# Sitemap 指令允许跨主机，每个纯语言镜像主机各有一份单源 sitemap（gen-shells.mjs 生成，
+# worker 把镜像主机的 /sitemap.xml 映射到 /<dir>/sitemap.xml）。
 Sitemap: https://genepad.cn/sitemap.xml
+Sitemap: https://en.genepad.cn/sitemap.xml
+Sitemap: https://cn.genepad.cn/sitemap.xml
+Sitemap: https://de.genepad.cn/sitemap.xml
+Sitemap: https://ru.genepad.cn/sitemap.xml
+Sitemap: https://jp.genepad.cn/sitemap.xml
+Sitemap: https://kr.genepad.cn/sitemap.xml
+Sitemap: https://fr.genepad.cn/sitemap.xml

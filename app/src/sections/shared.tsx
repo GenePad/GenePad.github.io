@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState, type ReactNode, type CSSProperties, type RefObject } from "react";
 import { useLightboxImage } from "../lightbox";
 import { useLang } from "../i18n";
-import { homeHref, isMirrorHost, otherLangHref } from "../links";
+import { homeHref, isMirrorHost } from "../links";
+import LangMenu from "./LangMenu";
 
 /* ── 滚动显现容器：进入视口时给自身与子级加 .rv-in ── */
 export function Reveal({
@@ -312,15 +313,9 @@ export function SubpageNav({ tag }: { tag: string }) {
           </span>
         </a>
         <div className="flex items-center gap-3">
-          {/* genepad.cn：原地切换文案；en / cn 镜像主机：跳到另一语言站点的同一页 */}
+          {/* genepad.cn：原地切换文案；各纯语言镜像主机：语言菜单跳到对应语言站点的同一页 */}
           {isMirrorHost() ? (
-            <a
-              href={otherLangHref()}
-              aria-label="Switch language"
-              className="border border-line-strong px-3 py-2 font-mono text-[12px] tracking-[0.12em] text-ink/70 transition-colors hover:border-gfp-deep hover:text-gfp-deep"
-            >
-              {t("nav.lang")}
-            </a>
+            <LangMenu />
           ) : (
             <button
               onClick={() => setLang(lang === "zh" ? "en" : "zh")}

@@ -32,33 +32,29 @@ export default defineConfig({
         "tutorial-library": path.resolve(__dirname, "tutorial-library.html"),
         "tutorial-ngs": path.resolve(__dirname, "tutorial-ngs.html"),
         "tutorial-lang": path.resolve(__dirname, "tutorial-lang.html"),
+        "tutorial-langpack": path.resolve(__dirname, "tutorial-langpack.html"),
         stats: path.resolve(__dirname, "stats.html"),
-        // en.genepad.cn 镜像壳页：app/en/*.html → docs/en/*.html，与中文页共用同一套 /src 模块
-        // （_worker.js 把 en 主机下的路径映射到 /en 子树）
-        "en-main": path.resolve(__dirname, "en/index.html"),
-        "en-tech-support": path.resolve(__dirname, "en/tech-support.html"),
-        "en-projects": path.resolve(__dirname, "en/projects.html"),
-        "en-library": path.resolve(__dirname, "en/library.html"),
-        "en-ngs": path.resolve(__dirname, "en/ngs.html"),
-        "en-tutorial": path.resolve(__dirname, "en/tutorial.html"),
-        "en-tutorial-ai": path.resolve(__dirname, "en/tutorial-ai.html"),
-        "en-tutorial-library": path.resolve(__dirname, "en/tutorial-library.html"),
-        "en-tutorial-ngs": path.resolve(__dirname, "en/tutorial-ngs.html"),
-        "en-tutorial-lang": path.resolve(__dirname, "en/tutorial-lang.html"),
-        "en-stats": path.resolve(__dirname, "en/stats.html"),
-        // cn.genepad.cn 中文镜像壳页：app/cn/*.html → docs/cn/*.html，与上面两套页面共用同一 /src 模块
-        // （_worker.js 把 cn 主机下的路径映射到 /cn 子树）
-        "cn-main": path.resolve(__dirname, "cn/index.html"),
-        "cn-tech-support": path.resolve(__dirname, "cn/tech-support.html"),
-        "cn-projects": path.resolve(__dirname, "cn/projects.html"),
-        "cn-library": path.resolve(__dirname, "cn/library.html"),
-        "cn-ngs": path.resolve(__dirname, "cn/ngs.html"),
-        "cn-tutorial": path.resolve(__dirname, "cn/tutorial.html"),
-        "cn-tutorial-ai": path.resolve(__dirname, "cn/tutorial-ai.html"),
-        "cn-tutorial-library": path.resolve(__dirname, "cn/tutorial-library.html"),
-        "cn-tutorial-ngs": path.resolve(__dirname, "cn/tutorial-ngs.html"),
-        "cn-tutorial-lang": path.resolve(__dirname, "cn/tutorial-lang.html"),
-        "cn-stats": path.resolve(__dirname, "cn/stats.html"),
+        // 各纯语言镜像壳页：app/<dir>/*.html → docs/<dir>/*.html，与中文页共用同一套 /src 模块
+        // （_worker.js 把镜像主机下的路径映射到 /<dir> 子树；en/cn 为手写底稿，
+        // de/ru/jp/kr/fr 由 scripts/gen-shells.mjs 从 en 模板生成）
+        ...Object.fromEntries(
+          ["en", "cn", "de", "ru", "jp", "kr", "fr"].flatMap((dir) =>
+            [
+              ["main", "index.html"],
+              ["tech-support", "tech-support.html"],
+              ["projects", "projects.html"],
+              ["library", "library.html"],
+              ["ngs", "ngs.html"],
+              ["tutorial", "tutorial.html"],
+              ["tutorial-ai", "tutorial-ai.html"],
+              ["tutorial-library", "tutorial-library.html"],
+              ["tutorial-ngs", "tutorial-ngs.html"],
+              ["tutorial-lang", "tutorial-lang.html"],
+              ["tutorial-langpack", "tutorial-langpack.html"],
+              ["stats", "stats.html"],
+            ].map(([key, file]) => [`${dir}-${key}`, path.resolve(__dirname, dir, file)]),
+          ),
+        ),
       },
     },
   },

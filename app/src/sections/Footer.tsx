@@ -1,6 +1,6 @@
 import { Reveal, PlasmidGlyph } from "./shared";
 import { useLang } from "../i18n";
-import { rootHref } from "../links";
+import { LANG_NAMES, MIRRORS, mirrorHref, mirrorOf, rootHref } from "../links";
 import { RELEASES_URL, GITEE_RELEASES_URL } from "../download-data";
 
 /* 页脚质粒环：滚动到位后描线绘制 */
@@ -38,6 +38,18 @@ function FooterPlasmid() {
 
 export default function Footer() {
   const { t } = useLang();
+  const currentLang = mirrorOf()?.lang;
+
+  /* 语言行：全部纯语言站点的同页互链（语言用各自本名，不随界面语言翻译）。
+     主站上七项全是链接——这是搜索引擎发现各镜像站的主要正文入口；
+     镜像上当前语言显示为纯文本，其余六项跳到对应语言站的同一页 */
+  const LANGS = MIRRORS.map((m) => ({
+    lang: m.lang,
+    label: LANG_NAMES[m.lang],
+    href: mirrorHref(m.lang),
+    hrefLang: m.lang === "zh" ? "zh-CN" : m.lang,
+    current: m.lang === currentLang,
+  }));
 
   const COLS = [
     {
@@ -114,6 +126,28 @@ export default function Footer() {
             <Reveal delay={200} className="hidden w-[200px] lg:block">
               <FooterPlasmid />
             </Reveal>
+          </div>
+
+          <div
+            aria-label="Languages"
+            className="mt-10 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-lined pt-6 font-mono text-[11px] tracking-[0.14em]"
+          >
+            {LANGS.map((l) =>
+              l.current ? (
+                <span key={l.lang} className="font-bold text-gfp">
+                  {l.label}
+                </span>
+              ) : (
+                <a
+                  key={l.lang}
+                  href={l.href}
+                  hrefLang={l.hrefLang}
+                  className="text-paper/55 transition-colors hover:text-gfp"
+                >
+                  {l.label}
+                </a>
+              ),
+            )}
           </div>
 
           <div className="mt-14 flex flex-col gap-3 border-t border-lined pt-6 font-mono text-[10.5px] tracking-[0.18em] text-paper/40 md:flex-row md:items-center md:justify-between">

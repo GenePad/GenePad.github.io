@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f6f6f4" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1c3a13" media="(prefers-color-scheme: dark)" />
+    <meta
+      name="description"
+      content="GenePad 단계별 튜토리얼: 드래그 앤 드롭으로 fastq.gz 열기, 페어 엔드 자동 페어링, 염기별 품질 확인, 아미노산 검색, 앵커 절단, 라이브러리 풍도 리포트 생성 — 전체 과정 비디오 포함. 모든 단계를 실제 스크린샷으로 그림 해설합니다."
+    />
+    <title>NGS 분석 튜토리얼 - GenePad | fastq.gz 조회 및 풍도 리포트</title>
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://kr.genepad.cn/tutorial-ngs" />
+    <link rel="alternate" hreflang="zh-CN" href="https://cn.genepad.cn/tutorial-ngs" />
+    <link rel="alternate" hreflang="en" href="https://en.genepad.cn/tutorial-ngs" />
+    <link rel="alternate" hreflang="de" href="https://de.genepad.cn/tutorial-ngs" />
+    <link rel="alternate" hreflang="ru" href="https://ru.genepad.cn/tutorial-ngs" />
+    <link rel="alternate" hreflang="ja" href="https://jp.genepad.cn/tutorial-ngs" />
+    <link rel="alternate" hreflang="ko" href="https://kr.genepad.cn/tutorial-ngs" />
+    <link rel="alternate" hreflang="fr" href="https://fr.genepad.cn/tutorial-ngs" />
+    <link rel="alternate" hreflang="x-default" href="https://genepad.cn/tutorial-ngs" />
+    <!-- Open Graph / Twitter 卡片 -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="GenePad" />
+    <meta property="og:locale" content="ko_KR" />
+    <meta property="og:title" content="NGS 분석 튜토리얼 - GenePad | fastq.gz 조회 및 풍도 리포트" />
+    <meta
+      property="og:description"
+      content="GenePad 단계별 튜토리얼: 드래그 앤 드롭으로 fastq.gz 열기, 페어 엔드 자동 페어링, 염기별 품질 확인, 아미노산 검색, 앵커 절단, 라이브러리 풍도 리포트 생성 — 전체 과정 비디오 포함. 모든 단계를 실제 스크린샷으로 그림 해설합니다."
+    />
+    <meta property="og:url" content="https://kr.genepad.cn/tutorial-ngs" />
+    <meta property="og:image" content="https://genepad.cn/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://genepad.cn/og.png" />
+    <meta name="twitter:title" content="NGS 분석 튜토리얼 - GenePad | fastq.gz 조회 및 풍도 리포트" />
+    <meta
+      name="twitter:description"
+      content="GenePad 단계별 튜토리얼: 드래그 앤 드롭으로 fastq.gz 열기, 페어 엔드 자동 페어링, 염기별 품질 확인, 아미노산 검색, 앵커 절단, 라이브러리 풍도 리포트 생성 — 전체 과정 비디오 포함. 모든 단계를 실제 스크린샷으로 그림 해설합니다."
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "GenePad NGS Analysis Tutorial",
+        "description": "GenePad 단계별 튜토리얼: 드래그 앤 드롭으로 fastq.gz 열기, 페어 엔드 자동 페어링, 염기별 품질 확인, 아미노산 검색, 앵커 절단, 라이브러리 풍도 리포트 생성 — 전체 과정 비디오 포함. 모든 단계를 실제 스크린샷으로 그림 해설합니다.",
+        "url": "https://en.genepad.cn/tutorial-ngs",
+        "isPartOf": { "@type": "WebSite", "name": "GenePad", "url": "https://genepad.cn/" },
+        "about": {
+          "@type": "SoftwareApplication",
+          "name": "GenePad",
+          "applicationCategory": "ScienceApplication",
+          "operatingSystem": "Windows, macOS, Linux, Android",
+          "url": "https://genepad.cn/",
+          "featureList": "NGS viewer, fastq.gz opening, paired-end auto-matching, per-base quality, amino-acid search, anchor trimming, abundance analysis"
+        },
+        "keywords": ["NGS analysis tutorial", "fastq viewer", "fastq.gz", "paired-end matching", "abundance analysis", "anchor trimming", "GenePad tutorial"]
+      }
+    </script>
+    <link rel="icon" href="/icon.ico" sizes="any" />
+    <style>
+      /* 首屏骨架：JS 与样式表就绪前先出文字；React 挂载后淡出移除（见 src/boot.ts） */
+      html { background: #f6f6f4; }
+      #boot {
+        position: fixed; inset: 0; z-index: 9999;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 16px; padding: 24px; text-align: center;
+        background: #f6f6f4; color: #1c3a13;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+          "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+      }
+      #boot .bt { font-size: clamp(2.2rem, 7vw, 4.2rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; }
+      #boot .bt small { display: block; margin-top: 10px; font-size: clamp(1rem, 2.4vw, 1.5rem); font-weight: 700; letter-spacing: 0.1em; color: #2f9a10; }
+      #boot .bd { max-width: 620px; font-size: 14.5px; line-height: 1.9; color: rgba(28, 58, 19, 0.72); }
+      #boot .sp { width: 26px; height: 26px; margin-top: 6px; border: 2.5px solid rgba(28, 58, 19, 0.2); border-top-color: #2f9a10; border-radius: 50%; animation: gp-spin 0.9s linear infinite; }
+      @keyframes gp-spin { to { transform: rotate(360deg); } }
+      @media (prefers-color-scheme: dark) {
+        html { background: #101a0c; }
+        #boot { background: #101a0c; color: #f6f6f4; }
+        #boot .bd { color: rgba(246, 246, 244, 0.72); }
+        #boot .sp { border-color: rgba(246, 246, 244, 0.22); border-top-color: #45c51f; }
+      }
+    </style>
+  </head>
+  <body data-tutorial="ngs">
+    <div id="boot">
+      <div class="bt">NGS Analysis Tutorial<small>NGS DATA ANALYSIS</small></div>
+      <p class="bd">일상적인 분자 클로닝을 위한 가볍고 크로스 플랫폼 유전자 지도 편집기입니다. 플라스미드 맵 열람·편집, 서열 주석 관리, 제한효소 부위 분석, Sanger 시퀀싱 트레이스 비교를 지원합니다.</p>
+      <div class="sp" role="status" aria-label="불러오는 중"></div>
+    </div>
+    <div id="root"></div>
+    <script type="module" src="/src/tutorial-detail-main.tsx"></script>
+  </body>
+</html>

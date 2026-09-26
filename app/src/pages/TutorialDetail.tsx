@@ -5,7 +5,7 @@ import Download from "../sections/Download";
 import Footer from "../sections/Footer";
 import { LightboxProvider } from "../lightbox";
 import { useLang, usePageTitle } from "../i18n";
-import { TUTORIALS, tutorialHref, type TutorialEntry, type TutorialStep } from "../tutorial-data";
+import { TUTORIALS, tutorialHref, type TutorialEntry, type TutorialStep, type TutorialDownload } from "../tutorial-data";
 import { dismissBoot } from "../boot";
 import { homeHref } from "../links";
 
@@ -42,6 +42,42 @@ function Steps({ steps }: { steps: TutorialStep[] }) {
         </li>
       ))}
     </ol>
+  );
+}
+
+function Downloads({
+  downloads,
+}: {
+  downloads: NonNullable<TutorialEntry["downloads"]>;
+}) {
+  const { t } = useLang();
+  return (
+    <Reveal>
+      <div className="mt-10 border border-line bg-paper p-6 md:p-8">
+        <div className="flex items-baseline justify-between gap-4">
+          <h2 className="text-[18px] font-bold tracking-tight">{t(downloads.heading)}</h2>
+          <span className="font-mono text-[10px] tracking-[0.22em] text-ink/40">.JSON</span>
+        </div>
+        <p className="mt-2 text-[13px] leading-6 text-ink/60">{t(downloads.hint)}</p>
+        <ul className="mt-5 divide-y divide-lined border-t border-lined">
+          {downloads.files.map((f: TutorialDownload) => (
+            <li key={f.file} className="flex flex-wrap items-center gap-x-4 gap-y-2 py-3">
+              <span className="w-24 font-bold tracking-tight">{f.label}</span>
+              <span className="flex-1 truncate font-mono text-[11.5px] text-ink/55">
+                {f.file} · {f.size}
+              </span>
+              <a
+                href={`/release/langpacks/${f.file}`}
+                download
+                className="inline-flex items-center gap-2 border border-line-strong px-4 py-1.5 font-mono text-[11px] tracking-[0.14em] text-ink/70 transition-colors hover:border-gfp-deep hover:text-gfp-deep"
+              >
+                ↓ {t("tut.langpack.dl.btn")}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </Reveal>
   );
 }
 
@@ -145,6 +181,8 @@ export default function TutorialDetail({ tut }: { tut: TutorialEntry }) {
               </Reveal>
 
               <Steps steps={tut.steps} />
+
+              {tut.downloads && <Downloads downloads={tut.downloads} />}
 
               {tut.note && (
                 <Reveal>

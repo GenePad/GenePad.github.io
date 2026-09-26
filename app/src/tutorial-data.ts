@@ -17,6 +17,14 @@ export type TutorialShot = { src: string; shot: TKey };
 
 export type TutorialStep = { name: TKey; desc: TKey; shots: TutorialShot[] };
 
+/** 教程内嵌下载块（语言包等随教程分发的附件）：label 用语言本名，不随界面语言翻译 */
+export type TutorialDownload = {
+  label: string;
+  /** 相对 /release/ 的文件名 */
+  file: string;
+  size: string;
+};
+
 export type TutorialEntry = {
   /** 页址后缀与 i18n 键名前缀：id "ai" → /tutorial-ai、tut.ai.*、tut.toc.ai.* */
   id: string;
@@ -31,6 +39,8 @@ export type TutorialEntry = {
   title: TKey;
   lead: TKey;
   steps: TutorialStep[];
+  /** 步骤后的附件下载块（可选，如官方语言包） */
+  downloads?: { heading: TKey; hint: TKey; files: TutorialDownload[] };
   /** 步骤后的补充说明（可选） */
   note?: TKey;
   /** 章节末尾内嵌视频（可选，目前支持 B 站播放器） */
@@ -200,6 +210,55 @@ export const TUTORIALS: TutorialEntry[] = [
     ],
     note: "tut.lang.note",
   },
+  {
+    id: "langpack",
+    pageTitle: "title.tutorial.langpack",
+    toc: { name: "tut.toc.langpack.name", desc: "tut.toc.langpack.desc", en: "tut.toc.langpack.en" },
+    head: "tut.langpack.head",
+    headEn: "tut.langpack.headEn",
+    title: "tut.langpack.title",
+    lead: "tut.langpack.lead",
+    steps: [
+      {
+        name: "tut.langpack.1.name",
+        desc: "tut.langpack.1.desc",
+        shots: [{ src: "shots/tutorial-setup-01.webp", shot: "tut.langpack.1.shot" }],
+      },
+      {
+        name: "tut.langpack.2.name",
+        desc: "tut.langpack.2.desc",
+        shots: [{ src: "shots/tutorial-setup-02.webp", shot: "tut.langpack.2.shot" }],
+      },
+      {
+        name: "tut.langpack.3.name",
+        desc: "tut.langpack.3.desc",
+        shots: [{ src: "shots/tutorial-setup-03.webp", shot: "tut.langpack.3.shot" }],
+      },
+      {
+        name: "tut.langpack.4.name",
+        desc: "tut.langpack.4.desc",
+        shots: [
+          { src: "shots/tutorial-setup-fr.webp", shot: "tut.langpack.4.shot1" },
+          { src: "shots/tutorial-setup-ko.webp", shot: "tut.langpack.4.shot2" },
+          { src: "shots/tutorial-setup-ru.webp", shot: "tut.langpack.4.shot3" },
+          { src: "shots/tutorial-setup-de.webp", shot: "tut.langpack.4.shot4" },
+          { src: "shots/tutorial-setup-ja.webp", shot: "tut.langpack.4.shot5" },
+        ],
+      },
+    ],
+    downloads: {
+      heading: "tut.langpack.dl.title",
+      hint: "tut.langpack.dl.hint",
+      files: [
+        { label: "Deutsch", file: "GenePad-langpack-de.json", size: "148 KB" },
+        { label: "Français", file: "GenePad-langpack-fr.json", size: "149 KB" },
+        { label: "日本語", file: "GenePad-langpack-ja.json", size: "155 KB" },
+        { label: "한국어", file: "GenePad-langpack-ko.json", size: "144 KB" },
+        { label: "Русский", file: "GenePad-langpack-ru.json", size: "207 KB" },
+      ],
+    },
+    note: "tut.langpack.note",
+  },
 ];
 
 /** 教程详情页地址（相对链接，中文主机 / en 镜像 / GitHub Pages 均适用；
@@ -226,7 +285,7 @@ export const TUTORIAL_CATEGORIES: TutorialCategory[] = [
     name: "tut.cat.gs.name",
     en: "tut.cat.gs.en",
     desc: "tut.cat.gs.desc",
-    tutorials: ["ai", "library", "lang"],
+    tutorials: ["ai", "library", "lang", "langpack"],
   },
   {
     id: "analysis",

@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f6f6f4" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1c3a13" media="(prefers-color-scheme: dark)" />
+    <meta
+      name="description"
+      content="GenePad 단계별 튜토리얼: 설정 → Language → AI Translate를 열고 목표 언어(프랑스어, 러시아어 등)를 입력하면 설정된 AI가 언어 팩을 생성해 인터페이스 전체를 전환합니다. 긴 텍스트는 구간별 번역과 자동 재시도로 처리되며, 언어 팩은 내보내 수동 편집할 수도 있습니다. 모든 단계를 실제 스크린샷으로 그림 해설합니다."
+    />
+    <title>원하는 언어 사용 튜토리얼 - GenePad | AI로 언어 팩 번역하기</title>
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://kr.genepad.cn/tutorial-lang" />
+    <link rel="alternate" hreflang="zh-CN" href="https://cn.genepad.cn/tutorial-lang" />
+    <link rel="alternate" hreflang="en" href="https://en.genepad.cn/tutorial-lang" />
+    <link rel="alternate" hreflang="de" href="https://de.genepad.cn/tutorial-lang" />
+    <link rel="alternate" hreflang="ru" href="https://ru.genepad.cn/tutorial-lang" />
+    <link rel="alternate" hreflang="ja" href="https://jp.genepad.cn/tutorial-lang" />
+    <link rel="alternate" hreflang="ko" href="https://kr.genepad.cn/tutorial-lang" />
+    <link rel="alternate" hreflang="fr" href="https://fr.genepad.cn/tutorial-lang" />
+    <link rel="alternate" hreflang="x-default" href="https://genepad.cn/tutorial-lang" />
+    <!-- Open Graph / Twitter 卡片 -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="GenePad" />
+    <meta property="og:locale" content="ko_KR" />
+    <meta property="og:title" content="원하는 언어 사용 튜토리얼 - GenePad | AI로 언어 팩 번역하기" />
+    <meta
+      property="og:description"
+      content="GenePad 단계별 튜토리얼: 설정 → Language → AI Translate를 열고 목표 언어(프랑스어, 러시아어 등)를 입력하면 설정된 AI가 언어 팩을 생성해 인터페이스 전체를 전환합니다. 긴 텍스트는 구간별 번역과 자동 재시도로 처리되며, 언어 팩은 내보내 수동 편집할 수도 있습니다. 모든 단계를 실제 스크린샷으로 그림 해설합니다."
+    />
+    <meta property="og:url" content="https://kr.genepad.cn/tutorial-lang" />
+    <meta property="og:image" content="https://genepad.cn/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://genepad.cn/og.png" />
+    <meta name="twitter:title" content="원하는 언어 사용 튜토리얼 - GenePad | AI로 언어 팩 번역하기" />
+    <meta
+      name="twitter:description"
+      content="GenePad 단계별 튜토리얼: 설정 → Language → AI Translate를 열고 목표 언어(프랑스어, 러시아어 등)를 입력하면 설정된 AI가 언어 팩을 생성해 인터페이스 전체를 전환합니다. 긴 텍스트는 구간별 번역과 자동 재시도로 처리되며, 언어 팩은 내보내 수동 편집할 수도 있습니다. 모든 단계를 실제 스크린샷으로 그림 해설합니다."
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "GenePad Any-Language Tutorial",
+        "description": "GenePad 단계별 튜토리얼: 설정 → Language → AI Translate를 열고 목표 언어(프랑스어, 러시아어 등)를 입력하면 설정된 AI가 언어 팩을 생성해 인터페이스 전체를 전환합니다. 긴 텍스트는 구간별 번역과 자동 재시도로 처리되며, 언어 팩은 내보내 수동 편집할 수도 있습니다. 모든 단계를 실제 스크린샷으로 그림 해설합니다.",
+        "url": "https://en.genepad.cn/tutorial-lang",
+        "isPartOf": { "@type": "WebSite", "name": "GenePad", "url": "https://genepad.cn/" },
+        "about": {
+          "@type": "SoftwareApplication",
+          "name": "GenePad",
+          "applicationCategory": "ScienceApplication",
+          "operatingSystem": "Windows, macOS, Linux, Android",
+          "url": "https://genepad.cn/",
+          "featureList": "AI-translated language packs, multilingual interface, custom languages, interface localization"
+        },
+        "keywords": ["GenePad language settings", "AI translation", "language pack", "multilingual interface", "interface localization", "GenePad tutorial"]
+      }
+    </script>
+    <link rel="icon" href="/icon.ico" sizes="any" />
+    <style>
+      /* 首屏骨架：JS 与样式表就绪前先出文字；React 挂载后淡出移除（见 src/boot.ts） */
+      html { background: #f6f6f4; }
+      #boot {
+        position: fixed; inset: 0; z-index: 9999;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 16px; padding: 24px; text-align: center;
+        background: #f6f6f4; color: #1c3a13;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+          "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+      }
+      #boot .bt { font-size: clamp(2.2rem, 7vw, 4.2rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; }
+      #boot .bt small { display: block; margin-top: 10px; font-size: clamp(1rem, 2.4vw, 1.5rem); font-weight: 700; letter-spacing: 0.1em; color: #2f9a10; }
+      #boot .bd { max-width: 620px; font-size: 14.5px; line-height: 1.9; color: rgba(28, 58, 19, 0.72); }
+      #boot .sp { width: 26px; height: 26px; margin-top: 6px; border: 2.5px solid rgba(28, 58, 19, 0.2); border-top-color: #2f9a10; border-radius: 50%; animation: gp-spin 0.9s linear infinite; }
+      @keyframes gp-spin { to { transform: rotate(360deg); } }
+      @media (prefers-color-scheme: dark) {
+        html { background: #101a0c; }
+        #boot { background: #101a0c; color: #f6f6f4; }
+        #boot .bd { color: rgba(246, 246, 244, 0.72); }
+        #boot .sp { border-color: rgba(246, 246, 244, 0.22); border-top-color: #45c51f; }
+      }
+    </style>
+  </head>
+  <body data-tutorial="lang">
+    <div id="boot">
+      <div class="bt">Any-Language Tutorial<small>ANY LANGUAGE</small></div>
+      <p class="bd">일상적인 분자 클로닝을 위한 가볍고 크로스 플랫폼 유전자 지도 편집기입니다. 플라스미드 맵 열람·편집, 서열 주석 관리, 제한효소 부위 분석, Sanger 시퀀싱 트레이스 비교를 지원합니다.</p>
+      <div class="sp" role="status" aria-label="불러오는 중"></div>
+    </div>
+    <div id="root"></div>
+    <script type="module" src="/src/tutorial-detail-main.tsx"></script>
+  </body>
+</html>

@@ -55,6 +55,8 @@ const OPEN_TOOLS = [
     en: "MULTILINGUAL",
     src: "/shots/i18n.webp",
     desc: "tb.o1.desc",
+    // 指向「设置界面语言」教程（语言镜像站首页的主要教程入口）
+    href: "tutorial-langpack",
   },
   {
     no: "O-02",

@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ja-JP">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f6f6f4" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1c3a13" media="(prefers-color-scheme: dark)" />
+    <meta
+      name="description"
+      content="GenePad の UI 言語設定チュートリアル：設定 → Language を開いて内蔵の中国語・英語を切り替え、「Import Language File」から公式言語パック（ドイツ語・ロシア語・日本語・韓国語・フランス語）をインポートすれば画面全体が即座に切り替わります。追加設定は不要。実際のスクリーンショット付きのステップ解説、5 つの公式パックをすべてダウンロード可能。"
+    />
+    <title>UI言語の設定チュートリアル - GenePad | 内蔵言語と公式言語パック</title>
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://jp.genepad.cn/tutorial-langpack" />
+    <link rel="alternate" hreflang="zh-CN" href="https://cn.genepad.cn/tutorial-langpack" />
+    <link rel="alternate" hreflang="en" href="https://en.genepad.cn/tutorial-langpack" />
+    <link rel="alternate" hreflang="de" href="https://de.genepad.cn/tutorial-langpack" />
+    <link rel="alternate" hreflang="ru" href="https://ru.genepad.cn/tutorial-langpack" />
+    <link rel="alternate" hreflang="ja" href="https://jp.genepad.cn/tutorial-langpack" />
+    <link rel="alternate" hreflang="ko" href="https://kr.genepad.cn/tutorial-langpack" />
+    <link rel="alternate" hreflang="fr" href="https://fr.genepad.cn/tutorial-langpack" />
+    <link rel="alternate" hreflang="x-default" href="https://genepad.cn/tutorial-langpack" />
+    <!-- Open Graph / Twitter 卡片 -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="GenePad" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:title" content="UI言語の設定チュートリアル - GenePad | 内蔵言語と公式言語パック" />
+    <meta
+      property="og:description"
+      content="GenePad の UI 言語設定チュートリアル：設定 → Language を開いて内蔵の中国語・英語を切り替え、「Import Language File」から公式言語パック（ドイツ語・ロシア語・日本語・韓国語・フランス語）をインポートすれば画面全体が即座に切り替わります。追加設定は不要。実際のスクリーンショット付きのステップ解説、5 つの公式パックをすべてダウンロード可能。"
+    />
+    <meta property="og:url" content="https://jp.genepad.cn/tutorial-langpack" />
+    <meta property="og:image" content="https://genepad.cn/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://genepad.cn/og.png" />
+    <meta name="twitter:title" content="UI言語の設定チュートリアル - GenePad | 内蔵言語と公式言語パック" />
+    <meta
+      name="twitter:description"
+      content="GenePad の UI 言語設定チュートリアル：設定 → Language を開いて内蔵の中国語・英語を切り替え、「Import Language File」から公式言語パック（ドイツ語・ロシア語・日本語・韓国語・フランス語）をインポートすれば画面全体が即座に切り替わります。追加設定は不要。実際のスクリーンショット付きのステップ解説、5 つの公式パックをすべてダウンロード可能。"
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "GenePad UI Language Tutorial",
+        "description": "GenePad の UI 言語設定チュートリアル：設定 → Language を開いて内蔵の中国語・英語を切り替え、「Import Language File」から公式言語パック（ドイツ語・ロシア語・日本語・韓国語・フランス語）をインポートすれば画面全体が即座に切り替わります。追加設定は不要。実際のスクリーンショット付きのステップ解説、5 つの公式パックをすべてダウンロード可能。",
+        "url": "https://en.genepad.cn/tutorial-langpack",
+        "isPartOf": { "@type": "WebSite", "name": "GenePad", "url": "https://genepad.cn/" },
+        "about": {
+          "@type": "SoftwareApplication",
+          "name": "GenePad",
+          "applicationCategory": "ScienceApplication",
+          "operatingSystem": "Windows, macOS, Linux, Android",
+          "url": "https://genepad.cn/",
+          "featureList": "UI language settings, Chinese UI, English UI, German language pack, Russian language pack, Japanese language pack, Korean language pack, French language pack, multilingual interface"
+        },
+        "keywords": ["GenePad language settings", "language pack download", "German UI", "Russian UI", "Japanese UI", "Korean UI", "French UI", "multilingual interface", "GenePad tutorial"]
+      }
+    </script>
+    <!-- Hand-drawn SVG icon, not enabled yet: <link rel="icon" type="image/png" href="/icon.png" /> -->
+    <link rel="icon" href="./icon.ico" sizes="any" />
+    <style>
+      /* 首屏骨架：JS 与样式表就绪前先出文字；React 挂载后淡出移除（见 src/boot.ts） */
+      html { background: #f6f6f4; }
+      #boot {
+        position: fixed; inset: 0; z-index: 9999;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 16px; padding: 24px; text-align: center;
+        background: #f6f6f4; color: #1c3a13;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+          "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+      }
+      #boot .bt { font-size: clamp(2.2rem, 7vw, 4.2rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; }
+      #boot .bt small { display: block; margin-top: 10px; font-size: clamp(1rem, 2.4vw, 1.5rem); font-weight: 700; letter-spacing: 0.1em; color: #2f9a10; }
+      #boot .bd { max-width: 620px; font-size: 14.5px; line-height: 1.9; color: rgba(28, 58, 19, 0.72); }
+      #boot .sp { width: 26px; height: 26px; margin-top: 6px; border: 2.5px solid rgba(28, 58, 19, 0.2); border-top-color: #2f9a10; border-radius: 50%; animation: gp-spin 0.9s linear infinite; }
+      @keyframes gp-spin { to { transform: rotate(360deg); } }
+      @media (prefers-color-scheme: dark) {
+        html { background: #101a0c; }
+        #boot { background: #101a0c; color: #f6f6f4; }
+        #boot .bd { color: rgba(246, 246, 244, 0.72); }
+        #boot .sp { border-color: rgba(246, 246, 244, 0.22); border-top-color: #45c51f; }
+      }
+    </style>
+  </head>
+  <body data-tutorial="langpack">
+    <div id="boot">
+      <div class="bt">UI Language Tutorial<small>UI LANGUAGE</small></div>
+      <p class="bd">日常の分子クローンングのためのクロスプラットフォーム・ゲンマップエディタ。プラスミドマップの閲覧・編集、シークエンスアノテーションの管理、制限酵素部位の解析、Sanger トレースの比較など、クローン設計から結果検証までのワークフロー全体をカバーします。</p>
+      <div class="sp" role="status" aria-label="読み込み中"></div>
+    </div>
+    <div id="root"></div>
+    <script type="module" src="/src/tutorial-detail-main.tsx"></script>
+  </body>
+</html>

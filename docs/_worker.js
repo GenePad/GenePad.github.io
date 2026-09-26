@@ -114,16 +114,23 @@ const STATS_CACHE_SECONDS = 300;
 const dayStart = (t) => Math.floor(t / DAY_MS) * DAY_MS;
 const weekStart = (t) => Math.floor((t - WEEK_ALIGN_MS) / WEEK_MS) * WEEK_MS + WEEK_ALIGN_MS;
 
-// ── en / cn 语言镜像路由 ──
-// en.genepad.cn / cn.genepad.cn 分别是面向搜索引擎的纯英文 / 纯中文镜像：
-// 镜像主机的路径映射到构建输出的 /en、/cn 子树（docs/en/*.html、docs/cn/*.html）；
-// 哈希产物、截图、安装包、接口等共享资源仍取根路径。任何主机上的 /en/*、/cn/*
-// 一律 308 到对应子域名（容错历史路径）；genepad.pages.dev 的 /en/*、/cn/* 静态直出，
+// ── 语言镜像路由 ──
+// en/cn/de/ru/jp/kr/fr.genepad.cn 分别是面向搜索引擎的纯语言镜像：
+// 镜像主机的路径映射到构建输出的 /<dir> 子树（docs/<dir>/*.html）；
+// 哈希产物、截图、安装包、接口等共享资源仍取根路径。任何主机上的 /<dir>/*
+// 一律 308 到对应子域名（容错历史路径）；genepad.pages.dev 的 /<dir>/* 静态直出，
 // 作为子域名 DNS 配好前的预览入口。
 const MIRROR_PREFIX_BY_HOST = {
   'en.genepad.cn': '/en',
   'cn.genepad.cn': '/cn',
+  'de.genepad.cn': '/de',
+  'ru.genepad.cn': '/ru',
+  'jp.genepad.cn': '/jp',
+  'kr.genepad.cn': '/kr',
+  'fr.genepad.cn': '/fr',
 };
+// 镜像主机不前缀的共享路径。注意 /sitemap.xml 不共享：每个镜像主机有各自的
+// /<dir>/sitemap.xml（gen-shells.mjs 生成），/robots.txt 共用同一份（其中列出全部主机的 sitemap）
 const MIRROR_SHARED_PREFIXES = [
   '/assets/',
   '/shots/',
@@ -133,7 +140,6 @@ const MIRROR_SHARED_PREFIXES = [
   '/icon.ico',
   '/icon.png',
   '/robots.txt',
-  '/sitemap.xml',
 ];
 
 function hostMatches(hostname, mirror) {

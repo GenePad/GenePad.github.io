@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 仅列 genepad.cn 中文 URL（sitemap 与主机须同源）；en / cn.genepad.cn 镜像页靠各页 head 里的
-     hreflang 互指被搜索引擎发现，故不在此列出。lastmod 只在页面内容变化时刷新。 -->
+<!-- 仅列 genepad.cn 中文 URL（sitemap 与主机须同源）；en/cn/de/ru/jp/kr/fr.genepad.cn 镜像页
+     不在此列出——各镜像主机有各自的 docs/<dir>/sitemap.xml（gen-shells.mjs 生成），
+     镜像间语言对应关系靠各页 head 的 hreflang 八联互指。lastmod 只在页面内容变化时刷新。 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://genepad.cn/</loc>
@@ -10,55 +11,61 @@
     </url>
     <url>
         <loc>https://genepad.cn/library</loc>
-        <lastmod>2026-09-22</lastmod>
+        <lastmod>2026-09-26</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://genepad.cn/ngs</loc>
-        <lastmod>2026-09-22</lastmod>
+        <lastmod>2026-09-26</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://genepad.cn/tutorial</loc>
-        <lastmod>2026-09-22</lastmod>
+        <lastmod>2026-09-26</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://genepad.cn/tutorial-ai</loc>
-        <lastmod>2026-09-22</lastmod>
+        <lastmod>2026-09-26</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://genepad.cn/tutorial-library</loc>
-        <lastmod>2026-09-22</lastmod>
+        <lastmod>2026-09-26</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://genepad.cn/tutorial-ngs</loc>
-        <lastmod>2026-09-22</lastmod>
+        <lastmod>2026-09-26</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://genepad.cn/tutorial-lang</loc>
-        <lastmod>2026-09-22</lastmod>
+        <lastmod>2026-09-26</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://genepad.cn/tutorial-langpack</loc>
+        <lastmod>2026-09-26</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://genepad.cn/tech-support</loc>
-        <lastmod>2026-09-22</lastmod>
+        <lastmod>2026-09-26</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://genepad.cn/projects</loc>
-        <lastmod>2026-09-22</lastmod>
+        <lastmod>2026-09-26</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
