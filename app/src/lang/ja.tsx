@@ -43,6 +43,7 @@ const ja: Record<TKey, ReactNode> = {
   "hero.tour": "画面を見る",
   "hero.features": "MAP · ANNOTATION · ENZYME · PRIMER · TRACE",
   "hero.platforms": "対応プラットフォーム",
+  "hero.langBtn": "言語の設定",
 
   // Workbench
   "wb.eyebrow": "Workbench",
@@ -652,6 +653,8 @@ const ja: Record<TKey, ReactNode> = {
   "tut.langpack.4.shot3": "ロシア語画面",
   "tut.langpack.4.shot4": "ドイツ語画面",
   "tut.langpack.4.shot5": "日本語画面",
+  "tut.lang.dl.hint":
+    "AI の設定は不要です。公式言語パック（ドイツ語・ロシア語・日本語・韓国語・フランス語）をダウンロードしてそのままインポートできます。GenePad 0.7.x に対応。",
   "tut.langpack.dl.title": "公式言語パックのダウンロード（.json）",
   "tut.langpack.dl.hint": "GenePad 0.7.x に対応。解凍は不要 — ステップ 3 の要領でそのままインポートしてください。",
   "tut.langpack.dl.btn": "ダウンロード",

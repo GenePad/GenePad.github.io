@@ -25,6 +25,16 @@ export type TutorialDownload = {
   size: string;
 };
 
+/* 官方 UI 语言包（教程四「配置任意语言」与教程五「设置界面语言」共用同一下载块，
+   文件位于 /release/langpacks/，更新时直接覆盖同名文件，无需改这里） */
+const LANGPACK_FILES: TutorialDownload[] = [
+  { label: "Deutsch", file: "GenePad-langpack-de.json", size: "148 KB" },
+  { label: "Français", file: "GenePad-langpack-fr.json", size: "149 KB" },
+  { label: "日本語", file: "GenePad-langpack-ja.json", size: "155 KB" },
+  { label: "한국어", file: "GenePad-langpack-ko.json", size: "144 KB" },
+  { label: "Русский", file: "GenePad-langpack-ru.json", size: "207 KB" },
+];
+
 export type TutorialEntry = {
   /** 页址后缀与 i18n 键名前缀：id "ai" → /tutorial-ai、tut.ai.*、tut.toc.ai.* */
   id: string;
@@ -208,6 +218,12 @@ export const TUTORIALS: TutorialEntry[] = [
         shots: [{ src: "shots/tutorial-lang-04.webp", shot: "tut.lang.5.shot" }],
       },
     ],
+    // 教程四讲 AI 翻译生成语言包，末尾同样提供官方语言包直接下载（不想配 AI 的用户走这条捷径）
+    downloads: {
+      heading: "tut.langpack.dl.title",
+      hint: "tut.lang.dl.hint",
+      files: LANGPACK_FILES,
+    },
     note: "tut.lang.note",
   },
   {
@@ -249,13 +265,7 @@ export const TUTORIALS: TutorialEntry[] = [
     downloads: {
       heading: "tut.langpack.dl.title",
       hint: "tut.langpack.dl.hint",
-      files: [
-        { label: "Deutsch", file: "GenePad-langpack-de.json", size: "148 KB" },
-        { label: "Français", file: "GenePad-langpack-fr.json", size: "149 KB" },
-        { label: "日本語", file: "GenePad-langpack-ja.json", size: "155 KB" },
-        { label: "한국어", file: "GenePad-langpack-ko.json", size: "144 KB" },
-        { label: "Русский", file: "GenePad-langpack-ru.json", size: "207 KB" },
-      ],
+      files: LANGPACK_FILES,
     },
     note: "tut.langpack.note",
   },

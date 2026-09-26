@@ -59,6 +59,7 @@ const zhDict = {
     "hero.tour": "查看界面",
     "hero.features": "图谱 · 标注 · 酶切 · 引物 · 峰图",
     "hero.platforms": "支持平台",
+    "hero.langBtn": "如何设置语言",
 
     // Workbench
     "wb.eyebrow": "Workbench · 图谱工作台",
@@ -669,6 +670,8 @@ const zhDict = {
     "tut.langpack.4.shot4": "德语界面",
     "tut.langpack.4.shot5": "日语界面",
     "tut.langpack.dl.title": "下载官方语言包（.json）",
+    "tut.lang.dl.hint":
+      "不想配置 AI？也可跳过翻译步骤，直接下载官方语言包（德语、俄语、日语、韩语、法语）导入使用，与 GenePad 0.7.x 兼容。",
     "tut.langpack.dl.hint": "与 GenePad 0.7.x 兼容；下载后无需解压，直接按步骤 3 导入。",
     "tut.langpack.dl.btn": "下载",
     "tut.langpack.note":
@@ -764,6 +767,7 @@ const dict: Record<Lang, Record<TKey, ReactNode>> = {
     "hero.tour": "View the interface",
     "hero.features": "MAP · ANNOTATION · ENZYME · PRIMER · TRACE",
     "hero.platforms": "Available on",
+    "hero.langBtn": "How to set the language",
 
     // Workbench
     "wb.eyebrow": "Workbench",
@@ -1375,6 +1379,8 @@ const dict: Record<Lang, Record<TKey, ReactNode>> = {
     "tut.langpack.4.shot4": "German interface",
     "tut.langpack.4.shot5": "Japanese interface",
     "tut.langpack.dl.title": "Download the official language packs (.json)",
+    "tut.lang.dl.hint":
+      "Skip the AI setup — download an official language pack (German, Russian, Japanese, Korean, French) and import it directly. Compatible with GenePad 0.7.x.",
     "tut.langpack.dl.hint": "Compatible with GenePad 0.7.x. No unzipping needed — import the file directly as in step 3.",
     "tut.langpack.dl.btn": "Download",
     "tut.langpack.note":

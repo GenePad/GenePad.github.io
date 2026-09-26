@@ -43,6 +43,7 @@ const de: Record<TKey, ReactNode> = {
   "hero.tour": "Oberfläche ansehen",
   "hero.features": "KARTE · ANNOTATION · ENZYMSCHNITT · PRIMER · CHROMATOGRAMM",
   "hero.platforms": "Verfügbar für",
+  "hero.langBtn": "Sprache einstellen",
 
   // Workbench
   "wb.eyebrow": "Workbench",
@@ -654,6 +655,8 @@ const de: Record<TKey, ReactNode> = {
   "tut.langpack.4.shot3": "Russische Oberfläche",
   "tut.langpack.4.shot4": "Deutsche Oberfläche",
   "tut.langpack.4.shot5": "Japanische Oberfläche",
+  "tut.lang.dl.hint":
+    "Keine KI einrichten? Laden Sie einfach ein offizielles Sprachpaket (Deutsch, Russisch, Japanisch, Koreanisch, Französisch) herunter und importieren Sie es direkt — kompatibel mit GenePad 0.7.x.",
   "tut.langpack.dl.title": "Offizielle Sprachpakete herunterladen (.json)",
   "tut.langpack.dl.hint": "Kompatibel mit GenePad 0.7.x; kein Entpacken nötig — die Datei direkt wie in Schritt 3 importieren.",
   "tut.langpack.dl.btn": "Herunterladen",

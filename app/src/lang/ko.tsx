@@ -43,6 +43,7 @@ const ko: Record<TKey, ReactNode> = {
   "hero.tour": "인터페이스 살펴보기",
   "hero.features": "MAP · ANNOTATION · ENZYME · PRIMER · TRACE",
   "hero.platforms": "지원 플랫폼",
+  "hero.langBtn": "언어 설정",
 
   // Workbench
   "wb.eyebrow": "Workbench",
@@ -652,6 +653,8 @@ const ko: Record<TKey, ReactNode> = {
   "tut.langpack.4.shot3": "러시아어 화면",
   "tut.langpack.4.shot4": "독일어 화면",
   "tut.langpack.4.shot5": "일본어 화면",
+  "tut.lang.dl.hint":
+    "AI 설정 없이도 공식 언어 팩(독일어·러시아어·일본어·한국어·프랑스어)을 내려받아 바로 가져올 수 있습니다. GenePad 0.7.x 호환.",
   "tut.langpack.dl.title": "공식 언어 팩 내려받기(.json)",
   "tut.langpack.dl.hint": "GenePad 0.7.x 호환. 압축 해제 불필요 — 단계 3과 같은 방식으로 파일을 바로 가져오면 됩니다.",
   "tut.langpack.dl.btn": "내려받기",

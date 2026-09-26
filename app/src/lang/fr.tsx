@@ -52,6 +52,7 @@ const fr: Record<TKey, ReactNode> = {
   "hero.tour": "Voir l’interface",
   "hero.features": "CARTE · ANNOTATION · ENZYME · AMORCE · TRACE",
   "hero.platforms": "Disponible sur",
+  "hero.langBtn": "Définir la langue",
 
   // Workbench
   "wb.eyebrow": "Atelier",
@@ -682,6 +683,8 @@ const fr: Record<TKey, ReactNode> = {
   "tut.langpack.4.shot3": "Interface en russe",
   "tut.langpack.4.shot4": "Interface en allemand",
   "tut.langpack.4.shot5": "Interface en japonais",
+  "tut.lang.dl.hint":
+    "Pas envie de configurer l'IA ? Téléchargez simplement un paquet officiel (allemand, russe, japonais, coréen, français) et importez-le ; compatible avec GenePad 0.7.x.",
   "tut.langpack.dl.title": "Télécharger les paquets officiels (.json)",
   "tut.langpack.dl.hint": "Compatible avec GenePad 0.7.x ; pas de décompression — importez le fichier directement comme à l'étape 3.",
   "tut.langpack.dl.btn": "Télécharger",

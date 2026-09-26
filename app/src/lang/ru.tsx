@@ -43,6 +43,7 @@ const ru: Record<TKey, ReactNode> = {
   "hero.tour": "Посмотреть интерфейс",
   "hero.features": "КАРТА · АННОТАЦИЯ · РЕСТРИКЦИЯ · ПРАЙМЕР · ПИКИ",
   "hero.platforms": "Поддерживаемые платформы",
+  "hero.langBtn": "Настройка языка",
 
   // Workbench
   "wb.eyebrow": "Рабочая среда",
@@ -654,6 +655,8 @@ const ru: Record<TKey, ReactNode> = {
   "tut.langpack.4.shot3": "Русский интерфейс",
   "tut.langpack.4.shot4": "Немецкий интерфейс",
   "tut.langpack.4.shot5": "Японский интерфейс",
+  "tut.lang.dl.hint":
+    "Не хотите настраивать ИИ? Просто скачайте официальный языковый пакет (немецкий, русский, японский, корейский, французский) и импортируйте его — совместимо с GenePad 0.7.x.",
   "tut.langpack.dl.title": "Скачайте официальные языковые пакеты (.json)",
   "tut.langpack.dl.hint": "Совместимо с GenePad 0.7.x; распаковка не нужна — импортируйте файл сразу, как в шаге 3.",
   "tut.langpack.dl.btn": "Скачать",

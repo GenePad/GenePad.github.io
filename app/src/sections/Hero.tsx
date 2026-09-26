@@ -10,6 +10,7 @@ import {
   AndroidIcon,
 } from "./shared";
 import { useLang } from "../i18n";
+import { isMirrorHost, mirrorOf } from "../links";
 
 /* 真实 superfolder GFP 起始区序列 */
 const SEQ = "ATGGTGAGCAAGGGCGAGGAGCTGTTCACCGGGGTGGTGCCCATCCTGGTCGAGCTGGACGGCGACGTAAACGGCCACAAGTTCAGCGTG";
@@ -113,6 +114,20 @@ export default function Hero() {
                   {t("hero.tour")}
                   <span className="font-mono text-xs">↓</span>
                 </a>
+                {/* de/ru/ja/ko/fr 镜像首页：直达「设置界面语言」教程（zh/en 主站与 en/cn 镜像不显示） */}
+                {(() => {
+                  const lang = mirrorOf()?.lang;
+                  if (!isMirrorHost() || !lang || lang === "zh" || lang === "en") return null;
+                  return (
+                    <a
+                      href="tutorial-langpack"
+                      className="inline-flex items-center gap-2.5 border border-gfp-deep/45 px-6 py-3.5 text-[14px] font-medium text-gfp-deep transition-colors hover:border-gfp-deep hover:bg-gfp-deep hover:text-paper"
+                    >
+                      {t("hero.langBtn")}
+                      <ArrowRight className="h-4 w-4" />
+                    </a>
+                  );
+                })()}
               </div>
             </Reveal>
 
