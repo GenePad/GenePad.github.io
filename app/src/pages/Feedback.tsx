@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
 import { Reveal, SectionHead, SubpageNav, ArrowRight } from "../sections/shared";
 import Footer from "../sections/Footer";
-import { LightboxProvider, useLightboxImage } from "../lightbox";
 import { useLang, usePageTitle } from "../i18n";
 import { dismissBoot } from "../boot";
 import { feedbackApiUrl, openFeedback } from "../feedback";
 
-/* 公开留言墙（/feedback）：经 GET /api/feedback/list 分页拉取用户留言（仅 hidden=0），
-   图片经 /api/feedback/image 从 R2 读出、点击用 Lightbox 放大；
-   提交入口复用全站反馈弹窗（openFeedback）。管理口径见 AGENTS.md「Feedback API」。 */
+/* 公开留言墙（/feedback）：经 GET /api/feedback/list 分页拉取用户留言（仅 hidden=0）；
+   提交入口复用全站反馈弹窗（openFeedback）。管理口径见 AGENTS.md「Feedback API」。
+   【图片功能下线（2026-09-27，纯文字版）】：images 字段保留在接口类型里（恒为空
+   数组），渲染层已移除；恢复见 _worker.js 的 IMAGE-REENABLE 标记与 git 历史。 */
 
 interface FeedbackItem {
   id: string;
@@ -19,32 +19,6 @@ interface FeedbackItem {
 }
 
 const PAGE_SIZE = 20;
-
-function imageUrl(key: string): string {
-  return feedbackApiUrl(`/api/feedback/image?key=${encodeURIComponent(key)}`);
-}
-
-/* 单张留言截图：注册进全站 Lightbox,点击放大 */
-function WallImage({ objectKey, index }: { objectKey: string; index: number }) {
-  const open = useLightboxImage({
-    src: imageUrl(objectKey),
-    caption: `#${index + 1}`,
-  });
-  return (
-    <button
-      onClick={open}
-      className="group block h-24 w-24 overflow-hidden border border-line md:h-28 md:w-28"
-      aria-label={`#${index + 1}`}
-    >
-      <img
-        src={imageUrl(objectKey)}
-        alt=""
-        loading="lazy"
-        className="h-full w-full object-cover transition-transform group-hover:scale-105"
-      />
-    </button>
-  );
-}
 
 export default function Feedback() {
   const { t, lang } = useLang();
@@ -115,8 +89,7 @@ export default function Feedback() {
   return (
     <div className="min-h-screen bg-paper font-sans text-ink">
       <SubpageNav tag="MESSAGE WALL" />
-      <LightboxProvider>
-        <main className="mx-auto max-w-[1400px] px-5 py-16 md:px-8 md:py-24">
+      <main className="mx-auto max-w-[1400px] px-5 py-16 md:px-8 md:py-24">
           <SectionHead
             index="F"
             eyebrow={t("fbw.eyebrow") as string}
@@ -170,22 +143,10 @@ export default function Feedback() {
                       <p className="whitespace-pre-wrap break-words text-[13.5px] leading-7 text-ink/85">
                         {item.text}
                       </p>
-                      {item.images.length > 0 && (
-                        <div className="mt-4 flex flex-wrap gap-2.5">
-                          {item.images.map((k, i) => (
-                            <WallImage key={k} objectKey={k} index={i} />
-                          ))}
-                        </div>
-                      )}
                       <p className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-1 pt-5 font-mono text-[10.5px] tracking-[0.12em] text-ink/45">
                         <span>{fmtDate(item.createdAt)}</span>
                         {item.contact && (
                           <span className="break-all text-ink/60">✉ {item.contact}</span>
-                        )}
-                        {item.images.length > 0 && (
-                          <span>
-                            {item.images.length} 🖼
-                          </span>
                         )}
                       </p>
                     </article>
@@ -210,7 +171,6 @@ export default function Feedback() {
             </div>
           )}
         </main>
-      </LightboxProvider>
       <Footer />
     </div>
   );

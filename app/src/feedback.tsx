@@ -3,22 +3,21 @@ import {
   useEffect,
   useRef,
   useState,
-  type ChangeEvent,
-  type ClipboardEvent,
 } from "react";
 import { useLang } from "./i18n";
 import { ArrowRight } from "./sections/shared";
 
 /* ── 用户反馈：页脚入口 → 全屏弹窗表单 → POST /api/feedback ──
-   文本（必填）+ 可选联系方式 + ≤3 张截图，Cloudflare Turnstile 人机验证；
+   文本（必填）+ 可选联系方式，Cloudflare Turnstile 人机验证；
    留言公开陈列在 /feedback 留言墙（GET /api/feedback/list，见 pages/Feedback.tsx）。
    <FeedbackModal/> 挂在 Footer（每页都有）；其他位置（TechSupport 反馈框、
    主页横幅、留言墙页）调 openFeedback() 触发 —— 模块级 CustomEvent，
-   不引入全局 Provider。管理（删除/隐藏留言）见 AGENTS.md「Feedback API」。 */
+   不引入全局 Provider。管理（删除/隐藏留言）见 AGENTS.md「Feedback API」。
+   【图片上传已下线（2026-09-27，纯文字版）】：选图/粘贴/压缩 UI 已移除，
+   恢复时前端按 git 历史（本文件 @ 170a04d）取回，后端 R2 代码以 IMAGE-REENABLE
+   标记注释保留在 docs/_worker.js；i18n 图片词条（fb.images 等 6 键）仍保留。 */
 
 const FB_OPEN_EVENT = "genepad:feedback-open";
-const MAX_IMAGES = 3;
-const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
 const MAX_TEXT = 5000;
 const MAX_CONTACT = 200;
 
@@ -92,36 +91,11 @@ function loadTurnstile(): Promise<TurnstileApi> {
   return turnstilePromise;
 }
 
-/* >2MB 的位图用 canvas 压到长边 2048 的 JPEG 再传；GIF（动画）与更小文件原样上传 */
-async function compressImage(file: File): Promise<File> {
-  if (file.type === "image/gif" || file.size <= 2 * 1024 * 1024) return file;
-  try {
-    const bitmap = await createImageBitmap(file);
-    const scale = Math.min(1, 2048 / Math.max(bitmap.width, bitmap.height));
-    const w = Math.max(1, Math.round(bitmap.width * scale));
-    const h = Math.max(1, Math.round(bitmap.height * scale));
-    const canvas = document.createElement("canvas");
-    canvas.width = w;
-    canvas.height = h;
-    canvas.getContext("2d")?.drawImage(bitmap, 0, 0, w, h);
-    bitmap.close();
-    const blob = await new Promise<Blob | null>((resolve) =>
-      canvas.toBlob(resolve, "image/jpeg", 0.85),
-    );
-    if (!blob || blob.size >= file.size) return file;
-    return new File([blob], `${file.name.replace(/\.[^.]*$/, "")}.jpg`, { type: "image/jpeg" });
-  } catch {
-    return file;
-  }
-}
-
 export function FeedbackModal() {
   const { t } = useLang();
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
   const [contact, setContact] = useState("");
-  const [images, setImages] = useState<File[]>([]);
-  const [previews, setPreviews] = useState<string[]>([]);
   const [phase, setPhase] = useState<"form" | "sending" | "success">("form");
   const [notice, setNotice] = useState<string | null>(null);
   const [token, setToken] = useState("");
@@ -188,69 +162,22 @@ export function FeedbackModal() {
     };
   }, [open, close]);
 
-  /* 预览 URL 生命周期 */
-  useEffect(() => {
-    const urls = images.map((f) => URL.createObjectURL(f));
-    setPreviews(urls);
-    return () => urls.forEach((u) => URL.revokeObjectURL(u));
-  }, [images]);
-
-  const addImages = useCallback(
-    (list: File[]) => {
-      const pics = list.filter((f) => f.type.startsWith("image/"));
-      if (!pics.length) return;
-      const room = MAX_IMAGES - images.length;
-      if (room <= 0 || pics.length > room) {
-        setNotice(t("fb.errorTooMany") as string);
-        return;
-      }
-      setNotice(null);
-      Promise.all(pics.map(compressImage)).then((compressed) => {
-        setImages((prev) => [...prev, ...compressed]);
-      });
-    },
-    [images.length, t],
-  );
-
-  const onPaste = (e: ClipboardEvent<HTMLDivElement>) => {
-    const files = Array.from(e.clipboardData?.files ?? []);
-    if (files.some((f) => f.type.startsWith("image/"))) {
-      e.preventDefault();
-      addImages(files);
-    }
-  };
-
-  const onPick = (e: ChangeEvent<HTMLInputElement>) => {
-    addImages(Array.from(e.target.files ?? []));
-    e.target.value = "";
-  };
-
   const submit = async () => {
     if (phase === "sending") return;
     setNotice(null);
     if (!text.trim()) return;
-    if (images.length > MAX_IMAGES) {
-      setNotice(t("fb.errorTooMany") as string);
-      return;
-    }
-    if (images.some((f) => f.size > MAX_IMAGE_BYTES)) {
-      setNotice(t("fb.errorTooLarge") as string);
-      return;
-    }
     setPhase("sending");
     const fd = new FormData();
     fd.set("text", text.trim().slice(0, MAX_TEXT));
     if (contact.trim()) fd.set("contact", contact.trim().slice(0, MAX_CONTACT));
     fd.set("page", window.location.href);
     fd.set("turnstile", token);
-    for (const f of images) fd.append("images", f);
     try {
       const res = await fetch(feedbackApiUrl("/api/feedback"), { method: "POST", body: fd });
       if (res.status === 204) {
         // 提交成功：清空草稿，下次打开是干净表单
         setText("");
         setContact("");
-        setImages([]);
         setPhase("success");
         return;
       }
@@ -284,7 +211,6 @@ export function FeedbackModal() {
       <div className="flex min-h-full items-start justify-center p-4 md:items-center md:p-8">
         <div
           onClick={(e) => e.stopPropagation()}
-          onPaste={onPaste}
           className="w-full max-w-xl border border-lined bg-paper text-ink shadow-[0_40px_120px_-40px_rgba(0,0,0,0.9)]"
         >
           {/* 顶栏 */}
@@ -343,39 +269,6 @@ export function FeedbackModal() {
                   placeholder={t("fb.contactPh") as string}
                   className={inputCls}
                 />
-              </div>
-
-              <div className="mt-5">
-                <p className={labelCls}>{t("fb.images")}</p>
-                {previews.length > 0 && (
-                  <ul className="mt-2.5 flex flex-wrap gap-2.5">
-                    {previews.map((src, i) => (
-                      <li key={src} className="relative">
-                        <img
-                          src={src}
-                          alt=""
-                          className="h-20 w-20 border border-line object-cover"
-                        />
-                        <button
-                          onClick={() => setImages((prev) => prev.filter((_, j) => j !== i))}
-                          aria-label={t("fb.imageRemove") as string}
-                          className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center border border-line bg-ink font-mono text-[11px] text-paper hover:border-gfp-deep hover:bg-gfp-deep"
-                        >
-                          ✕
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-                {images.length < MAX_IMAGES && (
-                  <label className="mt-2.5 inline-flex cursor-pointer items-center gap-2 border border-line px-3.5 py-2 font-mono text-[11px] tracking-[0.14em] text-ink/60 transition-colors hover:border-gfp-deep hover:text-gfp-deep">
-                    + {t("fb.imageAdd")}
-                    <input type="file" accept="image/*" multiple hidden onChange={onPick} />
-                  </label>
-                )}
-                <p className="mt-2 font-mono text-[10px] tracking-[0.08em] text-ink/40">
-                  {t("fb.pasteHint")}
-                </p>
               </div>
 
               {/* Turnstile 容器：显式渲染 */}

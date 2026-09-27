@@ -252,7 +252,7 @@ const zhDict = {
     // 用户反馈：弹窗表单（fb.*）与公开留言墙 / 主页横幅（fbw.*）
     "fb.entry": "在线反馈",
     "fb.title": "留言反馈",
-    "fb.intro": "留言与截图会公开显示在留言墙，欢迎描述使用中遇到的问题、复现步骤或功能建议。",
+    "fb.intro": "留言会公开显示在留言墙，欢迎描述使用中遇到的问题、复现步骤或功能建议。",
     "fb.text": "留言内容",
     "fb.textPh": "请描述你遇到的问题、复现步骤或功能建议…",
     "fb.contact": "联系方式（可选，将随留言公开展示）",
@@ -272,7 +272,7 @@ const zhDict = {
     "fb.close": "关闭",
     "fbw.eyebrow": "公开留言板",
     "fbw.title": "公开留言墙",
-    "fbw.lead": "来自 GenePad 用户的公开留言与截图——使用心得、问题反馈与功能建议，全部公开展示。",
+    "fbw.lead": "来自 GenePad 用户的公开留言——使用心得、问题反馈与功能建议，全部公开展示。",
     "fbw.write": "写留言",
     "fbw.empty": "还没有留言，来做第一个吧",
     "fbw.loading": "留言加载中…",
@@ -1046,7 +1046,7 @@ const dict: Record<Lang, Record<TKey, ReactNode>> = {
     "fb.entry": "Feedback",
     "fb.title": "Leave Feedback",
     "fb.intro":
-      "Messages and screenshots are shown publicly on the feedback wall. Tell us about problems you hit, how to reproduce them, or features you would like.",
+      "Messages are shown publicly on the feedback wall. Tell us about problems you hit, how to reproduce them, or features you would like.",
     "fb.text": "Message",
     "fb.textPh": "Describe the problem, how to reproduce it, or the feature you suggest…",
     "fb.contact": "Contact (optional, shown publicly with your message)",
@@ -1067,7 +1067,7 @@ const dict: Record<Lang, Record<TKey, ReactNode>> = {
     "fbw.eyebrow": "MESSAGE WALL",
     "fbw.title": "Feedback Wall",
     "fbw.lead":
-      "Public messages and screenshots from GenePad users — use cases, bug reports and feature requests, all in the open.",
+      "Public messages from GenePad users — use cases, bug reports and feature requests, all in the open.",
     "fbw.write": "Write a message",
     "fbw.empty": "No messages yet — be the first",
     "fbw.loading": "Loading messages…",

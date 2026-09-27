@@ -239,7 +239,7 @@ const de: Record<TKey, ReactNode> = {
   "fb.entry": "Feedback",
   "fb.title": "Feedback hinterlassen",
   "fb.intro":
-    "Nachrichten und Screenshots werden öffentlich auf der Feedback-Wand gezeigt. Beschreib uns Probleme, Schritte zur Reproduktion oder gewünschte Funktionen.",
+    "Nachrichten werden öffentlich auf der Feedback-Wand gezeigt. Beschreib uns Probleme, Schritte zur Reproduktion oder gewünschte Funktionen.",
   "fb.text": "Nachricht",
   "fb.textPh":
     "Beschreibe das Problem, wie es sich reproduzieren lässt, oder die vorgeschlagene Funktion…",
@@ -261,7 +261,7 @@ const de: Record<TKey, ReactNode> = {
   "fbw.eyebrow": "MESSAGE WALL",
   "fbw.title": "Feedback-Wand",
   "fbw.lead":
-    "Öffentliche Nachrichten und Screenshots von GenePad-Nutzern — Anwendungsfälle, Fehlerberichte und Funktionswünsche, alles offen.",
+    "Öffentliche Nachrichten von GenePad-Nutzern — Anwendungsfälle, Fehlerberichte und Funktionswünsche, alles offen.",
   "fbw.write": "Nachricht schreiben",
   "fbw.empty": "Noch keine Nachrichten — schreib die erste",
   "fbw.loading": "Nachrichten werden geladen…",

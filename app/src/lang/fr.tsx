@@ -249,7 +249,7 @@ const fr: Record<TKey, ReactNode> = {
   "fb.entry": "Feedback",
   "fb.title": "Laisser un message",
   "fb.intro":
-    "Les messages et captures d’écran sont affichés publiquement sur le mur de feedback. Décrivez vos problèmes, les étapes de reproduction ou les fonctions souhaitées.",
+    "Les messages sont affichés publiquement sur le mur de feedback. Décrivez vos problèmes, les étapes de reproduction ou les fonctions souhaitées.",
   "fb.text": "Message",
   "fb.textPh": "Décrivez le problème, comment le reproduire, ou la fonction suggérée…",
   "fb.contact": "Contact (facultatif, affiché publiquement avec le message)",
@@ -270,7 +270,7 @@ const fr: Record<TKey, ReactNode> = {
   "fbw.eyebrow": "MUR DE FEEDBACK",
   "fbw.title": "Mur de feedback",
   "fbw.lead":
-    "Messages publics et captures d’écran des utilisateurs de GenePad — usages, rapports de bugs et demandes de fonctions, tout est ouvert.",
+    "Messages publics des utilisateurs de GenePad — usages, rapports de bugs et demandes de fonctions, tout est ouvert.",
   "fbw.write": "Écrire un message",
   "fbw.empty": "Aucun message pour l’instant — soyez le premier",
   "fbw.loading": "Chargement des messages…",

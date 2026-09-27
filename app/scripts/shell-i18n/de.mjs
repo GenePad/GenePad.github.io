@@ -78,7 +78,7 @@ export default {
     "feedback": {
       title: "Feedback-Wand - GenePad | Öffentliche Nutzernachrichten",
       description:
-        "Öffentliche Feedback-Wand von GenePad: Anwendungsfälle, Fehlerberichte und Funktionswünsche von Nutzern, Screenshots willkommen. Nachrichten erscheinen nach der menschlichen Verifizierung öffentlich — oder über das Feedback-Formular im Seitenfuß.",
+        "Öffentliche Feedback-Wand von GenePad: Anwendungsfälle, Fehlerberichte und Funktionswünsche von Nutzern. Nachrichten erscheinen nach der menschlichen Verifizierung öffentlich — oder über das Feedback-Formular im Seitenfuß.",
     },
     "stats": {
       title: "Live-Statistiken - GenePad | Öffentliche Nutzungsstatistiken",

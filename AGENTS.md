@@ -115,35 +115,43 @@ and `nav.stats` (zh + en). Remember: `docs/stats.html` is build output — never
 
 ## Feedback API (`/api/feedback`) — 用户反馈 / 公开留言墙
 
-User feedback with Cloudflare Turnstile human verification, stored in D1 + R2 and
-publicly displayed on the `/feedback` message wall. Frontend lives in
-`app/src/feedback.tsx` (`FeedbackModal` — mounted once inside `Footer` so it exists on
-every page; `openFeedback()` event-bus trigger used by `TechSupport` and the home-page
-`FeedbackTicker` banner; `feedbackApiUrl()` returns same-origin `/api/feedback` on all
-CF-hosted hosts and falls back to the absolute `genepad.pages.dev` URL only on
-genepad.github.io). The wall page is the standard 14-shell set
-(`app/feedback.html` + `app/{en,cn}/feedback.html` hand-written, five mirrors generated;
-wired in `vite.config.ts` / `gen-shells.mjs` / `shell-i18n/*.mjs` / `check-dict-keys.mjs` /
-`prerender.mjs` — prerender serves a stub empty list for `/api/feedback/list` so the
-baked HTML shows the empty state). `/api/` is a mirror-shared prefix, so all three
-endpoints work on every mirror host without routing changes. Copy lives in `i18n.tsx`
-under `fb.*` (form) / `fbw.*` (wall + ticker) + `title.feedback`.
+User feedback (text-only) with Cloudflare Turnstile human verification, stored in D1 and
+publicly displayed on the `/feedback` message wall. **Images are offline since
+2026-09-27** (user decision to avoid enabling R2 billing): the R2 storage/image-endpoint
+code is kept **as commented blocks marked `IMAGE-REENABLE`** in `docs/_worker.js`
+(constants + R2 puts in `handleFeedback` + `handleFeedbackImage` + its dispatch branch);
+the D1 `feedback.images` column remains as a reserved field (always `'[]'`, still
+returned by the list endpoint). To re-enable: uncomment the marked blocks in
+`_worker.js`, re-bind the R2 bucket as `FEEDBACK_BUCKET` (redeploy), and restore the
+frontend image UI from git history (`app/src/feedback.tsx` @ commit `170a04d`; the six
+i18n keys `fb.images`/`fb.imageAdd`/`fb.imageRemove`/`fb.pasteHint`/`fb.errorTooMany`/
+`fb.errorTooLarge` were deliberately kept in all 7 dictionaries).
+
+Frontend lives in `app/src/feedback.tsx` (`FeedbackModal` — mounted once inside `Footer`
+so it exists on every page; `openFeedback()` event-bus trigger used by `TechSupport` and
+the home-page `FeedbackTicker` banner; `feedbackApiUrl()` returns same-origin
+`/api/feedback` on all CF-hosted hosts and falls back to the absolute
+`genepad.pages.dev` URL only on genepad.github.io). The wall page is the standard
+14-shell set (`app/feedback.html` + `app/{en,cn}/feedback.html` hand-written, five
+mirrors generated; wired in `vite.config.ts` / `gen-shells.mjs` / `shell-i18n/*.mjs` /
+`check-dict-keys.mjs` / `prerender.mjs` — prerender serves a stub empty list for
+`/api/feedback/list` so the baked HTML shows the empty state). `/api/` is a
+mirror-shared prefix, so the endpoints work on every mirror host without routing
+changes. Copy lives in `i18n.tsx` under `fb.*` (form) / `fbw.*` (wall + ticker) +
+`title.feedback`.
 
 Endpoints (all in `docs/_worker.js`, edit directly and push):
 
 - `POST /api/feedback` — multipart form: `text` (required ≤5000), `contact` (optional
-  ≤200), `page` (optional context), `turnstile` (token), `images` (≤3 files, each ≤5MiB,
-  png/jpeg/webp/gif). Server order: field validation → Turnstile siteverify (needs
-  **`TURNSTILE_SECRET_KEY`**) → per-IP rate limit (fixed 1h window, 5 per IP, D1-backed;
-  IP stored only as sha256 hash) → images to R2 (**`FEEDBACK_BUCKET`**, key
-  `fb/<yyyymmdd>/<uuid>/<n>.<ext>`) → row into D1. Success 204; errors are
-  `{error:'...'}` JSON (400/403/429/500/503).
+  ≤200), `page` (optional context), `turnstile` (token). Server order: field validation
+  → Turnstile siteverify (needs **`TURNSTILE_SECRET_KEY`**) → per-IP rate limit (fixed
+  1h window, 5 per IP, D1-backed; IP stored only as sha256 hash) → row into D1
+  (`images` written as `'[]'`). Success 204; errors are `{error:'...'}` JSON
+  (400/403/429/500/503).
 - `GET /api/feedback/list?before=<ms>&limit=≤50` — public, newest-first, **only
-  `hidden=0` rows**, returns `{ok, items:[{id,text,contact,images,createdAt}], total}`;
-  `page` / `ip_hash` / `user_agent` never leave the server. `Cache-Control: max-age=60`.
-- `GET /api/feedback/image?key=...` — streams the R2 object after a strict key-format
-  whitelist check (keys embed a random UUID, so URLs are unguessable without the list);
-  immutable long cache.
+  `hidden=0` rows**, returns `{ok, items:[{id,text,contact,images,createdAt}], total}`
+  (`images` always `[]` while the image feature is offline); `page` / `ip_hash` /
+  `user_agent` never leave the server. `Cache-Control: max-age=60`.
 
 Dashboard setup (one-time; binding changes need a redeploy):
 
@@ -152,24 +160,19 @@ Dashboard setup (one-time; binding changes need a redeploy):
    **secret** into Pages → Settings → Variables and Secrets as `TURNSTILE_SECRET_KEY`;
    the **sitekey** is a public value hardcoded in `app/src/feedback.tsx`
    (`TURNSTILE_SITEKEY`, production widget set 2026-09-27).
-2. **R2**: create bucket `genepad-feedback`, bind to the Pages project as
-   **`FEEDBACK_BUCKET`**.
-3. **D1**: run the two `CREATE TABLE` statements (`feedback`, `feedback_ip_window`)
-   embedded in the `_worker.js` header comment (same console as `usage_reports`).
+2. **D1**: run the two `CREATE TABLE` statements (`feedback`, `feedback_ip_window`)
+   embedded in the `_worker.js` header comment (same console as `usage_reports`);
+   executed 2026-09-27.
+3. ~~**R2**: bucket `genepad-feedback` bound as `FEEDBACK_BUCKET`~~ — not needed while
+   the image feature is offline (see re-enable note above).
 
 Data locations & moderation runbook (all manual, in the Cloudflare dashboard):
 
-- **Text rows**: D1 → `genepad` database → Console.
+- **Text rows**: D1 → `genepad` database → Console (rows are newest-first):
+  `SELECT id, text, contact, created_at FROM feedback ORDER BY created_at DESC;`
   - Hide a message (stays in DB, disappears from wall + ticker):
     `UPDATE feedback SET hidden = 1 WHERE id = '<id>';`
   - Delete a message: `DELETE FROM feedback WHERE id = '<id>';`
-  - Delete its images too — the R2 keys are in the row's `images` JSON column; remove
-    each object (next bullet). Rows are newest-first:
-    `SELECT id, text, contact, images, created_at FROM feedback ORDER BY created_at DESC;`
-- **Images**: R2 → bucket `genepad-feedback` → browse objects under `fb/<yyyymmdd>/<id>/`
-  and delete them (keys also listed in the D1 row's `images` column). Note images are
-  publicly readable via `/api/feedback/image` once submitted — that is inherent to the
-  public wall.
 - The `feedback_ip_window` rate-limit table needs no maintenance (rows are one per IP,
   tiny); optional purge: `DELETE FROM feedback_ip_window WHERE window_start < <ms-epoch>;`
 

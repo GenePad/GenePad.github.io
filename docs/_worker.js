@@ -27,19 +27,23 @@
 //   ALTER TABLE usage_reports ADD COLUMN os TEXT;
 //
 // ── 用户反馈 / 公开留言墙(/api/feedback)──
-// 前端:全站页脚「在线反馈」弹窗 POST 提交(文本 + 可选联系方式 + ≤3 张截图),
-// 公开反馈墙 /feedback 页经 GET /api/feedback/list 只读展示、图片经 /api/feedback/image
-// 从 R2 读出。提交需 Cloudflare Turnstile 令牌(服务端 siteverify 二次校验),
+// 前端:全站页脚「在线反馈」弹窗 POST 提交(文本 + 可选联系方式),
+// 公开反馈墙 /feedback 页经 GET /api/feedback/list 只读展示。
+// 提交需 Cloudflare Turnstile 令牌(服务端 siteverify 二次校验),
 // 并按 IP 限流(固定 1 小时窗口 ≤5 条);公开列表只输出 hidden=0 的行,
-// page / ip_hash / user_agent 不出接口。一次性配置(Turnstile widget、TURNSTILE_SECRET_KEY、
-// R2 桶 FEEDBACK_BUCKET)与删除/隐藏手册见 AGENTS.md「Feedback API」一节。
+// page / ip_hash / user_agent 不出接口。
+// 【图片功能下线(2026-09-27,纯文字版)】:R2 存储/图片端点代码保留为注释块,
+// 统一打 IMAGE-REENABLE 标记,恢复指南见 AGENTS.md「Feedback API」;
+// images 列保留为预留(恒为 '[]'),list 接口仍返回该字段(空数组)。
+// 一次性配置(Turnstile widget、TURNSTILE_SECRET_KEY)与删除/隐藏手册见
+// AGENTS.md「Feedback API」一节。
 // 建表 SQL(在 D1 控制台执行一次)：
 //   CREATE TABLE IF NOT EXISTS feedback (
 //     id TEXT PRIMARY KEY,
 //     text TEXT NOT NULL,
 //     contact TEXT,
 //     page TEXT,
-//     images TEXT NOT NULL DEFAULT '[]',
+//     images TEXT NOT NULL DEFAULT '[]',  -- 预留列:图片功能下线期间恒为 '[]'
 //     ip_hash TEXT NOT NULL,
 //     user_agent TEXT,
 //     hidden INTEGER NOT NULL DEFAULT 0,
@@ -61,14 +65,18 @@ const OS_WHITELIST = new Set(['windows', 'linux', 'macos', 'android', 'other']);
 const FB_MAX_TEXT = 5000;
 const FB_MAX_CONTACT = 200;
 const FB_MAX_PAGE = 300;
-const FB_MAX_IMAGES = 3;
-const FB_MAX_IMAGE_BYTES = 5 * 1024 * 1024;
-const FB_IMAGE_TYPES = { 'image/png': 'png', 'image/jpeg': 'jpg', 'image/webp': 'webp', 'image/gif': 'gif' };
+/* 【IMAGE-REENABLE】图片功能下线(2026-09-27)。恢复步骤:
+   ① 取消本块与 handleFeedback / handleFeedbackImage 内同标记注释;
+   ② Pages 项目重新绑定 R2 桶变量 FEEDBACK_BUCKET(并重新部署);
+   ③ 前端表单图片 UI 按 git 历史(app/src/feedback.tsx @ 170a04d)恢复。 */
+// const FB_MAX_IMAGES = 3;
+// const FB_MAX_IMAGE_BYTES = 5 * 1024 * 1024;
+// const FB_IMAGE_TYPES = { 'image/png': 'png', 'image/jpeg': 'jpg', 'image/webp': 'webp', 'image/gif': 'gif' };
 const FB_RATE_WINDOW_MS = 60 * 60 * 1000; // 每 IP 固定 1 小时窗口
 const FB_RATE_LIMIT = 5;
-// R2 对象 key 白名单(与写入侧 fb/<yyyymmdd>/<uuid>/<n>.<ext> 一一对应):
-// key 含随机 UUID,不经 list 接口拿不到,图片 URL 不可枚举
-const FB_IMAGE_KEY_RE = /^fb\/\d{8}\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\/[123]\.(png|jpg|webp|gif)$/;
+/* 【IMAGE-REENABLE】R2 对象 key 白名单(与写入侧 fb/<yyyymmdd>/<uuid>/<n>.<ext> 一一对应):
+   key 含随机 UUID,不经 list 接口拿不到,图片 URL 不可枚举 */
+// const FB_IMAGE_KEY_RE = /^fb\/\d{8}\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\/[123]\.(png|jpg|webp|gif)$/;
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -182,7 +190,9 @@ async function feedbackRateLimited(env, ipHash, now) {
 }
 
 async function handleFeedback(request, env) {
-  if (!env.DB || !env.FEEDBACK_BUCKET || !env.TURNSTILE_SECRET_KEY) {
+  // 【IMAGE-REENABLE】恢复图片时改回三绑定守卫:
+  // if (!env.DB || !env.FEEDBACK_BUCKET || !env.TURNSTILE_SECRET_KEY)
+  if (!env.DB || !env.TURNSTILE_SECRET_KEY) {
     return json({ error: 'feedback bindings missing' }, 503);
   }
 
@@ -200,6 +210,7 @@ async function handleFeedback(request, env) {
   const contact = typeof form.get('contact') === 'string' ? form.get('contact').trim().slice(0, FB_MAX_CONTACT) : '';
   const page = typeof form.get('page') === 'string' ? form.get('page').trim().slice(0, FB_MAX_PAGE) : '';
 
+  /* 【IMAGE-REENABLE】图片解析与校验(下线中):
   const images = form.getAll('images').filter((f) => f instanceof File && f.size > 0);
   if (images.length > FB_MAX_IMAGES) {
     return json({ error: 'too many images' }, 400);
@@ -208,6 +219,7 @@ async function handleFeedback(request, env) {
     if (!FB_IMAGE_TYPES[file.type]) return json({ error: 'invalid image type' }, 400);
     if (file.size > FB_MAX_IMAGE_BYTES) return json({ error: 'image too large' }, 400);
   }
+  */
 
   const ip = request.headers.get('CF-Connecting-IP') ?? '';
   const token = typeof form.get('turnstile') === 'string' ? form.get('turnstile') : '';
@@ -222,17 +234,19 @@ async function handleFeedback(request, env) {
   }
 
   const id = crypto.randomUUID();
+  /* 【IMAGE-REENABLE】图片写 R2(下线中):
   const dateDir = new Date(now).toISOString().slice(0, 10).replace(/-/g, '');
   const keys = [];
+  for (let i = 0; i < images.length; i += 1) {
+    // 先写 R2 再写 D1:中间失败会留下孤儿图片对象,量级可忽略,不做回滚
+    const key = `fb/${dateDir}/${id}/${i + 1}.${FB_IMAGE_TYPES[images[i].type]}`;
+    await env.FEEDBACK_BUCKET.put(key, await images[i].arrayBuffer(), {
+      httpMetadata: { contentType: images[i].type },
+    });
+    keys.push(key);
+  }
+  */
   try {
-    for (let i = 0; i < images.length; i += 1) {
-      // 先写 R2 再写 D1:中间失败会留下孤儿图片对象,量级可忽略,不做回滚
-      const key = `fb/${dateDir}/${id}/${i + 1}.${FB_IMAGE_TYPES[images[i].type]}`;
-      await env.FEEDBACK_BUCKET.put(key, await images[i].arrayBuffer(), {
-        httpMetadata: { contentType: images[i].type },
-      });
-      keys.push(key);
-    }
     await env.DB.prepare(
       `INSERT INTO feedback (id, text, contact, page, images, ip_hash, user_agent, created_at)
        VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)`,
@@ -242,7 +256,7 @@ async function handleFeedback(request, env) {
         text,
         contact,
         page,
-        JSON.stringify(keys),
+        '[]', // images 预留列:纯文字版恒为空数组
         ipHash,
         (request.headers.get('User-Agent') ?? '').slice(0, 256),
         now,
@@ -292,7 +306,7 @@ async function handleFeedbackList(url, env) {
   }
 }
 
-/* 留言图片直读:严格 key 白名单校验后从 R2 取对象,内容寻址不变所以长缓存 */
+/* 【IMAGE-REENABLE】留言图片直读端点(下线中,整段保留):
 async function handleFeedbackImage(url, env) {
   if (!env.FEEDBACK_BUCKET) {
     return json({ error: 'r2 binding missing' }, 503);
@@ -316,6 +330,7 @@ async function handleFeedbackImage(url, env) {
     return json({ error: 'storage error' }, 500);
   }
 }
+*/
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 const WEEK_MS = 7 * DAY_MS;
@@ -597,9 +612,11 @@ export default {
     if (url.pathname === '/api/feedback/list' && request.method === 'GET') {
       return handleFeedbackList(url, env);
     }
+    /* 【IMAGE-REENABLE】图片直读端点(下线中):
     if (url.pathname === '/api/feedback/image' && request.method === 'GET') {
       return handleFeedbackImage(url, env);
     }
+    */
 
     const routed = route(url);
     if (routed.redirect) {

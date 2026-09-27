@@ -78,7 +78,7 @@ export default {
     "feedback": {
       title: "Mur de feedback - GenePad | Messages publics des utilisateurs",
       description:
-        "Mur de feedback public de GenePad : usages, rapports de bugs et demandes de fonctions des utilisateurs, captures d’écran bienvenues. Les messages sont publiés après la vérification humaine — ou via le formulaire de feedback en pied de page.",
+        "Mur de feedback public de GenePad : usages, rapports de bugs et demandes de fonctions des utilisateurs. Les messages sont publiés après la vérification humaine — ou via le formulaire de feedback en pied de page.",
     },
     "stats": {
       title: "Données en direct - GenePad | Statistiques d’utilisation publiques",
