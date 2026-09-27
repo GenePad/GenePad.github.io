@@ -45,7 +45,6 @@ const ja: Record<TKey, ReactNode> = {
   "hero.desc":
     "日常の分子クローニングのための、軽量・クロスプラットフォーム対応のプラスミッドマップ編集ツール。プラスミッドマップの閲覧・編集、配列注釈の管理、制限酵素部位の解析、Sanger トレースとの照合まで、クローニング設計から結果検証までの一連の流れを支えます。",
   "hero.download": "無料ダウンロード／更新",
-  "hero.tour": "画面を見る",
   "hero.features": "MAP · ANNOTATION · ENZYME · PRIMER · TRACE",
   "hero.platforms": "対応プラットフォーム",
   "hero.langBtn": "言語の設定方法",
@@ -244,7 +243,7 @@ const ja: Record<TKey, ReactNode> = {
     "メッセージはフィードバックウォールに公開表示されます。不具合・再現手順・ご希望の機能をお知らせください。",
   "fb.text": "メッセージ",
   "fb.textPh": "問題の内容、再現手順、ご提案する機能などを記入してください…",
-  "fb.contact": "連絡先（任意・メッセージと一緒に公開表示されます）",
+  "fb.contact": "連絡先（任意・公開時は自動的にマスキングされます）",
   "fb.contactPh": "メール / GitHub / その他",
   "fb.images": "スクリーンショット（任意・最大 3 枚、各 5MB まで）",
   "fb.imageAdd": "画像を追加",
@@ -269,7 +268,8 @@ const ja: Record<TKey, ReactNode> = {
   "fbw.error": "メッセージの読み込みに失敗しました。しばらくしてからもう一度お試しください",
   "fbw.loadMore": "さらに表示",
   "fbw.viewAll": "すべて表示",
-  "fbw.latest": "最新",
+  "fbw.prev": "前へ",
+  "fbw.next": "次へ",
   "fbw.messages": "件のメッセージ",
 
   // サブページ共通

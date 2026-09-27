@@ -269,6 +269,16 @@ async function handleFeedback(request, env) {
   return new Response(null, { status: 204, headers: CORS_HEADERS });
 }
 
+/* 联系方式公开脱敏:邮箱保留前两位 + 域名(ab***@example.com),其余保留前两位;
+   完整值只存 D1(站主可查),任何接口都不出 */
+function maskContact(value) {
+  const at = value.indexOf('@');
+  if (at > 0) {
+    return value.slice(0, 2) + '***' + value.slice(at);
+  }
+  return value.slice(0, 2) + '***';
+}
+
 /* 公开留言墙列表:只吐 hidden=0 的行;before=上一页最后一条的 created_at(游标翻页) */
 async function handleFeedbackList(url, env) {
   if (!env.DB) {
@@ -294,7 +304,7 @@ async function handleFeedbackList(url, env) {
     const items = (rows.results ?? []).map((row) => ({
       id: row.id,
       text: row.text,
-      contact: row.contact || null,
+      contact: row.contact ? maskContact(row.contact) : null,
       images: JSON.parse(row.images ?? '[]'),
       createdAt: Number(row.created_at),
     }));

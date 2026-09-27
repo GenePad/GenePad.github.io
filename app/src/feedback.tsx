@@ -5,14 +5,14 @@ import {
   useState,
 } from "react";
 import { useLang } from "./i18n";
-import { ArrowRight } from "./sections/shared";
 
-/* ── 用户反馈：页脚入口 → 全屏弹窗表单 → POST /api/feedback ──
+/* ── 用户反馈：页脚/Hero 入口 → 全屏弹窗表单 → POST /api/feedback ──
    文本（必填）+ 可选联系方式，Cloudflare Turnstile 人机验证；
-   留言公开陈列在 /feedback 留言墙（GET /api/feedback/list，见 pages/Feedback.tsx）。
-   <FeedbackModal/> 挂在 Footer（每页都有）；其他位置（TechSupport 反馈框、
-   主页横幅、留言墙页）调 openFeedback() 触发 —— 模块级 CustomEvent，
-   不引入全局 Provider。管理（删除/隐藏留言）见 AGENTS.md「Feedback API」。
+   留言公开陈列在 /feedback 留言墙（GET /api/feedback/list，见 pages/Feedback.tsx，
+   主页卡片轮播见 sections/FeedbackSection.tsx）。
+   <FeedbackModal/> 挂在 Footer（每页都有）；其他位置（Hero、TechSupport 反馈框、
+   留言墙页）调 openFeedback() 触发 —— 模块级 CustomEvent，不引入全局 Provider。
+   管理（删除/隐藏留言）见 AGENTS.md「Feedback API」。
    【图片上传已下线（2026-09-27，纯文字版）】：选图/粘贴/压缩 UI 已移除，
    恢复时前端按 git 历史（本文件 @ 170a04d）取回，后端 R2 代码以 IMAGE-REENABLE
    标记注释保留在 docs/_worker.js；i18n 图片词条（fb.images 等 6 键）仍保留。 */
@@ -304,83 +304,5 @@ export function FeedbackModal() {
         </div>
       </div>
     </div>
-  );
-}
-
-/* ── 主页留言横幅：[在线反馈] [最新留言滚动] [查看更多] ──
-   留言列表来自公开 list 接口（无留言/接口未配置时优雅退化：横幅仍在，不滚动） */
-export function FeedbackTicker() {
-  const { t } = useLang();
-  const [items, setItems] = useState<string[] | null>(null);
-
-  useEffect(() => {
-    let cancelled = false;
-    const controller = new AbortController();
-    const timer = window.setTimeout(() => controller.abort(), 8000);
-    fetch(feedbackApiUrl("/api/feedback/list?limit=10"), { signal: controller.signal })
-      .then((res) => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.json() as Promise<{ items?: { text?: string }[] }>;
-      })
-      .then((json) => {
-        if (cancelled) return;
-        setItems(
-          (json.items ?? [])
-            .map((it) => String(it.text ?? "").replace(/\s+/g, " ").trim())
-            .filter(Boolean)
-            .slice(0, 10),
-        );
-      })
-      .catch(() => {
-        if (!cancelled) setItems([]);
-      })
-      .finally(() => window.clearTimeout(timer));
-    return () => {
-      cancelled = true;
-      controller.abort();
-    };
-  }, []);
-
-  return (
-    <aside className="border-b border-lined bg-ink text-paper">
-      <div className="mx-auto flex max-w-[1400px] flex-col gap-3 px-5 py-4 md:flex-row md:items-center md:gap-6 md:px-8">
-        <button
-          onClick={openFeedback}
-          className="inline-flex shrink-0 items-center gap-2.5 bg-gfp px-5 py-2.5 font-mono text-[12px] font-bold tracking-[0.12em] text-on-gfp transition-colors hover:bg-gfp-deep hover:text-paper"
-        >
-          {t("fb.entry")}
-        </button>
-
-        {items && items.length > 0 ? (
-          <div className="relative min-w-0 flex-1 overflow-hidden" aria-hidden>
-            <div className="gp-marquee-track-slow flex w-max items-center whitespace-nowrap font-mono text-[11px] tracking-[0.08em] text-paper/65">
-              {[...items, ...items].map((s, i) => (
-                <span key={i} className="flex items-center">
-                  <span className="px-5">“{s.length > 80 ? `${s.slice(0, 80)}…` : s}”</span>
-                  <span className="text-gfp">·</span>
-                </span>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <p className="min-w-0 flex-1 font-mono text-[11px] tracking-[0.08em] text-paper/50">
-            {items ? (t("fbw.empty") as string) : ""}
-          </p>
-        )}
-
-        <span className="hidden shrink-0 items-center gap-2 font-mono text-[10px] uppercase tracking-[0.24em] text-paper/40 md:inline-flex">
-          <span className="inline-block h-1.5 w-1.5 bg-gfp" />
-          {t("fbw.latest")}
-        </span>
-
-        <a
-          href="feedback"
-          className="group inline-flex shrink-0 items-center gap-2 border border-lined px-4 py-2 font-mono text-[11px] tracking-[0.14em] text-paper/80 transition-colors hover:border-gfp hover:text-gfp"
-        >
-          {t("fbw.viewAll")}
-          <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-        </a>
-      </div>
-    </aside>
   );
 }

@@ -161,12 +161,17 @@
   .gp-marquee-track {
     animation: gp-marquee 36s linear infinite;
   }
-  /* 主页留言横幅：同款滚动、更缓 + 减少动态偏好时静止 */
-  .gp-marquee-track-slow {
-    animation: gp-marquee 64s linear infinite;
+
+  /* 主页反馈卡片轮播翻页淡入 */
+  @keyframes gp-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .gp-fade-in {
+    animation: gp-fade-in 0.45s ease both;
   }
   @media (prefers-reduced-motion: reduce) {
-    .gp-marquee-track-slow {
+    .gp-fade-in {
       animation: none;
     }
   }

@@ -151,7 +151,10 @@ Endpoints (all in `docs/_worker.js`, edit directly and push):
 - `GET /api/feedback/list?before=<ms>&limit=≤50` — public, newest-first, **only
   `hidden=0` rows**, returns `{ok, items:[{id,text,contact,images,createdAt}], total}`
   (`images` always `[]` while the image feature is offline); `page` / `ip_hash` /
-  `user_agent` never leave the server. `Cache-Control: max-age=60`.
+  `user_agent` never leave the server. **`contact` is masked server-side** before it
+  leaves the DB — emails keep the first 2 chars + domain (`ab***@example.com`), other
+  values keep the first 2 chars; the full value lives only in D1 for replying.
+  `Cache-Control: max-age=60`.
 
 Dashboard setup (one-time; binding changes need a redeploy):
 

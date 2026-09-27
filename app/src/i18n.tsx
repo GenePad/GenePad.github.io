@@ -57,7 +57,6 @@ const zhDict = {
     "hero.desc":
       "面向日常分子克隆的跨平台基因图谱编辑器：浏览与编辑质粒图谱、管理序列标注、分析酶切位点、比对 Sanger 测序峰图，覆盖克隆设计与结果核验的完整流程。",
     "hero.download": "免费下载/升级",
-    "hero.tour": "查看界面",
     "hero.features": "图谱 · 标注 · 酶切 · 引物 · 峰图",
     "hero.platforms": "支持平台",
     "hero.langBtn": "如何设置语言",
@@ -255,7 +254,7 @@ const zhDict = {
     "fb.intro": "留言会公开显示在留言墙，欢迎描述使用中遇到的问题、复现步骤或功能建议。",
     "fb.text": "留言内容",
     "fb.textPh": "请描述你遇到的问题、复现步骤或功能建议…",
-    "fb.contact": "联系方式（可选，将随留言公开展示）",
+    "fb.contact": "联系方式（可选，公开展示时自动脱敏，便于我们回复）",
     "fb.contactPh": "邮箱 / GitHub / 其他",
     "fb.images": "截图（可选，最多 3 张，每张 ≤5MB）",
     "fb.imageAdd": "添加图片",
@@ -279,7 +278,8 @@ const zhDict = {
     "fbw.error": "留言加载失败，请稍后重试",
     "fbw.loadMore": "加载更多",
     "fbw.viewAll": "查看更多",
-    "fbw.latest": "最新留言",
+    "fbw.prev": "上一页",
+    "fbw.next": "下一页",
     "fbw.messages": "条留言",
 
     // 子页面共用
@@ -852,7 +852,6 @@ const dict: Record<Lang, Record<TKey, ReactNode>> = {
     "hero.desc":
       "A cross-platform gene map editor for everyday molecular cloning: browse and edit plasmid maps, manage sequence annotations, analyze restriction sites, and align Sanger traces — covering the full workflow from cloning design to result verification.",
     "hero.download": "Download / Upgrade Free",
-    "hero.tour": "View the interface",
     "hero.features": "MAP · ANNOTATION · ENZYME · PRIMER · TRACE",
     "hero.platforms": "Available on",
     "hero.langBtn": "How to set the language",
@@ -1049,7 +1048,7 @@ const dict: Record<Lang, Record<TKey, ReactNode>> = {
       "Messages are shown publicly on the feedback wall. Tell us about problems you hit, how to reproduce them, or features you would like.",
     "fb.text": "Message",
     "fb.textPh": "Describe the problem, how to reproduce it, or the feature you suggest…",
-    "fb.contact": "Contact (optional, shown publicly with your message)",
+    "fb.contact": "Contact (optional, auto-masked when shown publicly)",
     "fb.contactPh": "Email / GitHub / anything",
     "fb.images": "Screenshots (optional, up to 3, ≤5MB each)",
     "fb.imageAdd": "Add image",
@@ -1074,7 +1073,8 @@ const dict: Record<Lang, Record<TKey, ReactNode>> = {
     "fbw.error": "Failed to load messages, please try again later",
     "fbw.loadMore": "Load more",
     "fbw.viewAll": "View all",
-    "fbw.latest": "Latest",
+    "fbw.prev": "Previous",
+    "fbw.next": "Next",
     "fbw.messages": "messages",
 
     // 子页面共用

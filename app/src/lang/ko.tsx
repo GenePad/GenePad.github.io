@@ -41,7 +41,6 @@ const ko: Record<TKey, ReactNode> = {
   "hero.desc":
     "일상적인 분자 클로닝을 위한 크로스 플랫폼 유전자 지도 편집기입니다. 플라스미드 맵 열람·편집, 서열 주석 관리, 제한효소 부위 분석, Sanger 시퀀싱 트레이스 비교로 클로닝 설계부터 결과 검증까지의 전 과정을 지원합니다.",
   "hero.download": "무료 다운로드 / 업그레이드",
-  "hero.tour": "인터페이스 살펴보기",
   "hero.features": "맵 · 주석 · 효소 절단 · 프라이머 · 크로마토그램",
   "hero.platforms": "지원 플랫폼",
   "hero.langBtn": "언어 설정 방법",
@@ -240,7 +239,7 @@ const ko: Record<TKey, ReactNode> = {
     "메시지는 피드백 월에 공개로 표시됩니다. 문제, 재현 단계 또는 기능 제안을 알려주세요.",
   "fb.text": "메시지",
   "fb.textPh": "겪은 문제, 재현 단계 또는 제안하는 기능을 적어주세요…",
-  "fb.contact": "연락처 (선택, 메시지와 함께 공개 표시됨)",
+  "fb.contact": "연락처 (선택, 공개 시 자동 마스킹)",
   "fb.contactPh": "이메일 / GitHub / 기타",
   "fb.images": "스크린샷 (선택, 최대 3장, 각 5MB 이하)",
   "fb.imageAdd": "이미지 추가",
@@ -265,7 +264,8 @@ const ko: Record<TKey, ReactNode> = {
   "fbw.error": "메시지를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요",
   "fbw.loadMore": "더 보기",
   "fbw.viewAll": "모두 보기",
-  "fbw.latest": "최신",
+  "fbw.prev": "이전",
+  "fbw.next": "다음",
   "fbw.messages": "개의 메시지",
 
   // 하위 페이지 공용

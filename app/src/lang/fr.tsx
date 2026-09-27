@@ -50,7 +50,6 @@ const fr: Record<TKey, ReactNode> = {
   "hero.desc":
     "Un éditeur de cartes géniques multiplateforme pensé pour le clonage moléculaire au quotidien : parcourez et modifiez les cartes de plasmides, gérez les annotations de séquences, analysez les sites de restriction et alignez les chromatogrammes Sanger — l’intégralité du flux de travail, de la conception du clonage à la vérification des résultats.",
   "hero.download": "Télécharger / mettre à niveau gratuitement",
-  "hero.tour": "Voir l’interface",
   "hero.features": "CARTE · ANNOTATION · ENZYME · AMORCE · TRACE",
   "hero.platforms": "Disponible sur",
   "hero.langBtn": "Définir la langue",
@@ -252,7 +251,7 @@ const fr: Record<TKey, ReactNode> = {
     "Les messages sont affichés publiquement sur le mur de feedback. Décrivez vos problèmes, les étapes de reproduction ou les fonctions souhaitées.",
   "fb.text": "Message",
   "fb.textPh": "Décrivez le problème, comment le reproduire, ou la fonction suggérée…",
-  "fb.contact": "Contact (facultatif, affiché publiquement avec le message)",
+  "fb.contact": "Contact (facultatif, automatiquement masqué lorsqu’affiché publiquement)",
   "fb.contactPh": "E-mail / GitHub / autre",
   "fb.images": "Captures d’écran (facultatif, 3 max, ≤5 Mo chacune)",
   "fb.imageAdd": "Ajouter une image",
@@ -277,7 +276,8 @@ const fr: Record<TKey, ReactNode> = {
   "fbw.error": "Échec du chargement des messages, réessayez plus tard",
   "fbw.loadMore": "Charger plus",
   "fbw.viewAll": "Tout voir",
-  "fbw.latest": "Derniers",
+  "fbw.prev": "Précédent",
+  "fbw.next": "Suivant",
   "fbw.messages": "messages",
 
   // Sous-pages communes

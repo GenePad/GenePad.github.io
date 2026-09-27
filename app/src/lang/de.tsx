@@ -41,7 +41,6 @@ const de: Record<TKey, ReactNode> = {
   "hero.desc":
     "Ein plattformübergreifender Genkarten-Editor für die tägliche molekulare Klonierung: Plasmidkarten betrachten und bearbeiten, Sequenzannotationen verwalten, Restriktionsstellen analysieren und Sanger-Chromatogramme abgleichen — so deckt GenePad den kompletten Workflow vom Klonierungsdesign bis zur Ergebnisprüfung ab.",
   "hero.download": "Kostenlos herunterladen / aktualisieren",
-  "hero.tour": "Oberfläche ansehen",
   "hero.features": "KARTE · ANNOTATION · RESTRIKTION · PRIMER · CHROMATOGRAMM",
   "hero.platforms": "Verfügbar für",
   "hero.langBtn": "Sprache einstellen",
@@ -243,7 +242,7 @@ const de: Record<TKey, ReactNode> = {
   "fb.text": "Nachricht",
   "fb.textPh":
     "Beschreibe das Problem, wie es sich reproduzieren lässt, oder die vorgeschlagene Funktion…",
-  "fb.contact": "Kontakt (optional, wird öffentlich mit der Nachricht gezeigt)",
+  "fb.contact": "Kontakt (optional, bei öffentlicher Anzeige automatisch maskiert)",
   "fb.contactPh": "E-Mail / GitHub / anderes",
   "fb.images": "Screenshots (optional, bis zu 3, je ≤5MB)",
   "fb.imageAdd": "Bild hinzufügen",
@@ -268,7 +267,8 @@ const de: Record<TKey, ReactNode> = {
   "fbw.error": "Nachrichten konnten nicht geladen werden, bitte später erneut versuchen",
   "fbw.loadMore": "Mehr laden",
   "fbw.viewAll": "Alle ansehen",
-  "fbw.latest": "Neueste",
+  "fbw.prev": "Zurück",
+  "fbw.next": "Weiter",
   "fbw.messages": "Nachrichten",
 
   // 子页面共用

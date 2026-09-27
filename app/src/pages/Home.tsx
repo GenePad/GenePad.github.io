@@ -8,9 +8,9 @@ import DayNight from "../sections/DayNight";
 import Sanger from "../sections/Sanger";
 import NgsPromo from "../sections/NgsPromo";
 import Toolbox from "../sections/Toolbox";
+import FeedbackSection from "../sections/FeedbackSection";
 import Download from "../sections/Download";
 import Footer from "../sections/Footer";
-import { FeedbackTicker } from "../feedback";
 import { LightboxProvider } from "../lightbox";
 import { dismissBoot } from "../boot";
 import { usePageTitle } from "../i18n";
@@ -44,8 +44,8 @@ export default function Home() {
           <NgsPromo />
           <DayNight />
           <Toolbox />
-          <Download index="07" />
-          <FeedbackTicker />
+          <FeedbackSection index="07" />
+          <Download index="08" />
           <Footer />
         </main>
       </LightboxProvider>
