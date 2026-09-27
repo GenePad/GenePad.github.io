@@ -23,30 +23,30 @@ const ja: Record<TKey, ReactNode> = {
   "nav.lang": "EN",
 
   // Page titles（実行時タイトルは UI 言語に追従。静的 HTML の <title> はページ言語と一致：jp.genepad.cn は日本語）
-  "title.home": "GenePad - 軽量・クロスプラットフォーム対応のプラスミッドマップ編集ツール",
+  "title.home": "GenePad - 軽量・複数 OS 対応のプラスミッドマップ編集ツール",
   "title.library": "遺伝子ファイルライブラリ - GenePad | プラスミッドファイルの検索と管理",
-  "title.ngs": "NGS データ閲覧 - GenePad | FASTQ シークエンスデータの表示とライブラリ豊度解析",
+  "title.ngs": "NGS データ閲覧 - GenePad | FASTQ 配列データの表示とライブラリ豊度解析",
   "title.tutorial": "使い方 - GenePad | AI 設定 · 遺伝子ファイルライブラリ · NGS 解析",
-  "title.tutorial.ai": "AI 設定チュートリアル - GenePad | DeepSeek API キーの取得と保存",
-  "title.tutorial.library": "遺伝子ファイルライブラリチュートリアル - GenePad | プラスミッドの取り込み・検索・AI タグ",
-  "title.tutorial.ngs": "NGS 解析チュートリアル - GenePad | fastq.gz の閲覧とライブラリ豊度レポート",
-  "title.tutorial.lang": "任意の言語を設定するチュートリアル - GenePad | AI 翻訳で言語パックを生成",
-  "title.tutorial.langpack": "UI 言語を設定するチュートリアル - GenePad | 内蔵言語と公式言語パック",
+  "title.tutorial.ai": "AI 設定の手順 - GenePad | DeepSeek API キーの取得と保存",
+  "title.tutorial.library": "遺伝子ファイルライブラリの手順 - GenePad | プラスミッドの取り込み・検索・AI タグ",
+  "title.tutorial.ngs": "NGS 解析の手順 - GenePad | fastq.gz の閲覧とライブラリ豊度レポート",
+  "title.tutorial.lang": "任意の言語を設定する手順 - GenePad | AI 翻訳で言語パックを生成",
+  "title.tutorial.langpack": "UI 言語を設定する手順 - GenePad | 内蔵言語と公式言語パック",
   "title.projects": "関連プロジェクト - GenePad | プラスミッド汎用要素ライブラリとコドンアトラス",
   "title.tech": "開発者向け技術文書 - GenePad",
   "title.stats": "最新統計 - GenePad | 公開利用統計",
-  "title.feedback": "フィードバックウォール - GenePad | 公開ユーザーメッセージ",
+  "title.feedback": "ユーザーの声 - GenePad | 公開メッセージ一覧",
 
   // Hero
   "hero.badge": "無料公開ベータ",
   "hero.badgeEn": "Free Beta · Cross-platform",
   "hero.titleCn": "遺伝子マップ編集",
-  "hero.titleEn": "クロスプラットフォーム",
+  "hero.titleEn": "複数 OS 対応",
   "hero.desc":
-    "日常の分子クローニングのための、軽量・クロスプラットフォーム対応のプラスミッドマップ編集ツール。プラスミッドマップの閲覧・編集、配列注釈の管理、制限酵素部位の解析、Sanger トレースとの照合まで、クローニング設計から結果検証までの一連の流れを支えます。",
+    "日常の分子クローニングのための、軽量・複数 OS 対応のプラスミッドマップ編集ツール。プラスミッドマップの閲覧・編集、配列注釈の管理、制限酵素部位の解析、Sanger トレースとの照合まで、クローニング設計から結果検証までの一連の流れを支えます。",
   "hero.download": "無料入手／更新",
   "hero.features": "MAP · ANNOTATION · ENZYME · PRIMER · TRACE",
-  "hero.platforms": "対応プラットフォーム",
+  "hero.platforms": "対応 OS",
   "hero.langBtn": "言語の設定方法",
 
   // Workbench
@@ -65,7 +65,7 @@ const ja: Record<TKey, ReactNode> = {
     "制限酵素部位は二本鎖配列上に直接表示され、カーソルを合わせると認識配列・鎖の向き・上下の鎖の切断位置を確認できます。5′ 突出末端も明示され、クローニング設計の確認を素早く行えます。",
   "wb.4.name": "タンパク質の物性",
   "wb.4.desc":
-    "CDS を選ぶと、分子量・等電点・GRAVY・脂肪族指数・モル吸光係数をリアルタイムに計算。等電点は 19 種類の計算法を内蔵して比較でき、既定では文献で推奨される結果を表示します。",
+    "CDS を選ぶと、分子量・等電点・GRAVY・脂肪族指数・モル吸光係数を即時に計算。等電点は 19 種類の計算法を内蔵して比較でき、既定では文献で推奨される結果を表示します。",
 
   // DayNight
   "dn.eyebrow": "Light & Dark",
@@ -115,7 +115,7 @@ const ja: Record<TKey, ReactNode> = {
     "配列を選択して右クリックメニューから電気泳動シミュレーションを起動すると、アガロースゲルのバンド位置をプレビューできます。Trans2K® など主要な分子量マーカーを内蔵しており、実験前に泳動結果を予測できます。",
   "tb.c2.name": "タンパク質電気泳動シミュレーション",
   "tb.c2.desc":
-    "SDS-PAGE シミュレーション：CDS かアミノ酸区間を選んでサンプルを読み込み、PageRuler などの染色済み分子量マーカーを基準に、バンド位置をリアルタイム計算します。",
+    "SDS-PAGE シミュレーション：CDS かアミノ酸区間を選んでサンプルを読み込み、PageRuler などの染色済み分子量マーカーを基準に、バンド位置を即時計算します。",
   "tb.c3.name": "CRISPR sgRNA 設計",
   "tb.c3.desc":
     "SpCas9、xCas9、Cas12a/b、TnpB など 12 種類の認識様式に対応。PAM の向き、シード領域の長さ、オフターゲットの除外条件を設定でき、候補配列はワンクリックでマップ上に注釈として書き戻せます。",
@@ -144,50 +144,50 @@ const ja: Record<TKey, ReactNode> = {
   "lp.cta": "詳しく見る",
 
   // Download
-  "dl.eyebrow": "Download · ダウンロード / 更新",
+  "dl.eyebrow": "Download · 入手 / 更新",
   "dl.title": (
     <>
-      デスクトップからモバイルまで、
+      PC からスマートフォンまで、
       <br />
-      全プラットフォームで使えるアプリ
+      どの OS でも使えるアプリ
     </>
   ),
   "dl.lead":
-    "Windows、macOS、Linux のデスクトップと Android モバイルに対応し、機能はすべてのプラットフォームで共通です。初回はインストーラをダウンロードしてインストールするだけです。インストール済みの方は、最新版をダウンロードして上書きインストールするだけで更新でき、旧バージョンをアンインストールする必要はありません。",
-  "dl.note.desktop": "デスクトップ",
-  "dl.note.linuxX64": "デスクトップ · x86_64",
-  "dl.note.mobile": "モバイル",
+    "Windows、macOS、Linux と Android に対応し、機能はどの環境でも共通です。初回はインストーラを入手して導入するだけです。導入済みの方は、最新版を入手して上書き導入するだけで更新でき、旧バージョンを削除する必要はありません。",
+  "dl.note.desktop": "PC",
+  "dl.note.linuxX64": "PC · x86_64",
+  "dl.note.mobile": "スマートフォン",
   "dl.note.soon": "近日公開",
   "dl.upgradeNote":
-    "GenePad をインストール済みですか？最新のインストーラをダウンロードして上書きインストールするだけで更新でき、旧バージョンを削除する必要はありません。初めての方は、ダウンロード後の案内に従ってインストールしてください。",
-  "dl.cmdTitle.recommended": "コマンドラインでのインストール／更新（推奨）",
-  "dl.cmdTitle.plain": "コマンドラインでのインストール／更新",
+    "GenePad を導入済みですか？最新のインストーラを入手して上書き導入するだけで更新でき、旧バージョンを削除する必要はありません。初めての方は、入手後の案内に従って導入してください。",
+  "dl.cmdTitle.recommended": "コマンドラインでの導入／更新（推奨）",
+  "dl.cmdTitle.plain": "コマンドラインでの導入／更新",
   "dl.cmd.brewLabel": "macOS · Homebrew",
   "dl.cmd.npmLabel": "Linux · npm",
   "dl.cmd.npmLabelMac": "macOS · npm",
   "dl.cmd.note": "上のコマンドをコピーして、ターミナルに貼り付けて実行してください。",
-  "dl.cmd.scriptLabel": "Linux · ワンクリックインストール／更新スクリプト",
-  "dl.cmd.scriptLabelMac": "macOS · ワンクリックインストール／更新スクリプト",
+  "dl.cmd.scriptLabel": "Linux · ワンクリック導入／更新スクリプト",
+  "dl.cmd.scriptLabelMac": "macOS · ワンクリック導入／更新スクリプト",
   "dl.cmdTab.script": "ワンクリック",
   "dl.cmdTab.npm": "npm",
   "dl.cmd.recommendedTag": "推奨",
-  "dl.or.linux": "またはインストーラを直接ダウンロード",
-  "dl.ai.title": "AI 支援のインストール／更新",
+  "dl.or.linux": "またはインストーラを直接入手",
+  "dl.ai.title": "AI 支援の導入／更新",
   "dl.ai.desc":
-    "macOS 版のインストーラは未署名のため、手作業の手順が多くなります。以下のプロンプトを AI アシスタント（Kimi、ChatGPT など）にコピーし、案内に従ってインストールを進めてください。",
-  "dl.ai.prompt": `macOS へ「GenePad」というアプリをインストールするのを手伝ってください。次の順に試し、どれかの方法が成功したらそこで止まってください：
-1. 第一候補：公式のワンクリックインストールスクリプトを実行します（Homebrew を自動検出してインストールし、ネットワーク状況に応じて中国国内のミラーに切り替えます）。必ず -q を付けてください。スクリプトは既定では終了時に Enter キーの入力を待つため、-q を付けるとその待ちを飛ばせ、無人実行に便利です：
+    "macOS 版のインストーラは未署名のため、手作業の手順が多くなります。以下のプロンプトを AI アシスタント（Kimi、ChatGPT など）にコピーし、案内に従って導入を進めてください。",
+  "dl.ai.prompt": `macOS へ「GenePad」というアプリを導入するのを手伝ってください。次の順に試し、どれかの方法が成功したらそこで止まってください：
+1. 第一候補：公式のワンクリック導入スクリプトを実行します（Homebrew を自動検出して導入し、ネットワーク状況に応じて中国国内のミラーに切り替えます）。必ず -q を付けてください。スクリプトは既定では終了時に Enter キーの入力を待つため、-q を付けるとその待ちを飛ばせ、無人実行に便利です：
    curl -fsSL https://genepad.cn/release/install.sh | bash -s -- -q
-   インストール完了後、open -a GenePad を実行してください。
-2. 第二候補：Homebrew でインストール（自動的に「アプリケーション」に追加されます）：
+   導入完了後、open -a GenePad を実行してください。
+2. 第二候補：Homebrew で導入（自動的に「アプリケーション」に追加されます）：
    brew install genepad/tap/genepad
-   インストール完了後、open -a GenePad を実行してください。Homebrew が未インストールの場合は、先に次のコマンドでインストールしてください：
+   導入完了後、open -a GenePad を実行してください。Homebrew が未導入の場合は、先に次のコマンドで導入してください：
    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-3. 第三の方法：npm でインストール（コマンドラインから起動）。可能なら ~/Applications にもコピーして、「アプリケーション」と Launchpad に表示されるようにしてください：
+3. 第三の方法：npm で導入（コマンドラインから起動）。可能なら ~/Applications にもコピーして、「アプリケーション」と Launchpad に表示されるようにしてください：
    npm install -g @genepad/app
    mkdir -p ~/Applications && cp -R "$(npm root -g)/@genepad/darwin-arm64/GenePad.app" ~/Applications/
    その後、open -a GenePad を実行（またはコマンドラインで genepad を実行）
-4. 手動（最終手段）：本アプリは未署名のため、ブラウザからダウンロードしたファイルは Gatekeeper に「破損している」と判定されます。そのため curl でダウンロードし、ローカルで署名します。まず https://genepad.cn/update.json から最新のバージョン番号を読み取り（VERSION とします。例：0.7.1）、対応するバージョンの .app.tar.gz をダウンロードして展開・インストールしてください：
+4. 手動（最終手段）：本アプリは未署名のため、ブラウザから入手したファイルは Gatekeeper に「破損している」と判定されます。そのため curl で入手し、ローカルで署名します。まず https://genepad.cn/update.json から最新のバージョン番号を読み取り（VERSION とします。例：0.7.1）、対応するバージョンの .app.tar.gz を入手して展開・導入してください：
    curl -L -o /tmp/gene-pad-app.tar.gz "https://genepad.cn/release/mac/GenePad_\${VERSION}_Darwin_arm64.app.tar.gz"
    mkdir -p /tmp/gene-pad-extract && tar -xzf /tmp/gene-pad-app.tar.gz -C /tmp/gene-pad-extract
    mv "/tmp/gene-pad-extract/GenePad.app" /Applications/
@@ -195,13 +195,13 @@ const ja: Record<TKey, ReactNode> = {
    codesign --force --deep --sign - "/Applications/GenePad.app"
    open "/Applications/GenePad.app"
 
-⚠️ 注意：上記の方法は機能しなくなっていたり、古くなっていたりする可能性があります。どこかの手順が進まない場合は、別の実行可能な方法（例：別の方法での Gatekeeper 回避、他の展開・署名ツールの使用）に自分で切り替えてください。上記のダウンロードリンクにアクセスできない場合に限り、公式サイト https://genepad.cn を開いてください——公式サイトは他のダウンロードリンクを掲載しているだけで、インストールの支援は行っていません。`,
-  "dl.mac.other": "その他のインストール／更新方法（Homebrew / npm / AI 支援 / インストーラ直リンク）",
+⚠️ 注意：上記の方法は機能しなくなっていたり、古くなっていたりする可能性があります。どこかの手順が進まない場合は、別の実行可能な方法（例：別の方法での Gatekeeper 回避、他の展開・署名ツールの使用）に自分で切り替えてください。上記の配布リンクにアクセスできない場合に限り、公式サイト https://genepad.cn を開いてください——公式サイトは他の配布リンクを掲載しているだけで、導入の支援は行っていません。`,
+  "dl.mac.other": "その他の導入／更新方法（Homebrew / npm / AI 支援 / インストーラ直リンク）",
   "dl.mac.unsigned":
-    "未署名について：ブラウザから直接ダウンロードした .dmg / .app ファイルは、Gatekeeper に「破損している」と判定されます。右クリック →「開く」で実行するか、xattr -cr を実行して隔離属性を取り除いてください。上記のコマンドラインによるインストール／更新を推奨します。",
+    "未署名について：ブラウザから直接入手した .dmg / .app ファイルは、Gatekeeper に「破損している」と判定されます。右クリック →「開く」で実行するか、xattr -cr を実行して隔離属性を取り除いてください。上記のコマンドラインによる導入／更新を推奨します。",
   "dl.copy": "コピー",
   "dl.copied": "コピーしました ✓",
-  "dl.filesTitle": "インストーラの直接ダウンロード",
+  "dl.filesTitle": "インストーラの直接入手",
   "lb.close": "閉じる",
   "lb.prev": "前の画像",
   "lb.next": "次の画像",
@@ -212,20 +212,20 @@ const ja: Record<TKey, ReactNode> = {
   "dl.arch.x64": "x86_64",
   "dl.arch.arm64": "ARM64",
   "dl.spark": "Spark Store",
-  "dl.sparkNote": "中国製 Linux ディストリビューションをお使いの方は、Spark Store からもインストール／更新できます",
+  "dl.sparkNote": "中国製 Linux ディストリビューションをお使いの方は、Spark Store からも導入／更新できます",
   "dl.releases": "全バージョン（GitHub Releases）",
   "dl.releasesGitee": "全バージョン（Gitee ミラー）",
   "dl.licenseTag": "LICENSE",
   "dl.license":
-    "GenePad Free は個人の評価・学習目的で無料で、日常のマップ閲覧・編集・保存が含まれます。商用利用は、今後リリースされる GenePad Pro のライセンスで対応する予定です。",
+    "GenePad Free は個人の評価・学習目的で無料で、日常のマップ閲覧・編集・保存が含まれます。商用利用は、今後提供予定の GenePad Pro のライセンスで対応する予定です。",
   "dl.license.academic":
-    "学術無償ライセンス：2026 年から 2027 年 12 月 31 日までの期間、大学・病院の研究グループ・iGEM 参加者・研究者・学生などの学術ユーザーは、本プログラムをダウンロードするだけで無償利用権を自動的に取得できます。申請や GenePad チームへの連絡は不要です。この権利は学術研究の用途に限られ、いかなる商用目的にも使用できません。",
+    "学術無償ライセンス：2026 年から 2027 年 12 月 31 日までの期間、大学・病院の研究グループ・iGEM 参加者・研究者・学生などの学術ユーザーは、本プログラムを入手するだけで無償利用権を自動的に取得できます。申請や GenePad チームへの連絡は不要です。この権利は学術研究の用途に限られ、いかなる商用目的にも使用できません。",
 
   // Footer
   "ft.blurb":
-    "日常の分子クローニングを支える、軽量・クロスプラットフォーム対応のプラスミッドマップ編集ツール。問題やご意見を送ってくださったすべてのユーザーに感謝します。",
-  "ft.col.download": "ダウンロード",
-  "ft.col.support": "フィードバックとサポート",
+    "日常の分子クローニングを支える、軽量・複数 OS 対応のプラスミッドマップ編集ツール。問題やご意見を送ってくださったすべてのユーザーに感謝します。",
+  "ft.col.download": "入手",
+  "ft.col.support": "ご意見・お問い合わせ",
   "ft.col.more": "その他",
   "ft.giteeMirror": "Gitee ミラー",
   "ft.changelog": "更新履歴",
@@ -237,13 +237,13 @@ const ja: Record<TKey, ReactNode> = {
   "ft.copyright": "© 2026 GENEPAD — MADE FOR THE BENCH",
 
   // ユーザーフィードバック
-  "fb.entry": "フィードバック",
-  "fb.title": "フィードバックを送る",
+  "fb.entry": "ご意見・要望",
+  "fb.title": "ご意見・要望を送る",
   "fb.intro":
-    "メッセージはフィードバックウォールに公開表示されます。不具合・再現手順・ご希望の機能をお知らせください。",
+    "メッセージは「ユーザーの声」ページに公開表示されます。不具合・再現手順・ご希望の機能をお知らせください。",
   "fb.text": "メッセージ",
   "fb.textPh": "問題の内容、再現手順、ご提案する機能などを記入してください…",
-  "fb.contact": "連絡先（任意・公開時は自動的にマスキングされます）",
+  "fb.contact": "連絡先（任意・公開時は自動的に一部を伏せて表示されます）",
   "fb.contactPh": "メール / GitHub / その他",
   "fb.images": "スクリーンショット（任意・最大 3 枚、各 5MB まで）",
   "fb.imageAdd": "画像を追加",
@@ -253,13 +253,13 @@ const ja: Record<TKey, ReactNode> = {
   "fb.captchaError": "人間認証を読み込めませんでした — ネットワークを確認して再試行してください",
   "fb.submit": "送信",
   "fb.sending": "送信中…",
-  "fb.success": "メッセージを受け付けました。フィードバックありがとうございます！",
+  "fb.success": "メッセージを受け付けました。ご意見ありがとうございます！",
   "fb.error": "送信に失敗しました。しばらくしてからもう一度お試しください",
   "fb.errorTooMany": "画像は最大 3 枚です",
   "fb.errorTooLarge": "画像が 5MB の制限を超えています",
   "fb.close": "閉じる",
-  "fbw.eyebrow": "公開メッセージウォール",
-  "fbw.title": "フィードバックウォール",
+  "fbw.eyebrow": "公開メッセージ",
+  "fbw.title": "ユーザーの声",
   "fbw.lead":
     "GenePad ユーザーからの公開メッセージ — 活用例、不具合報告、機能のご提案をすべて公開で掲載しています。",
   "fbw.write": "メッセージを書く",
@@ -282,7 +282,7 @@ const ja: Record<TKey, ReactNode> = {
     "読み込み・変換・取り込み用のプログラムを自前で開発する方向け：GenePad が使用する .gen・.gjson 形式、および SnapGene .dna 変換方式は、実装の詳細をすぐ確認できるよう独立したページに分けてあります。",
   "ts.group.formats": "ファイル形式",
   "ts.group.formatsEn": "FILE FORMATS",
-  "ts.group.code": "コードサンプル",
+  "ts.group.code": "コード例",
   "ts.group.codeEn": "CODE SAMPLES",
   "ts.gen.title": ".gen ファイル定義",
   "ts.gen.desc":
@@ -293,7 +293,7 @@ const ja: Record<TKey, ReactNode> = {
   "ts.dna.title": ".dna 変換方式",
   "ts.dna.desc":
     "SnapGene .dna のバイナリパッケージ構造、flags ビット、フィールドの対応、0-based↔1-based 座標変換。",
-  "ts.rust.title": "Rust 読み込みサンプル",
+  "ts.rust.title": "Rust 読み込み例",
   "ts.rust.desc":
     "rusqlite で .gen を、serde_json で .gjson を読む最小限の動作する実装。依存関係と期待される出力を含みます。",
   "ts.readDoc": "文書を読む",
@@ -321,7 +321,7 @@ const ja: Record<TKey, ReactNode> = {
   "pr.ca.usage":
     "python scripts/build_atlas.py が GTEx / GENCODE の入力から全組織の表を再構築し、check_release.py と package_release.py がリリース前の検証とパッケージ化を担います。",
   "pr.org.text":
-    "上記のプロジェクトは GenePad 本体のプロジェクトから生まれ、同じ基準で保守されています。ソースコードと進捗は GitHub 組織のページをご覧ください。Issue でのフィードバックを歓迎します。",
+    "上記のプロジェクトは GenePad 本体のプロジェクトから生まれ、同じ基準で保守されています。ソースコードと進捗は GitHub 組織のページをご覧ください。Issue でのご意見を歓迎します。",
 
   // Library ページ（遺伝子ファイルライブラリ紹介ページ）
   "lib.eyebrow": "Gene File Library",
@@ -334,7 +334,7 @@ const ja: Record<TKey, ReactNode> = {
   ),
   "lib.lead":
     "研究が進むにつれてプラスミッドファイルは複数のフォルダ・ディスク・端末に散らばりがちで、ファイル名からはプラスミッドの性質が分かりません。遺伝子ファイルライブラリはこうしたファイルを検索できる統一索引に取り込み、プロジェクト別・保存先別・AI 生成タグ別の 3 つの管理方法に対応。名前も場所も覚えていなくても、属性の手がかり 1〜2 個で AI が探し当てます。",
-  "lib.hero.shot": "LIBRARY — 331 件のプラスミッドを索引化、右側はライブラリ全体のタグクラウド",
+  "lib.hero.shot": "LIBRARY — 331 件のプラスミッドを索引化、右側は索引全体のタグクラウド",
 
   "lib.pain.head": "よくある課題",
   "lib.pain.headEn": "COMMON ISSUES",
@@ -366,14 +366,14 @@ const ja: Record<TKey, ReactNode> = {
   "lib.tags.headEn": "AI TAGS",
   "lib.tags.title": "AI が性質タグを自動生成",
   "lib.tags.desc":
-    "AI を設定すると、プラスミッドのスキャン時や開いたときに、プログラムが自動で配列と要素を読み取り、各ファイルに一連の性質タグを生成します。列見出しからの一括更新にも対応——欠けているタグだけを補うか、すべて再生成するかを選べます。右側のタグクラウドはライブラリ全体の属性分布を示し、いくつかの属性を組み合わせた絞り込みで目的のファイルを特定できます。",
+    "AI を設定すると、プラスミッドのスキャン時や開いたときに、プログラムが自動で配列と要素を読み取り、各ファイルに一連の性質タグを生成します。列見出しからの一括更新にも対応——欠けているタグだけを補うか、すべて再生成するかを選べます。右側のタグクラウドは索引全体の属性分布を示し、いくつかの属性を組み合わせた絞り込みで目的のファイルを特定できます。",
   "lib.tags.shot": "列見出しから一括更新 — タグのない項目だけ補う、またはすべて再生成",
 
   "lib.ai.head": "AI アシスタント",
   "lib.ai.headEn": "AI ASSISTANT",
   "lib.ai.title": "AI アシスタントに直接検索させる",
   "lib.ai.desc":
-    "AI アシスタントに直接指示できます。たとえば「Type I CRISPR プラスミッドを探して」と頼むと、ライブラリ全体を検索し、候補を挙げながら各プラスミッドの性質と推奨用途を説明します。「プラスミッドライブラリを整理して」と頼めば、まず現状を分析し、それから整理案を提示します。",
+    "AI アシスタントに直接指示できます。たとえば「Type I CRISPR プラスミッドを探して」と頼むと、索引全体を検索し、候補を挙げながら各プラスミッドの性質と推奨用途を説明します。「プラスミッドライブラリを整理して」と頼めば、まず現状を分析し、それから整理案を提示します。",
   "lib.ai.shot1": "AI ASSISTANT —「プラスミッドライブラリを整理して」：まず現状を分析し、次に整理案を提示",
   "lib.ai.shot2": "AI ASSISTANT —「Type I CRISPR プラスミッドを探して」：候補と性質を一覧で提示",
 
@@ -392,8 +392,8 @@ const ja: Record<TKey, ReactNode> = {
   "lib.setup.2.shot": "AI Settings — 設定を新規作成し、DeepSeek を選んで「Get」をクリック",
   "lib.setup.3.name": "DeepSeek API キーを取得",
   "lib.setup.3.desc":
-    "ブラウザで DeepSeek のプラットフォームが開きます。アカウント登録と入金の後、「Create API key」をクリック。キーは 1 度しか表示されないため、作成後すぐにコピーしてください。",
-  "lib.setup.3.shot": "DEEPSEEK プラットフォーム — API キーを作成したらすぐにコピー",
+    "ブラウザで DeepSeek のサイトが開きます。アカウント登録と入金の後、「Create API key」をクリック。キーは 1 度しか表示されないため、作成後すぐにコピーしてください。",
+  "lib.setup.3.shot": "DEEPSEEK のサイト — API キーを作成したらすぐにコピー",
   "lib.setup.4.name": "キーを貼り付けて保存",
   "lib.setup.4.desc":
     "GenePad に戻ってキーを貼り付け、「Test connection」をクリック。接続の成功を確認したら「Save current profile」をクリックして保存します。これで AI 機能の設定は完了です。",
@@ -419,20 +419,20 @@ const ja: Record<TKey, ReactNode> = {
 
   "lib.final.title": "遺伝子ファイルライブラリは GenePad の内蔵機能で、単体のソフトウェアではありません",
   "lib.final.desc":
-    "遺伝子ファイルライブラリは GenePad プラスミッドマップ編集ツールに内蔵されています。GenePad をダウンロード・インストール／更新すれば、道具箱から利用できます。現在は無料の公開ベータで、全プラットフォームに対応しています。",
+    "遺伝子ファイルライブラリは GenePad プラスミッドマップ編集ツールに内蔵されています。GenePad を入手・導入／更新すれば、道具箱から利用できます。現在は無料の公開ベータで、全 OS に対応しています。",
   "lib.final.cta": "ホームへ戻る",
-  "lib.final.cta2": "今すぐダウンロード",
-  "lib.top.hint": "下部のダウンロード欄へ移動",
+  "lib.final.cta2": "今すぐ入手",
+  "lib.top.hint": "下部の入手欄へ移動",
 
   // ホームページの NGS データ閲覧紹介セクション
   "np.lead":
-    "fastq.gz / fastq / fq.gz / fq のシークエンスファイルをそのまま開けます。右クリックかドラッグ＆ドロップで開き、ペアエンドファイルは自動でペアリング・結合。塩基ごとの品質確認、アミノ酸検索による可変領域の特定、アンカーを設定した一括トリミングを経て、ワンクリックでライブラリ豊度レポートを生成します。",
+    "fastq.gz / fastq / fq.gz / fq の配列ファイルをそのまま開けます。右クリックかドラッグ＆ドロップで開き、ペアエンドファイルは自動でペアリング・結合。塩基ごとの品質確認、アミノ酸検索による可変領域の特定、アンカーを設定した一括トリミングを経て、ワンクリックでライブラリ豊度レポートを生成します。",
   "np.c1": "fastq.gz · fq.gz 解凍不要",
   "np.c2": "ペアエンド自動ペアリング・結合",
   "np.c3": "塩基ごとの品質",
   "np.c4": "アンカートリミング + 豊度レポート",
   "np.cta": "詳しく見る",
-  "np.safe": "GenePad 内蔵機能 · 無料公開ベータ · 全プラットフォーム対応",
+  "np.safe": "GenePad 内蔵機能 · 無料公開ベータ · 全 OS 対応",
 
   // NGS データ閲覧ページ
   "ngs.eyebrow": "NGS Data Viewer",
@@ -444,24 +444,24 @@ const ja: Record<TKey, ReactNode> = {
     </>
   ),
   "ngs.lead":
-    "GenePad は fastq.gz / fastq / fq.gz / fq のシークエンスファイルをそのまま開けます。エクスプローラーで右クリックし、メニューの「Open with」から GenePad を選ぶか、ファイルをウィンドウに直接ドラッグしてください。ペアエンドの場合は R1・R2 の 2 ファイルを一緒にドラッグすれば、ペア関係を自動認識します。開いた後は reads を 1 本ずつ閲覧し、各塩基の品質とペア結合の成否を確認できます。アミノ酸断片での検索で目的の可変領域を見つけ、トリミングアンカーを設定してファイル全体を一括トリミングし、最後はワンクリックでライブラリ豊度レポートを生成します。",
+    "GenePad は fastq.gz / fastq / fq.gz / fq の配列ファイルをそのまま開けます。エクスプローラーで右クリックし、メニューの「Open with」から GenePad を選ぶか、ファイルをウィンドウに直接ドラッグしてください。ペアエンドの場合は R1・R2 の 2 ファイルを一緒にドラッグすれば、ペア関係を自動認識します。開いた後は reads を 1 本ずつ閲覧し、各塩基の品質とペア結合の成否を確認できます。アミノ酸断片での検索で目的の可変領域を見つけ、トリミングアンカーを設定してファイル全体を一括トリミングし、最後はワンクリックでライブラリ豊度レポートを生成します。",
   "ngs.hero.shot":
     "FASTQ VIEWER — ペアエンドの reads を自動結合、塩基ごとに品質で色分け、右側はファイル統計",
 
-  "ngs.open.head": "シークエンスファイルを開く",
+  "ngs.open.head": "配列ファイルを開く",
   "ngs.open.headEn": "OPENING FASTQ FILES",
   "ngs.open.title": "右クリックやドラッグで開けます。コマンドライン不要",
   "ngs.open.lead":
-    "fastq.gz、fastq、fq.gz、fq の 4 種類の拡張子に対応し、gzip 圧縮ファイルは解凍せずに開けます。GenePad をインストール／更新したら、次の 2 つの方法のどちらでも開けます：",
+    "fastq.gz、fastq、fq.gz、fq の 4 種類の拡張子に対応し、gzip 圧縮ファイルは解凍せずに開けます。GenePad を導入／更新したら、次の 2 つの方法のどちらでも開けます：",
   "ngs.open.1.name": "右クリック「Open with」",
   "ngs.open.1.desc":
-    "エクスプローラーでシークエンスファイルを右クリック →「Open with」：サブメニューから直接 GenePad を選ぶか、「別のアプリを選択」の一覧で GenePad を選んで既定に設定——以後、ファイルをダブルクリックするだけで直接開けます。",
+    "エクスプローラーで配列ファイルを右クリック →「Open with」：サブメニューから直接 GenePad を選ぶか、「別のアプリを選択」の一覧で GenePad を選んで既定に設定——以後、ファイルをダブルクリックするだけで直接開けます。",
   "ngs.open.2.name": "ウィンドウへドラッグ",
   "ngs.open.2.desc":
-    "1 つまたは複数のシークエンスファイルを GenePad ウィンドウに直接ドラッグします。ようこそ画面と作業画面のどちらでも、ドラッグ＆ドロップで開けます。",
+    "1 つまたは複数の配列ファイルを GenePad ウィンドウに直接ドラッグします。ようこそ画面と作業画面のどちらでも、ドラッグ＆ドロップで開けます。",
   "ngs.open.1.shot": "右クリックメニュー —「Open with」→ GenePad",
   "ngs.open.1.shot2": "別のアプリを選択 — システムの一覧で GenePad を選び、既定に設定できます",
-  "ngs.open.2.shot": "ウィンドウへドラッグ — 複数のシークエンスファイルをまとめてドラッグすれば開けます",
+  "ngs.open.2.shot": "ウィンドウへドラッグ — 複数の配列ファイルをまとめてドラッグすれば開けます",
 
   "ngs.pair.head": "ペアエンド",
   "ngs.pair.headEn": "PAIRED-END",
@@ -474,7 +474,7 @@ const ja: Record<TKey, ReactNode> = {
   "ngs.reads.headEn": "READS & QUALITY",
   "ngs.reads.title": "各 read の品質と結合結果がひと目で分かる",
   "ngs.reads.lead":
-    "メイン画面にはシークエンスで得られた各 read が上から下へ一覧表示され、右側の属性欄にファイル全体の統計がまとめられます：",
+    "メイン画面には配列解読で得られた各 read が上から下へ一覧表示され、右側の属性欄にファイル全体の統計がまとめられます：",
   "ngs.reads.1.name": "ペアエンド自動結合",
   "ngs.reads.1.desc":
     "ペアエンドデータは 1 本ずつ自動で結合（merge）され、各 read にオーバーラップ長と一致率（例：Overlap 135bp · 99% identity）が表示されます。結合の成否はひと目で判断できます。",
@@ -491,36 +491,36 @@ const ja: Record<TKey, ReactNode> = {
   "ngs.aa.headEn": "SEARCH BY AMINO ACIDS",
   "ngs.aa.title": "タンパク質断片で目的の可変領域を見つける",
   "ngs.aa.desc":
-    "下部の検索ボックスを AA モードに切り替え、アミノ酸配列（例：MATNNQ）を入力すると、結合後の read をタンパク質に翻訳して 1 本ずつ照合し、一致したペプチドを配列中に枠で囲んで表示します。ライブラリシークエンスは両側の配列が保存的で中央が可変——既知の保存タンパク質断片を問い合わせにすれば、数千本の read からそれぞれの目的の可変領域を素早く見つけられます。",
+    "下部の検索ボックスを AA モードに切り替え、アミノ酸配列（例：MATNNQ）を入力すると、結合後の read をタンパク質に翻訳して 1 本ずつ照合し、一致したペプチドを配列中に枠で囲んで表示します。ライブラリの配列は両側が保存的で中央が可変——既知の保存タンパク質断片を問い合わせにすれば、数千本の read からそれぞれの目的の可変領域を素早く見つけられます。",
   "ngs.aa.shot": "AA SEARCH — アミノ酸断片を入力すると、一致したペプチドが翻訳結果の中で枠表示されます",
 
   "ngs.trim.head": "アンカートリミング",
   "ngs.trim.headEn": "TRIM ANCHORS",
   "ngs.trim.title": "トリミングアンカーを設定して目的区間を正確に切り出す",
   "ngs.trim.desc":
-    "目的区間の両側にある保存配列を左右のトリミングアンカーに設定し、Trim をクリックすればシークエンスファイル全体を一括トリミングし、2 つのアンカー間の可変領域配列だけを残します。属性欄には通過率と、アンカー非ヒットや断片が短すぎるなどで除外された件数がリアルタイムに表示されます。トリミング後の read は「Export processed reads」でワンクリックで書き出せ、後続の解析やデータ提出に使えます。",
-  "ngs.trim.shot": "TRIM ANCHORS — 左右のアンカーで対象範囲を挟み込み、通過率をリアルタイム表示",
+    "目的区間の両側にある保存配列を左右のトリミングアンカーに設定し、Trim をクリックすれば配列ファイル全体を一括トリミングし、2 つのアンカー間の可変領域配列だけを残します。属性欄には通過率と、アンカー非ヒットや断片が短すぎるなどで除外された件数が即時に表示されます。トリミング後の read は「Export processed reads」でワンクリックで書き出せ、後続の解析やデータ提出に使えます。",
+  "ngs.trim.shot": "TRIM ANCHORS — 左右のアンカーで対象範囲を挟み込み、通過率を即時表示",
 
   "ngs.report.head": "ライブラリ豊度解析",
   "ngs.report.headEn": "LIBRARY ANALYSIS",
   "ngs.report.title": "ファイル全体からワンクリックで豊度レポートを作成",
   "ngs.report.desc":
-    "Sequence analysis をクリックすると、トリミング結果に対して統計を実行します：既定ではファイル全体をそのまま解析し（数千万本の read をすべてメモリへ読み込む必要はありません）、各ユニーク配列の出現回数と頻度を集計し、両端アンカーの保持・除去を選べます。解析が完了すると図入りレポートが生成されます——上位配列のヒストグラム（DNA / AA の 2 種類の集計）と各配列の長さ・件数・頻度・+1 読み枠の翻訳に加え、完全な表は CSV として書き出され、Excel でそのまま開けます。これで簡単なライブラリ豊度レポートが完成です。",
+    "Sequence analysis をクリックすると、トリミング結果に対して統計を実行します：既定ではファイル全体をそのまま解析し（数千万本の read をすべてメモリへ読み込む必要はありません）、一意な配列ごとの出現回数と頻度を集計し、両端アンカーの保持・除去を選べます。解析が完了すると図入りレポートが生成されます——上位配列のヒストグラム（DNA / AA の 2 種類の集計）と各配列の長さ・件数・頻度・+1 読み枠の翻訳に加え、完全な表は CSV として書き出され、Excel でそのまま開けます。これで簡単なライブラリ豊度レポートが完成です。",
   "ngs.report.shot1": "SEQUENCE ANALYSIS — 既定ではファイル全体を解析、アンカーの保持 / 除去を選択可",
   "ngs.report.shot2": "ANALYSIS REPORT — 上位配列のヒストグラムと完全な豊度表（CSV）",
 
-  "ngs.video.head": "動画チュートリアル",
+  "ngs.video.head": "動画解説",
   "ngs.video.headEn": "VIDEO TUTORIAL",
   "ngs.video.lead":
-    "文章と画像だけでは足りない方へ、完全な操作実演を用意しました：シークエンスファイルを開くところから、ペアエンドのペアリング、アンカートリミング、豊度レポートの生成まで、全工程を実際のデータで順を追って進めます。ページ内で直接再生できます。",
+    "文章と画像だけでは足りない方へ、完全な操作実演を用意しました：配列ファイルを開くところから、ペアエンドのペアリング、アンカートリミング、豊度レポートの生成まで、全工程を実際のデータで順を追って進めます。ページ内で直接再生できます。",
   "ngs.video.caption": "VIDEO TUTORIAL — 全工程の実演：開く → ペアリング → 閲覧 → 検索 → トリミング → 豊度レポート",
 
   "ngs.final.title": "NGS データ閲覧は GenePad の内蔵機能で、単体のソフトウェアではありません",
   "ngs.final.desc":
-    "NGS データ閲覧は GenePad プラスミッドマップ編集ツールに内蔵されています。ダウンロード・インストール／更新後はすぐにシークエンスファイルを直接開け、マップ編集や Sanger トレースとの照合などの機能と同じアプリで連携して使えます。現在は無料の公開ベータで、全プラットフォームに対応しています。",
+    "NGS データ閲覧は GenePad プラスミッドマップ編集ツールに内蔵されています。入手・導入／更新後はすぐに配列ファイルを直接開け、マップ編集や Sanger トレースとの照合などの機能と同じアプリで連携して使えます。現在は無料の公開ベータで、全 OS に対応しています。",
   "ngs.final.cta": "ホームへ戻る",
-  "ngs.final.cta2": "今すぐダウンロード",
-  "ngs.top.hint": "下部のダウンロード欄へ移動",
+  "ngs.final.cta2": "今すぐ入手",
+  "ngs.top.hint": "下部の入手欄へ移動",
 
   // Tutorial ページ（チュートリアルセンター：各機能の使い方を随時収録）
   "tut.eyebrow": "Tutorials",
@@ -532,12 +532,12 @@ const ja: Record<TKey, ReactNode> = {
     </>
   ),
   "tut.lead":
-    "ここには GenePad の図解チュートリアルを集めており、新しい記事を順次追加していきます：DeepSeek を接続して AI 機能を使えるようにする方法、遺伝子ファイルライブラリで数百件のプラスミッドを管理する方法、fastq.gz からライブラリ豊度レポートまでの NGS 解析など。各手順には実際の画面のスクリーンショットが付き、順番に操作するだけで進められます。",
-  "tut.toc.hint": "カードをクリックすると対応するチュートリアルに移動します",
-  "tut.card.view": "チュートリアルを読む",
-  "tut.prev": "前のチュートリアル",
-  "tut.next": "次のチュートリアル",
-  "tut.backTo": "チュートリアル目次へ戻る",
+    "ここには GenePad の図解解説を集めており、新しい記事を順次追加していきます：DeepSeek を接続して AI 機能を使えるようにする方法、遺伝子ファイルライブラリで数百件のプラスミッドを管理する方法、fastq.gz からライブラリ豊度レポートまでの NGS 解析など。各手順には実際の画面のスクリーンショットが付き、順番に操作するだけで進められます。",
+  "tut.toc.hint": "カードをクリックすると対応する解説に移動します",
+  "tut.card.view": "解説を読む",
+  "tut.prev": "前の解説",
+  "tut.next": "次の解説",
+  "tut.backTo": "解説目次へ戻る",
   "tut.toc.ai.name": "AI を設定する（DeepSeek）",
   "tut.toc.ai.desc":
     "設定を開き、新しい設定を作成し、API キーを取得・保存——5 つの手順で DeepSeek に接続し、AI アシスタントとプラスミッド自動タグを使えるようになります。",
@@ -572,7 +572,7 @@ const ja: Record<TKey, ReactNode> = {
   "tut.cat.analysis.desc": "配列データの閲覧・検索・定量解析。",
 
   // チュートリアル 2：AI を設定
-  "tut.ai.head": "チュートリアル 2 · AI を設定する",
+  "tut.ai.head": "解説 2 · AI を設定する",
   "tut.ai.headEn": "TUTORIAL 2 · SET UP DEEPSEEK",
   "tut.ai.title": "5 つの手順で DeepSeek に接続し、AI アシスタントと自動タグを使えるようにする",
   "tut.ai.lead":
@@ -585,11 +585,11 @@ const ja: Record<TKey, ReactNode> = {
   "tut.ai.2.shot": "AI Settings — 左側で AI Settings を選び、New config をクリック",
   "tut.ai.3.name": "設定内容を入力",
   "tut.ai.3.desc":
-    "設定に名前を付け、プロバイダーで DeepSeek を、モデルで deepseek-v4-flash を選び、API URL は既定のままにします。次に API Key の横の「Get」をクリックすると、ブラウザで DeepSeek のプラットフォームが開きます。",
+    "設定に名前を付け、プロバイダーで DeepSeek を、モデルで deepseek-v4-flash を選び、API URL は既定のままにします。次に API Key の横の「Get」をクリックすると、ブラウザで DeepSeek のサイトが開きます。",
   "tut.ai.3.shot": "名前とモデルを入力 — API Key の横の「Get」をクリック",
   "tut.ai.4.name": "DeepSeek API キーを取得",
   "tut.ai.4.desc":
-    "DeepSeek のプラットフォームでアカウントを登録して入金し、「Create API key」をクリック、名前を付けて確認します。キーは 1 度しか表示されないため、すぐにコピーしてください。",
+    "DeepSeek のサイトでアカウントを登録して入金し、「Create API key」をクリック、名前を付けて確認します。キーは 1 度しか表示されないため、すぐにコピーしてください。",
   "tut.ai.5.name": "キーを貼り付けて保存",
   "tut.ai.5.desc":
     "GenePad に戻ってキーを貼り付け、「Test connection」をクリック。接続の成功を確認したら「Save current config」をクリックして保存します。これで AI 設定は完了です。",
@@ -597,9 +597,9 @@ const ja: Record<TKey, ReactNode> = {
     "1 回設定すれば長く使え、キーはローカルにのみ保存されます。以後、ようこそ画面と作業画面の AI アイコンから直接対話でき、開いたり取り込んだりしたプラスミッドにも自動で性質タグが付けられます。",
 
   // チュートリアル 3：遺伝子ファイルライブラリ
-  "tut.lib.head": "チュートリアル 3 · 遺伝子ファイルライブラリ",
+  "tut.lib.head": "解説 3 · 遺伝子ファイルライブラリ",
   "tut.lib.headEn": "TUTORIAL 3 · GENE FILE LIBRARY",
-  "tut.lib.title": "数百件のプラスミッドを、検索可能なライブラリとして管理する",
+  "tut.lib.title": "数百件のプラスミッドを、検索可能な索引として管理する",
   "tut.lib.lead":
     "遺伝子ファイルライブラリは道具箱にあります：ファイルを移動もコピーもせず、各所に散在するプラスミッドの統一索引を作るだけです。以下の手順は、自動取り込みから、属性を一言で伝えて目的のプラスミッドを特定するところまでを扱います。",
   "tut.lib.1.name": "監視フォルダを設定し、プラスミッドを自動取り込み",
@@ -610,7 +610,7 @@ const ja: Record<TKey, ReactNode> = {
     "新しいプロジェクトを作成してプラスミッドをドラッグすれば整理完了。あるいは保存された場所のまま閲覧します。AI を設定すると各プラスミッドに性質タグが付き、タグをクリックするだけで関連する全プラスミッドを絞り込めます。",
   "tut.lib.3.name": "AI が性質タグを自動生成",
   "tut.lib.3.desc":
-    "チュートリアル 1 の設定を終えていれば、プラスミッドのスキャン時や開いたときに lentiviral、sgRNA、ampicillin などのタグが自動生成されます。列見出しからの一括更新も可能——欠けているタグだけを補うか、すべて再生成します。",
+    "解説 2 の設定を終えていれば、プラスミッドのスキャン時や開いたときに lentiviral、sgRNA、ampicillin などのタグが自動生成されます。列見出しからの一括更新も可能——欠けているタグだけを補うか、すべて再生成します。",
   "tut.lib.4.name": "AI アシスタントが属性で特定",
   "tut.lib.4.desc":
     "AI アシスタントに直接要件を伝えます。たとえば「Type I CRISPR プラスミッドを探して」：アシスタントはライブラリ全体を検索し、候補を挙げながら各プラスミッドの性質と推奨用途を説明します。",
@@ -621,14 +621,14 @@ const ja: Record<TKey, ReactNode> = {
     "ファイルライブラリは索引に過ぎず、元のファイルは変更しません。AI を設定しなくても取り込みと閲覧には影響せず、自動タグと AI 検索だけが使えなくなります。",
 
   // チュートリアル 4：NGS ファイル解析
-  "tut.ngs.head": "チュートリアル 4 · NGS ファイル解析",
+  "tut.ngs.head": "解説 4 · NGS ファイル解析",
   "tut.ngs.headEn": "TUTORIAL 4 · NGS ANALYSIS",
   "tut.ngs.title": "fastq.gz からライブラリ豊度レポートまで",
   "tut.ngs.lead":
-    "コマンドライン不要。シークエンスファイルをウィンドウにドラッグするだけで開始できます。以下の 6 つの手順で、開く・ペアリング・品質確認・検索・トリミング・豊度解析の完全な流れを扱い、ページ末尾に完全な操作動画を付けています。",
-  "tut.ngs.1.name": "シークエンスファイルを開く",
+    "コマンドライン不要。配列ファイルをウィンドウにドラッグするだけで開始できます。以下の 6 つの手順で、開く・ペアリング・品質確認・検索・トリミング・豊度解析の完全な流れを扱い、ページ末尾に完全な操作動画を付けています。",
+  "tut.ngs.1.name": "配列ファイルを開く",
   "tut.ngs.1.desc":
-    "1 つまたは複数のシークエンスファイルを GenePad ウィンドウに直接ドラッグ。あるいはエクスプローラーで右クリックし、「Open with」で GenePad を選びます。fastq.gz、fastq、fq.gz、fq に対応し、gzip 圧縮は解凍不要です。",
+    "1 つまたは複数の配列ファイルを GenePad ウィンドウに直接ドラッグ。あるいはエクスプローラーで右クリックし、「Open with」で GenePad を選びます。fastq.gz、fastq、fq.gz、fq に対応し、gzip 圧縮は解凍不要です。",
   "tut.ngs.2.name": "ペアエンドファイルを自動ペアリング",
   "tut.ngs.2.desc":
     "R1・R2 の 2 ファイルを一緒にドラッグすると、先頭 read の ID でペアを自動認識。複数ペアを一度にドラッグすると確認画面が表示され、「Auto-pair」でワンクリックペアリングできます。確認後、各ペアは 1 つのペアエンドデータとして開かれます。",
@@ -640,19 +640,19 @@ const ja: Record<TKey, ReactNode> = {
     "下部の検索ボックスを AA モードに切り替え、既知の保存タンパク質断片（例：MATNNQ）を入力：結合後の read をタンパク質に翻訳して 1 本ずつ照合し、一致したペプチドを枠表示。数千本の read から目的の可変領域を素早く特定できます。",
   "tut.ngs.5.name": "アンカーを設定して一括トリミング",
   "tut.ngs.5.desc":
-    "目的区間の両側にある保存配列を左右のトリミングアンカーに設定し、Trim をクリックすればファイル全体を一括トリミングし、2 つのアンカー間の可変領域だけを残します。属性欄には通過率がリアルタイム表示され、トリミング結果はワンクリックで書き出せます。",
+    "目的区間の両側にある保存配列を左右のトリミングアンカーに設定し、Trim をクリックすればファイル全体を一括トリミングし、2 つのアンカー間の可変領域だけを残します。属性欄には通過率が即時表示され、トリミング結果はワンクリックで書き出せます。",
   "tut.ngs.6.name": "ライブラリ豊度レポートを生成",
   "tut.ngs.6.desc":
-    "Sequence analysis をクリック：ファイル全体で各ユニーク配列の出現回数と頻度を集計し、上位配列のヒストグラムと各配列の明細を生成、完全な表は CSV として書き出され、Excel でそのまま開けます。これで簡単なライブラリ豊度レポートが完成です。",
+    "Sequence analysis をクリック：ファイル全体で一意な配列ごとの出現回数と頻度を集計し、上位配列のヒストグラムと各配列の明細を生成、完全な表は CSV として書き出され、Excel でそのまま開けます。これで簡単なライブラリ豊度レポートが完成です。",
 
   // チュートリアル 5：任意の言語を設定
-  "tut.lang.head": "チュートリアル 5 · 任意の言語を設定",
+  "tut.lang.head": "解説 5 · 任意の言語を設定",
   "tut.lang.headEn": "TUTORIAL 5 · ANY LANGUAGE",
   "tut.lang.title": "AI 翻訳で UI を任意の言語に切り替える",
   "tut.lang.lead":
-    "GenePad には中国語と英語の UI が内蔵されていますが、他の言語は公式対応を待つ必要がありません：設定 → Language を開き、「AI Translate」をクリックし、目的の言語を入力するだけで、言語パックを自動生成して適用します。先にチュートリアル 1 で AI の設定を終えてください。",
+    "GenePad には中国語と英語の UI が内蔵されていますが、他の言語は公式対応を待つ必要がありません：設定 → Language を開き、「AI Translate」をクリックし、目的の言語を入力するだけで、言語パックを自動生成して適用します。先に解説 2 で AI の設定を終えてください。",
   "tut.lang.1.name": "設定を開く",
-  "tut.lang.1.desc": "チュートリアル 1 と同じ：GenePad を起動し、ようこそ画面右上の歯車アイコンをクリックして設定ウィンドウを開きます。",
+  "tut.lang.1.desc": "解説 2 と同じ：GenePad を起動し、ようこそ画面右上の歯車アイコンをクリックして設定ウィンドウを開きます。",
   "tut.lang.2.name": "Language 設定を開き、AI Translate をクリック",
   "tut.lang.2.desc":
     "設定の左側で「Language」を選び、「AI Translate」をクリックします。この画面では言語ファイルの手動読み込み／書き出しもできます。",
@@ -673,11 +673,11 @@ const ja: Record<TKey, ReactNode> = {
     "AI 翻訳は内蔵の中国語言語ファイルを原文とします。個々の語句が正確でない場合は、言語ファイルを書き出して手元で修正し、再度読み込んでください。",
 
   // チュートリアル 6：UI 言語の設定（内蔵言語の切り替え + 公式言語パックの読み込み）
-  "tut.langpack.head": "チュートリアル 6 · UI 言語を設定",
+  "tut.langpack.head": "解説 6 · UI 言語を設定",
   "tut.langpack.headEn": "TUTORIAL 6 · UI LANGUAGE",
   "tut.langpack.title": "2 つの手順で UI をあなたの言語に",
   "tut.langpack.lead":
-    "GenePad には中国語と英語の画面が内蔵されています。ドイツ語・ロシア語・日本語・韓国語・フランス語は公式言語パックで提供 — ダウンロードして設定から読み込むだけで、追加の設定は不要です。AI 翻訳で作った独自の言語パックも同じ手順で使えます。",
+    "GenePad には中国語と英語の画面が内蔵されています。ドイツ語・ロシア語・日本語・韓国語・フランス語は公式言語パックで提供 — 入手して設定から読み込むだけで、追加の設定は不要です。AI 翻訳で作った独自の言語パックも同じ手順で使えます。",
   "tut.langpack.1.name": "設定を開く",
   "tut.langpack.1.desc": "GenePad を起動し、ようこそ画面右上の歯車アイコンをクリックして設定ウィンドウを開きます。",
   "tut.langpack.1.shot": "ようこそ画面 — 右上の歯車アイコンをクリック",
@@ -685,9 +685,9 @@ const ja: Record<TKey, ReactNode> = {
   "tut.langpack.2.desc":
     "設定ウィンドウの左側で「Language」を選択：English か 中文 をクリックすると内蔵言語が切り替わります。読み込んだ言語パックも同じ一覧に表示されます。",
   "tut.langpack.2.shot": "Language 設定 — 言語をクリックすると即座に切り替わります。下部のボタンで言語ファイルの読み込み / 書き出し",
-  "tut.langpack.3.name": "言語パックをダウンロードして読み込む",
+  "tut.langpack.3.name": "言語パックを入手して読み込む",
   "tut.langpack.3.desc":
-    "このページの下部から必要な言語の .json パックをダウンロードし、「Import Language File」をクリックしてダウンロードしたファイルを選びます。読み込みが完了すると一覧に言語が追加され — クリックすれば画面全体が切り替わり、右側のゴミ箱アイコンで削除できます。",
+    "このページの下部から必要な言語の .json パックを入手し、「Import Language File」をクリックして入手したファイルを選びます。読み込みが完了すると一覧に言語が追加され — クリックすれば画面全体が切り替わり、右側のゴミ箱アイコンで削除できます。",
   "tut.langpack.3.shot": "読み込み完了 — 一覧に言語が追加され、クリックで切り替わります",
   "tut.langpack.4.name": "画面全体が切り替わる",
   "tut.langpack.4.desc":
@@ -697,21 +697,21 @@ const ja: Record<TKey, ReactNode> = {
   "tut.langpack.4.shot3": "ロシア語画面",
   "tut.langpack.4.shot4": "ドイツ語画面",
   "tut.langpack.4.shot5": "日本語画面",
-  "tut.langpack.dl.title": "公式言語パックのダウンロード（.json）",
+  "tut.langpack.dl.title": "公式言語パックの入手（.json）",
   "tut.lang.dl.hint":
-    "AI 設定は不要です。公式言語パック（ドイツ語・ロシア語・日本語・韓国語・フランス語）をダウンロードして、そのまま読み込めます。GenePad 0.7.x 対応。",
+    "AI 設定は不要です。公式言語パック（ドイツ語・ロシア語・日本語・韓国語・フランス語）を入手して、そのまま読み込めます。GenePad 0.7.x 対応。",
   "tut.langpack.dl.hint": "GenePad 0.7.x 対応。解凍は不要 — 手順 3 と同じ要領でそのまま読み込んでください。",
-  "tut.langpack.dl.btn": "ダウンロード",
+  "tut.langpack.dl.btn": "入手",
   "tut.langpack.note":
-    "言語パックには画面の文字列のみが含まれ、配列やファイルのデータは含まれません。公式パックはバージョンごとに更新されるため、新しいファイルを読み込み直せば最新になります。他の言語が必要ですか？チュートリアル 4 で AI 翻訳により任意の言語パックを生成できます。",
+    "言語パックには画面の文字列のみが含まれ、配列やファイルのデータは含まれません。公式パックはバージョンごとに更新されるため、新しいファイルを読み込み直せば最新になります。他の言語が必要ですか？解説 5 で AI 翻訳により任意の言語パックを生成できます。",
 
   // チュートリアル 2：SnapGene からの移行（移行カテゴリー、ハブページの先頭）
-  "title.tutorial.snapgene": "SnapGene 代替ガイド - GenePad | 無料のクロスプラットフォーム プラスミッドマップ編集ツール",
+  "title.tutorial.snapgene": "SnapGene 代替ガイド - GenePad | 無料・複数 OS 対応のプラスミッドマップ編集ツール",
   "tut.toc.snapgene.name": "SnapGene から乗り換える",
   "tut.toc.snapgene.desc":
     "既存の .dna ファイルを直接読み書きし、マップ・制限酵素部位・Sanger 比較まで日々の作業をカバー。さらに NGS や遺伝子ファイルライブラリなど独自機能も",
   "tut.toc.snapgene.en": "SWITCH FROM SNAPGENE",
-  "tut.snapgene.head": "チュートリアル 1 · SnapGene 代替ガイド",
+  "tut.snapgene.head": "解説 1 · SnapGene 代替ガイド",
   "tut.snapgene.headEn": "TUTORIAL 1 · SNAPGENE ALTERNATIVE",
   "tut.snapgene.title": "SnapGene から GenePad へ：作業の流れの移行ガイド",
   "tut.snapgene.lead":
@@ -735,7 +735,7 @@ const ja: Record<TKey, ReactNode> = {
   "tut.snapgene.4.shot": "右クリックメニューから直接 sgRNA 設計：12 種類の認識様式、候補はワンクリックでマップへ",
   "tut.snapgene.5.name": "電気泳動シミュレーションとタンパク質の物性",
   "tut.snapgene.5.desc":
-    "アガロースゲルと SDS-PAGE の両方に対応：Trans2K® などの分子量マーカーを内蔵し、泳動前にバンド位置を予測できます。CDS を選ぶと分子量・等電点（19 種類の計算法）・GRAVY・脂肪族指数・モル吸光係数をリアルタイムに計算します。",
+    "アガロースゲルと SDS-PAGE の両方に対応：Trans2K® などの分子量マーカーを内蔵し、泳動前にバンド位置を予測できます。CDS を選ぶと分子量・等電点（19 種類の計算法）・GRAVY・脂肪族指数・モル吸光係数を即時に計算します。",
   "tut.snapgene.5.shot1": "DNA 電気泳動シミュレーション：Trans2K® マーカー、制限消化や PCR 産物をレーンに追加",
   "tut.snapgene.5.shot2": "タンパク質の物性欄：分子量・等電点・GRAVY・脂肪族指数・モル吸光係数",
   "tut.snapgene.6.name": "NGS データの閲覧",
@@ -754,33 +754,33 @@ const ja: Record<TKey, ReactNode> = {
   "tut.snapgene.note":
     "ライセンス：GenePad は現在無料の公開ベータです。ベータ終了後も、マップの閲覧・編集・保存など既存機能は引き続き無料でご利用いただけます。学術ユーザー（大学・病院の研究室・iGEM・学生）は 2027 年 12 月 31 日まで自動的に無料で利用でき、申請は不要です。商用利用は今後提供予定の GenePad Pro が対象になります。道具箱の「Molecular Cloning」は一部機能を先行提供中で、作業の流れ全体は開発中です。",
 
-  "tut.final.title": "チュートリアルで扱う機能はすべて GenePad に内蔵されており、単体のソフトウェアではありません",
+  "tut.final.title": "解説で扱う機能はすべて GenePad に内蔵されており、単体のソフトウェアではありません",
   "tut.final.desc":
-    "GenePad をダウンロード・インストール／更新すれば、チュートリアルのとおりに操作できます：AI アシスタント、遺伝子ファイルライブラリ、NGS データ閲覧が同じアプリで連携します。現在は無料の公開ベータで、全プラットフォームに対応しています。",
+    "GenePad を入手・導入／更新すれば、解説のとおりに操作できます：AI アシスタント、遺伝子ファイルライブラリ、NGS データ閲覧が同じアプリで連携します。現在は無料の公開ベータで、全 OS に対応しています。",
   "tut.final.cta": "ホームへ戻る",
-  "tut.final.cta2": "今すぐダウンロード",
-  "tut.top.hint": "下部のダウンロード欄へ移動",
+  "tut.final.cta2": "今すぐ入手",
+  "tut.top.hint": "下部の入手欄へ移動",
 
   // Stats サブページ（リアルタイム統計）
   "st.eyebrow": "Live Stats",
   "st.title": (
     <>
-      リアルタイムのインストール統計、
+      随時更新の導入統計、
       <br />
       次の 1 台はあなたです
     </>
   ),
   "st.lead":
-    "以下の数値は、GenePad アプリ内の匿名利用統計から集計されたものです：各インストールは 1 つのランダム識別子としてのみ数えられ、シークエンス・ファイル・個人情報は一切含まれません。データは報告のたびに自動更新され、GenePad の利用に登録は不要です。",
-  "st.k.installs": "累計インストール数",
+    "以下の数値は、GenePad アプリ内の匿名利用統計から集計されたものです：各導入は 1 つのランダム識別子としてのみ数えられ、配列・ファイル・個人情報は一切含まれません。データは報告のたびに自動更新され、GenePad の利用に登録は不要です。",
+  "st.k.installs": "累計導入数",
   "st.k.active30": "直近 30 日の稼働",
   "st.k.active7": "直近 7 日の稼働",
   "st.k.hours": "累計使用時間",
   "st.k.hoursUnit": "時間",
-  "st.chart.title": "週次の新規インストール",
-  "st.chart.title.daily": "日次の新規インストール",
-  "st.chart.caption": "WEEKLY NEW INSTALLS — 各インストールの初回起動時刻で集計（月曜〜日曜、UTC）",
-  "st.chart.caption.daily": "DAILY NEW INSTALLS — 各インストールの初回起動日で集計（UTC の自然日）",
+  "st.chart.title": "週次の新規導入",
+  "st.chart.title.daily": "日次の新規導入",
+  "st.chart.caption": "WEEKLY NEW INSTALLS — 各導入の初回起動時刻で集計（月曜〜日曜、UTC）",
+  "st.chart.caption.daily": "DAILY NEW INSTALLS — 各導入の初回起動日で集計（UTC の自然日）",
   "st.chart.note.daily": "最後のバーは本日の集計途中の値で、数はまだ増えていきます。",
   "st.chart.note.byos": "バーの色は OS ごとに分かれています。バーの各部分にカーソルを合わせると、OS ごとの数値を確認できます。",
   "st.chart.total": "合計",
@@ -788,12 +788,12 @@ const ja: Record<TKey, ReactNode> = {
   "st.tab.aria": "統計の粒度",
   "st.tab.weekly": "週次",
   "st.tab.daily": "日次",
-  "st.os.title": "インストール OS の分布",
+  "st.os.title": "導入 OS の分布",
   "st.os.other": "その他",
   "st.updated": "データ更新日時",
-  "st.note": "集計方法：ランダムなインストール識別子で集約。統計をオフにした場合やアンインストール後は数えられません。",
+  "st.note": "集計方法：ランダムな導入識別子で集約。統計をオフにした場合やアプリ削除後は数えられません。",
   "st.error": "統計データを一時的に取得できません。しばらくしてから画面を再読み込みしてお試しください。",
-  "st.cta": "無料でダウンロードして、次のユーザーになりましょう",
+  "st.cta": "無料で入手して、次のユーザーになりましょう",
 };
 
 export default ja;
