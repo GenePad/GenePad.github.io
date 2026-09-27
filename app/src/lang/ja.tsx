@@ -8,25 +8,25 @@ import type { TKey } from "../i18n";
 
 const ja: Record<TKey, ReactNode> = {
   // Nav
-  "nav.workbench": "ワークベンチ",
-  "nav.daynight": "ライト＆ダーク",
-  "nav.sanger": "Sanger トレース",
-  "nav.toolbox": "ツールボックス",
-  "nav.download": "ダウンロード",
+  "nav.workbench": "作業台",
+  "nav.daynight": "昼夜切替",
+  "nav.sanger": "Sanger 整列",
+  "nav.toolbox": "道具箱",
+  "nav.download": "入手",
   "nav.library": "遺伝子ファイルライブラリ",
   "nav.ngs": "NGS データ閲覧",
-  "nav.tutorial": "チュートリアル",
+  "nav.tutorial": "使い方",
   "nav.docs": "技術文書",
   "nav.projects": "関連プロジェクト",
-  "nav.stats": "リアルタイム統計",
-  "nav.cta": "無料ダウンロード／更新",
+  "nav.stats": "最新統計",
+  "nav.cta": "無料入手／更新",
   "nav.lang": "EN",
 
   // Page titles（実行時タイトルは UI 言語に追従。静的 HTML の <title> はページ言語と一致：jp.genepad.cn は日本語）
   "title.home": "GenePad - 軽量・クロスプラットフォーム対応のプラスミッドマップ編集ツール",
   "title.library": "遺伝子ファイルライブラリ - GenePad | プラスミッドファイルの検索と管理",
   "title.ngs": "NGS データ閲覧 - GenePad | FASTQ シークエンスデータの表示とライブラリ豊度解析",
-  "title.tutorial": "チュートリアル - GenePad | AI 設定 · 遺伝子ファイルライブラリ · NGS 解析",
+  "title.tutorial": "使い方 - GenePad | AI 設定 · 遺伝子ファイルライブラリ · NGS 解析",
   "title.tutorial.ai": "AI 設定チュートリアル - GenePad | DeepSeek API キーの取得と保存",
   "title.tutorial.library": "遺伝子ファイルライブラリチュートリアル - GenePad | プラスミッドの取り込み・検索・AI タグ",
   "title.tutorial.ngs": "NGS 解析チュートリアル - GenePad | fastq.gz の閲覧とライブラリ豊度レポート",
@@ -34,7 +34,7 @@ const ja: Record<TKey, ReactNode> = {
   "title.tutorial.langpack": "UI 言語を設定するチュートリアル - GenePad | 内蔵言語と公式言語パック",
   "title.projects": "関連プロジェクト - GenePad | プラスミッド汎用要素ライブラリとコドンアトラス",
   "title.tech": "開発者向け技術文書 - GenePad",
-  "title.stats": "リアルタイム統計 - GenePad | 公開利用統計",
+  "title.stats": "最新統計 - GenePad | 公開利用統計",
   "title.feedback": "フィードバックウォール - GenePad | 公開ユーザーメッセージ",
 
   // Hero
@@ -44,14 +44,14 @@ const ja: Record<TKey, ReactNode> = {
   "hero.titleEn": "クロスプラットフォーム",
   "hero.desc":
     "日常の分子クローニングのための、軽量・クロスプラットフォーム対応のプラスミッドマップ編集ツール。プラスミッドマップの閲覧・編集、配列注釈の管理、制限酵素部位の解析、Sanger トレースとの照合まで、クローニング設計から結果検証までの一連の流れを支えます。",
-  "hero.download": "無料ダウンロード／更新",
+  "hero.download": "無料入手／更新",
   "hero.features": "MAP · ANNOTATION · ENZYME · PRIMER · TRACE",
   "hero.platforms": "対応プラットフォーム",
   "hero.langBtn": "言語の設定方法",
 
   // Workbench
   "wb.eyebrow": "Workbench",
-  "wb.title": <>マップ・配列・解析をひとつにまとめたワークベンチ</>,
+  "wb.title": <>マップ・配列・解析をひとつにまとめた作業台</>,
   "wb.lead":
     "マップの閲覧、配列編集、制限酵素部位の確認、タンパク質の物性計算をひとつの画面に統合。各表示は選択中の対象に連動して位置が合います。",
   "wb.1.name": "プラスミッドマップ全体",
@@ -104,11 +104,11 @@ const ja: Record<TKey, ReactNode> = {
 
   // Toolbox
   "tb.eyebrow": "Toolbox",
-  "tb.title": <>豊富なツールボックス</>,
+  "tb.title": <>豊富な道具箱</>,
   "tb.lead":
-    "配列を選択していれば、電気泳動シミュレーションや sgRNA 設計を右クリックメニューから直接呼び出せます。共通のツールボックスには AI アシスタントと遺伝子ファイルライブラリが用意され、多言語 UI と「Open with」対応によって、既存の作業の流れにも組み込みやすくなっています。",
+    "配列を選択していれば、電気泳動シミュレーションや sgRNA 設計を右クリックメニューから直接呼び出せます。共通の道具箱には AI アシスタントと遺伝子ファイルライブラリが用意され、多言語 UI と「Open with」対応によって、既存の作業の流れにも組み込みやすくなっています。",
   "tb.groupA": "右クリックメニュー",
-  "tb.groupB": "共通ツールボックス",
+  "tb.groupB": "共通の道具箱",
   "tb.groupC": "開放性",
   "tb.c1.name": "DNA 電気泳動シミュレーション",
   "tb.c1.desc":
@@ -381,7 +381,7 @@ const ja: Record<TKey, ReactNode> = {
   "lib.setup.headEn": "GETTING STARTED",
   "lib.setup.title": "初期設定は数分で完了",
   "lib.setup.lead":
-    "遺伝子ファイルライブラリは GenePad のツールボックスにあります。開いたら、次の手順で設定を進めてください：",
+    "遺伝子ファイルライブラリは GenePad の道具箱にあります。開いたら、次の手順で設定を進めてください：",
   "lib.setup.1.name": "設定の入り口を開く",
   "lib.setup.1.desc":
     "初めて遺伝子ファイルライブラリを開いたときは、上部バナーの「Configure AI」をクリック。以降はいつでも右上の AI アイコンから設定に入れます。",
@@ -419,7 +419,7 @@ const ja: Record<TKey, ReactNode> = {
 
   "lib.final.title": "遺伝子ファイルライブラリは GenePad の内蔵機能で、単体のソフトウェアではありません",
   "lib.final.desc":
-    "遺伝子ファイルライブラリは GenePad プラスミッドマップ編集ツールに内蔵されています。GenePad をダウンロード・インストール／更新すれば、ツールボックスから利用できます。現在は無料の公開ベータで、全プラットフォームに対応しています。",
+    "遺伝子ファイルライブラリは GenePad プラスミッドマップ編集ツールに内蔵されています。GenePad をダウンロード・インストール／更新すれば、道具箱から利用できます。現在は無料の公開ベータで、全プラットフォームに対応しています。",
   "lib.final.cta": "ホームへ戻る",
   "lib.final.cta2": "今すぐダウンロード",
   "lib.top.hint": "下部のダウンロード欄へ移動",
@@ -601,7 +601,7 @@ const ja: Record<TKey, ReactNode> = {
   "tut.lib.headEn": "TUTORIAL 3 · GENE FILE LIBRARY",
   "tut.lib.title": "数百件のプラスミッドを、検索可能なライブラリとして管理する",
   "tut.lib.lead":
-    "遺伝子ファイルライブラリはツールボックスにあります：ファイルを移動もコピーもせず、各所に散在するプラスミッドの統一索引を作るだけです。以下の手順は、自動取り込みから、属性を一言で伝えて目的のプラスミッドを特定するところまでを扱います。",
+    "遺伝子ファイルライブラリは道具箱にあります：ファイルを移動もコピーもせず、各所に散在するプラスミッドの統一索引を作るだけです。以下の手順は、自動取り込みから、属性を一言で伝えて目的のプラスミッドを特定するところまでを扱います。",
   "tut.lib.1.name": "監視フォルダを設定し、プラスミッドを自動取り込み",
   "tut.lib.1.desc":
     "遺伝子ファイルライブラリを開く →「Watch folders」→ プラスミッドを保存しているフォルダを追加。以後、起動のたびに自動スキャン：新しいプラスミッドは自動で取り込まれ、削除されたものは自動で除外されます。手動の維持は不要です。",
@@ -752,7 +752,7 @@ const ja: Record<TKey, ReactNode> = {
   "tut.snapgene.8.shot1": "言語設定：6 か国語を内蔵、言語パックの読み込みと AI 生成に対応",
   "tut.snapgene.8.shot2": "「別のプログラムで開く」：SnapGene・VS Code などへワンクリックで受け渡し",
   "tut.snapgene.note":
-    "ライセンス：GenePad は現在無料の公開ベータです。ベータ終了後も、マップの閲覧・編集・保存など既存機能は引き続き無料でご利用いただけます。学術ユーザー（大学・病院の研究室・iGEM・学生）は 2027 年 12 月 31 日まで自動的に無料で利用でき、申請は不要です。商用利用は今後提供予定の GenePad Pro が対象になります。ツールボックスの「Molecular Cloning」は一部機能を先行提供中で、作業の流れ全体は開発中です。",
+    "ライセンス：GenePad は現在無料の公開ベータです。ベータ終了後も、マップの閲覧・編集・保存など既存機能は引き続き無料でご利用いただけます。学術ユーザー（大学・病院の研究室・iGEM・学生）は 2027 年 12 月 31 日まで自動的に無料で利用でき、申請は不要です。商用利用は今後提供予定の GenePad Pro が対象になります。道具箱の「Molecular Cloning」は一部機能を先行提供中で、作業の流れ全体は開発中です。",
 
   "tut.final.title": "チュートリアルで扱う機能はすべて GenePad に内蔵されており、単体のソフトウェアではありません",
   "tut.final.desc":
