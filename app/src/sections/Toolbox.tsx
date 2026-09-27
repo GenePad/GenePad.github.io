@@ -64,7 +64,7 @@ const OPEN_TOOLS = [
     en: "OPEN WITH",
     src: "/shots/open-with.webp",
     desc: "tb.o2.desc",
-    // 指向「SnapGene 替代指南」教程（与 O-01 → 语言包教程同一模式）
+    // 指向「SnapGene 替代方案」教程（与 O-01 → 语言包教程同一模式）
     href: "tutorial-snapgene",
   },
 ] as const;

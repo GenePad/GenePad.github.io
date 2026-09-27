@@ -731,7 +731,7 @@ const fr: Record<TKey, ReactNode> = {
   "tut.langpack.note":
     "Les paquets de langue ne contiennent que le texte de l’interface — jamais de séquences ni de données de fichiers. Les paquets officiels sont mis à jour à chaque version ; importez le nouveau fichier pour mettre à jour. Une autre langue ? Le tutoriel 4 génère des paquets pour n’importe quelle langue par traduction IA.",
 
-  // Tutoriel 2 : quitter SnapGene (catégorie migration, en tête de la page tutoriels)
+  // Tutoriel 1 : alternative à SnapGene (catégorie migration, en tête de la page tutoriels)
   "title.tutorial.snapgene": "Alternative à SnapGene - GenePad | Éditeur de cartes plasmidiques gratuit et multiplateforme",
   "tut.toc.snapgene.name": "Quitter SnapGene",
   "tut.toc.snapgene.desc":
@@ -739,9 +739,9 @@ const fr: Record<TKey, ReactNode> = {
   "tut.toc.snapgene.en": "SWITCH FROM SNAPGENE",
   "tut.snapgene.head": "Tutoriel 1 · Quitter SnapGene",
   "tut.snapgene.headEn": "TUTORIAL 1 · SNAPGENE ALTERNATIVE",
-  "tut.snapgene.title": "De SnapGene à GenePad : guide de migration du flux de travail",
+  "tut.snapgene.title": "Alternative à SnapGene : un éditeur de cartes plasmidiques gratuit et multiplateforme — GenePad",
   "tut.snapgene.lead":
-    "Vous utilisez déjà SnapGene ? Ce guide montre ce que GenePad reprend de votre quotidien : les fichiers .dna existants s’ouvrent et s’enregistrent directement, et les cartes, sites de restriction, amorces et alignements Sanger fonctionnent comme vous vous y attendez — plus des capacités que SnapGene n’a pas : consultation de données NGS, bibliothèque de fichiers géniques et assistant IA. Pas besoin de choisir : la fonction « Ouvrir avec » renvoie le fichier à SnapGene à tout moment.",
+    "Vous utilisez déjà SnapGene ? Ce tutoriel montre ce que GenePad reprend de votre quotidien : les fichiers .dna existants s’ouvrent et s’enregistrent directement, et les cartes, sites de restriction, amorces et alignements Sanger fonctionnent comme vous vous y attendez — plus des capacités que SnapGene n’a pas : consultation de données NGS, bibliothèque de fichiers géniques et assistant IA. Pas besoin de choisir : la fonction « Ouvrir avec » renvoie le fichier à SnapGene à tout moment.",
   "tut.snapgene.1.name": "Ouvrez directement vos fichiers .dna existants",
   "tut.snapgene.1.desc":
     "Glissez un plasmide .dna de SnapGene dans GenePad : séquence principale, topologie, features, amorces et notes sont lues telles quelles ; les modifications se réenregistrent en .dna — aucun obstacle de format pour vos collègues restés sous SnapGene.",
@@ -781,7 +781,9 @@ const fr: Record<TKey, ReactNode> = {
     "Licence : GenePad est en bêta publique gratuite ; après la bêta, les fonctions existantes — consultation, édition et enregistrement des cartes — resteront gratuites. Les utilisateurs académiques (universités, équipes hospitalières, iGEM, étudiants) bénéficient automatiquement d’un accès gratuit jusqu’au 31 décembre 2027, sans demande ; l’usage commercial sera couvert par la future GenePad Pro. Le clonage moléculaire de la boîte à outils est déjà disponible partiellement, le flux complet est en développement.",
 
   "tut.final.title":
-    "Toutes les fonctions des tutoriels sont intégrées à GenePad, et non des logiciels distincts",
+    "Toutes les fonctions des tutoriels sont intégrées à GenePad — téléchargez-le et essayez-le",
+  "tut.final.titleOne":
+    "Toutes les fonctions présentées dans « {name} » sont intégrées à GenePad — téléchargez-le et essayez-le",
   "tut.final.desc":
     "Installez ou mettez à niveau GenePad, puis suivez les tutoriels : l’assistant IA, la bibliothèque de fichiers géniques et la consultation des données NGS œuvrent de concert dans un même programme. Actuellement en bêta publique gratuite, sur toutes les plateformes.",
   "tut.final.cta": "Retour à l’accueil",

@@ -68,7 +68,7 @@ export default {
         "tutorial-snapgene": {
       title: "SnapGene-Alternative - GenePad | Kostenloser Plasmidkarten-Editor für alle Plattformen",
       description:
-        "GenePad-Leitfaden für den Wechsel von SnapGene: SnapGene-.dna-Plasmiddateien lassen sich direkt öffnen und speichern; Karten, Restriktionsschnitte, Primer und Sanger-Alignment verhalten sich wie gewohnt — dazu NGS-Datenansicht, Gen-Dateibibliothek, KI-Assistent und eine sechssprachige Oberfläche. Kostenlose öffentliche Beta für Windows, macOS, Linux und Android, mit „Öffnen mit“ jederzeit zurück zu SnapGene.",
+        "GenePad-Tutorial für den Wechsel von SnapGene: SnapGene-.dna-Plasmiddateien lassen sich direkt öffnen und speichern; Karten, Restriktionsschnitte, Primer und Sanger-Alignment verhalten sich wie gewohnt — dazu NGS-Datenansicht, Gen-Dateibibliothek, KI-Assistent und eine sechssprachige Oberfläche. Kostenlose öffentliche Beta für Windows, macOS, Linux und Android, mit „Öffnen mit“ jederzeit zurück zu SnapGene.",
     },
 "tutorial-langpack": {
       title: "Sprache der Oberfläche einstellen - GenePad | Eingebaute Sprachen & offizielle Sprachpakete",

@@ -712,9 +712,9 @@ const de: Record<TKey, ReactNode> = {
   "tut.toc.snapgene.en": "SWITCH FROM SNAPGENE",
   "tut.snapgene.head": "Tutorial 1 · Von SnapGene wechseln",
   "tut.snapgene.headEn": "TUTORIAL 1 · SNAPGENE ALTERNATIVE",
-  "tut.snapgene.title": "Von SnapGene zu GenePad: Leitfaden für den Workflow-Wechsel",
+  "tut.snapgene.title": "SnapGene-Alternative: Kostenlose Plasmidkarten-Software für alle Plattformen",
   "tut.snapgene.lead":
-    "Schon mit SnapGene unterwegs? Dieser Leitfaden zeigt, wie viel Alltag GenePad übernimmt: vorhandene .dna-Dateien lassen sich direkt öffnen und speichern, Karten, Restriktionsschnitte, Primer und Sanger-Alignment verhalten sich wie gewohnt — dazu Fähigkeiten, die SnapGene nicht hat: NGS-Datenansicht, Gen-Dateibibliothek und KI-Assistent. Beide Tools schließen sich nicht aus: Mit „Öffnen mit“ gibt GenePad Dateien jederzeit an SnapGene zurück.",
+    "Schon mit SnapGene unterwegs? Dieses Tutorial zeigt, wie viel Alltag GenePad übernimmt: vorhandene .dna-Dateien lassen sich direkt öffnen und speichern, Karten, Restriktionsschnitte, Primer und Sanger-Alignment verhalten sich wie gewohnt — dazu Fähigkeiten, die SnapGene nicht hat: NGS-Datenansicht, Gen-Dateibibliothek und KI-Assistent. Beide Tools schließen sich nicht aus: Mit „Öffnen mit“ gibt GenePad Dateien jederzeit an SnapGene zurück.",
   "tut.snapgene.1.name": "Vorhandene .dna-Dateien direkt öffnen",
   "tut.snapgene.1.desc":
     "SnapGene-.dna-Plasmiddateien einfach in GenePad ziehen: Hauptsequenz, Topologie, Features, Primer und Notizen werden unverändert eingelesen; bearbeitete Dateien lassen sich wieder als .dna speichern — für Kollegen, die weiter mit SnapGene arbeiten, gibt es kein Formatproblem.",
@@ -753,7 +753,8 @@ const de: Record<TKey, ReactNode> = {
   "tut.snapgene.note":
     "Lizenz: GenePad befindet sich in der kostenlosen öffentlichen Beta; nach der Beta bleiben bestehende Funktionen wie Ansehen, Bearbeiten und Speichern von Karten kostenlos. Akademische Nutzer (Hochschulen, Krankenhausgruppen, iGEM, Studierende) haben bis zum 31. Dezember 2027 automatisch freien Zugang — keine Anmeldung nötig; die kommerzielle Nutzung wird durch das kommende GenePad Pro abgedeckt. Molekulares Klonen im Werkzeugkasten ist bereits mit Teilen der Funktionalität verfügbar, der komplette Workflow befindet sich noch in Entwicklung.",
 
-  "tut.final.title": "Alles aus diesen Tutorials steckt in GenePad — keine Zusatzsoftware",
+  "tut.final.title": "Alles aus diesen Tutorials steckt in GenePad — laden Sie es herunter und probieren Sie es aus",
+  "tut.final.titleOne": "Alles aus „{name}“ steckt in GenePad — laden Sie es herunter und probieren Sie es aus",
   "tut.final.desc":
     "GenePad installieren oder aktualisieren und einfach mitmachen: KI-Assistent, Dateibibliothek und NGS-Datenansicht arbeiten in derselben Anwendung zusammen. Während der öffentlichen Beta kostenlos, auf allen Plattformen.",
   "tut.final.cta": "Zurück zur Startseite",

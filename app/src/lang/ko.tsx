@@ -702,16 +702,16 @@ const ko: Record<TKey, ReactNode> = {
     "언어 팩에는 화면 텍스트만 들어 있으며 서열이나 파일 데이터는 포함되지 않습니다. 공식 팩은 버전마다 갱신되므로 새 파일을 다시 가져오면 최신 상태가 됩니다. 다른 언어가 필요하신가요? 튜토리얼 4에서 AI 번역으로 어떤 언어의 팩이든 만들 수 있습니다.",
 
   // 튜토리얼 1: SnapGene에서 전환 (마이그레이션 카테고리, 허브 페이지 최상단)
-  "title.tutorial.snapgene": "SnapGene 대안 가이드 - GenePad | 무료 크로스플랫폼 플라스미드 지도 편집기",
+  "title.tutorial.snapgene": "SnapGene 대안 - GenePad | 무료 크로스플랫폼 플라스미드 지도 편집기",
   "tut.toc.snapgene.name": "SnapGene에서 갈아타기",
   "tut.toc.snapgene.desc":
     "기존 .dna 파일을 바로 읽고 쓰고, 지도·제한효소 부위·Sanger 정렬까지 일상 워크플로를 그대로 커버 — NGS, 유전자 파일 라이브러리 등 고유 기능도",
   "tut.toc.snapgene.en": "SWITCH FROM SNAPGENE",
-  "tut.snapgene.head": "튜토리얼 1 · SnapGene 대안 가이드",
+  "tut.snapgene.head": "튜토리얼 1 · SnapGene 대안",
   "tut.snapgene.headEn": "TUTORIAL 1 · SNAPGENE ALTERNATIVE",
-  "tut.snapgene.title": "SnapGene에서 GenePad로: 워크플로 마이그레이션 가이드",
+  "tut.snapgene.title": "SnapGene 대안: 무료 크로스플랫폼 플라스미드 지도 편집기 GenePad",
   "tut.snapgene.lead":
-    "SnapGene을 쓰고 계신가요? 이 가이드는 GenePad가 일상 업무를 어디까지 대신할 수 있는지 정리합니다. 기존 .dna 파일을 그대로 읽고 저장하며, 지도·제한효소 부위·프라이머·Sanger 정렬도 익숙하게 동작합니다. 게다가 NGS 데이터 보기·유전자 파일 라이브러리·AI 어시스턴트 같은 SnapGene에 없는 기능도 있습니다. 둘 중 하나만 쓸 필요는 없습니다 — GenePad의 「다른 프로그램으로 열기」로 언제든 파일을 SnapGene에 넘길 수 있습니다.",
+    "SnapGene을 쓰고 계신가요? 이 튜토리얼은 GenePad가 일상 업무를 어디까지 대신할 수 있는지 정리합니다. 기존 .dna 파일을 그대로 읽고 저장하며, 지도·제한효소 부위·프라이머·Sanger 정렬도 익숙하게 동작합니다. 게다가 NGS 데이터 보기·유전자 파일 라이브러리·AI 어시스턴트 같은 SnapGene에 없는 기능도 있습니다. 둘 중 하나만 쓸 필요는 없습니다 — GenePad의 「다른 프로그램으로 열기」로 언제든 파일을 SnapGene에 넘길 수 있습니다.",
   "tut.snapgene.1.name": "기존 .dna 파일 바로 열기",
   "tut.snapgene.1.desc":
     "SnapGene의 .dna 플라스미드 파일을 GenePad로 끌어다 놓기만 하면 열립니다: 주 서열·토폴로지·feature·프라이머·notes를 그대로 읽어 들이고, 편집 후에도 .dna로 저장할 수 있어 SnapGene을 계속 쓰는 선생님이나 동료에게 넘겨도 형식 문제가 없습니다.",
@@ -750,7 +750,8 @@ const ko: Record<TKey, ReactNode> = {
   "tut.snapgene.note":
     "라이선스: GenePad는 현재 무료 공개 베타입니다. 베타가 끝난 뒤에도 지도 보기·편집·저장 등 기존 기능은 계속 무료입니다. 학술 사용자(대학·병원 연구실·iGEM·학생)는 2027년 12월 31일까지 자동으로 무료 이용이 허가되며 신청이 필요 없습니다. 상업적 이용은 추후 출시될 GenePad Pro가 담당합니다. 툴박스의 Molecular Cloning은 일부 기능이 먼저 공개되어 있으며 전체 워크플로는 개발 중입니다.",
 
-  "tut.final.title": "튜토리얼의 기능은 모두 GenePad에 내장되어 있으며 별도 소프트웨어가 아닙니다",
+  "tut.final.title": "튜토리얼의 기능은 모두 GenePad에 내장되어 있습니다. 다운로드해 직접 체험해 보세요",
+  "tut.final.titleOne": "'{name}'의 기능은 모두 GenePad에 내장되어 있습니다. 다운로드해 직접 체험해 보세요",
   "tut.final.desc":
     "GenePad를 설치/업그레이드한 뒤 튜토리얼대로 진행하세요. AI 어시스턴트, 유전자 파일 라이브러리, NGS 데이터 조회가 같은 프로그램 안에서 함께 작동합니다. 현재는 무료 공개 베타 단계로 전체 플랫폼을 지원합니다.",
   "tut.final.cta": "홈으로 돌아가기",

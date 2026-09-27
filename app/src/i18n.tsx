@@ -715,17 +715,17 @@ const zhDict = {
     "tut.langpack.note":
       "语言包仅包含界面文本，不涉及序列与文件数据；官方语言包会随版本持续更新，重新导入即可升级。想接入其他语言？参见教程四，用 AI 翻译生成任意语言包。",
 
-    // 教程二：SnapGene 替代指南（迁移指南分类，目录页置顶推荐）
-    "title.tutorial.snapgene": "SnapGene 替代指南 - GenePad | 免费的跨平台质粒图谱软件",
-    "tut.toc.snapgene.name": "SnapGene 替代指南",
+    // 教程一：SnapGene 替代方案（迁移指南分类，目录页置顶推荐）
+    "title.tutorial.snapgene": "SnapGene 替代方案：免费的跨平台质粒图谱软件 GenePad",
+    "tut.toc.snapgene.name": "SnapGene 替代方案",
     "tut.toc.snapgene.desc":
       "既有 .dna 文件直接读写，图谱、酶切、Sanger 比对逐项对齐，另有 NGS、基因文件库等独有能力",
     "tut.toc.snapgene.en": "SWITCH FROM SNAPGENE",
-    "tut.snapgene.head": "教程一 · SnapGene 替代指南",
+    "tut.snapgene.head": "教程一 · SnapGene 替代方案",
     "tut.snapgene.headEn": "TUTORIAL 1 · SNAPGENE ALTERNATIVE",
-    "tut.snapgene.title": "从 SnapGene 到 GenePad：工作流迁移指南",
+    "tut.snapgene.title": "SnapGene 替代方案：免费的跨平台质粒图谱软件 GenePad",
     "tut.snapgene.lead":
-      "已经在用 SnapGene？这篇指南讲清楚 GenePad 能接住哪些日常工作：既有 .dna 文件直接读写，图谱、酶切、引物、Sanger 比对逐项对齐，另有一批它没有的能力——NGS 数据查看、基因文件库与 AI 助手。两个工具不必二选一：GenePad 内置「打开方式」，随时把文件交回 SnapGene。",
+      "已经在用 SnapGene？这篇教程讲清楚 GenePad 能接住哪些日常工作：既有 .dna 文件直接读写，图谱、酶切、引物、Sanger 比对逐项对齐，另有一批它没有的能力——NGS 数据查看、基因文件库与 AI 助手。两个工具不必二选一：GenePad 内置「打开方式」，随时把文件交回 SnapGene。",
     "tut.snapgene.1.name": "直接打开既有 .dna 文件",
     "tut.snapgene.1.desc":
       "把 SnapGene 的 .dna 质粒文件拖进 GenePad 即可打开：主序列、拓扑、features、引物与 notes 原样读入；编辑后仍可存回 .dna，传回给仍用 SnapGene 的导师或同事不会有格式障碍。",
@@ -764,7 +764,8 @@ const zhDict = {
     "tut.snapgene.note":
       "授权说明：GenePad 当前免费公测；公测结束后，图谱查看、编辑、保存等已有功能依旧免费。学术用户（高校、医院课题组、iGEM、学生）在 2026 年至 2027 年 12 月 31 日期间自动获得免费使用权限，无需申请；商业使用将由后续发布的 GenePad Pro 授权支持。工具箱中的分子克隆（Molecular Cloning）已上线部分功能，完整流程仍在开发中。",
 
-    "tut.final.title": "教程涉及的功能均内置于 GenePad，并非独立软件",
+    "tut.final.title": "教程涉及的功能均内置于 GenePad，欢迎下载体验",
+    "tut.final.titleOne": "{name}涉及的功能均内置于 GenePad，欢迎下载体验",
     "tut.final.desc":
       "下载安装/升级 GenePad 后即可按教程操作：AI 助手、基因文件库与 NGS 数据查看在同一程序内配合使用。当前为免费公测阶段，覆盖全部平台。",
     "tut.final.cta": "返回主页",
@@ -1512,16 +1513,16 @@ const dict: Record<Lang, Record<TKey, ReactNode>> = {
       "Language packs contain interface text only — never sequences or file data. Official packs are updated with each release; import the new file to upgrade. Want another language? Tutorial 4 generates packs for any language with AI translation.",
 
     // Tutorial 1: switch from SnapGene (migration category, featured first on the hub)
-    "title.tutorial.snapgene": "SnapGene Alternative Guide - GenePad | Free Cross-platform Plasmid Map Editor",
+    "title.tutorial.snapgene": "SnapGene Alternative: Free Cross-platform Plasmid Map Software | GenePad",
     "tut.toc.snapgene.name": "Switch from SnapGene",
     "tut.toc.snapgene.desc":
       "Read and write your existing .dna files directly, cover the daily cloning workflow, plus NGS, a gene file library and other abilities SnapGene doesn't have",
     "tut.toc.snapgene.en": "SWITCH FROM SNAPGENE",
     "tut.snapgene.head": "Tutorial 1 · Switch from SnapGene",
     "tut.snapgene.headEn": "TUTORIAL 1 · SNAPGENE ALTERNATIVE",
-    "tut.snapgene.title": "From SnapGene to GenePad: a workflow migration guide",
+    "tut.snapgene.title": "SnapGene Alternative: A Free Cross-platform Plasmid Map Software",
     "tut.snapgene.lead":
-      "Already using SnapGene? This guide shows how much of your daily work GenePad takes over: existing .dna files open and save directly, maps, restriction sites, primers and Sanger alignment all behave the way you expect — plus abilities SnapGene doesn't have: NGS data viewing, a gene file library and an AI assistant. No need to pick one: GenePad's built-in \"Open with\" hands files back to SnapGene at any time.",
+      "Already using SnapGene? This tutorial shows how much of your daily work GenePad takes over: existing .dna files open and save directly, maps, restriction sites, primers and Sanger alignment all behave the way you expect — plus abilities SnapGene doesn't have: NGS data viewing, a gene file library and an AI assistant. No need to pick one: GenePad's built-in \"Open with\" hands files back to SnapGene at any time.",
     "tut.snapgene.1.name": "Open your existing .dna files",
     "tut.snapgene.1.desc":
       "Drag a SnapGene .dna plasmid file into GenePad and it opens: main sequence, topology, features, primers and notes are read as-is; edits still save back to .dna, so files sent to SnapGene-using colleagues keep working.",
@@ -1560,7 +1561,8 @@ const dict: Record<Lang, Record<TKey, ReactNode>> = {
     "tut.snapgene.note":
       "Licensing: GenePad is in a free public beta; after the beta, existing features such as map viewing, editing and saving remain free. Academic users (universities, hospital groups, iGEM, students) automatically have free usage through December 31, 2027 — no application needed; commercial use will be covered by the upcoming GenePad Pro. Molecular cloning in the toolbox already ships with partial functionality, with the full workflow still in development.",
 
-    "tut.final.title": "Everything in these tutorials is built into GenePad — no separate software",
+    "tut.final.title": "Everything in these tutorials is built into GenePad — download it and give it a try",
+    "tut.final.titleOne": "Everything in “{name}” is built into GenePad — download it and give it a try",
     "tut.final.desc":
       "Install or upgrade GenePad and follow along: the AI assistant, gene file library, and NGS viewer work together in the same app. Free during the public beta, on every platform.",
     "tut.final.cta": "Back to Home",

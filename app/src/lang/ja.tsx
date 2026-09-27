@@ -705,17 +705,17 @@ const ja: Record<TKey, ReactNode> = {
   "tut.langpack.note":
     "言語パックには画面の文字列のみが含まれ、配列やファイルのデータは含まれません。公式パックはバージョンごとに更新されるため、新しいファイルを読み込み直せば最新になります。他の言語が必要ですか？解説 5 で AI 翻訳により任意の言語パックを生成できます。",
 
-  // チュートリアル 2：SnapGene からの移行（移行カテゴリー、ハブページの先頭）
-  "title.tutorial.snapgene": "SnapGene 代替ガイド - GenePad | 無料・複数 OS 対応のプラスミッドマップ編集ツール",
+  // チュートリアル 1：SnapGene の代替（移行カテゴリー、ハブページの先頭）
+  "title.tutorial.snapgene": "SnapGene の代替 - GenePad | 無料・複数 OS 対応のプラスミッドマップ編集ツール",
   "tut.toc.snapgene.name": "SnapGene から乗り換える",
   "tut.toc.snapgene.desc":
     "既存の .dna ファイルを直接読み書きし、マップ・制限酵素部位・Sanger 比較まで日々の作業をカバー。さらに NGS や遺伝子ファイル集など独自機能も",
   "tut.toc.snapgene.en": "SWITCH FROM SNAPGENE",
-  "tut.snapgene.head": "解説 1 · SnapGene 代替ガイド",
+  "tut.snapgene.head": "解説 1 · SnapGene の代替",
   "tut.snapgene.headEn": "TUTORIAL 1 · SNAPGENE ALTERNATIVE",
-  "tut.snapgene.title": "SnapGene から GenePad へ：作業の流れの移行ガイド",
+  "tut.snapgene.title": "SnapGene の代替：無料・複数 OS 対応のプラスミッドマップソフト GenePad",
   "tut.snapgene.lead":
-    "SnapGene を使っていますか？このガイドでは、GenePad が日々の作業のどこまで引き受けられるかを解説します：既存の .dna ファイルはそのまま読み書きでき、マップ・制限酵素部位・プライマー・Sanger 比較も直感的に操作できます。さらに NGS データ閲覧・遺伝子ファイル集・AI アシスタントなど、SnapGene にない機能も。両者は排他的ではありません — GenePad の「Open with」から、いつでもファイルを SnapGene に渡せます。",
+    "SnapGene を使っていますか？この解説では、GenePad が日々の作業のどこまで引き受けられるかを解説します：既存の .dna ファイルはそのまま読み書きでき、マップ・制限酵素部位・プライマー・Sanger 比較も直感的に操作できます。さらに NGS データ閲覧・遺伝子ファイル集・AI アシスタントなど、SnapGene にない機能も。両者は排他的ではありません — GenePad の「Open with」から、いつでもファイルを SnapGene に渡せます。",
   "tut.snapgene.1.name": "既存の .dna ファイルをそのまま開く",
   "tut.snapgene.1.desc":
     "SnapGene の .dna プラスミドファイルを GenePad にドラッグするだけで開けます：主配列・トポロジー・注釈・プライマー・notes をそのまま読み込み、編集後も .dna として保存できるため、SnapGene を使い続ける先生や同僚に渡しても形式の問題はありません。",
@@ -754,7 +754,8 @@ const ja: Record<TKey, ReactNode> = {
   "tut.snapgene.note":
     "ライセンス：GenePad は現在無料の公開ベータです。ベータ終了後も、マップの閲覧・編集・保存など既存機能は引き続き無料でご利用いただけます。学術ユーザー（大学・病院の研究室・iGEM・学生）は 2027 年 12 月 31 日まで自動的に無料で利用でき、申請は不要です。商用利用は今後提供予定の GenePad Pro が対象になります。道具箱の「Molecular Cloning」は一部機能を先行提供中で、作業の流れ全体は開発中です。",
 
-  "tut.final.title": "解説で扱う機能はすべて GenePad に内蔵されており、単体のソフトウェアではありません",
+  "tut.final.title": "解説で扱う機能はすべて GenePad に内蔵されています。ぜひダウンロードしてお試しください",
+  "tut.final.titleOne": "「{name}」で扱う機能はすべて GenePad に内蔵されています。ぜひダウンロードしてお試しください",
   "tut.final.desc":
     "GenePad を入手・導入／更新すれば、解説のとおりに操作できます：AI アシスタント、遺伝子ファイル集、NGS データ閲覧が同じアプリで連携します。現在は無料の公開ベータで、全 OS に対応しています。",
   "tut.final.cta": "ホームへ戻る",

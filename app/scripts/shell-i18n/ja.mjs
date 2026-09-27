@@ -66,9 +66,9 @@ export default {
         "GenePad の手順解説：Settings → Language → AI Translate を開き、目的の言語（フランス語、ロシア語など）を入力すれば、設定済みの AI が言語パックを生成して UI 全体を切り替えます——長文は分割して翻訳し、失敗した部分は自動で再試行。言語パックは書き出して手動編集もできます。全手順を実際のスクリーンショットで図解。",
     },
         "tutorial-snapgene": {
-      title: "SnapGene 代替ガイド - GenePad | 無料・複数 OS 対応のプラスミッドマップ編集ツール",
+      title: "SnapGene の代替 - GenePad | 無料・複数 OS 対応のプラスミッドマップ編集ツール",
       description:
-        "GenePad の SnapGene 移行ガイド：SnapGene の .dna プラスミドファイルをそのまま読み書きでき、マップ・制限酵素部位・プライマー・Sanger 比較も直感的に操作できます。さらに NGS データ閲覧・遺伝子ファイル集・AI アシスタント・6 か国語 UI を搭載し、Windows / macOS / Linux / Android で無料の公開ベータ中。「Open with」でいつでも SnapGene にファイルを渡せます。",
+        "GenePad の SnapGene 代替解説：SnapGene の .dna プラスミドファイルをそのまま読み書きでき、マップ・制限酵素部位・プライマー・Sanger 比較も直感的に操作できます。さらに NGS データ閲覧・遺伝子ファイル集・AI アシスタント・6 か国語 UI を搭載し、Windows / macOS / Linux / Android で無料の公開ベータ中。「Open with」でいつでも SnapGene にファイルを渡せます。",
     },
 "tutorial-langpack": {
       title: "UI 言語を設定する手順 - GenePad | 内蔵言語と公式言語パック",

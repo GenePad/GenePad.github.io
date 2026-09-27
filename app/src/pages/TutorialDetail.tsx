@@ -235,7 +235,7 @@ export default function TutorialDetail({ tut }: { tut: TutorialEntry }) {
                     <span className="text-gfp">10</span> — PART OF GENEPAD
                   </p>
                   <h2 className="mt-6 max-w-3xl font-display text-[clamp(1.6rem,3.4vw,2.6rem)] font-bold leading-[1.15] tracking-tight">
-                    {t("tut.final.title")}
+                    {String(t("tut.final.titleOne")).replace("{name}", String(t(tut.toc.name)))}
                   </h2>
                   <p className="mt-5 max-w-2xl text-[14px] leading-8 text-paper/70">
                     {t("tut.final.desc")}

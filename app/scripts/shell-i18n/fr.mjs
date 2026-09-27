@@ -68,7 +68,7 @@ export default {
         "tutorial-snapgene": {
       title: "Alternative à SnapGene - GenePad | Éditeur de cartes plasmidiques gratuit et multiplateforme",
       description:
-        "Guide GenePad pour quitter SnapGene : vos fichiers .dna s’ouvrent et s’enregistrent directement ; cartes, sites de restriction, amorces et alignement Sanger fonctionnent comme attendu — plus la consultation NGS, la bibliothèque de fichiers, l’assistant IA et une interface en six langues. Bêta publique gratuite sur Windows, macOS, Linux et Android, avec « Ouvrir avec » pour rendre la main à SnapGene à tout moment.",
+        "Tutoriel GenePad pour quitter SnapGene : vos fichiers .dna s’ouvrent et s’enregistrent directement ; cartes, sites de restriction, amorces et alignement Sanger fonctionnent comme attendu — plus la consultation NGS, la bibliothèque de fichiers, l’assistant IA et une interface en six langues. Bêta publique gratuite sur Windows, macOS, Linux et Android, avec « Ouvrir avec » pour rendre la main à SnapGene à tout moment.",
     },
 "tutorial-langpack": {
       title: "Tutoriel langue de l’interface - GenePad | Langues intégrées et paquets officiels",
