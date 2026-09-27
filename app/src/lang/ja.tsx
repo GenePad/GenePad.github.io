@@ -35,6 +35,7 @@ const ja: Record<TKey, ReactNode> = {
   "title.projects": "関連プロジェクト - GenePad | プラスミッド汎用要素ライブラリとコドンアトラス",
   "title.tech": "開発者向け技術文書 - GenePad",
   "title.stats": "リアルタイム統計 - GenePad | 公開利用統計",
+  "title.feedback": "フィードバックウォール - GenePad | 公開ユーザーメッセージ",
 
   // Hero
   "hero.badge": "無料公開ベータ",
@@ -235,6 +236,41 @@ const ja: Record<TKey, ReactNode> = {
   "ft.ngs": "NGS データ閲覧",
   "ft.sponsor": "開発者を支援する",
   "ft.copyright": "© 2026 GENEPAD — MADE FOR THE BENCH",
+
+  // ユーザーフィードバック
+  "fb.entry": "フィードバック",
+  "fb.title": "フィードバックを送る",
+  "fb.intro":
+    "メッセージとスクリーンショットはフィードバックウォールに公開表示されます。不具合・再現手順・ご希望の機能をお知らせください。",
+  "fb.text": "メッセージ",
+  "fb.textPh": "問題の内容、再現手順、ご提案する機能などを記入してください…",
+  "fb.contact": "連絡先（任意・メッセージと一緒に公開表示されます）",
+  "fb.contactPh": "メール / GitHub / その他",
+  "fb.images": "スクリーンショット（任意・最大 3 枚、各 5MB まで）",
+  "fb.imageAdd": "画像を追加",
+  "fb.imageRemove": "画像を削除",
+  "fb.pasteHint": "スクリーンショットは直接貼り付け可能（Ctrl+V）",
+  "fb.captchaLoading": "人間認証を読み込み中…",
+  "fb.captchaError": "人間認証を読み込めませんでした — ネットワークを確認して再試行してください",
+  "fb.submit": "送信",
+  "fb.sending": "送信中…",
+  "fb.success": "メッセージを受け付けました。フィードバックありがとうございます！",
+  "fb.error": "送信に失敗しました。しばらくしてからもう一度お試しください",
+  "fb.errorTooMany": "画像は最大 3 枚です",
+  "fb.errorTooLarge": "画像が 5MB の制限を超えています",
+  "fb.close": "閉じる",
+  "fbw.eyebrow": "公開メッセージウォール",
+  "fbw.title": "フィードバックウォール",
+  "fbw.lead":
+    "GenePad ユーザーからの公開メッセージとスクリーンショット — 活用例、不具合報告、機能のご提案をすべて公開で掲載しています。",
+  "fbw.write": "メッセージを書く",
+  "fbw.empty": "まだメッセージはありません。最初の 1 件を投稿しましょう",
+  "fbw.loading": "メッセージを読み込み中…",
+  "fbw.error": "メッセージの読み込みに失敗しました。しばらくしてからもう一度お試しください",
+  "fbw.loadMore": "さらに表示",
+  "fbw.viewAll": "すべて表示",
+  "fbw.latest": "最新",
+  "fbw.messages": "件のメッセージ",
 
   // サブページ共通
   "sub.back": "ホームへ戻る",

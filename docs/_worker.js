@@ -25,11 +25,50 @@
 //
 // 已建库升级(一次性,必须先于本版本部署执行,否则 os 列缺失导致 UPSERT 500)：
 //   ALTER TABLE usage_reports ADD COLUMN os TEXT;
+//
+// ── 用户反馈 / 公开留言墙(/api/feedback)──
+// 前端:全站页脚「在线反馈」弹窗 POST 提交(文本 + 可选联系方式 + ≤3 张截图),
+// 公开反馈墙 /feedback 页经 GET /api/feedback/list 只读展示、图片经 /api/feedback/image
+// 从 R2 读出。提交需 Cloudflare Turnstile 令牌(服务端 siteverify 二次校验),
+// 并按 IP 限流(固定 1 小时窗口 ≤5 条);公开列表只输出 hidden=0 的行,
+// page / ip_hash / user_agent 不出接口。一次性配置(Turnstile widget、TURNSTILE_SECRET_KEY、
+// R2 桶 FEEDBACK_BUCKET)与删除/隐藏手册见 AGENTS.md「Feedback API」一节。
+// 建表 SQL(在 D1 控制台执行一次)：
+//   CREATE TABLE IF NOT EXISTS feedback (
+//     id TEXT PRIMARY KEY,
+//     text TEXT NOT NULL,
+//     contact TEXT,
+//     page TEXT,
+//     images TEXT NOT NULL DEFAULT '[]',
+//     ip_hash TEXT NOT NULL,
+//     user_agent TEXT,
+//     hidden INTEGER NOT NULL DEFAULT 0,
+//     created_at INTEGER NOT NULL
+//   );
+//   CREATE INDEX IF NOT EXISTS idx_feedback_created ON feedback (created_at);
+//   CREATE TABLE IF NOT EXISTS feedback_ip_window (
+//     ip_hash TEXT PRIMARY KEY,
+//     window_start INTEGER NOT NULL,
+//     count INTEGER NOT NULL
+//   );
 
 const UUID_PATTERN = /^[A-Za-z0-9_-]{8,64}$/;
 const MAX_TEXT_LENGTH = 64;
 const MAX_USAGE_SECONDS = 1_000_000_000;
 const OS_WHITELIST = new Set(['windows', 'linux', 'macos', 'android', 'other']);
+
+// ── 用户反馈限制 ──
+const FB_MAX_TEXT = 5000;
+const FB_MAX_CONTACT = 200;
+const FB_MAX_PAGE = 300;
+const FB_MAX_IMAGES = 3;
+const FB_MAX_IMAGE_BYTES = 5 * 1024 * 1024;
+const FB_IMAGE_TYPES = { 'image/png': 'png', 'image/jpeg': 'jpg', 'image/webp': 'webp', 'image/gif': 'gif' };
+const FB_RATE_WINDOW_MS = 60 * 60 * 1000; // 每 IP 固定 1 小时窗口
+const FB_RATE_LIMIT = 5;
+// R2 对象 key 白名单(与写入侧 fb/<yyyymmdd>/<uuid>/<n>.<ext> 一一对应):
+// key 含随机 UUID,不经 list 接口拿不到,图片 URL 不可枚举
+const FB_IMAGE_KEY_RE = /^fb\/\d{8}\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\/[123]\.(png|jpg|webp|gif)$/;
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -38,10 +77,10 @@ const CORS_HEADERS = {
   'Access-Control-Max-Age': '86400',
 };
 
-function json(body, status) {
+function json(body, status, extraHeaders = {}) {
   return new Response(JSON.stringify(body), {
     status,
-    headers: { 'Content-Type': 'application/json', ...CORS_HEADERS },
+    headers: { 'Content-Type': 'application/json', ...CORS_HEADERS, ...extraHeaders },
   });
 }
 
@@ -99,6 +138,183 @@ async function handleReport(request, env) {
   }
 
   return new Response(null, { status: 204, headers: CORS_HEADERS });
+}
+
+// ── 用户反馈(留言墙)──
+
+async function sha256Hex(text) {
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+/* 服务端二次校验前端 Turnstile 令牌;remoteip 交给 Cloudflare 做风控加权 */
+async function verifyTurnstile(secret, token, ip) {
+  try {
+    const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ secret, response: token, remoteip: ip }),
+    });
+    const outcome = await res.json();
+    return outcome.success === true;
+  } catch {
+    return false;
+  }
+}
+
+/* 每 IP 固定窗口计数;读写竞态下偶尔多放行一两条无关紧要,不值得上事务 */
+async function feedbackRateLimited(env, ipHash, now) {
+  const row = await env.DB.prepare(
+    'SELECT window_start, count FROM feedback_ip_window WHERE ip_hash = ?1',
+  )
+    .bind(ipHash)
+    .first();
+  const inWindow = row && now - row.window_start < FB_RATE_WINDOW_MS;
+  const windowStart = inWindow ? row.window_start : now;
+  const count = (inWindow ? row.count : 0) + 1;
+  await env.DB.prepare(
+    `INSERT INTO feedback_ip_window (ip_hash, window_start, count) VALUES (?1, ?2, ?3)
+     ON CONFLICT(ip_hash) DO UPDATE SET window_start = ?2, count = ?3`,
+  )
+    .bind(ipHash, windowStart, count)
+    .run();
+  return count > FB_RATE_LIMIT;
+}
+
+async function handleFeedback(request, env) {
+  if (!env.DB || !env.FEEDBACK_BUCKET || !env.TURNSTILE_SECRET_KEY) {
+    return json({ error: 'feedback bindings missing' }, 503);
+  }
+
+  let form;
+  try {
+    form = await request.formData();
+  } catch {
+    return json({ error: 'invalid form' }, 400);
+  }
+
+  const text = typeof form.get('text') === 'string' ? form.get('text').trim().slice(0, FB_MAX_TEXT) : '';
+  if (!text) {
+    return json({ error: 'text required' }, 400);
+  }
+  const contact = typeof form.get('contact') === 'string' ? form.get('contact').trim().slice(0, FB_MAX_CONTACT) : '';
+  const page = typeof form.get('page') === 'string' ? form.get('page').trim().slice(0, FB_MAX_PAGE) : '';
+
+  const images = form.getAll('images').filter((f) => f instanceof File && f.size > 0);
+  if (images.length > FB_MAX_IMAGES) {
+    return json({ error: 'too many images' }, 400);
+  }
+  for (const file of images) {
+    if (!FB_IMAGE_TYPES[file.type]) return json({ error: 'invalid image type' }, 400);
+    if (file.size > FB_MAX_IMAGE_BYTES) return json({ error: 'image too large' }, 400);
+  }
+
+  const ip = request.headers.get('CF-Connecting-IP') ?? '';
+  const token = typeof form.get('turnstile') === 'string' ? form.get('turnstile') : '';
+  if (!(await verifyTurnstile(env.TURNSTILE_SECRET_KEY, token, ip))) {
+    return json({ error: 'captcha failed' }, 403);
+  }
+
+  const now = Date.now();
+  const ipHash = await sha256Hex(ip);
+  if (await feedbackRateLimited(env, ipHash, now)) {
+    return json({ error: 'rate limited' }, 429);
+  }
+
+  const id = crypto.randomUUID();
+  const dateDir = new Date(now).toISOString().slice(0, 10).replace(/-/g, '');
+  const keys = [];
+  try {
+    for (let i = 0; i < images.length; i += 1) {
+      // 先写 R2 再写 D1:中间失败会留下孤儿图片对象,量级可忽略,不做回滚
+      const key = `fb/${dateDir}/${id}/${i + 1}.${FB_IMAGE_TYPES[images[i].type]}`;
+      await env.FEEDBACK_BUCKET.put(key, await images[i].arrayBuffer(), {
+        httpMetadata: { contentType: images[i].type },
+      });
+      keys.push(key);
+    }
+    await env.DB.prepare(
+      `INSERT INTO feedback (id, text, contact, page, images, ip_hash, user_agent, created_at)
+       VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)`,
+    )
+      .bind(
+        id,
+        text,
+        contact,
+        page,
+        JSON.stringify(keys),
+        ipHash,
+        (request.headers.get('User-Agent') ?? '').slice(0, 256),
+        now,
+      )
+      .run();
+  } catch (err) {
+    return json({ error: 'storage error' }, 500);
+  }
+
+  return new Response(null, { status: 204, headers: CORS_HEADERS });
+}
+
+/* 公开留言墙列表:只吐 hidden=0 的行;before=上一页最后一条的 created_at(游标翻页) */
+async function handleFeedbackList(url, env) {
+  if (!env.DB) {
+    return json({ error: 'd1 binding missing' }, 503);
+  }
+
+  const beforeRaw = Number(url.searchParams.get('before') ?? '0');
+  const before = Number.isFinite(beforeRaw) && beforeRaw > 0 ? Math.floor(beforeRaw) : 0;
+  const limitRaw = Number(url.searchParams.get('limit') ?? '20');
+  const limit = Math.min(Math.max(Number.isFinite(limitRaw) ? Math.floor(limitRaw) : 20, 1), 50);
+
+  try {
+    const [rows, totalRow] = await Promise.all([
+      env.DB.prepare(
+        `SELECT id, text, contact, images, created_at FROM feedback
+         WHERE hidden = 0${before ? ' AND created_at < ?2' : ''}
+         ORDER BY created_at DESC LIMIT ?1`,
+      )
+        .bind(...(before ? [limit, before] : [limit]))
+        .all(),
+      env.DB.prepare('SELECT COUNT(*) AS n FROM feedback WHERE hidden = 0').first(),
+    ]);
+    const items = (rows.results ?? []).map((row) => ({
+      id: row.id,
+      text: row.text,
+      contact: row.contact || null,
+      images: JSON.parse(row.images ?? '[]'),
+      createdAt: Number(row.created_at),
+    }));
+    return json({ ok: true, items, total: Number(totalRow?.n ?? 0) }, 200, {
+      'Cache-Control': 'public, max-age=60',
+    });
+  } catch (err) {
+    return json({ error: 'db error' }, 500);
+  }
+}
+
+/* 留言图片直读:严格 key 白名单校验后从 R2 取对象,内容寻址不变所以长缓存 */
+async function handleFeedbackImage(url, env) {
+  if (!env.FEEDBACK_BUCKET) {
+    return json({ error: 'r2 binding missing' }, 503);
+  }
+  const key = url.searchParams.get('key') ?? '';
+  if (!FB_IMAGE_KEY_RE.test(key)) {
+    return json({ error: 'invalid key' }, 400);
+  }
+  try {
+    const object = await env.FEEDBACK_BUCKET.get(key);
+    if (!object) return json({ error: 'not found' }, 404);
+    return new Response(object.body, {
+      status: 200,
+      headers: {
+        'Content-Type': object.httpMetadata?.contentType ?? 'application/octet-stream',
+        'Cache-Control': 'public, max-age=31536000, immutable',
+        ...CORS_HEADERS,
+      },
+    });
+  } catch (err) {
+    return json({ error: 'storage error' }, 500);
+  }
 }
 
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -367,6 +583,22 @@ export default {
 
     if (url.pathname === '/api/telemetry/stats' && request.method === 'GET') {
       return handleStats(env);
+    }
+
+    if (url.pathname === '/api/feedback') {
+      if (request.method === 'OPTIONS') {
+        return new Response(null, { status: 204, headers: CORS_HEADERS });
+      }
+      if (request.method === 'POST') {
+        return handleFeedback(request, env);
+      }
+      return json({ error: 'method not allowed' }, 405);
+    }
+    if (url.pathname === '/api/feedback/list' && request.method === 'GET') {
+      return handleFeedbackList(url, env);
+    }
+    if (url.pathname === '/api/feedback/image' && request.method === 'GET') {
+      return handleFeedbackImage(url, env);
     }
 
     const routed = route(url);

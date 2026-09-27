@@ -4,6 +4,7 @@ import Footer from "../sections/Footer";
 import { useLang, usePageTitle } from "../i18n";
 import { rootHref } from "../links";
 import { dismissBoot } from "../boot";
+import { openFeedback } from "../feedback";
 
 /* 技术支持 / 开发者文档首页：.gen、.gjson、.dna、Rust 示例四个入口
    （四个文档页目前只有中文版、位于 genepad.cn 根路径，中英文 hub 都用 rootHref 指向它们） */
@@ -107,6 +108,12 @@ export default function TechSupport() {
           <div className="border-l-2 border-gfp-deep bg-ink/[0.03] px-5 py-4">
             <p className="text-[13px] leading-7 text-ink/70">{t("ts.feedback")}</p>
             <p className="mt-2 flex flex-wrap gap-x-6 gap-y-1 font-mono text-[11px] tracking-[0.14em]">
+              <button
+                onClick={openFeedback}
+                className="text-gfp-deep hover:underline"
+              >
+                {t("fb.entry")} →
+              </button>
               <a
                 href="https://github.com/GenePad/GenePad.github.io/issues"
                 target="_blank"

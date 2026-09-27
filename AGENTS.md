@@ -53,19 +53,20 @@ wrangler.jsonc               # Cloudflare Pages configuration (serves docs/)
 `docs/sitemap.xml` is hand-maintained (no build step) and referenced by
 `docs/robots.txt`. It must cover **every** public HTML page in `docs/` — both
 build output (`index` / `tech-support` / `projects` / `library` / `ngs` /
-`stats`) and hand-maintained pages (`changelog`, `tech-*.html`). **Whenever a
+`feedback` / `stats`) and hand-maintained pages (`changelog`, `tech-*.html`).
+**Whenever a
 page is added, removed, renamed, or its content changes, update the sitemap in
 the same change**: add/remove its `<url>` block and refresh `<lastmod`
 (`YYYY-MM-DD`) for any page whose content changed. Keep entries in site nav
 order. `priority` conventions: home 1.0; main nav pages (library/ngs/
-tech-support) 0.8; secondary pages (projects, tech-*) 0.7; utility pages
-(changelog/stats) 0.6.
+tech-support) 0.8; secondary pages (projects, feedback, tech-*) 0.7; utility
+pages (changelog/stats) 0.6.
 
 Exception: the mirror pages (`docs/en/*.html` at `en.genepad.cn`,
 `docs/cn/*.html` at `cn.genepad.cn`, and the generated `docs/{de,ru,jp,kr,fr}/*.html`)
 are **not** listed here — a sitemap must
 not mix hosts. Each mirror host gets its **own** single-host sitemap instead:
-`docs/<dir>/sitemap.xml` (10 indexable pages, stats excluded) is **generated
+`docs/<dir>/sitemap.xml` (13 indexable pages, stats excluded) is **generated
 by `app/scripts/gen-shells.mjs` on every build** — do not hand-edit those.
 `docs/robots.txt` (shared by all hosts) declares all eight sitemaps with
 cross-host `Sitemap:` lines; the worker maps `<mirror>.genepad.cn/sitemap.xml`
@@ -77,8 +78,9 @@ every page of every host).
 ## Telemetry API (`/api/telemetry`)
 
 `docs/_worker.js` is a Pages advanced-mode Worker committed in the build output: it serves
-`/api/telemetry` (anonymous usage stats POSTed by the Gene Editor app every 7 days, D1-backed)
-and falls back to `env.ASSETS.fetch()` for every other path, so static serving is unchanged.
+`/api/telemetry` (anonymous usage stats POSTed by the Gene Editor app every 7 days, D1-backed),
+`/api/feedback` (user feedback / public message wall — see the next section), and falls back
+to `env.ASSETS.fetch()` for every other path, so static serving is unchanged.
 Requirements (dashboard, one-time): create a D1 database, run the CREATE TABLE SQL embedded
 at the top of `_worker.js`, and bind it to the Pages project as variable **`DB`**.
 No build tooling touches this file — edit it directly and push.
@@ -110,6 +112,66 @@ is fetched client-side from
 `https://genepad.pages.dev/api/telemetry/stats` (absolute URL so genepad.cn / GitHub Pages
 mirrors work; CORS handled by `_worker.js`). Copy lives in `app/src/i18n.tsx` under `st.*`
 and `nav.stats` (zh + en). Remember: `docs/stats.html` is build output — never hand-edit.
+
+## Feedback API (`/api/feedback`) — 用户反馈 / 公开留言墙
+
+User feedback with Cloudflare Turnstile human verification, stored in D1 + R2 and
+publicly displayed on the `/feedback` message wall. Frontend lives in
+`app/src/feedback.tsx` (`FeedbackModal` — mounted once inside `Footer` so it exists on
+every page; `openFeedback()` event-bus trigger used by `TechSupport` and the home-page
+`FeedbackTicker` banner; `feedbackApiUrl()` returns same-origin `/api/feedback` on all
+CF-hosted hosts and falls back to the absolute `genepad.pages.dev` URL only on
+genepad.github.io). The wall page is the standard 14-shell set
+(`app/feedback.html` + `app/{en,cn}/feedback.html` hand-written, five mirrors generated;
+wired in `vite.config.ts` / `gen-shells.mjs` / `shell-i18n/*.mjs` / `check-dict-keys.mjs` /
+`prerender.mjs` — prerender serves a stub empty list for `/api/feedback/list` so the
+baked HTML shows the empty state). `/api/` is a mirror-shared prefix, so all three
+endpoints work on every mirror host without routing changes. Copy lives in `i18n.tsx`
+under `fb.*` (form) / `fbw.*` (wall + ticker) + `title.feedback`.
+
+Endpoints (all in `docs/_worker.js`, edit directly and push):
+
+- `POST /api/feedback` — multipart form: `text` (required ≤5000), `contact` (optional
+  ≤200), `page` (optional context), `turnstile` (token), `images` (≤3 files, each ≤5MiB,
+  png/jpeg/webp/gif). Server order: field validation → Turnstile siteverify (needs
+  **`TURNSTILE_SECRET_KEY`**) → per-IP rate limit (fixed 1h window, 5 per IP, D1-backed;
+  IP stored only as sha256 hash) → images to R2 (**`FEEDBACK_BUCKET`**, key
+  `fb/<yyyymmdd>/<uuid>/<n>.<ext>`) → row into D1. Success 204; errors are
+  `{error:'...'}` JSON (400/403/429/500/503).
+- `GET /api/feedback/list?before=<ms>&limit=≤50` — public, newest-first, **only
+  `hidden=0` rows**, returns `{ok, items:[{id,text,contact,images,createdAt}], total}`;
+  `page` / `ip_hash` / `user_agent` never leave the server. `Cache-Control: max-age=60`.
+- `GET /api/feedback/image?key=...` — streams the R2 object after a strict key-format
+  whitelist check (keys embed a random UUID, so URLs are unguessable without the list);
+  immutable long cache.
+
+Dashboard setup (one-time; binding changes need a redeploy):
+
+1. **Turnstile**: create a **Managed** widget with hostnames `genepad.cn`,
+   `*.genepad.cn`, `genepad.pages.dev`, `genepad.github.io`, `localhost`. Put the
+   **secret** into Pages → Settings → Variables and Secrets as `TURNSTILE_SECRET_KEY`;
+   put the **sitekey** into `app/src/feedback.tsx` (`TURNSTILE_SITEKEY` — currently the
+   official always-pass test key `1x00000000000000000000AA`, replace before going live).
+2. **R2**: create bucket `genepad-feedback`, bind to the Pages project as
+   **`FEEDBACK_BUCKET`**.
+3. **D1**: run the two `CREATE TABLE` statements (`feedback`, `feedback_ip_window`)
+   embedded in the `_worker.js` header comment (same console as `usage_reports`).
+
+Data locations & moderation runbook (all manual, in the Cloudflare dashboard):
+
+- **Text rows**: D1 → `genepad` database → Console.
+  - Hide a message (stays in DB, disappears from wall + ticker):
+    `UPDATE feedback SET hidden = 1 WHERE id = '<id>';`
+  - Delete a message: `DELETE FROM feedback WHERE id = '<id>';`
+  - Delete its images too — the R2 keys are in the row's `images` JSON column; remove
+    each object (next bullet). Rows are newest-first:
+    `SELECT id, text, contact, images, created_at FROM feedback ORDER BY created_at DESC;`
+- **Images**: R2 → bucket `genepad-feedback` → browse objects under `fb/<yyyymmdd>/<id>/`
+  and delete them (keys also listed in the D1 row's `images` column). Note images are
+  publicly readable via `/api/feedback/image` once submitted — that is inherent to the
+  public wall.
+- The `feedback_ip_window` rate-limit table needs no maintenance (rows are one per IP,
+  tiny); optional purge: `DELETE FROM feedback_ip_window WHERE window_start < <ms-epoch>;`
 
 ## Build & Deploy
 
@@ -152,8 +214,9 @@ Seven crawler-facing pure-language mirrors of the bilingual pages (+ stats) —
 search engines can index each language without changing anything about how
 genepad.cn behaves for users:
 
-- **Shells**: 11 shells per mirror (index, tech-support, projects, library,
-  ngs, tutorial ×5, stats) at `app/<dir>/*.html`, built to `docs/<dir>/` via
+- **Shells**: 14 shells per mirror (index, tech-support, projects, library,
+  ngs, tutorial ×7, feedback, stats) at `app/<dir>/*.html`, built to
+  `docs/<dir>/` via
   the mirror inputs in `app/vite.config.ts`. They share the same `/src`
   modules as the zh pages. `app/en/*.html` and `app/cn/*.html` are
   hand-written; `app/{de,ru,jp,kr,fr}/*.html` are **generated** by

@@ -40,6 +40,7 @@ const fr: Record<TKey, ReactNode> = {
     "Projets - GenePad | Bibliothèques d’éléments plasmidiques et cartes de codons",
   "title.tech": "Documentation développeur - GenePad",
   "title.stats": "Données en direct - GenePad | Statistiques d’utilisation publiques",
+  "title.feedback": "Mur de feedback - GenePad | Messages publics des utilisateurs",
 
   // Hero
   "hero.badge": "BÊTA PUBLIQUE GRATUITE",
@@ -243,6 +244,41 @@ const fr: Record<TKey, ReactNode> = {
   "ft.ngs": "Visualiseur NGS",
   "ft.sponsor": "Soutenir le développeur",
   "ft.copyright": "© 2026 GENEPAD — MADE FOR THE BENCH",
+
+  // Retours utilisateurs
+  "fb.entry": "Feedback",
+  "fb.title": "Laisser un message",
+  "fb.intro":
+    "Les messages et captures d’écran sont affichés publiquement sur le mur de feedback. Décrivez vos problèmes, les étapes de reproduction ou les fonctions souhaitées.",
+  "fb.text": "Message",
+  "fb.textPh": "Décrivez le problème, comment le reproduire, ou la fonction suggérée…",
+  "fb.contact": "Contact (facultatif, affiché publiquement avec le message)",
+  "fb.contactPh": "E-mail / GitHub / autre",
+  "fb.images": "Captures d’écran (facultatif, 3 max, ≤5 Mo chacune)",
+  "fb.imageAdd": "Ajouter une image",
+  "fb.imageRemove": "Retirer l’image",
+  "fb.pasteHint": "Vous pouvez aussi coller des captures directement (Ctrl+V)",
+  "fb.captchaLoading": "Chargement de la vérification humaine…",
+  "fb.captchaError": "Échec du chargement de la vérification — vérifiez le réseau et réessayez",
+  "fb.submit": "Envoyer",
+  "fb.sending": "Envoi…",
+  "fb.success": "Message bien reçu — merci pour votre retour !",
+  "fb.error": "Échec de l’envoi, réessayez plus tard",
+  "fb.errorTooMany": "3 images maximum",
+  "fb.errorTooLarge": "L’image dépasse la limite de 5 Mo",
+  "fb.close": "Fermer",
+  "fbw.eyebrow": "MUR DE FEEDBACK",
+  "fbw.title": "Mur de feedback",
+  "fbw.lead":
+    "Messages publics et captures d’écran des utilisateurs de GenePad — usages, rapports de bugs et demandes de fonctions, tout est ouvert.",
+  "fbw.write": "Écrire un message",
+  "fbw.empty": "Aucun message pour l’instant — soyez le premier",
+  "fbw.loading": "Chargement des messages…",
+  "fbw.error": "Échec du chargement des messages, réessayez plus tard",
+  "fbw.loadMore": "Charger plus",
+  "fbw.viewAll": "Tout voir",
+  "fbw.latest": "Derniers",
+  "fbw.messages": "messages",
 
   // Sous-pages communes
   "sub.back": "Retour à l’accueil",

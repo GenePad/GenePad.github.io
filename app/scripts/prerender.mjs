@@ -41,6 +41,7 @@ const ROOT_PATHS = [
   "/tutorial-ngs",
   "/tutorial-lang",
   "/tutorial-langpack",
+  "/feedback",
 ];
 
 /* 镜像主机名 → 构建输出子树（与 _worker.js 的 MIRROR_PREFIX_BY_HOST、src/links.ts 的 MIRRORS 保持一致） */
@@ -114,6 +115,13 @@ function resolveAsset(pathname) {
 function startServer() {
   const server = http.createServer((req, res) => {
     const url = new URL(req.url, "http://localhost");
+    // 反馈墙页的列表接口本地没有 D1:回一个空列表,预渲染固化「空态」文案,
+    // 真实留言由浏览器端 fetch 覆盖(与 stats 页排除预渲染的取舍不同,这里空态是正式文案)
+    if (url.pathname === "/api/feedback/list") {
+      res.writeHead(200, { "Content-Type": MIME[".json"] });
+      res.end(JSON.stringify({ ok: true, items: [], total: 0 }));
+      return;
+    }
     const host = (req.headers.host ?? "").split(":")[0];
     // 复刻 _worker.js：镜像主机下非共享路径映射到各自的 /en、/cn 子树
     const mirrorPrefix = Object.entries(MIRROR_PREFIX_BY_HOST).find(([mirror]) =>

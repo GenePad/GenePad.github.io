@@ -48,6 +48,7 @@ const PAGES = [
   { key: "tutorial-ngs", file: "tutorial-ngs.html", sitePath: "/tutorial-ngs" },
   { key: "tutorial-lang", file: "tutorial-lang.html", sitePath: "/tutorial-lang" },
   { key: "tutorial-langpack", file: "tutorial-langpack.html", sitePath: "/tutorial-langpack" },
+  { key: "feedback", file: "feedback.html", sitePath: "/feedback" },
   { key: "stats", file: "stats.html", sitePath: "/stats" },
 ];
 
@@ -212,6 +213,7 @@ const SITEMAP_PRIORITY = {
   "tutorial-library": "0.7",
   "tutorial-ngs": "0.7",
   "tutorial-lang": "0.7",
+  feedback: "0.7",
 };
 const today = () => new Date().toISOString().slice(0, 10);
 

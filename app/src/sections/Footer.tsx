@@ -2,6 +2,15 @@ import { Reveal, PlasmidGlyph } from "./shared";
 import { useLang } from "../i18n";
 import { LANG_NAMES, MIRRORS, mirrorHref, mirrorOf, rootHref } from "../links";
 import { RELEASES_URL, GITEE_RELEASES_URL } from "../download-data";
+import { FeedbackModal, openFeedback } from "../feedback";
+
+/* 链接列条目:action 条目(在线反馈)渲染为打开弹窗的按钮,其余为 <a> */
+interface FooterLink {
+  label: React.ReactNode;
+  href?: string;
+  external?: boolean;
+  action?: "feedback";
+}
 
 /* 页脚质粒环：滚动到位后描线绘制 */
 function FooterPlasmid() {
@@ -51,7 +60,7 @@ export default function Footer() {
     current: m.lang === currentLang,
   }));
 
-  const COLS = [
+  const COLS: { title: React.ReactNode; links: FooterLink[] }[] = [
     {
       title: t("ft.col.download"),
       links: [
@@ -63,6 +72,7 @@ export default function Footer() {
     {
       title: t("ft.col.support"),
       links: [
+        { label: t("fb.entry"), action: "feedback" },
         { label: "GitHub Issues", href: "https://github.com/GenePad/GenePad.github.io/issues", external: true },
         { label: "Gitee Issues", href: "https://gitee.com/GenePad/GenePad.github.io/issues", external: true },
         { label: t("nav.tutorial"), href: "tutorial", external: false },
@@ -107,13 +117,22 @@ export default function Footer() {
                       <ul className="mt-4 space-y-2.5">
                         {col.links.map((l) => (
                           <li key={l.label as string}>
-                            <a
-                              href={l.href}
-                              {...(l.external ? { target: "_blank", rel: "noreferrer" } : {})}
-                              className="text-[13.5px] text-paper/75 transition-colors hover:text-gfp"
-                            >
-                              {l.label}
-                            </a>
+                            {l.action === "feedback" ? (
+                              <button
+                                onClick={openFeedback}
+                                className="text-[13.5px] text-paper/75 transition-colors hover:text-gfp"
+                              >
+                                {l.label}
+                              </button>
+                            ) : (
+                              <a
+                                href={l.href}
+                                {...(l.external ? { target: "_blank", rel: "noreferrer" } : {})}
+                                className="text-[13.5px] text-paper/75 transition-colors hover:text-gfp"
+                              >
+                                {l.label}
+                              </a>
+                            )}
                           </li>
                         ))}
                       </ul>
@@ -156,6 +175,8 @@ export default function Footer() {
           </div>
         </div>
       </div>
+      {/* 在线反馈弹窗:挂在这里(每页都有 Footer)让全站任意位置 openFeedback() 可用 */}
+      <FeedbackModal />
     </footer>
   );
 }

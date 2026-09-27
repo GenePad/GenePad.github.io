@@ -31,6 +31,7 @@ const de: Record<TKey, ReactNode> = {
   "title.projects": "Projekte - GenePad | Plasmid-Element-Bibliotheken & Codon-Karten",
   "title.tech": "Entwicklerdokumentation - GenePad",
   "title.stats": "Live-Statistiken - GenePad | Öffentliche Nutzungsstatistiken",
+  "title.feedback": "Feedback-Wand - GenePad | Öffentliche Nutzernachrichten",
 
   // Hero
   "hero.badge": "Kostenlose Beta",
@@ -233,6 +234,42 @@ const de: Record<TKey, ReactNode> = {
   "ft.ngs": "NGS-Daten-Viewer",
   "ft.sponsor": "Entwickler unterstützen",
   "ft.copyright": "© 2026 GENEPAD — MADE FOR THE BENCH",
+
+  // 用户反馈
+  "fb.entry": "Feedback",
+  "fb.title": "Feedback hinterlassen",
+  "fb.intro":
+    "Nachrichten und Screenshots werden öffentlich auf der Feedback-Wand gezeigt. Beschreib uns Probleme, Schritte zur Reproduktion oder gewünschte Funktionen.",
+  "fb.text": "Nachricht",
+  "fb.textPh":
+    "Beschreibe das Problem, wie es sich reproduzieren lässt, oder die vorgeschlagene Funktion…",
+  "fb.contact": "Kontakt (optional, wird öffentlich mit der Nachricht gezeigt)",
+  "fb.contactPh": "E-Mail / GitHub / anderes",
+  "fb.images": "Screenshots (optional, bis zu 3, je ≤5MB)",
+  "fb.imageAdd": "Bild hinzufügen",
+  "fb.imageRemove": "Bild entfernen",
+  "fb.pasteHint": "Screenshots lassen sich auch direkt einfügen (Strg+V)",
+  "fb.captchaLoading": "Menschliche Verifizierung wird geladen…",
+  "fb.captchaError": "Verifizierung konnte nicht geladen werden — Netzwerk prüfen und erneut versuchen",
+  "fb.submit": "Absenden",
+  "fb.sending": "Wird gesendet…",
+  "fb.success": "Nachricht erhalten — danke für das Feedback!",
+  "fb.error": "Senden fehlgeschlagen, bitte später erneut versuchen",
+  "fb.errorTooMany": "Maximal 3 Bilder",
+  "fb.errorTooLarge": "Bild überschreitet das 5MB-Limit",
+  "fb.close": "Schließen",
+  "fbw.eyebrow": "MESSAGE WALL",
+  "fbw.title": "Feedback-Wand",
+  "fbw.lead":
+    "Öffentliche Nachrichten und Screenshots von GenePad-Nutzern — Anwendungsfälle, Fehlerberichte und Funktionswünsche, alles offen.",
+  "fbw.write": "Nachricht schreiben",
+  "fbw.empty": "Noch keine Nachrichten — schreib die erste",
+  "fbw.loading": "Nachrichten werden geladen…",
+  "fbw.error": "Nachrichten konnten nicht geladen werden, bitte später erneut versuchen",
+  "fbw.loadMore": "Mehr laden",
+  "fbw.viewAll": "Alle ansehen",
+  "fbw.latest": "Neueste",
+  "fbw.messages": "Nachrichten",
 
   // 子页面共用
   "sub.back": "Zurück zur Startseite",

@@ -31,6 +31,7 @@ const ko: Record<TKey, ReactNode> = {
   "title.projects": "프로젝트 - GenePad | 플라스미드 파트 라이브러리 및 코돈 지도",
   "title.tech": "개발자 문서 - GenePad",
   "title.stats": "실시간 통계 - GenePad | 공개 사용 통계",
+  "title.feedback": "피드백 월 - GenePad | 공개 사용자 메시지",
 
   // Hero
   "hero.badge": "무료 공개 베타",
@@ -231,6 +232,41 @@ const ko: Record<TKey, ReactNode> = {
   "ft.ngs": "NGS 데이터 뷰어",
   "ft.sponsor": "개발자 후원",
   "ft.copyright": "© 2026 GENEPAD — MADE FOR THE BENCH",
+
+  // 사용자 피드백
+  "fb.entry": "피드백",
+  "fb.title": "피드백 남기기",
+  "fb.intro":
+    "메시지와 스크린샷은 피드백 월에 공개로 표시됩니다. 문제, 재현 단계 또는 기능 제안을 알려주세요.",
+  "fb.text": "메시지",
+  "fb.textPh": "겪은 문제, 재현 단계 또는 제안하는 기능을 적어주세요…",
+  "fb.contact": "연락처 (선택, 메시지와 함께 공개 표시됨)",
+  "fb.contactPh": "이메일 / GitHub / 기타",
+  "fb.images": "스크린샷 (선택, 최대 3장, 각 5MB 이하)",
+  "fb.imageAdd": "이미지 추가",
+  "fb.imageRemove": "이미지 삭제",
+  "fb.pasteHint": "스크린샷을 바로 붙여넣을 수 있습니다 (Ctrl+V)",
+  "fb.captchaLoading": "사람 인증을 불러오는 중…",
+  "fb.captchaError": "인증을 불러오지 못했습니다 — 네트워크를 확인하고 다시 시도해 주세요",
+  "fb.submit": "제출",
+  "fb.sending": "제출 중…",
+  "fb.success": "메시지가 접수되었습니다. 피드백 감사합니다!",
+  "fb.error": "제출에 실패했습니다. 잠시 후 다시 시도해 주세요",
+  "fb.errorTooMany": "이미지는 최대 3장까지",
+  "fb.errorTooLarge": "이미지가 5MB 제한을 초과합니다",
+  "fb.close": "닫기",
+  "fbw.eyebrow": "공개 메시지 월",
+  "fbw.title": "피드백 월",
+  "fbw.lead":
+    "GenePad 사용자들의 공개 메시지와 스크린샷 — 활용 사례, 버그 보고, 기능 제안을 모두 공개로 게시합니다.",
+  "fbw.write": "메시지 쓰기",
+  "fbw.empty": "아직 메시지가 없습니다. 첫 번째가 되어 보세요",
+  "fbw.loading": "메시지를 불러오는 중…",
+  "fbw.error": "메시지를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요",
+  "fbw.loadMore": "더 보기",
+  "fbw.viewAll": "모두 보기",
+  "fbw.latest": "최신",
+  "fbw.messages": "개의 메시지",
 
   // 하위 페이지 공용
   "sub.back": "홈으로 돌아가기",

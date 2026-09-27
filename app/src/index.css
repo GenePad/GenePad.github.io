@@ -161,6 +161,15 @@
   .gp-marquee-track {
     animation: gp-marquee 36s linear infinite;
   }
+  /* 主页留言横幅：同款滚动、更缓 + 减少动态偏好时静止 */
+  .gp-marquee-track-slow {
+    animation: gp-marquee 64s linear infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .gp-marquee-track-slow {
+      animation: none;
+    }
+  }
 
   /* 打字光标 */
   @keyframes gp-blink {

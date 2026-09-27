@@ -35,6 +35,7 @@ export default defineConfig({
         "tutorial-lang": path.resolve(__dirname, "tutorial-lang.html"),
         "tutorial-langpack": path.resolve(__dirname, "tutorial-langpack.html"),
         stats: path.resolve(__dirname, "stats.html"),
+        feedback: path.resolve(__dirname, "feedback.html"),
         // 各纯语言镜像壳页：app/<dir>/*.html → docs/<dir>/*.html，与中文页共用同一套 /src 模块
         // （_worker.js 把镜像主机下的路径映射到 /<dir> 子树；en/cn 为手写底稿，
         // de/ru/jp/kr/fr 由 scripts/gen-shells.mjs 从 en 模板生成）
@@ -54,6 +55,7 @@ export default defineConfig({
               ["tutorial-lang", "tutorial-lang.html"],
               ["tutorial-langpack", "tutorial-langpack.html"],
               ["stats", "stats.html"],
+              ["feedback", "feedback.html"],
             ].map(([key, file]) => [`${dir}-${key}`, path.resolve(__dirname, dir, file)]),
           ),
         ),

@@ -26,7 +26,7 @@ const JSX_KEYS = [
 const PAGES = [
   "index", "tech-support", "projects", "library", "ngs", "tutorial",
   "tutorial-ai", "tutorial-library", "tutorial-ngs", "tutorial-lang",
-  "tutorial-langpack", "stats",
+  "tutorial-langpack", "feedback", "stats",
 ];
 const TITLE_KEY_OF_PAGE = {
   "index": "title.home",
@@ -40,6 +40,7 @@ const TITLE_KEY_OF_PAGE = {
   "tutorial-ngs": "title.tutorial.ngs",
   "tutorial-lang": "title.tutorial.lang",
   "tutorial-langpack": "title.tutorial.langpack",
+  "feedback": "title.feedback",
   "stats": "title.stats",
 };
 

@@ -10,6 +10,7 @@ import NgsPromo from "../sections/NgsPromo";
 import Toolbox from "../sections/Toolbox";
 import Download from "../sections/Download";
 import Footer from "../sections/Footer";
+import { FeedbackTicker } from "../feedback";
 import { LightboxProvider } from "../lightbox";
 import { dismissBoot } from "../boot";
 import { usePageTitle } from "../i18n";
@@ -44,6 +45,7 @@ export default function Home() {
           <DayNight />
           <Toolbox />
           <Download index="07" />
+          <FeedbackTicker />
           <Footer />
         </main>
       </LightboxProvider>
