@@ -22,10 +22,11 @@ const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
 const MAX_TEXT = 5000;
 const MAX_CONTACT = 200;
 
-/* Turnstile 站点密钥。这里是官方「总是通过」的测试密钥，供本地/部署前联调；
-   上线前在 Turnstile 控制台建 Managed widget（域名含 genepad.cn、*.genepad.cn、
-   genepad.pages.dev、genepad.github.io、localhost）并替换 —— 见 AGENTS.md。 */
-const TURNSTILE_SITEKEY = "1x00000000000000000000AA";
+/* Turnstile 站点密钥(公开值,随页面分发即可)。对应 Turnstile 控制台的
+   Managed widget,secret 存在 Pages 的 TURNSTILE_SECRET_KEY,绝不下前端;
+   widget 域名须覆盖 genepad.cn、*.genepad.cn、genepad.pages.dev、
+   genepad.github.io、localhost(见 AGENTS.md「Feedback API」)。 */
+const TURNSTILE_SITEKEY = "0x4AAAAAAFE5EI70ze4K5yUN";
 
 export function openFeedback() {
   window.dispatchEvent(new CustomEvent(FB_OPEN_EVENT));

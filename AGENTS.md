@@ -150,8 +150,8 @@ Dashboard setup (one-time; binding changes need a redeploy):
 1. **Turnstile**: create a **Managed** widget with hostnames `genepad.cn`,
    `*.genepad.cn`, `genepad.pages.dev`, `genepad.github.io`, `localhost`. Put the
    **secret** into Pages → Settings → Variables and Secrets as `TURNSTILE_SECRET_KEY`;
-   put the **sitekey** into `app/src/feedback.tsx` (`TURNSTILE_SITEKEY` — currently the
-   official always-pass test key `1x00000000000000000000AA`, replace before going live).
+   the **sitekey** is a public value hardcoded in `app/src/feedback.tsx`
+   (`TURNSTILE_SITEKEY`, production widget set 2026-09-27).
 2. **R2**: create bucket `genepad-feedback`, bind to the Pages project as
    **`FEEDBACK_BUCKET`**.
 3. **D1**: run the two `CREATE TABLE` statements (`feedback`, `feedback_ip_window`)
