@@ -31,7 +31,7 @@ const ko: Record<TKey, ReactNode> = {
   "title.projects": "프로젝트 - GenePad | 플라스미드 파트 라이브러리 및 코돈 지도",
   "title.tech": "개발자 문서 - GenePad",
   "title.stats": "실시간 통계 - GenePad | 공개 사용 통계",
-  "title.feedback": "피드백 월 - GenePad | 공개 사용자 메시지",
+  "title.feedback": "메시지와 피드백 - GenePad | 공개 사용자 메시지",
 
   // Hero
   "hero.badge": "무료 공개 베타",
@@ -236,7 +236,7 @@ const ko: Record<TKey, ReactNode> = {
   "fb.entry": "피드백",
   "fb.title": "피드백 남기기",
   "fb.intro":
-    "메시지는 피드백 월에 공개로 표시됩니다. 문제, 재현 단계 또는 기능 제안을 알려주세요.",
+    "메시지는 메시지와 피드백 페이지에 공개로 표시됩니다. 문제, 재현 단계 또는 기능 제안을 알려주세요.",
   "fb.text": "메시지",
   "fb.textPh": "겪은 문제, 재현 단계 또는 제안하는 기능을 적어주세요…",
   "fb.contact": "연락처 (선택, 공개 시 자동 마스킹)",
@@ -254,8 +254,8 @@ const ko: Record<TKey, ReactNode> = {
   "fb.errorTooMany": "이미지는 최대 3장까지",
   "fb.errorTooLarge": "이미지가 5MB 제한을 초과합니다",
   "fb.close": "닫기",
-  "fbw.eyebrow": "공개 메시지 월",
-  "fbw.title": "피드백 월",
+  "fbw.eyebrow": "공개 메시지",
+  "fbw.title": "메시지와 피드백",
   "fbw.lead":
     "GenePad 사용자들의 공개 메시지 — 활용 사례, 버그 보고, 기능 제안을 모두 공개로 게시합니다.",
   "fbw.write": "메시지 쓰기",

@@ -5,7 +5,7 @@ import { useLang, usePageTitle } from "../i18n";
 import { dismissBoot } from "../boot";
 import { feedbackApiUrl, openFeedback } from "../feedback";
 
-/* 公开留言墙（/feedback）：经 GET /api/feedback/list 分页拉取用户留言（仅 hidden=0）；
+/* 留言与反馈页（/feedback）：经 GET /api/feedback/list 分页拉取用户留言（仅 hidden=0）；
    提交入口复用全站反馈弹窗（openFeedback）。管理口径见 AGENTS.md「Feedback API」。
    【图片功能下线（2026-09-27，纯文字版）】：images 字段保留在接口类型里（恒为空
    数组），渲染层已移除；恢复见 _worker.js 的 IMAGE-REENABLE 标记与 git 历史。 */
@@ -88,7 +88,7 @@ export default function Feedback() {
 
   return (
     <div className="min-h-screen bg-paper font-sans text-ink">
-      <SubpageNav tag="MESSAGE WALL" />
+      <SubpageNav tag="MESSAGE BOARD" />
       <main className="mx-auto max-w-[1400px] px-5 py-16 md:px-8 md:py-24">
           <SectionHead
             index="F"

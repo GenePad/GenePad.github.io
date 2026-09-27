@@ -40,7 +40,7 @@ const fr: Record<TKey, ReactNode> = {
     "Projets - GenePad | Bibliothèques d’éléments plasmidiques et cartes de codons",
   "title.tech": "Documentation développeur - GenePad",
   "title.stats": "Données en direct - GenePad | Statistiques d’utilisation publiques",
-  "title.feedback": "Mur de feedback - GenePad | Messages publics des utilisateurs",
+  "title.feedback": "Messages et feedback - GenePad | Messages publics des utilisateurs",
 
   // Hero
   "hero.badge": "BÊTA PUBLIQUE GRATUITE",
@@ -248,7 +248,7 @@ const fr: Record<TKey, ReactNode> = {
   "fb.entry": "Feedback",
   "fb.title": "Laisser un message",
   "fb.intro":
-    "Les messages sont affichés publiquement sur le mur de feedback. Décrivez vos problèmes, les étapes de reproduction ou les fonctions souhaitées.",
+    "Les messages sont affichés publiquement sur la page Messages et feedback. Décrivez vos problèmes, les étapes de reproduction ou les fonctions souhaitées.",
   "fb.text": "Message",
   "fb.textPh": "Décrivez le problème, comment le reproduire, ou la fonction suggérée…",
   "fb.contact": "Contact (facultatif, automatiquement masqué lorsqu’affiché publiquement)",
@@ -266,8 +266,8 @@ const fr: Record<TKey, ReactNode> = {
   "fb.errorTooMany": "3 images maximum",
   "fb.errorTooLarge": "L’image dépasse la limite de 5 Mo",
   "fb.close": "Fermer",
-  "fbw.eyebrow": "MUR DE FEEDBACK",
-  "fbw.title": "Mur de feedback",
+  "fbw.eyebrow": "MESSAGES PUBLICS",
+  "fbw.title": "Messages et feedback",
   "fbw.lead":
     "Messages publics des utilisateurs de GenePad — usages, rapports de bugs et demandes de fonctions, tout est ouvert.",
   "fbw.write": "Écrire un message",

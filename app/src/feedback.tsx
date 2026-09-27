@@ -8,10 +8,10 @@ import { useLang } from "./i18n";
 
 /* ── 用户反馈：页脚/Hero 入口 → 全屏弹窗表单 → POST /api/feedback ──
    文本（必填）+ 可选联系方式，Cloudflare Turnstile 人机验证；
-   留言公开陈列在 /feedback 留言墙（GET /api/feedback/list，见 pages/Feedback.tsx，
+   留言公开陈列在 /feedback 留言与反馈页（GET /api/feedback/list，见 pages/Feedback.tsx，
    主页卡片轮播见 sections/FeedbackSection.tsx）。
    <FeedbackModal/> 挂在 Footer（每页都有）；其他位置（Hero、TechSupport 反馈框、
-   留言墙页）调 openFeedback() 触发 —— 模块级 CustomEvent，不引入全局 Provider。
+   留言与反馈页）调 openFeedback() 触发 —— 模块级 CustomEvent，不引入全局 Provider。
    管理（删除/隐藏留言）见 AGENTS.md「Feedback API」。
    【图片上传已下线（2026-09-27，纯文字版）】：选图/粘贴/压缩 UI 已移除，
    恢复时前端按 git 历史（本文件 @ 170a04d）取回，后端 R2 代码以 IMAGE-REENABLE

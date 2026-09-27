@@ -47,7 +47,7 @@ const zhDict = {
     "title.projects": "生态项目 - GenePad | 质粒元件库与密码子图谱",
     "title.tech": "开发者技术文档 - GenePad",
     "title.stats": "实时数据 - GenePad | 公开使用统计",
-    "title.feedback": "留言反馈 - GenePad | 公开留言墙",
+    "title.feedback": "留言与反馈 - GenePad | 公开用户留言",
 
     // Hero
     "hero.badge": "免费公测中",
@@ -248,10 +248,10 @@ const zhDict = {
     "ft.sponsor": "赞助开发者",
     "ft.copyright": "© 2026 GENEPAD — MADE FOR THE BENCH",
 
-    // 用户反馈：弹窗表单（fb.*）与公开留言墙 / 主页横幅（fbw.*）
+    // 用户反馈：弹窗表单（fb.*）与留言与反馈页 / 主页横幅（fbw.*）
     "fb.entry": "在线反馈",
     "fb.title": "留言反馈",
-    "fb.intro": "留言会公开显示在留言墙，欢迎描述使用中遇到的问题、复现步骤或功能建议。",
+    "fb.intro": "留言会公开显示在留言与反馈页，欢迎描述使用中遇到的问题、复现步骤或功能建议。",
     "fb.text": "留言内容",
     "fb.textPh": "请描述你遇到的问题、复现步骤或功能建议…",
     "fb.contact": "联系方式（可选，公开展示时自动脱敏，便于我们回复）",
@@ -270,7 +270,7 @@ const zhDict = {
     "fb.errorTooLarge": "图片超过 5MB 限制",
     "fb.close": "关闭",
     "fbw.eyebrow": "公开留言板",
-    "fbw.title": "公开留言墙",
+    "fbw.title": "留言与反馈",
     "fbw.lead": "来自 GenePad 用户的公开留言——使用心得、问题反馈与功能建议，全部公开展示。",
     "fbw.write": "写留言",
     "fbw.empty": "还没有留言，来做第一个吧",
@@ -843,7 +843,7 @@ const dict: Record<Lang, Record<TKey, ReactNode>> = {
     "title.projects": "Projects - GenePad | Plasmid Part Libraries & Codon Maps",
     "title.tech": "Developer Documentation - GenePad",
     "title.stats": "Live Stats - GenePad | Public Usage Statistics",
-    "title.feedback": "Feedback Wall - GenePad | Public User Messages",
+    "title.feedback": "Messages & Feedback - GenePad | Public User Messages",
 
     // Hero
     "hero.badge": "IN FREE BETA",
@@ -1046,7 +1046,7 @@ const dict: Record<Lang, Record<TKey, ReactNode>> = {
     "fb.entry": "Feedback",
     "fb.title": "Leave Feedback",
     "fb.intro":
-      "Messages are shown publicly on the feedback wall. Tell us about problems you hit, how to reproduce them, or features you would like.",
+      "Messages are shown publicly on the Messages & Feedback page. Tell us about problems you hit, how to reproduce them, or features you would like.",
     "fb.text": "Message",
     "fb.textPh": "Describe the problem, how to reproduce it, or the feature you suggest…",
     "fb.contact": "Contact (optional, auto-masked when shown publicly)",
@@ -1064,8 +1064,8 @@ const dict: Record<Lang, Record<TKey, ReactNode>> = {
     "fb.errorTooMany": "Up to 3 images",
     "fb.errorTooLarge": "Image exceeds the 5MB limit",
     "fb.close": "Close",
-    "fbw.eyebrow": "MESSAGE WALL",
-    "fbw.title": "Feedback Wall",
+    "fbw.eyebrow": "MESSAGE BOARD",
+    "fbw.title": "Messages & Feedback",
     "fbw.lead":
       "Public messages from GenePad users — use cases, bug reports and feature requests, all in the open.",
     "fbw.write": "Write a message",

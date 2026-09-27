@@ -76,9 +76,9 @@ export default {
         "Tutoriel GenePad sur la langue de l’interface : ouvrez Réglages → Language pour basculer entre le chinois et l’anglais intégrés, ou importez via « Import Language File » un paquet officiel (allemand, russe, japonais, coréen, français) — toute l’interface bascule aussitôt, sans configuration. Pas à pas illustré, les cinq paquets officiels en téléchargement.",
     },
     "feedback": {
-      title: "Mur de feedback - GenePad | Messages publics des utilisateurs",
+      title: "Messages et feedback - GenePad | Messages publics des utilisateurs",
       description:
-        "Mur de feedback public de GenePad : usages, rapports de bugs et demandes de fonctions des utilisateurs. Les messages sont publiés après la vérification humaine — ou via le formulaire de feedback en pied de page.",
+        "Messages et feedback publics de GenePad : usages, rapports de bugs et demandes de fonctions des utilisateurs. Les messages sont publiés après la vérification humaine — ou via le formulaire de feedback en pied de page.",
     },
     "stats": {
       title: "Données en direct - GenePad | Statistiques d’utilisation publiques",

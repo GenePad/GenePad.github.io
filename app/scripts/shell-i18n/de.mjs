@@ -76,9 +76,9 @@ export default {
         "GenePad-Tutorial zur Sprache der Oberfläche: Öffnen Sie Einstellungen → Language, um zwischen den eingebauten Sprachen Chinesisch/Englisch zu wechseln, oder importieren Sie über „Import Language File“ ein offizielles Sprachpaket (Deutsch, Russisch, Japanisch, Koreanisch, Französisch) — die gesamte Oberfläche wechselt sofort, ohne Konfiguration. Schritt für Schritt mit Screenshots; alle fünf offiziellen Pakete stehen zum Download bereit.",
     },
     "feedback": {
-      title: "Feedback-Wand - GenePad | Öffentliche Nutzernachrichten",
+      title: "Nachrichten & Feedback - GenePad | Öffentliche Nutzernachrichten",
       description:
-        "Öffentliche Feedback-Wand von GenePad: Anwendungsfälle, Fehlerberichte und Funktionswünsche von Nutzern. Nachrichten erscheinen nach der menschlichen Verifizierung öffentlich — oder über das Feedback-Formular im Seitenfuß.",
+        "Nachrichten & Feedback von GenePad: Anwendungsfälle, Fehlerberichte und Funktionswünsche von Nutzern. Nachrichten erscheinen nach der menschlichen Verifizierung öffentlich — oder über das Feedback-Formular im Seitenfuß.",
     },
     "stats": {
       title: "Live-Statistiken - GenePad | Öffentliche Nutzungsstatistiken",

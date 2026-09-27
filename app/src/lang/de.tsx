@@ -31,7 +31,7 @@ const de: Record<TKey, ReactNode> = {
   "title.projects": "Projekte - GenePad | Plasmid-Element-Bibliotheken & Codon-Karten",
   "title.tech": "Entwicklerdokumentation - GenePad",
   "title.stats": "Live-Statistiken - GenePad | Öffentliche Nutzungsstatistiken",
-  "title.feedback": "Feedback-Wand - GenePad | Öffentliche Nutzernachrichten",
+  "title.feedback": "Nachrichten & Feedback - GenePad | Öffentliche Nutzernachrichten",
 
   // Hero
   "hero.badge": "Kostenlose Beta",
@@ -238,7 +238,7 @@ const de: Record<TKey, ReactNode> = {
   "fb.entry": "Feedback",
   "fb.title": "Feedback hinterlassen",
   "fb.intro":
-    "Nachrichten werden öffentlich auf der Feedback-Wand gezeigt. Beschreib uns Probleme, Schritte zur Reproduktion oder gewünschte Funktionen.",
+    "Nachrichten werden öffentlich auf der Seite „Nachrichten & Feedback“ gezeigt. Beschreib uns Probleme, Schritte zur Reproduktion oder gewünschte Funktionen.",
   "fb.text": "Nachricht",
   "fb.textPh":
     "Beschreibe das Problem, wie es sich reproduzieren lässt, oder die vorgeschlagene Funktion…",
@@ -257,8 +257,8 @@ const de: Record<TKey, ReactNode> = {
   "fb.errorTooMany": "Maximal 3 Bilder",
   "fb.errorTooLarge": "Bild überschreitet das 5MB-Limit",
   "fb.close": "Schließen",
-  "fbw.eyebrow": "MESSAGE WALL",
-  "fbw.title": "Feedback-Wand",
+  "fbw.eyebrow": "MESSAGE BOARD",
+  "fbw.title": "Nachrichten & Feedback",
   "fbw.lead":
     "Öffentliche Nachrichten von GenePad-Nutzern — Anwendungsfälle, Fehlerberichte und Funktionswünsche, alles offen.",
   "fbw.write": "Nachricht schreiben",
