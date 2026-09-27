@@ -31,9 +31,9 @@ export default {
         "GenePad が保守する関連プロジェクト：プラスミッド汎用要素の配列ライブラリ（20 分類 266 要素、NCBI まで出典をたどれる、MIT ライセンス）と、GTEx/GENCODE から構築したヒト組織特異的コドン使用アトラス（ソースコード公開）——研究者と開発者のためのツール。",
     },
     library: {
-      title: "遺伝子ファイルライブラリ - GenePad | プラスミッドファイルの検索と管理",
+      title: "遺伝子ファイル集 - GenePad | プラスミッドファイルの検索と管理",
       description:
-        "GenePad 内蔵のプラスミッドファイルライブラリ：フォルダに散在するプラスミッドファイルを検索可能な 1 つの索引に集約——プロジェクト別・保存先別・AI 生成タグ別に整理。DeepSeek を設定すればプラスミッドに自動タグ付けされ、AI アシスタントが属性からプラスミッドを探します。ファイル名や場所を覚える必要はありません。",
+        "GenePad 内蔵のプラスミッドファイル集：フォルダに散在するプラスミッドファイルを検索可能な 1 つの索引に集約——プロジェクト別・保存先別・AI 生成タグ別に整理。DeepSeek を設定すればプラスミッドに自動タグ付けされ、AI アシスタントが属性からプラスミッドを探します。ファイル名や場所を覚える必要はありません。",
     },
     ngs: {
       title: "NGS データ閲覧 - GenePad | FASTQ 配列データの表示とライブラリ豊度解析",
@@ -41,9 +41,9 @@ export default {
         "GenePad 内蔵の NGS データ閲覧：右クリックの「Open with」やドラッグ＆ドロップで fastq.gz / fastq / fq.gz / fq ファイルを直接開けます。ペアエンドは自動ペアリング・自動結合、塩基ごとの品質確認、アミノ酸断片の検索で可変領域を特定、トリミングアンカーで一括切り出し、ワンクリックでライブラリ豊度レポートを作成します。",
     },
     tutorial: {
-      title: "使い方 - GenePad | AI 設定 · 遺伝子ファイルライブラリ · NGS 解析",
+      title: "使い方 - GenePad | AI 設定 · 遺伝子ファイル集 · NGS 解析",
       description:
-        "GenePad の使い方目次：図解入りの手順ガイド——DeepSeek AI の設定、遺伝子ファイルライブラリの整理、NGS データを fastq.gz からライブラリ豊度レポートまで、など。1 記事 1 ページ、随時更新。",
+        "GenePad の使い方目次：図解入りの手順ガイド——DeepSeek AI の設定、遺伝子ファイル集の整理、NGS データを fastq.gz からライブラリ豊度レポートまで、など。1 記事 1 ページ、随時更新。",
     },
     "tutorial-ai": {
       title: "AI 設定の手順 - GenePad | DeepSeek API キーの取得と保存",
@@ -51,7 +51,7 @@ export default {
         "GenePad の手順解説：5 つの手順で DeepSeek に接続——Settings を開き、設定を作成し、モデルを選び、DeepSeek のプラットフォームで API キーを作成・コピーして、貼り付け・接続テスト・保存すれば、AI アシスタントとプラスミッド自動タグが使えるようになります。全手順を実際のスクリーンショットで図解。",
     },
     "tutorial-library": {
-      title: "遺伝子ファイルライブラリの手順 - GenePad | プラスミッドの取り込み・検索・AI タグ",
+      title: "遺伝子ファイル集の手順 - GenePad | プラスミッドの取り込み・検索・AI タグ",
       description:
         "GenePad の手順解説：監視フォルダを追加すればプラスミッドが自動で取り込まれ、プロジェクト・保存先・AI タグで閲覧し、AI アシスタントでプラスミッドを特定、ワンクリックで SnapGene / VS Code にファイルを渡せます。全手順を実際のスクリーンショットで図解。",
     },
@@ -68,7 +68,7 @@ export default {
         "tutorial-snapgene": {
       title: "SnapGene 代替ガイド - GenePad | 無料・複数 OS 対応のプラスミッドマップ編集ツール",
       description:
-        "GenePad の SnapGene 移行ガイド：SnapGene の .dna プラスミドファイルをそのまま読み書きでき、マップ・制限酵素部位・プライマー・Sanger 比較も直感的に操作できます。さらに NGS データ閲覧・遺伝子ファイルライブラリ・AI アシスタント・6 か国語 UI を搭載し、Windows / macOS / Linux / Android で無料の公開ベータ中。「Open with」でいつでも SnapGene にファイルを渡せます。",
+        "GenePad の SnapGene 移行ガイド：SnapGene の .dna プラスミドファイルをそのまま読み書きでき、マップ・制限酵素部位・プライマー・Sanger 比較も直感的に操作できます。さらに NGS データ閲覧・遺伝子ファイル集・AI アシスタント・6 か国語 UI を搭載し、Windows / macOS / Linux / Android で無料の公開ベータ中。「Open with」でいつでも SnapGene にファイルを渡せます。",
     },
 "tutorial-langpack": {
       title: "UI 言語を設定する手順 - GenePad | 内蔵言語と公式言語パック",
