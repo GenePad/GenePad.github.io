@@ -23,7 +23,7 @@ const ja: Record<TKey, ReactNode> = {
   "nav.lang": "EN",
 
   // Page titles（実行時タイトルは UI 言語に追従。静的 HTML の <title> はページ言語と一致：jp.genepad.cn は日本語）
-  "title.home": "GenePad - 軽量・複数 OS 対応のプラスミッドマップ編集ツール",
+  "title.home": "GenePad - 分子生物学のための遺伝子マップ編集ツール",
   "title.library": "遺伝子ファイル集 - GenePad | プラスミッドファイルの検索と管理",
   "title.ngs": "NGS データ閲覧 - GenePad | FASTQ 配列データの表示とライブラリ豊度解析",
   "title.tutorial": "使い方 - GenePad | AI 設定 · 遺伝子ファイル集 · NGS 解析",

@@ -16,7 +16,7 @@ export default {
   // 11 构建ページの <title> と meta description（og/twitter 描述は description を流用）
   pages: {
     index: {
-      title: "GenePad - 軽量・複数 OS 対応のプラスミッドマップ編集ツール",
+      title: "GenePad - 分子生物学のための遺伝子マップ編集ツール",
       description:
         "GenePad は日常の分子クローニングのための軽量・複数 OS 対応のプラスミッドマップ編集ツール：プラスミッドマップの閲覧・編集、配列注釈の管理、制限酵素部位の解析、Sanger トレースとの照合に対応。GEN、GenBank、FASTA、SnapGene DNA（.dna）、AB1、GJSON の読み書きに対応します。",
     },

@@ -35,7 +35,7 @@ const zhDict = {
     "nav.lang": "EN",
 
     // Page titles（运行时标题随语言切换；静态 HTML 中的 <title> 与页面语言一致：根路径中文、en.genepad.cn 英文）
-    "title.home": "基因工坊 GenePad - 轻量跨平台基因图谱编辑器",
+    "title.home": "基因工坊 GenePad - 分子生物学基因图谱编辑器",
     "title.library": "基因文件库 - GenePad | 质粒文件检索与管理",
     "title.ngs": "NGS 数据查看 - GenePad | FASTQ 测序数据查看与文库丰度分析",
     "title.tutorial": "使用教程 - GenePad | AI 配置 · 基因文件库 · NGS 文件分析",
@@ -831,7 +831,7 @@ const dict: Record<Lang, Record<TKey, ReactNode>> = {
     "nav.lang": "中",
 
     // Page titles (runtime title follows the UI language; static HTML ships the English one for crawlers)
-    "title.home": "GenePad - Lightweight Cross-Platform Gene Map Editor",
+    "title.home": "GenePad - Gene Map Editor for Molecular Biology",
     "title.library": "File Library - GenePad | Plasmid File Search & Management",
     "title.ngs": "NGS Viewer - GenePad | FASTQ Data Viewing & Library Abundance Analysis",
     "title.tutorial": "Tutorials - GenePad | AI Setup · File Library · NGS Analysis",

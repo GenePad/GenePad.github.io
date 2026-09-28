@@ -20,7 +20,7 @@ const fr: Record<TKey, ReactNode> = {
 
   // Titres de page (le titre d’exécution suit la langue de l’interface ; le <title> statique
   // des pages HTML correspond à la langue de la page, ici le français pour fr.genepad.cn)
-  "title.home": "GenePad - Éditeur de cartes géniques léger et multiplateforme",
+  "title.home": "GenePad - Éditeur de cartes géniques pour la biologie moléculaire",
   "title.library":
     "Bibliothèque de fichiers - GenePad | Recherche et gestion de fichiers plasmidiques",
   "title.ngs":

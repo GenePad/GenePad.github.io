@@ -19,7 +19,7 @@ const ko: Record<TKey, ReactNode> = {
   "nav.lang": "EN",
 
   // 페이지 제목
-  "title.home": "GenePad - 가벼운 크로스 플랫폼 유전자 지도 편집기",
+  "title.home": "GenePad - 분자생물학을 위한 유전자 지도 편집기",
   "title.library": "파일 라이브러리 - GenePad | 플라스미드 파일 검색 및 관리",
   "title.ngs": "NGS 뷰어 - GenePad | FASTQ 데이터 조회 및 라이브러리 풍부도 분석",
   "title.tutorial": "튜토리얼 - GenePad | AI 설정 · 파일 라이브러리 · NGS 분석",

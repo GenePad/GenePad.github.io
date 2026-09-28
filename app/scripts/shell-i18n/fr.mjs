@@ -16,7 +16,7 @@ export default {
   // <title> et meta description des 11 pages build (og/twitter réutilisent description)
   pages: {
     "index": {
-      title: "GenePad - Éditeur de cartes géniques léger et multiplateforme",
+      title: "GenePad - Éditeur de cartes géniques pour la biologie moléculaire",
       description:
         "GenePad est un éditeur de cartes géniques léger et multiplateforme pour le clonage moléculaire au quotidien : parcourez et modifiez les cartes de plasmides, gérez les annotations de séquences, analysez les sites de restriction et comparez les chromatogrammes Sanger. Formats pris en charge : GEN, GenBank, FASTA, SnapGene DNA (.dna), AB1 et GJSON.",
     },

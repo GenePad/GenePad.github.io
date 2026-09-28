@@ -19,7 +19,7 @@ const ru: Record<TKey, ReactNode> = {
   "nav.lang": "EN",
 
   // Page titles（运行时标题随语言切换；ru.genepad.cn 壳页 <title> 与此一致）
-  "title.home": "GenePad - лёгкий кроссплатформенный редактор карт генов",
+  "title.home": "GenePad - редактор карт генов для молекулярной биологии",
   "title.library": "Библиотека файлов - GenePad | Поиск и управление файлами плазмид",
   "title.ngs": "Просмотр NGS-данных - GenePad | Просмотр данных FASTQ и анализ обилия последовательностей",
   "title.tutorial": "Руководства - GenePad | Настройка ИИ · Библиотека файлов · Анализ NGS",

@@ -19,7 +19,7 @@ const de: Record<TKey, ReactNode> = {
   "nav.lang": "EN",
 
   // Page titles（运行时标题随语言切换；de.genepad.cn 壳页 <title> 与此一致）
-  "title.home": "GenePad - Leichtgewichtiger plattformübergreifender Genkarten-Editor",
+  "title.home": "GenePad - Genkarten-Editor für die Molekularbiologie",
   "title.library": "Dateibibliothek - GenePad | Plasmid-Dateien suchen & verwalten",
   "title.ngs": "NGS-Viewer - GenePad | FASTQ-Daten ansehen & Bibliotheks-Häufigkeitsanalyse",
   "title.tutorial": "Tutorials - GenePad | KI einrichten · Dateibibliothek · NGS-Analyse",

@@ -16,7 +16,7 @@ export default {
   // 11 个构建页的 <title> 与 meta description（og/twitter 描述复用 description）
   pages: {
     "index": {
-      title: "GenePad - Leichtgewichtiger plattformübergreifender Genkarten-Editor",
+      title: "GenePad - Genkarten-Editor für die Molekularbiologie",
       description:
         "GenePad ist ein leichtgewichtiger, plattformübergreifender Genkarten-Editor für die tägliche molekulare Klonierung: Plasmidkarten ansehen und bearbeiten, Sequenzannotationen verwalten, Restriktionsstellen analysieren und Sanger-Sequenzierchromatogramme vergleichen. Unterstützt GEN, GenBank, FASTA, SnapGene DNA (.dna), AB1 und GJSON.",
     },

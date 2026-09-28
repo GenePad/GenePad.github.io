@@ -16,7 +16,7 @@ export default {
   // 11개 빌드 페이지의 <title>과 meta description(og/twitter 설명은 description 재사용)
   pages: {
     "index": {
-      title: "GenePad - 가벼운 크로스 플랫폼 유전자 지도 편집기",
+      title: "GenePad - 분자생물학을 위한 유전자 지도 편집기",
       description:
         "GenePad는 일상적인 분자 클로닝을 위한 가볍고 크로스 플랫폼 유전자 지도 편집기입니다. 플라스미드 맵 열람·편집, 서열 주석 관리, 제한효소 부위 분석, Sanger 시퀀싱 트레이스 비교를 지원합니다. GEN, GenBank, FASTA, SnapGene DNA(.dna), AB1, GJSON 형식을 지원합니다.",
     },
