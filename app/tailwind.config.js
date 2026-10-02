@@ -17,6 +17,12 @@ module.exports = {
         gfp: "rgb(var(--gp-gfp) / <alpha-value>)",
         "gfp-deep": "rgb(var(--gp-gfp-deep) / <alpha-value>)",
         "on-gfp": "rgb(var(--gp-on-gfp) / <alpha-value>)",
+        /* stats 分系统图表色（色盲安全，index.css :root/深色块） */
+        "os-windows": "rgb(var(--gp-os-windows) / <alpha-value>)",
+        "os-macos": "rgb(var(--gp-os-macos) / <alpha-value>)",
+        "os-linux": "rgb(var(--gp-os-linux) / <alpha-value>)",
+        "os-android": "rgb(var(--gp-os-android) / <alpha-value>)",
+        "os-other": "rgb(var(--gp-os-other) / <alpha-value>)",
         line: "rgb(var(--gp-line) / 0.16)",
         "line-strong": "rgb(var(--gp-line) / 0.34)",
         lined: "rgb(var(--gp-lined) / 0.16)",

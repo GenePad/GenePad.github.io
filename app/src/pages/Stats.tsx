@@ -32,14 +32,15 @@ interface StatsData {
   updatedAt: number;
 }
 
-/* 柱内堆叠顺序（自下而上）与配色：windows 压底沿用原合计柱的 gfp-deep，向上渐浅；
-   全部走语义 token，深色模式跟随 CSS 变量自动翻转 */
+/* 柱内堆叠顺序（自下而上）与配色：Okabe-Ito 色盲安全色板（蓝/橙/紫红/蓝绿）+ 中性灰，
+   色相与明度双通道拉开，红绿色弱下仍两两可辨（弃用旧版全绿灰系）；
+   全部走语义 token，深色模式跟随 CSS 变量自动提亮 */
 const OS_STACK: { key: OsKey; fill: string; swatch: string }[] = [
-  { key: "windows", fill: "fill-gfp-deep", swatch: "bg-gfp-deep" },
-  { key: "macos", fill: "fill-ink", swatch: "bg-ink" },
-  { key: "linux", fill: "fill-pine", swatch: "bg-pine" },
-  { key: "android", fill: "fill-sage", swatch: "bg-sage" },
-  { key: "other", fill: "fill-ink/40", swatch: "bg-ink/40" },
+  { key: "windows", fill: "fill-os-windows", swatch: "bg-os-windows" },
+  { key: "macos", fill: "fill-os-macos", swatch: "bg-os-macos" },
+  { key: "linux", fill: "fill-os-linux", swatch: "bg-os-linux" },
+  { key: "android", fill: "fill-os-android", swatch: "bg-os-android" },
+  { key: "other", fill: "fill-os-other", swatch: "bg-os-other" },
 ];
 
 export default function Stats() {
@@ -136,6 +137,8 @@ export default function Stats() {
     .filter((row) => row.n > 0)
     .sort((a, b) => b.n - a.n || a.key.localeCompare(b.key));
   const osTotal = osRows.reduce((sum, row) => sum + row.n, 0);
+  /* 分布横条与柱状图同色系：按 key 取图例色，未知 key 回落合计柱绿 */
+  const osSwatch = new Map<string, string>(OS_STACK.map((s) => [s.key, s.swatch]));
 
   /* 分系统时间序列：当前粒度的 byOs 桶折成「桶起点 → 各系统计数」表；
      接口尚未返回（老 worker / 缓存响应）时 osBuckets 为 null，图表退回单色合计柱 */
@@ -202,7 +205,7 @@ export default function Stats() {
                       </span>
                       <span className="h-2 flex-1 overflow-hidden bg-ink/[0.06]">
                         <span
-                          className="block h-full bg-gfp-deep"
+                          className={`block h-full ${osSwatch.get(row.key) ?? "bg-gfp-deep"}`}
                           style={{ width: `${Math.max(pct, 0.75)}%` }}
                         />
                       </span>
