@@ -296,8 +296,8 @@ fi
 # ---------- 1. 识别 CPU 架构 / detect architecture ----------
 case "$(uname -m)" in
   x86_64|amd64)  ARCH="amd64" ;;
-  aarch64|arm64) die "自 0.7.1 起不再提供 ARM64 Linux 安装包（仅 x86_64 deb）。旧版 0.6.9 的 ARM64 包仍可在 ${SITE} 下载页获取" \
-                    "ARM64 Linux builds were discontinued in 0.7.1 (x86_64 deb only). The last ARM64 packages (0.6.9) remain available on the download page at ${SITE}" ;;
+  aarch64|arm64) die "自 0.7.1 起不再提供 ARM64 Linux 安装包（仅 x86_64 deb）" \
+                    "ARM64 Linux builds were discontinued in 0.7.1 (x86_64 deb only)" ;;
   *) die "不支持的 CPU 架构: $(uname -m)（目前仅提供 x86_64 安装包）" \
         "unsupported CPU architecture: $(uname -m) (only x86_64 builds are provided)" ;;
 esac
