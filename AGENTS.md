@@ -364,9 +364,7 @@ docs/release/mac/GenePad_x.x.x_Darwin_arm64.app.tar.gz (+ .app.tar.gz.sig)
 人用下载为 zip(内含 NSIS setup exe)——浏览器直下裸 exe 会被 SmartScreen/下载
 拦截,zip 不会;应用内 updater(tauri-plugin-updater)自 0.7.3 起改下**签名的裸
 exe**(bundler minisign 签名,标准 updater 产物,改规范名不改字节签名仍有效),
-zip 转人用下载专用,`.zip.sig` 存档备用(清单不再引用)。旧版本 0.6.9 的
-rpm/tar.gz/arm64 包与 0.7.1 的裸 exe(+sig)已删(2026-10-03,不再保留存档;
-install.sh 的停发提示已同步改为不再指向下载页)。
+zip 转人用下载专用,`.zip.sig` 存档备用(清单不再引用)。
 
 **macOS notes:** the app is unsigned, so browser downloads get flagged by
 Gatekeeper — the site steers macOS users to `brew install genepad/tap/genepad`
