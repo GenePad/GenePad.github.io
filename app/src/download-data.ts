@@ -61,7 +61,7 @@ export const PLATFORMS: (Omit<PlatformDownloads, "files"> & {
   {
     id: "android",
     files: [
-      { name: `GenePad-v${VERSION}-android-universal-release.apk`, size: "24.7 MB" },
+      { name: `GenePad-v${VERSION}-android-universal-release.apk`, size: "17.8 MB" },
     ].map(withSources),
   },
 ];
