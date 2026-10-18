@@ -52,7 +52,8 @@
                 <button class="doc-toc-toggle" type="button">目录</button>
                 <a class="doc-toc-home" href="/">← 返回首页</a>
                 <p class="doc-toc-group">版本</p>
-                <a class="current" href="#v0-7-8">v0.7.8</a>
+                <a class="current" href="#v0-7-9">v0.7.9</a>
+                <a href="#v0-7-8">v0.7.8</a>
                 <a href="#v0-7-7">v0.7.7</a>
                 <a href="#v0-7-6">v0.7.6</a>
                 <a href="#v0-7-5">v0.7.5</a>
@@ -75,6 +76,31 @@
                         记录 GenePad 每个版本的新功能、缺陷修复与维护变更。版本按发布时间倒序排列。
                     </p>
                 </div>
+
+                <section class="doc-section" id="v0-7-9">
+                    <div class="section-heading">
+                        <p class="eyebrow">2026-10-19</p>
+                        <h2>v0.7.9</h2>
+                    </div>
+                    <p>本次更新的核心是<strong>引物 Tm 计算全面对齐 SnapGene</strong>：通过对 SnapGene Tm 算法的逆向分析重写了计算模型，修复了此前约 3°C 的系统性偏差；打开 SnapGene 文件时，引物结合位点的 Tm 直接采用文件内保存的数值，与 SnapGene 中所见完全一致。另新增引物浓度设置项，并修复反向拖选时选中信息气泡位置、图谱独占时工具栏位置等问题。</p>
+
+                    <h3>✨ 新功能</h3>
+                    <ul>
+                        <li><strong>引物 Tm</strong>：
+                            <ul>
+                                <li>引物熔解温度（Tm）按 SnapGene 的算法口径重新实现，计算结果与 SnapGene 一致（此前偏差可达 3°C）</li>
+                                <li>打开 SnapGene 文件时，引物与序列结合位点的 Tm 直接显示文件内保存的数值</li>
+                                <li>新增「设置 &gt; 引物」页：引物寡核苷酸浓度可调（默认 0.25 µM，与 SnapGene 相同），改动即时生效并在多窗口间同步；序列视图、引物列表与引物对话框的 Tm 显示统一跟随</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <h3>🐛 问题修复</h3>
+                    <ul>
+                        <li>序列视图中反向拖选（光标落在选区起始端）时，选中信息气泡现在贴选区上侧跟随光标端，不再固定显示在底部</li>
+                        <li>图谱独占显示（序列视图隐藏）时，底部悬浮工具栏贴左下角，不再悬在画面中央</li>
+                    </ul>
+                </section>
 
                 <section class="doc-section" id="v0-7-8">
                     <div class="section-heading">

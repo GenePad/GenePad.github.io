@@ -1,19 +1,19 @@
 {
-  "version": "0.7.8",
-  "notes": "# GenePad v0.7.8\n\n本次更新带来两大新能力:**局域网去中心团队**(无需服务器,同一局域网内即可组建团队、共享基因文件库)与**基因文件库设置改版**(双击可映射用外部程序打开);安卓安装包大幅瘦身(24.7MB → 17.8MB);序列比对全面优化:泳道更紧凑、支持勾选框多选、新增空白泳道快速跳转、图谱与列表联动更顺畅。另修复安卓启动报错、错误弹窗显示 [object Object] 等一批问题。\n\n## ✨ 新功能\n\n**团队协作**\n- 全新「局域网网络」模式:无需中心服务器,同一局域网内即可创建/加入团队(开放网络自动扫描发现;隐藏网络或跨网段可手动输入网络凭据或 IP 直连)\n- 成员的基因文件列表自动同步,文件索取直达持有者、投递定向直传,文件本体始终只在自己电脑上\n- 双击成员条目即可发起索取;与原有「中心服务器(企业管理)」模式并存,任一时刻二选一\n- 共享基因列表默认开启:对方只能看到列表,具体文件需向你索取\n\n**基因文件库**\n- 库窗口设置弹窗改版为三页签:AI 标签 / 团队管理 / 双击打开方式\n- 双击打开方式支持按扩展名映射外部程序(如双击 .dna 直接用 SnapGene 打开),右键「打开」同步跟随,并新增「用本程序打开」;支持一键恢复全部默认\n- 用第三方程序打开时显示进行中提示,失败给出明确错误弹窗\n\n**序列比对**\n- 比对条目列表改版:每行行首勾选框多选,配套全选 / 取消选择 / 隐藏显示 / 移除所选工具栏,支持 Delete / Ctrl+A / Esc 快捷键(全选按鼠标焦点只作用于上或下部分,再按一次整体取消)\n- 泳道大幅压缩:无色谱的泳道只占一行高度,列表行只保留名称(bp / 一致度等详情移入悬停提示)\n- 空白泳道新增快速跳转按钮:←/→ 跳到本泳道最近命中,↑/↓ 跳到最近有内容的泳道并居中\n- 图谱比对条与列表双向联动:悬浮 / 选中金色描边,点击图谱比对条直接跳转并聚焦泳道\n- 点击比对名称跳转时,目标泳道/色谱自动纵向滚入视口\n- 核酸搜索无命中时,可确认后一键转为序列比对(以搜索序列新建比对条目并进入比对模式)\n- 隐藏比对条目时列表不再整体跳动;隐藏区文字改回正常颜色、上下区分隔线加深加粗\n\n**交互与快捷键**\n- 引入「焦点」概念:Delete、Ctrl+A 等快捷键按鼠标上一步点击的位置分流——点引物删引物、点泳道全选该泳道、点列表全选该列表,不再误触\n\n**安卓**\n- 安卓版大幅瘦身:团队、AI 助手、分子克隆、电泳等不再进入安卓包(安卓聚焦浏览),安装包从 24.7MB 降到 17.8MB(-28%),浏览、酶切检测、序列查看等功能不变\n\n## 🐛 问题修复\n\n- 安卓启动不再弹出「Plugin window not initialized」错误\n- 错误弹窗不再显示 [object Object],对象类错误完整展示并可复制详情\n- 勾选比对条目时列表不再下坠一帧再归位\n- 修复全局 toast 气泡变透明的问题;AI 设置打开时不再先闪「未配置任何 AI」黄条\n- 修复局域网团队「member not found」、侧栏团队共享计数为 0 等问题\n- 比对泳道与面板列表滚动联动更流畅,滚动中悬浮高亮不再引发卡顿",
-  "pub_date": "2026-10-09T00:05:00+08:00",
+  "version": "0.7.9",
+  "notes": "# GenePad v0.7.9\n\n本次更新的核心是**引物 Tm 计算全面对齐 SnapGene**:通过对 SnapGene Tm 算法的逆向分析重写了计算模型,修复了此前约 3°C 的系统性偏差;打开 SnapGene 文件时,引物结合位点的 Tm 直接采用文件内保存的数值,与 SnapGene 中所见完全一致。另新增引物浓度设置项,并修复反向拖选时选中信息气泡位置、图谱独占时工具栏位置等问题。\n\n## ✨ 新功能\n\n**引物 Tm**\n- 引物熔解温度(Tm)按 SnapGene 的算法口径重新实现,计算结果与 SnapGene 一致(此前偏差可达 3°C)\n- 打开 SnapGene 文件时,引物与序列结合位点的 Tm 直接显示文件内保存的数值\n- 新增「设置 > 引物」页:引物寡核苷酸浓度可调(默认 0.25 µM,与 SnapGene 相同),改动即时生效并在多窗口间同步;序列视图、引物列表与引物对话框的 Tm 显示统一跟随\n\n## 🐛 问题修复\n\n- 序列视图中反向拖选(光标落在选区起始端)时,选中信息气泡现在贴选区上侧跟随光标端,不再固定显示在底部\n- 图谱独占显示(序列视图隐藏)时,底部悬浮工具栏贴左下角,不再悬在画面中央",
+  "pub_date": "2026-10-19T01:10:00+08:00",
   "platforms": {
     "windows-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRK20xNzladkFOWk5BY0ZJdTR1TitaTXVkaDQwWkExVGlacGU1V2d5Z1NIVGsyNXZwTXhmV2hEc2I0OHNZWVhPOHFPaHpFQUlEam9MZG1qWVNrR21uV3VlRDBlZm9qdWdvPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkxNTk1Mzg3CWZpbGU6R2VuZVBhZF8wLjcuOF94NjQtc2V0dXAuZXhlCkVLemFQNkdITGF5YXlqam0xL0Q5TXc1M2U3NFZMbEVWQVhxSE8rNzRuWlJJT1ZxbkkyODNDWEVPOUl6Zyt6MFQ5WTBFNUdNeDZwMjFuWXNIREVEZ0RRPT0K",
-      "url": "https://genepad.pages.dev/release/windows/GenePad_0.7.8_Windows_amd64.exe"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRK20xNzladkFOWkRZZTlRenczQlJ3V1NSb0hyV2VWN2hnTGhMZEhrc3pTYWdOK0w3Wk5Ndk12T1FiakZNZGVFd1N1WW5FTlY5U0VyeXFta04wOUxzZUdYd1FqSlJMMFFBPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyMzQ0MjM3CWZpbGU6R2VuZVBhZF8wLjcuOV94NjQtc2V0dXAuZXhlCjIrRmdTeHcrSWFENExGOUR6RlBpRHRZZTRDMWdqY0RxZUxScHFNeWgvZ00walZEYm5sd1FRQnRuVWRaUEJlQ1E2eVlMakxoK1Q1Qi9ZdUhwcTA3MkN3PT0K",
+      "url": "https://genepad.pages.dev/release/windows/GenePad_0.7.9_Windows_amd64.exe"
     },
     "darwin-aarch64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRK20xNzladkFOWk1Tb1dPeUlTRi9aUmZWblV2azVpNFFIVzRZUlppa2pjTHA3Y3ZhN3FwWDFvU0hERDJCOUltZWp2NXU0QmRMdVNaRU4rY25VTURMQWVzdTUrZWY4WGdFPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkxNDc0MDY1CWZpbGU6R2VuZVBhZC5hcHAudGFyLmd6CjZwUTdKaVlOQlJZVjZqM1VRR095dG9TVFJpVjFjTDV1em01ZGF6MXd3cDA2QmNpa2JPUyszaW1Na0ZxZ0hNQWpGdkdQNGNad1haRE9WM2VXRGJmZkNRPT0K",
-      "url": "https://genepad.pages.dev/release/mac/GenePad_0.7.8_Darwin_arm64.app.tar.gz"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRK20xNzladkFOWkJ4YlMyMmZFS3RicC9PUG9GaUJnKys5Rzh4NVFuVUZkR29kUVNpYnErK0NhYnozdHQ5UEFGYVJ4bDJsc25LSWZ4RCtja3BlK1RvMHFEbmZjUXBLMWdVPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyMzQzNjA3CWZpbGU6R2VuZVBhZC5hcHAudGFyLmd6CjNtK1BhV0pjNmJwOTNscjBURFlrekZvVVJ2Slc0M2kzdnFPbHdKTlRwdVBEbVk5TVlZUEtGZGZLNTg2Qko5VXN6RFIyU1AzWm05T1VWY29Bb3ZkRUJnPT0K",
+      "url": "https://genepad.pages.dev/release/mac/GenePad_0.7.9_Darwin_arm64.app.tar.gz"
     },
     "linux-x86_64-deb": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRK20xNzladkFOWkFsVWF3OXQ0eE1QUDd1TnUrNE5GTklxYkszb3ZqMi9OSHhKMWRqZkROMEx1UXNWTEIvQW9xUjFGQTBKc3hRY3VMVm1mQUhIZ01BUlBPUFMveXBkVFFvPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkxNTk1MDI4CWZpbGU6R2VuZVBhZF8wLjcuOF9hbWQ2NC5kZWIKNXFZWmdtNXNYWHlXTFU0Qy83blhodlpSNFNzbmFtM3laempEcEY3N2RkcDI2d1BCcmlTRE5GV05zN3hmTDZnYUNZeDdOeXJsN2FHNDdqZHZZK2FmQmc9PQo=",
-      "url": "https://genepad.pages.dev/release/linux/GenePad_0.7.8_Linux_amd64.deb"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRK20xNzladkFOWkUvaTd0SHlpdmxtNGhpNy9Vcyt5MmNWNXlBc1pzdFR0VDVNcC9heW1BTkdnS0w4WnFJcVhnZVhQdHlGcmhGdjBvRUlxaEs4ZnZVNnBZYXh0bEN0QUF3PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyMzQzOTQyCWZpbGU6R2VuZVBhZF8wLjcuOV9hbWQ2NC5kZWIKQmV2V0NSL1RlTngwamgrZ2pSYlBQb2JYeXZGUXRxdWlxY2JDUUdGSmVnUUFkSUl6UzRxS0JLY2Z4S2V5NkdZSUJhL1ZRZ3hxL0VKL0lScmhjbXREQnc9PQo=",
+      "url": "https://genepad.pages.dev/release/linux/GenePad_0.7.9_Linux_amd64.deb"
     }
   }
 }
