@@ -316,7 +316,9 @@ Pages 环境变量 **`AAV_ORIGIN`** 里，形如 `http://<ip>:8787`，**不写�
   （含 query、POST 请求体，SSE 流式响应直通）；顺带隐藏源站 IP。反代返回的
   HTML 追加 `X-Robots-Tag: noindex`（壳页才是收录入口）。
 - **路由**（`route()` 的 aav 分支 + 纯函数 `routeAav`，可 node 单测）：
-  - `aav.genepad.cn/` → 静态壳 `/aav/index.html`；`/robots.txt` → 共用根
+  - `aav.genepad.cn/` → 静态壳（资产路径 **`/aav`**，目录直出 index.html——**不能**
+    映射成 `/aav/index.html`：Pages 资产层会把目录下 index.html 308 规范化回
+    目录，与 `/aav/*` 前缀规则相接成重定向死循环）；`/robots.txt` → 共用根
     robots.txt；`/sitemap.xml` → `/aav/sitemap.xml`（手工维护，单条目）；
     `/app`（`/app/`）→ 源站 `/`；其余 → 源站原路径。
   - 其他任何主机上的 `/aav/*` 一律 308 到 `aav.genepad.cn/*`（pages.dev 例外：

@@ -403,9 +403,13 @@ const AAV_STRIP_HEADERS = [
   'x-real-ip', 'accept-encoding',
 ];
 
-/* 纯函数,便于 node 单测:aav 主机上的路径 → 路由结果 */
+/* 纯函数,便于 node 单测:aav 主机上的路径 → 路由结果
+   根路径必须映射到目录 /aav 而非文件路径:Pages 资产层会把「目录下的 index.html」
+   308 规范化回该目录(相对 Location),而下方 aav 主机的 /aav/* 前缀规则又把 /aav/
+   308 回根,两跳相接即成重定向死循环(2026-10-21 首次上线踩过);镜像的
+   prefix+pathname('/en')天生是目录路径,故无此问题 */
 function routeAav(pathname, search) {
-  if (pathname === '/' || pathname === '') return { assetPath: '/aav/index.html' };
+  if (pathname === '/' || pathname === '') return { assetPath: '/aav' };
   if (pathname === '/robots.txt') return { assetPath: '/robots.txt' };
   if (pathname === '/sitemap.xml') return { assetPath: '/aav/sitemap.xml' };
   /* 壳内 iframe 的挂载点:映射到源站根(应用按根路径自举) */
