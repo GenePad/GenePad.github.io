@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<!-- 手工维护页(同 changelog.html 口径,不进 vite 构建,重建站点不受影响)。
+     aav.genepad.cn 的壳页:全屏 iframe 承载「AAV 文献助手」。
+     iframe 不直接嵌源站(HTTP)—— HTTPS 页面嵌 HTTP iframe 属混合内容,
+     会被浏览器整体拦截;docs/_worker.js 在 aav 主机上做同源反代,iframe 指向本域 /app,
+     由 Worker 转发到源站(源站地址在 Pages 环境变量 AAV_ORIGIN,不写入仓库;
+     机制与路由见 _worker.js 的 aav 分支注释与 AGENTS.md)。 -->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AAV 文献助手 - GenePad</title>
+  <meta name="description" content="AAV 文献助手：面向腺相关病毒（AAV）研究的文献问答工具，由 GenePad 提供。">
+  <link rel="canonical" href="https://aav.genepad.cn/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ctext%20y='.9em'%20font-size='90'%3E%F0%9F%A7%AC%3C/text%3E%3C/svg%3E">
+  <style>
+    html, body { margin: 0; padding: 0; height: 100%; }
+    iframe { display: block; width: 100%; height: 100%; border: 0; background: #fff; }
+  </style>
+</head>
+<body>
+  <!-- 相对路径 src:在子域名根(→ /app)与 pages.dev /aav/ 预览(→ /aav/app)下都解析到 aav 反代入口 -->
+  <iframe src="app" title="AAV 文献助手">您的浏览器不支持内嵌框架，请改用现代浏览器访问。</iframe>
+</body>
+</html>

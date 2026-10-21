@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- aav.genepad.cn 专用单源 sitemap（单页站点，手工维护）。
+     sitemap 不混主机：主站 sitemap 不收 aav，与语言镜像 docs/<dir>/sitemap.xml 同一口径；
+     aav 主机的 /sitemap.xml 由 _worker.js 映射到本文件。 -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://aav.genepad.cn/</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>

@@ -36,6 +36,9 @@ docs/                        # SERVED ROOT — do not hand-edit index.html / tec
   en/                        # BUILD OUTPUT (English mirror pages, served at en.genepad.cn)
   cn/                        # BUILD OUTPUT (Chinese mirror pages, served at cn.genepad.cn)
   de/ ru/ jp/ kr/ fr/        # BUILD OUTPUT (generated mirror shells, served at de/ru/jp/kr/fr.genepad.cn)
+  aav/                       # Hand-maintained: aav.genepad.cn shell page + single-entry sitemap.xml
+                             #   (iframe wrapper; the tool itself is proxied by _worker.js — see
+                             #   "AAV Tool Subdomain" below)
   assets/                    # BUILD OUTPUT (hashed js/css; safe to delete before rebuild)
   shots/                     # BUILD OUTPUT (copied from app/public/)
   styles.css                 # Hand-maintained: styles for the legacy tech-*.html / changelog pages
@@ -68,7 +71,9 @@ are **not** listed here — a sitemap must
 not mix hosts. Each mirror host gets its **own** single-host sitemap instead:
 `docs/<dir>/sitemap.xml` (13 indexable pages, stats excluded) is **generated
 by `app/scripts/gen-shells.mjs` on every build** — do not hand-edit those.
-`docs/robots.txt` (shared by all hosts) declares all eight sitemaps with
+`docs/aav/sitemap.xml` (single entry) is the same-idea hand-maintained sitemap
+for the separate host `aav.genepad.cn` and is likewise not in the main sitemap.
+`docs/robots.txt` (shared by all hosts) declares all nine sitemaps with
 cross-host `Sitemap:` lines; the worker maps `<mirror>.genepad.cn/sitemap.xml`
 to `/<dir>/sitemap.xml`. Mirror discovery has three reinforcing channels:
 per-mirror sitemaps, the hreflang alternates in every page's `<head>`, and the
@@ -292,6 +297,41 @@ genepad.cn behaves for users:
   page (the main entry on the mirror sites), the tutorial-hub card, sidebar,
   and prev/next pagers — all derived automatically from `tutorial-data.ts`.
   To update a pack, overwrite the file (keep the name); no rebuild needed.
+
+## AAV Tool Subdomain (`aav.genepad.cn`) — iframe 壳页 + Worker 同源反代
+
+`aav.genepad.cn` 承载「AAV 文献助手」——一个独立的 uvicorn 服务（源站地址只存在
+Pages 环境变量 **`AAV_ORIGIN`** 里，形如 `http://<ip>:8787`，**不写入仓库**——
+`docs/` 随 GitHub 公开，写死会泄露后端 IP），全部资源走根相对路径
+（`/style.css` `/app.js` `/vendor/*` `/img/*`，接口 `/api/chat`、`/api/usage`）。
+结构与路由：
+
+- **壳页**：`docs/aav/index.html`（手工维护，同 changelog.html 口径，不进
+  vite 构建）——全屏 iframe，`src="app"` 用相对路径，子域名根与 pages.dev
+  `/aav/` 预览两种挂载下都解析正确。
+- **为什么 iframe 不直接嵌源站**：Cloudflare 强制 HTTPS，HTTPS 页面嵌
+  `http://` iframe 属混合内容，会被浏览器整体拦截。因此 `_worker.js` 在 aav
+  主机上做**同源反代**（`aavProxy()`）：iframe 实际指向
+  `https://aav.genepad.cn/app`（特判映射到源站 `/`），其余路径原样转发到源站
+  （含 query、POST 请求体，SSE 流式响应直通）；顺带隐藏源站 IP。反代返回的
+  HTML 追加 `X-Robots-Tag: noindex`（壳页才是收录入口）。
+- **路由**（`route()` 的 aav 分支 + 纯函数 `routeAav`，可 node 单测）：
+  - `aav.genepad.cn/` → 静态壳 `/aav/index.html`；`/robots.txt` → 共用根
+    robots.txt；`/sitemap.xml` → `/aav/sitemap.xml`（手工维护，单条目）；
+    `/app`（`/app/`）→ 源站 `/`；其余 → 源站原路径。
+  - 其他任何主机上的 `/aav/*` 一律 308 到 `aav.genepad.cn/*`（pages.dev 例外：
+    `genepad.pages.dev/aav/` 静态直出壳页，作为 DNS 配好前的预览——但 iframe
+    内的根相对资源在预览下会 404，完整功能必须等子域名 DNS 生效后走
+    aav.genepad.cn）。
+- **API 路径冲突**：源站占用 `/api/chat`、`/api/usage`；站点自己的 API
+  （`/api/telemetry(/stats)`、`/api/feedback(/list)`）在 `fetch()` 里先于
+  `route()` 短路——今后给本站新增 API 端点**不得**使用这两个路径，否则 aav
+  子域上的同名请求会被本站劫持。
+- **一次性前提（dashboard）**：① Pages 项目 → Custom domains → 添加
+  `aav.genepad.cn`（与 de/ru/jp/kr/fr 镜像同流程，DNS 记录自动创建）；
+  ② Pages 项目 → Settings → Variables and Secrets → 添加
+  `AAV_ORIGIN = http://<ip>:8787`（缺失时反代返回 503 `AAV_ORIGIN binding
+  missing`）。两者生效都需 push 触发重新部署。
 
 ## Download Panel
 

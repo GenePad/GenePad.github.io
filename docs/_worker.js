@@ -383,6 +383,64 @@ const MIRROR_SHARED_PREFIXES = [
   '/robots.txt',
 ];
 
+// ── aav 工具子域(aav.genepad.cn)──
+// 「AAV 文献助手」壳页:根路径出静态壳 docs/aav/index.html(全屏 iframe,src="app")。
+// iframe 不能直接嵌源站 —— HTTPS 壳页嵌 HTTP iframe 属于混合内容,浏览器会整体拦截;
+// 因此由本 Worker 在 aav 主机上做同源反代,iframe 实际指向 https://aav.genepad.cn/app
+// (特判映射到源站根),顺带隐藏源站 IP。
+// 源站地址只在 Pages 环境变量 AAV_ORIGIN(http://<ip>:8787,uvicorn)里,不写入仓库——
+// 本文件随 docs/ 公开在 GitHub,写死等于泄露后端。
+// 源站应用全部用根相对路径(/style.css /app.js /api/chat /api/usage …),整域转发即可;
+// 反代返回的 HTML 追加 X-Robots-Tag: noindex(壳页才是收录入口)。
+// 注意:源站占用 /api/chat、/api/usage;fetch() 里站点 API 在 route() 之前短路,
+// 今后本站新增 API 端点不得撞上这两个路径,否则 aav 子域上的同名请求会被本站劫持。
+const AAV_HOST = 'aav.genepad.cn';
+const AAV_SUBPATH = '/aav';
+// 逐跳头与 CF 注入头不下传源站
+const AAV_STRIP_HEADERS = [
+  'host', 'cdn-loop', 'cf-connecting-ip', 'cf-ipcountry', 'cf-ray', 'cf-visitor',
+  'cf-worker', 'cf-ew-via', 'x-forwarded-for', 'x-forwarded-host', 'x-forwarded-proto',
+  'x-real-ip', 'accept-encoding',
+];
+
+/* 纯函数,便于 node 单测:aav 主机上的路径 → 路由结果 */
+function routeAav(pathname, search) {
+  if (pathname === '/' || pathname === '') return { assetPath: '/aav/index.html' };
+  if (pathname === '/robots.txt') return { assetPath: '/robots.txt' };
+  if (pathname === '/sitemap.xml') return { assetPath: '/aav/sitemap.xml' };
+  /* 壳内 iframe 的挂载点:映射到源站根(应用按根路径自举) */
+  if (pathname === '/app' || pathname === '/app/') return { proxyPath: '/' + search };
+  return { proxyPath: pathname + search };
+}
+
+/* 同源反代:原样转发到源站。非 GET/HEAD 透传请求体(SSE 流式响应随 Response 直通) */
+async function aavProxy(request, targetPath, env) {
+  const origin = (env.AAV_ORIGIN ?? '').replace(/\/+$/, '');
+  if (!origin) {
+    return json({ error: 'AAV_ORIGIN binding missing' }, 503);
+  }
+  const headers = new Headers(request.headers);
+  for (const name of AAV_STRIP_HEADERS) {
+    headers.delete(name);
+  }
+  const init = { method: request.method, headers, redirect: 'follow' };
+  if (request.method !== 'GET' && request.method !== 'HEAD') {
+    init.body = request.body;
+  }
+  let upstream;
+  try {
+    upstream = await fetch(origin + targetPath, init);
+  } catch {
+    return json({ error: 'aav origin unreachable' }, 502);
+  }
+  if ((upstream.headers.get('content-type') ?? '').includes('text/html')) {
+    const resHeaders = new Headers(upstream.headers);
+    resHeaders.set('X-Robots-Tag', 'noindex');
+    return new Response(upstream.body, { status: upstream.status, headers: resHeaders });
+  }
+  return upstream;
+}
+
 function hostMatches(hostname, mirror) {
   return hostname === mirror || hostname.endsWith('.' + mirror);
 }
@@ -399,6 +457,20 @@ function prefixRedirect(pathname, search) {
 
 /* 纯函数，便于 node 单测：返回 { redirect } 或 { assetPath }（null 表示原样交给 ASSETS） */
 export function route(url) {
+  if (hostMatches(url.hostname, AAV_HOST)) {
+    /* aav 主机上的 /aav/* 前缀与镜像主机同口径:308 到子域名根路径 */
+    if (url.pathname === AAV_SUBPATH || url.pathname.startsWith(AAV_SUBPATH + '/')) {
+      return { redirect: 'https://' + AAV_HOST + url.pathname.slice(AAV_SUBPATH.length) + url.search };
+    }
+    return routeAav(url.pathname, url.search);
+  }
+  /* 其他主机上的 /aav/* 一律 308 到子域名(pages.dev 例外:静态直出壳页作 DNS 配好前的预览) */
+  if (
+    url.hostname !== 'genepad.pages.dev' &&
+    (url.pathname === AAV_SUBPATH || url.pathname.startsWith(AAV_SUBPATH + '/'))
+  ) {
+    return { redirect: 'https://' + AAV_HOST + url.pathname.slice(AAV_SUBPATH.length) + url.search };
+  }
   for (const [mirror, prefix] of Object.entries(MIRROR_PREFIX_BY_HOST)) {
     if (!hostMatches(url.hostname, mirror)) continue;
     const redirected = prefixRedirect(url.pathname, url.search);
@@ -631,6 +703,9 @@ export default {
     const routed = route(url);
     if (routed.redirect) {
       return Response.redirect(routed.redirect, 308);
+    }
+    if (routed.proxyPath !== undefined) {
+      return aavProxy(request, routed.proxyPath, env);
     }
     if (routed.assetPath) {
       return env.ASSETS.fetch(new Request('https://en.genepad.cn' + routed.assetPath, request));
