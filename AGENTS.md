@@ -300,9 +300,15 @@ genepad.cn behaves for users:
 
 ## AAV Tool Subdomain (`aav.genepad.cn`) — iframe 壳页 + Worker 同源反代
 
-`aav.genepad.cn` 承载「AAV 文献助手」——一个独立的 uvicorn 服务（源站地址只存在
-Pages 环境变量 **`AAV_ORIGIN`** 里，形如 `http://<ip>:8787`，**不写入仓库**——
-`docs/` 随 GitHub 公开，写死会泄露后端 IP），全部资源走根相对路径
+`aav.genepad.cn` 承载「AAV 文献助手」——一个独立的 uvicorn 服务，跑在国内服务器的
+8787 端口。**Worker 不能 fetch 裸 IP**（Cloudflare 拦成 1003 Direct IP access），
+而国内源站不能解析域名（避免域名-IP 关联），因此源站经 **Cloudflare Tunnel** 暴露为
+`https://aav-tool.genepad.cn`：隧道 CNAME 橙云指向 `cfargotunnel.com`，DNS 上不存在
+任何指向国内 IP 的记录；服务器端 `cloudflared` systemd 常驻
+（`/etc/cloudflared/config.yml`，ingress → `http://localhost:8787`，
+`protocol: http2`，隧道名 `aav-tool`）。该主机名只存在 Pages 环境变量
+**`AAV_ORIGIN`** 里，不写入仓库——`docs/` 随 GitHub 公开，写死等于泄露后端。
+应用全部资源走根相对路径
 （`/style.css` `/app.js` `/vendor/*` `/img/*`，接口 `/api/chat`、`/api/usage`）。
 结构与路由：
 
@@ -333,8 +339,8 @@ Pages 环境变量 **`AAV_ORIGIN`** 里，形如 `http://<ip>:8787`，**不写�
 - **一次性前提（dashboard）**：① Pages 项目 → Custom domains → 添加
   `aav.genepad.cn`（与 de/ru/jp/kr/fr 镜像同流程，DNS 记录自动创建）；
   ② Pages 项目 → Settings → Variables and Secrets → 添加
-  `AAV_ORIGIN = http://<ip>:8787`（缺失时反代返回 503 `AAV_ORIGIN binding
-  missing`）。两者生效都需 push 触发重新部署。
+  `AAV_ORIGIN = https://aav-tool.genepad.cn`（缺失时反代返回 503
+  `AAV_ORIGIN binding missing`）。两者生效都需 push/重部署触发。
 
 ## Download Panel
 
