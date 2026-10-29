@@ -1,19 +1,19 @@
 {
-  "version": "0.7.9",
-  "notes": "# GenePad v0.7.9\n\n本次更新以小修补为主:引物 Tm(熔解温度)计算算法更新为对齐 SnapGene;另新增引物浓度设置项,并修复反向拖选时选中信息气泡位置、图谱独占时工具栏位置两个显示问题。\n\n## ✨ 新功能\n\n- 新增「设置 > 引物」页:引物寡核苷酸浓度可调(默认 0.25 µM,与 SnapGene 相同),改动即时生效并在多窗口间同步\n\n## 🐛 问题修复\n\n- 序列视图中反向拖选(光标落在选区起始端)时,选中信息气泡现在贴选区上侧跟随光标端,不再固定显示在底部\n- 图谱独占显示(序列视图隐藏)时,底部悬浮工具栏贴左下角,不再悬在画面中央",
-  "pub_date": "2026-10-19T01:10:00+08:00",
+  "version": "0.7.11",
+  "notes": "# GenePad v0.7.11\n\n本次更新为比对视图的两处修复:AB1 测序文件与参考比对时头尾低质量区的折叠改按长度阈值判断,比对命中区间之间的跳转按钮不再落在 gap 内的插入段上。\n\n## 🐛 问题修复\n\n- AB1 测序文件比对时,头尾低质量区域改按长度阈值决定是否折叠:低质量区达到 100 碱基时保持展开显示,不足 100 碱基时才整段折叠,较长的低质段不再被误折叠\n- 比对泳道中命中区间之间的 < > 跳转按钮现在与 gap 内插入段保持同等留距,不再紧贴插入段;跳转空间被插入段占满时该按钮不再渲染",
+  "pub_date": "2026-10-29T11:00:00+08:00",
   "platforms": {
     "windows-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRK20xNzladkFOWkRZZTlRenczQlJ3V1NSb0hyV2VWN2hnTGhMZEhrc3pTYWdOK0w3Wk5Ndk12T1FiakZNZGVFd1N1WW5FTlY5U0VyeXFta04wOUxzZUdYd1FqSlJMMFFBPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyMzQ0MjM3CWZpbGU6R2VuZVBhZF8wLjcuOV94NjQtc2V0dXAuZXhlCjIrRmdTeHcrSWFENExGOUR6RlBpRHRZZTRDMWdqY0RxZUxScHFNeWgvZ00walZEYm5sd1FRQnRuVWRaUEJlQ1E2eVlMakxoK1Q1Qi9ZdUhwcTA3MkN3PT0K",
-      "url": "https://genepad.pages.dev/release/windows/GenePad_0.7.9_Windows_amd64.exe"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRK20xNzladkFOWkZhTXJ2bTM1YzlQVThLUXc4TlRrd1FLYTZpTXNxMHM4NmFnZjBBT0FzMFA0dDlkMHpjVnVyVVp1UU9iakhTWlVnVUJZcW44eVIwblRHLzJFVWZzdWcwPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkzMjQxMDU4CWZpbGU6R2VuZVBhZF8wLjcuMTFfeDY0LXNldHVwLmV4ZQpOdmZBOFVta2JsRnJZeVJyc0QySkVzNGttQ25sbnd5RmRmRTM2K1kwdE0waUdKNUVSN2IxcTBXTUpmVVo5TmZCM20yOFhNK0lncS94SElCeUU1RS9EZz09Cg==",
+      "url": "https://genepad.pages.dev/release/windows/GenePad_0.7.11_Windows_amd64.exe"
     },
     "darwin-aarch64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRK20xNzladkFOWkJ4YlMyMmZFS3RicC9PUG9GaUJnKys5Rzh4NVFuVUZkR29kUVNpYnErK0NhYnozdHQ5UEFGYVJ4bDJsc25LSWZ4RCtja3BlK1RvMHFEbmZjUXBLMWdVPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyMzQzNjA3CWZpbGU6R2VuZVBhZC5hcHAudGFyLmd6CjNtK1BhV0pjNmJwOTNscjBURFlrekZvVVJ2Slc0M2kzdnFPbHdKTlRwdVBEbVk5TVlZUEtGZGZLNTg2Qko5VXN6RFIyU1AzWm05T1VWY29Bb3ZkRUJnPT0K",
-      "url": "https://genepad.pages.dev/release/mac/GenePad_0.7.9_Darwin_arm64.app.tar.gz"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRK20xNzladkFOWk95TElxTkc2UjRESGxmL0Z3U3BNc2tQdkdlWkxDclpxSXl5RjEwUVpOZ0M4WVVUMEFmY1ppRHFtMlI4RDBUYXNmczJOSWlXS3dHTTlmcEJ0QjRwV3dBPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkzMjQwMzc0CWZpbGU6R2VuZVBhZC5hcHAudGFyLmd6ClFGRjFRMmxXbGR0ZExRWFhXZTUzWng1ajJmQlBOZ3R6SExYSENTUVAyeGQyc3d1b3F6N0ZlWjkxemRmSDBmVHY2Z0QzYk01RHVUeGlyd1c4TjRtZ0J3PT0K",
+      "url": "https://genepad.pages.dev/release/mac/GenePad_0.7.11_Darwin_arm64.app.tar.gz"
     },
     "linux-x86_64-deb": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRK20xNzladkFOWkUvaTd0SHlpdmxtNGhpNy9Vcyt5MmNWNXlBc1pzdFR0VDVNcC9heW1BTkdnS0w4WnFJcVhnZVhQdHlGcmhGdjBvRUlxaEs4ZnZVNnBZYXh0bEN0QUF3PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyMzQzOTQyCWZpbGU6R2VuZVBhZF8wLjcuOV9hbWQ2NC5kZWIKQmV2V0NSL1RlTngwamgrZ2pSYlBQb2JYeXZGUXRxdWlxY2JDUUdGSmVnUUFkSUl6UzRxS0JLY2Z4S2V5NkdZSUJhL1ZRZ3hxL0VKL0lScmhjbXREQnc9PQo=",
-      "url": "https://genepad.pages.dev/release/linux/GenePad_0.7.9_Linux_amd64.deb"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRK20xNzladkFOWk5jdG9XeVpIRGJWSnlGYTVpdTdSdVA5Tmg4ZHd0YVVqZ2tEUTVhMVBZVDJpMmRSaTlCZTZuUDBneVRtTmxEWHQxeE0rdlpFaytqV1BQNTlxZ2tXOEE0PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkzMjQwNjY2CWZpbGU6R2VuZVBhZF8wLjcuMTFfYW1kNjQuZGViCmFVWER6M0ErY3RiTEdjOWM5Z1FHRDlrNjY2RXhaRUxadVR4UVRyeFRWMXNPZlg3S1NZNzRNbEhZcTE0Wi8zaEtMK09YRHhNbTBiZ0VjN2JvYStXSUFRPT0K",
+      "url": "https://genepad.pages.dev/release/linux/GenePad_0.7.11_Linux_amd64.deb"
     }
   }
 }

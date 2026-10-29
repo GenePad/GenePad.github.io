@@ -52,7 +52,8 @@
                 <button class="doc-toc-toggle" type="button">目录</button>
                 <a class="doc-toc-home" href="/">← 返回首页</a>
                 <p class="doc-toc-group">版本</p>
-                <a class="current" href="#v0-7-9">v0.7.9</a>
+                <a class="current" href="#v0-7-11">v0.7.11</a>
+                <a href="#v0-7-9">v0.7.9</a>
                 <a href="#v0-7-8">v0.7.8</a>
                 <a href="#v0-7-7">v0.7.7</a>
                 <a href="#v0-7-6">v0.7.6</a>
@@ -76,6 +77,20 @@
                         记录 GenePad 每个版本的新功能、缺陷修复与维护变更。版本按发布时间倒序排列。
                     </p>
                 </div>
+
+                <section class="doc-section" id="v0-7-11">
+                    <div class="section-heading">
+                        <p class="eyebrow">2026-10-29</p>
+                        <h2>v0.7.11</h2>
+                    </div>
+                    <p>本次更新为比对视图的两处修复：AB1 测序文件与参考比对时头尾低质量区的折叠改按长度阈值判断，比对命中区间之间的跳转按钮不再落在 gap 内的插入段上。</p>
+
+                    <h3>🐛 问题修复</h3>
+                    <ul>
+                        <li>AB1 测序文件比对时，头尾低质量区域改按长度阈值决定是否折叠：低质量区达到 100 碱基时保持展开显示，不足 100 碱基时才整段折叠，较长的低质段不再被误折叠</li>
+                        <li>比对泳道中命中区间之间的 &lt; &gt; 跳转按钮现在与 gap 内插入段保持同等留距，不再紧贴插入段；跳转空间被插入段占满时该按钮不再渲染</li>
+                    </ul>
+                </section>
 
                 <section class="doc-section" id="v0-7-9">
                     <div class="section-heading">

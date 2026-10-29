@@ -1,7 +1,7 @@
 /* 安装包下载数据：三个来源 = 本站直链 / Gitee / GitHub
    发新版本时只需更新 VERSION 与各文件的 name/size（size 单位 MB） */
 
-export const VERSION = "0.7.9";
+export const VERSION = "0.7.11";
 
 const GITHUB_LATEST =
   "https://github.com/GenePad/GenePad.github.io/releases/latest/download/";
