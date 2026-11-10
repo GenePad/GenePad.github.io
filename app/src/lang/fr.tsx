@@ -821,6 +821,9 @@ const fr: Record<TKey, ReactNode> = {
   "st.tab.aria": "Granularité statistique",
   "st.tab.weekly": "Hebdomadaire",
   "st.tab.daily": "Quotidien",
+  "st.dau.title": "Utilisateurs actifs par jour",
+  "st.dau.caption":
+    "UTILISATEURS ACTIFS PAR JOUR — installations ayant envoyé un signal ce jour-là (jours calendaires UTC). L’application envoie un signal tous les 7 jours ; la valeur d’un jour vaut donc environ un septième des actifs sur 7 jours — à lire comme une tendance d’activité.",
   "st.os.title": "Répartition des installations par système",
   "st.os.other": "Autres",
   "st.updated": "Données mises à jour",

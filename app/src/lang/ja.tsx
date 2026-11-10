@@ -789,6 +789,8 @@ const ja: Record<TKey, ReactNode> = {
   "st.tab.aria": "統計の粒度",
   "st.tab.weekly": "週次",
   "st.tab.daily": "日次",
+  "st.dau.title": "日次アクティブユーザー",
+  "st.dau.caption": "日次アクティブユーザー — 当日にハートビートを報告したインストール数（UTC 自然日）。アプリは 7 日ごとに報告するため、1 日の値は直近 7 日間のアクティブ数の約 7 分の 1 です。活発度の傾向としてご覧ください。",
   "st.os.title": "導入 OS の分布",
   "st.os.other": "その他",
   "st.updated": "データ更新日時",

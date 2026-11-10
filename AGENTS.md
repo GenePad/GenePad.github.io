@@ -80,6 +80,16 @@ per-mirror sitemaps, the hreflang alternates in every page's `<head>`, and the
 footer language row (crawlable same-page links between all seven mirrors on
 every page of every host).
 
+## llms.txt（AI 检索索引）
+
+`docs/llms.txt` 手工维护（与 robots.txt / changelog.html 同口径，不进构建），
+遵循 llmstxt.org 约定：面向 AI 的站点索引——H1 + 摘要 + 分类链接清单（页面范围
+与 sitemap.xml 一致，另列 stats、aav 及机器可读数据：update.json / latest.json /
+sitemap / 公开 API）。`/llms.txt` 在 `_worker.js` 的 `MIRROR_SHARED_PREFIXES`
+与 `routeAav()` 里各占一行（与 /robots.txt 同款）：九个主机返回根下同一份文件，
+pages.dev / GitHub Pages 静态直出。维护时机：页面增删或改用途时同步更新该文件；
+发版时顺手更新其中的「当前版本」行（update.json 才是版本权威来源）。
+
 ## Telemetry API (`/api/telemetry`)
 
 `docs/_worker.js` is a Pages advanced-mode Worker committed in the build output: it serves
@@ -102,7 +112,9 @@ It also exposes `GET /api/telemetry/stats` — aggregate-only counters (installs
 total hours, `byOs` OS distribution, 26-week install histogram) plus per-OS time series
 `weeklyByOs` / `dailyByOs` (same buckets as `weekly` / `daily`, each item
 `{ w | d, os: {windows?, linux?, macos?, android?, other?} }` with zero counts omitted)
-consumed by the public `stats.html` subpage; no per-uuid rows are ever exposed. The three
+and a `dailyActive` series (30 UTC days of `{ d, n }`, clients whose weekly heartbeat
+landed on that day — a per-day sampling of activity, roughly 1/7 of active7d) consumed
+by the public `stats.html` subpage; no per-uuid rows are ever exposed. The three
 os-derivation SQL expressions (totals / weekly / daily) must stay identical so the per-OS
 series sums equal the totals. Dashboard binding changes take
 effect only after a redeploy (push an empty commit if needed).

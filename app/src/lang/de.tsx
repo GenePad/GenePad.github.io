@@ -788,6 +788,8 @@ const de: Record<TKey, ReactNode> = {
   "st.tab.aria": "Zeitliche Auflösung",
   "st.tab.weekly": "Wöchentlich",
   "st.tab.daily": "Täglich",
+  "st.dau.title": "Täglich aktive Nutzer",
+  "st.dau.caption": "TÄGLICH AKTIVE NUTZER — Installationen mit einem Herzschlag an diesem Tag (UTC-Kalendertage). Die Anwendung meldet alle 7 Tage; der Tageswert entspricht daher ungefähr einem Siebtel der 7-Tage-Aktiven und ist vor allem als Trend zu lesen.",
   "st.os.title": "Installationen nach Betriebssystem",
   "st.os.other": "Andere",
   "st.updated": "Daten aktualisiert:",

@@ -371,7 +371,8 @@ const MIRROR_PREFIX_BY_HOST = {
   'fr.genepad.cn': '/fr',
 };
 // 镜像主机不前缀的共享路径。注意 /sitemap.xml 不共享：每个镜像主机有各自的
-// /<dir>/sitemap.xml（gen-shells.mjs 生成），/robots.txt 共用同一份（其中列出全部主机的 sitemap）
+// /<dir>/sitemap.xml（gen-shells.mjs 生成）；/robots.txt 与 /llms.txt 共用根下同一份
+// （robots 列出全部主机的 sitemap，llms.txt 是面向 AI 的站点索引）
 const MIRROR_SHARED_PREFIXES = [
   '/assets/',
   '/shots/',
@@ -381,6 +382,7 @@ const MIRROR_SHARED_PREFIXES = [
   '/icon.ico',
   '/icon.png',
   '/robots.txt',
+  '/llms.txt',
 ];
 
 // ── aav 工具子域(aav.genepad.cn)──
@@ -411,6 +413,7 @@ const AAV_STRIP_HEADERS = [
 function routeAav(pathname, search) {
   if (pathname === '/' || pathname === '') return { assetPath: '/aav/' };
   if (pathname === '/robots.txt') return { assetPath: '/robots.txt' };
+  if (pathname === '/llms.txt') return { assetPath: '/llms.txt' };
   if (pathname === '/sitemap.xml') return { assetPath: '/aav/sitemap.xml' };
   /* 壳内 iframe 的挂载点:映射到源站根(应用按根路径自举) */
   if (pathname === '/app' || pathname === '/app/') return { proxyPath: '/' + search };
@@ -495,6 +498,8 @@ export function route(url) {
    时间序列两条：weekly(近 26 周,周一 00:00 UTC 起)与 daily(近 30 个 UTC 自然日,
    最后一项是当天、仍在累计)——前端 stats 页按同一份数据切换视图,
    日/周分桶都补齐空桶,不依赖前端补零。
+   另有 dailyActive：每日活跃用户——当日(UTC 自然日)收到心跳上报的安装实例数,
+   应用每 7 天上报一次心跳,单日数值约为近 7 天活跃的 1/7,作活跃趋势参考;
    另有 weeklyByOs / dailyByOs：同一批桶按系统拆分的装机数,桶键与合计序列逐一对齐,
    os 只保留非零键——前端把每根柱按系统堆叠着色 */
 const OS_KEYS = ['windows', 'linux', 'macos', 'android', 'other'];
@@ -543,7 +548,7 @@ async function handleStats(env) {
   }
 
   const now = Date.now();
-  const [totals, weeklyRows, dailyRows, osRows, weeklyOsRows, dailyOsRows] = await Promise.all([
+  const [totals, weeklyRows, dailyRows, osRows, weeklyOsRows, dailyOsRows, dailyActiveRows] = await Promise.all([
     env.DB.prepare(
       `SELECT COUNT(*) AS installs,
               COALESCE(SUM(CASE WHEN last_seen_at > ?1 THEN 1 ELSE 0 END), 0) AS active30d,
@@ -597,6 +602,16 @@ async function handleStats(env) {
     )
       .bind(now - STATS_DAYS * DAY_MS)
       .all(),
+    // 每日活跃：当日(UTC 自然日)收到心跳的装机数。last_seen_at 随每周心跳滚动更新,
+    // 故单日数值约为近 7 天活跃的 1/7——前端标注口径后按趋势呈现
+    env.DB.prepare(
+      `SELECT (last_seen_at / ${DAY_MS}) * ${DAY_MS} AS d, COUNT(*) AS n
+       FROM usage_reports
+       WHERE last_seen_at > ?1
+       GROUP BY d`,
+    )
+      .bind(now - STATS_DAYS * DAY_MS)
+      .all(),
   ]);
 
   const counts = new Map(
@@ -617,6 +632,15 @@ async function handleStats(env) {
   for (let i = STATS_DAYS - 1; i >= 0; i -= 1) {
     const d = currentDayStart - i * DAY_MS;
     daily.push({ d, n: dayCounts.get(d) ?? 0 });
+  }
+
+  const dauCounts = new Map(
+    (dailyActiveRows.results ?? []).map((row) => [Number(row.d), Number(row.n)]),
+  );
+  const dailyActive = [];
+  for (let i = STATS_DAYS - 1; i >= 0; i -= 1) {
+    const d = currentDayStart - i * DAY_MS;
+    dailyActive.push({ d, n: dauCounts.get(d) ?? 0 });
   }
 
   const byOs = { windows: 0, linux: 0, macos: 0, android: 0, other: 0 };
@@ -650,6 +674,7 @@ async function handleStats(env) {
       byOs,
       weekly,
       daily,
+      dailyActive,
       weeklyByOs,
       dailyByOs,
       updatedAt: now,

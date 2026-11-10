@@ -1,0 +1,55 @@
+# GenePad
+
+> GenePad（基因工坊）是一款免费、跨平台的基因序列查看与编辑器（质粒图谱编辑器 / plasmid map editor），覆盖 Windows、macOS、Linux 与 Android，面向日常分子克隆：质粒图谱浏览与编辑、序列标注、酶切位点分析、引物、Sanger 测序比对、NGS 数据查看、基因文件库管理，并支持配置大模型 AI 助手。本文件是官网的 AI 检索索引（llms.txt 格式）。
+
+- 官网：https://genepad.cn —— 中英双语（默认中文），全部页面为预渲染静态 HTML，无需 JavaScript 即可完整阅读
+- 当前版本：0.7.11（2026-10-29 发布；权威来源为 update.json，此处仅为检索便利）
+- 可读写格式：SnapGene .dna、GenBank、FASTA、ABI/AB1 峰图、FASTQ / fastq.gz 等
+- 语言镜像：en/cn/de/ru/jp/kr/fr.genepad.cn（英/中/德/俄/日/韩/法各一种语言，页面 head 以 hreflang 互指）
+
+## 产品页面 Pages
+
+- [首页（产品介绍与下载）](https://genepad.cn/): 功能总览、工具箱与全平台下载面板（本站直链 / Gitee / GitHub 三个下载源）
+- [基因文件库](https://genepad.cn/library): 质粒文件检索与管理：项目分类、性质标签、AI 自动标注与自然语言检索
+- [NGS 数据查看](https://genepad.cn/ngs): FASTQ 测序数据本地查看：双端自动配对拼接、Phred 质量着色、氨基酸检索、锚点裁切、文库丰度报告
+- [使用教程](https://genepad.cn/tutorial): 教程中心，下列各篇教程的入口
+- [开发者技术文档](https://genepad.cn/tech-support): 开发者文档入口：.gen、.gjson 文件定义、Rust 读取示例与 .dna 转换方案
+- [生态项目](https://genepad.cn/projects): 配套资源：质粒元件库与密码子图谱
+- [留言与反馈](https://genepad.cn/feedback): 公开用户留言墙（提交需 Turnstile 人机验证）
+- [更新日志](https://genepad.cn/changelog): 全版本更新记录
+
+## 教程 Tutorials
+
+- [从 SnapGene 迁移](https://genepad.cn/tutorial-snapgene): SnapGene 替代方案，.dna 文件导入
+- [配置 AI 助手](https://genepad.cn/tutorial-ai): DeepSeek 等大模型 API 密钥获取与设置
+- [基因文件库教程](https://genepad.cn/tutorial-library): 质粒入库、检索与 AI 标签
+- [NGS 数据分析](https://genepad.cn/tutorial-ngs): fastq.gz 查看与文库丰度报告
+- [配置任意语言](https://genepad.cn/tutorial-lang): 用 AI 翻译生成自定义界面语言包
+- [设置界面语言](https://genepad.cn/tutorial-langpack): 内置语言与官方语言包（de/fr/ja/ko/ru）安装
+
+## 开发者文档 Developer docs
+
+- [.gen 文件格式](https://genepad.cn/tech-gen-format): GenePad 原生文件格式定义
+- [.gjson 文件格式](https://genepad.cn/tech-gjson-format): 图谱 JSON 序列化格式定义
+- [Rust 读取示例](https://genepad.cn/tech-rust-readers): 用 Rust 解析上述格式的示例
+- [.dna 转换方案](https://genepad.cn/tech-dna-conversion): SnapGene .dna → .gen 转换
+
+## 下载与安装 Downloads
+
+- 安装包直链目录：https://genepad.cn/release/ （Windows zip/exe、macOS dmg/app.tar.gz、Linux deb、Android apk；界面语言包在 /release/langpacks/）
+- Linux / macOS 一键安装：`curl -fsSL https://genepad.cn/release/install.sh | bash`
+- macOS Homebrew：`brew install genepad/tap/genepad`
+- npm（全平台）：`npm i -g @genepad/app` —— https://www.npmjs.com/package/@genepad/app
+- GitHub Releases：https://github.com/GenePad/GenePad.github.io/releases
+
+## 机器可读数据 Machine-readable
+
+- [update.json](https://genepad.cn/update.json): 最新版本元数据（版本号、发布时间、更新说明、各平台下载直链）
+- [latest.json](https://genepad.cn/latest.json): 应用内自动更新清单（附 minisign 签名信息）
+- [sitemap.xml](https://genepad.cn/sitemap.xml): 主站全部页面索引；每个语言镜像主机另有自己的 /sitemap.xml
+- [实时统计](https://genepad.cn/stats): 公开聚合使用统计页（noindex）；数据 API：GET https://genepad.pages.dev/api/telemetry/stats（仅聚合计数，无个人明细）
+- 留言墙公开数据：GET https://genepad.cn/api/feedback/list?limit=50 （最新留言，联系方式已脱敏）
+
+## 相关站点 Related
+
+- [AAV 文献助手](https://aav.genepad.cn/): 配套在线工具：腺相关病毒（AAV）文献查询助手，对话式交互

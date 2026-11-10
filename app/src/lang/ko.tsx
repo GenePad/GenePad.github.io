@@ -785,6 +785,8 @@ const ko: Record<TKey, ReactNode> = {
   "st.tab.aria": "통계 집계 단위",
   "st.tab.weekly": "주별",
   "st.tab.daily": "일별",
+  "st.dau.title": "일일 활성 사용자",
+  "st.dau.caption": "일일 활성 사용자 — 당일 하트비트를 보고한 설치 인스턴스 수(UTC 자연일). 앱은 7일마다 한 번 보고하므로 하루 값은 최근 7일 활성의 약 7분의 1입니다. 활성 추세로 읽어 주세요.",
   "st.os.title": "설치 운영체제 분포",
   "st.os.other": "기타",
   "st.updated": "데이터 업데이트",

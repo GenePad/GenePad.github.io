@@ -5,7 +5,7 @@ import { useLang, usePageTitle } from "../i18n";
 import { dismissBoot } from "../boot";
 import { homeHref } from "../links";
 
-/* 实时数据页：公开的匿名使用统计聚合（总装机 / 活跃 / 时长 / 每周·每日新增、分系统堆叠）
+/* 实时数据页：公开的匿名使用统计聚合（总装机 / 活跃 / 时长 / 每周·每日新增 / 每日活跃、分系统堆叠）
    数据来自 /api/telemetry/stats（仅聚合计数，无任何 uuid 明细），
    该接口托管在 genepad.pages.dev，跨域调用（genepad.cn / GitHub Pages 镜像）依赖其 CORS 头 */
 
@@ -26,6 +26,9 @@ interface StatsData {
   weekly: { w: number; n: number }[];
   /* 近 30 个 UTC 自然日；接口尚未返回 daily 时（老 worker / 缓存响应）只保留每周视图 */
   daily?: { d: number; n: number }[];
+  /* 每日活跃用户：当日收到心跳上报的安装实例数（应用每 7 天上报一次，按日采样看趋势）；
+     接口尚未返回时（老 worker / 缓存响应）整块不渲染 */
+  dailyActive?: { d: number; n: number }[];
   /* 分系统时间序列（桶键与 weekly/daily 逐一对齐）；接口尚未返回时图表退回单色合计柱 */
   weeklyByOs?: { w: number; os: Partial<Record<OsKey, number>> }[];
   dailyByOs?: { d: number; os: Partial<Record<OsKey, number>> }[];
@@ -158,6 +161,17 @@ export default function Stats() {
   const PAD_BOTTOM = 26;
   const BAR_SLOT = CHART_W / Math.max(1, series.length);
   const BAR_W = Math.floor(BAR_SLOT * 0.56);
+
+  /* 每日活跃用户序列：与每日新增同一 30 天窗口；接口尚未返回该序列时整块隐藏 */
+  const dauReady = (data?.dailyActive?.length ?? 0) > 0;
+  const dauSeries = (data?.dailyActive ?? []).slice(-DAYS_SHOWN);
+  const dauMax = Math.max(1, ...dauSeries.map((d) => d.n));
+  const dauStep = Math.max(1, Math.ceil(dauSeries.length / 7));
+  const dauSlot = CHART_W / Math.max(1, dauSeries.length);
+  const dauBarW = Math.floor(dauSlot * 0.56);
+  const dauRange = dauSeries.length
+    ? `${fmtDay(dauSeries[0].d)} — ${fmtDay(dauSeries[dauSeries.length - 1].d + DAY_MS - 1)}`
+    : "";
 
   return (
     <div className="min-h-screen bg-paper font-sans text-ink">
@@ -377,6 +391,69 @@ export default function Stats() {
             )}
           </figure>
         </Reveal>
+
+        {/* 每日活跃用户柱状图（接口未返回 dailyActive 时整块不渲染） */}
+        {dauReady && (
+          <Reveal delay={220}>
+            <figure className="mt-14 border border-line">
+              <figcaption className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-6 py-4 md:px-8">
+                <span className="font-mono text-[11px] tracking-[0.2em] text-ink/55">
+                  {t("st.dau.title")}
+                </span>
+                <span className="font-mono text-[10px] tracking-[0.16em] text-ink/40">
+                  {dauRange}
+                </span>
+              </figcaption>
+              <svg
+                viewBox={`0 0 ${CHART_W} ${CHART_H + PAD_BOTTOM}`}
+                className="block h-auto w-full"
+                role="img"
+                aria-label={t("st.dau.caption") as string}
+              >
+                {/* 基准线 */}
+                <line x1="0" y1={CHART_H} x2={CHART_W} y2={CHART_H} stroke="currentColor" strokeWidth="1" className="text-line-strong" />
+                {dauSeries.map((d, i) => {
+                  const barH = d.n > 0 ? Math.max(3, (CHART_H - 18) * (d.n / dauMax)) : 0;
+                  return (
+                    <g key={d.d}>
+                      {barH > 0 && (
+                        <rect
+                          x={i * dauSlot + (dauSlot - dauBarW) / 2}
+                          y={CHART_H - barH}
+                          width={dauBarW}
+                          height={barH}
+                          fill="currentColor"
+                          className="text-gfp-deep"
+                        >
+                          <title>{`${fmtDay(d.d)} · ${fmt(d.n)}`}</title>
+                          <animate attributeName="height" from="0" to={barH} dur="0.5s" fill="freeze" />
+                          <animate attributeName="y" from={CHART_H} to={CHART_H - barH} dur="0.5s" fill="freeze" />
+                        </rect>
+                      )}
+                      <text
+                        x={i * dauSlot + dauSlot / 2}
+                        y={CHART_H + 17}
+                        textAnchor="middle"
+                        className="fill-ink/40"
+                        fontSize="9.5"
+                        fontFamily="ui-monospace, monospace"
+                        letterSpacing="0.08em"
+                      >
+                        {i % dauStep === 0 ? fmtDay(d.d) : ""}
+                      </text>
+                    </g>
+                  );
+                })}
+              </svg>
+              <p className="border-t border-line px-6 py-3 font-mono text-[10px] tracking-[0.14em] text-ink/45 md:px-8">
+                {t("st.dau.caption")}
+              </p>
+              <p className="border-t border-line px-6 py-3 font-mono text-[10px] tracking-[0.14em] text-ink/40 md:px-8">
+                {t("st.chart.note.daily")}
+              </p>
+            </figure>
+          </Reveal>
+        )}
 
         {/* 口径说明 + 更新时间 + CTA */}
         <Reveal delay={260}>
