@@ -1,16 +1,16 @@
 {
-  "version": "0.7.11",
-  "pub_date": "2026-10-29T11:00:00+08:00",
-  "notes": "# GenePad v0.7.11\n\n本次更新为比对视图的两处修复:AB1 测序文件与参考比对时头尾低质量区的折叠改按长度阈值判断,比对命中区间之间的跳转按钮不再落在 gap 内的插入段上。\n\n## 🐛 问题修复\n\n- AB1 测序文件比对时,头尾低质量区域改按长度阈值决定是否折叠:低质量区达到 100 碱基时保持展开显示,不足 100 碱基时才整段折叠,较长的低质段不再被误折叠\n- 比对泳道中命中区间之间的 < > 跳转按钮现在与 gap 内插入段保持同等留距,不再紧贴插入段;跳转空间被插入段占满时该按钮不再渲染",
+  "version": "0.7.12",
+  "pub_date": "2026-11-10T23:00:00+08:00",
+  "notes": "# GenePad v0.7.12\n\n本次更新集中修复测序比对视图中含大段未比对插入区（如 AB1 读段头/尾低质量区展开显示时）的数个显示问题，并调整线性图谱的比对泳道布局。\n\n## ✨ 改进\n\n- 线性图谱的比对泳道移至酶/引物标签阶梯之下、紧贴序列轴，比对条不再半透明，避免与底色叠加产生误读色段\n\n## 🐛 问题修复\n\n- 测序比对读段含大段插入区（未比对头/尾段展开显示）时：参考行大段「-」下方读段泳道不显示、读段虚线框在插入区断开成两截、单行视图滚动到插入段时整条比对轨道消失——一并修复；插入区首个碱基不再重复显示两列\n- 空白泳道「跳到下一命中」按钮不再浮在插入段之上；跳转目标改为最近的显示内容段（含插入段），不再越过整段插入区直接落到匹配区\n- 环形图谱：近竖直方向被挤压的外圈标签不再发散成异常长的横线\n- 比对色谱：反向链悬停提示改按原始读段序号显示（屏上最右端为 #1）",
   "platforms": {
     "windows-x86_64": {
-      "url": "https://genepad.pages.dev/release/windows/GenePad_0.7.11_Windows_amd64.zip"
+      "url": "https://genepad.pages.dev/release/windows/GenePad_0.7.12_Windows_amd64.zip"
     },
     "linux-x86_64-deb": {
-      "url": "https://genepad.pages.dev/release/linux/GenePad_0.7.11_Linux_amd64.deb"
+      "url": "https://genepad.pages.dev/release/linux/GenePad_0.7.12_Linux_amd64.deb"
     },
     "android": {
-      "url": "https://genepad.pages.dev/release/android/GenePad-v0.7.11-android-universal-release.apk"
+      "url": "https://genepad.pages.dev/release/android/GenePad-v0.7.12-android-universal-release.apk"
     }
   }
 }

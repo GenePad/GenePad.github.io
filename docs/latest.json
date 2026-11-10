@@ -1,19 +1,19 @@
 {
-  "version": "0.7.11",
-  "notes": "# GenePad v0.7.11\n\n本次更新为比对视图的两处修复:AB1 测序文件与参考比对时头尾低质量区的折叠改按长度阈值判断,比对命中区间之间的跳转按钮不再落在 gap 内的插入段上。\n\n## 🐛 问题修复\n\n- AB1 测序文件比对时,头尾低质量区域改按长度阈值决定是否折叠:低质量区达到 100 碱基时保持展开显示,不足 100 碱基时才整段折叠,较长的低质段不再被误折叠\n- 比对泳道中命中区间之间的 < > 跳转按钮现在与 gap 内插入段保持同等留距,不再紧贴插入段;跳转空间被插入段占满时该按钮不再渲染",
-  "pub_date": "2026-10-29T11:00:00+08:00",
+  "version": "0.7.12",
+  "notes": "# GenePad v0.7.12\n\n本次更新集中修复测序比对视图中含大段未比对插入区（如 AB1 读段头/尾低质量区展开显示时）的数个显示问题，并调整线性图谱的比对泳道布局。\n\n## ✨ 改进\n\n- 线性图谱的比对泳道移至酶/引物标签阶梯之下、紧贴序列轴，比对条不再半透明，避免与底色叠加产生误读色段\n\n## 🐛 问题修复\n\n- 测序比对读段含大段插入区（未比对头/尾段展开显示）时：参考行大段「-」下方读段泳道不显示、读段虚线框在插入区断开成两截、单行视图滚动到插入段时整条比对轨道消失——一并修复；插入区首个碱基不再重复显示两列\n- 空白泳道「跳到下一命中」按钮不再浮在插入段之上；跳转目标改为最近的显示内容段（含插入段），不再越过整段插入区直接落到匹配区\n- 环形图谱：近竖直方向被挤压的外圈标签不再发散成异常长的横线\n- 比对色谱：反向链悬停提示改按原始读段序号显示（屏上最右端为 #1）",
+  "pub_date": "2026-11-10T23:00:00+08:00",
   "platforms": {
     "windows-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRK20xNzladkFOWkZhTXJ2bTM1YzlQVThLUXc4TlRrd1FLYTZpTXNxMHM4NmFnZjBBT0FzMFA0dDlkMHpjVnVyVVp1UU9iakhTWlVnVUJZcW44eVIwblRHLzJFVWZzdWcwPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkzMjQxMDU4CWZpbGU6R2VuZVBhZF8wLjcuMTFfeDY0LXNldHVwLmV4ZQpOdmZBOFVta2JsRnJZeVJyc0QySkVzNGttQ25sbnd5RmRmRTM2K1kwdE0waUdKNUVSN2IxcTBXTUpmVVo5TmZCM20yOFhNK0lncS94SElCeUU1RS9EZz09Cg==",
-      "url": "https://genepad.pages.dev/release/windows/GenePad_0.7.11_Windows_amd64.exe"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRK20xNzladkFOWlBXNTBwYi9EOExoMHVtZ29LbXNXdVhTTGpWaktqb05oMmE4UDhDWmYwTTF3ODN6VHE3TkgxRzQvQTNrZ0lqUUJ4MDcvL2tORXk2VmhUMEduT3h1UndRPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk0MzIwNDM4CWZpbGU6R2VuZVBhZF8wLjcuMTJfeDY0LXNldHVwLmV4ZQpwb3oxSURzL2NlOWw5MlkxU1E1WlhQRVNoWXNlUmRQVTVzYzlGRzMrcjNibjAvcXdtMmlaRkNRSlp5OTVhQkFZbWdDcEFOd3RnZ1BMZjV4RGdzZVlBQT09Cg==",
+      "url": "https://genepad.pages.dev/release/windows/GenePad_0.7.12_Windows_amd64.exe"
     },
     "darwin-aarch64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRK20xNzladkFOWk95TElxTkc2UjRESGxmL0Z3U3BNc2tQdkdlWkxDclpxSXl5RjEwUVpOZ0M4WVVUMEFmY1ppRHFtMlI4RDBUYXNmczJOSWlXS3dHTTlmcEJ0QjRwV3dBPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkzMjQwMzc0CWZpbGU6R2VuZVBhZC5hcHAudGFyLmd6ClFGRjFRMmxXbGR0ZExRWFhXZTUzWng1ajJmQlBOZ3R6SExYSENTUVAyeGQyc3d1b3F6N0ZlWjkxemRmSDBmVHY2Z0QzYk01RHVUeGlyd1c4TjRtZ0J3PT0K",
-      "url": "https://genepad.pages.dev/release/mac/GenePad_0.7.11_Darwin_arm64.app.tar.gz"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRK20xNzladkFOWkJLZU80MVFtVjJHMUFTcDFyYWs1ZXpYaDMvRU9XZVB0SGJXNzM2UEg2SUxPTmRPN1RXRDNSMnN6L21TOGJlTXFGcVlWdElYRXZ3N2xaUDEwZk5aOVF3PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk0MzIwMTU5CWZpbGU6R2VuZVBhZC5hcHAudGFyLmd6CmNWTzNRa3hiVVVLT1EzWnVIVzI4a0lUR1RXN0tjNFZLL3NMcmlocENpUUMvdldoU3dIVkxGTDZMOElIUjJVSjFFMHNTd01CVE83K3Y4b3pXS2x3REFBPT0K",
+      "url": "https://genepad.pages.dev/release/mac/GenePad_0.7.12_Darwin_arm64.app.tar.gz"
     },
     "linux-x86_64-deb": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRK20xNzladkFOWk5jdG9XeVpIRGJWSnlGYTVpdTdSdVA5Tmg4ZHd0YVVqZ2tEUTVhMVBZVDJpMmRSaTlCZTZuUDBneVRtTmxEWHQxeE0rdlpFaytqV1BQNTlxZ2tXOEE0PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkzMjQwNjY2CWZpbGU6R2VuZVBhZF8wLjcuMTFfYW1kNjQuZGViCmFVWER6M0ErY3RiTEdjOWM5Z1FHRDlrNjY2RXhaRUxadVR4UVRyeFRWMXNPZlg3S1NZNzRNbEhZcTE0Wi8zaEtMK09YRHhNbTBiZ0VjN2JvYStXSUFRPT0K",
-      "url": "https://genepad.pages.dev/release/linux/GenePad_0.7.11_Linux_amd64.deb"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRK20xNzladkFOWks1SUw3cldrVUI3OWtmdlJPRktFOEhGU1dwaUJQOVdVU2tCdEQ0anBtanU5b2lvbjFjQysxeklhMklUcTB3Q3h3cTBsWTJ0bUM1bm90SWNmNGNWT1FJPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk0MzIwMTYzCWZpbGU6R2VuZVBhZF8wLjcuMTJfYW1kNjQuZGViCmY4cTBySm1ma1BlL1lhR0JSMkluZWIwN3YzL01aL3poNHdpdCsvRXFYYzhCYmRZSWNWaU9XWmUwNEFMRkRkVjVrTGxJTEpoRTVHRGVnRExuMkxNS0RRPT0K",
+      "url": "https://genepad.pages.dev/release/linux/GenePad_0.7.12_Linux_amd64.deb"
     }
   }
 }

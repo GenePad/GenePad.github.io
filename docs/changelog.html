@@ -52,7 +52,8 @@
                 <button class="doc-toc-toggle" type="button">目录</button>
                 <a class="doc-toc-home" href="/">← 返回首页</a>
                 <p class="doc-toc-group">版本</p>
-                <a class="current" href="#v0-7-11">v0.7.11</a>
+                <a class="current" href="#v0-7-12">v0.7.12</a>
+                <a href="#v0-7-11">v0.7.11</a>
                 <a href="#v0-7-9">v0.7.9</a>
                 <a href="#v0-7-8">v0.7.8</a>
                 <a href="#v0-7-7">v0.7.7</a>
@@ -78,6 +79,26 @@
                     </p>
                 </div>
 
+                <section class="doc-section" id="v0-7-12">
+                    <div class="section-heading">
+                        <p class="eyebrow">2026-11-10</p>
+                        <h2>v0.7.12</h2>
+                    </div>
+                    <p>本次更新集中修复测序比对视图中含大段未比对插入区（如 AB1 读段头/尾低质量区展开显示时）的数个显示问题，并调整线性图谱的比对泳道布局。</p>
+
+                    <h3>✨ 改进</h3>
+                    <ul>
+                        <li>线性图谱的比对泳道移至酶/引物标签阶梯之下、紧贴序列轴，比对条不再半透明，避免与底色叠加产生误读色段</li>
+                    </ul>
+
+                    <h3>🐛 问题修复</h3>
+                    <ul>
+                        <li>测序比对读段含大段插入区（未比对头/尾段展开显示）时：参考行大段「-」下方读段泳道不显示、读段虚线框在插入区断开成两截、单行视图滚动到插入段时整条比对轨道消失——一并修复；插入区首个碱基不再重复显示两列</li>
+                        <li>空白泳道「跳到下一命中」按钮不再浮在插入段之上；跳转目标改为最近的显示内容段（含插入段），不再越过整段插入区直接落到匹配区</li>
+                        <li>环形图谱：近竖直方向被挤压的外圈标签不再发散成异常长的横线</li>
+                        <li>比对色谱：反向链悬停提示改按原始读段序号显示（屏上最右端为 #1）</li>
+                    </ul>
+                </section>
                 <section class="doc-section" id="v0-7-11">
                     <div class="section-heading">
                         <p class="eyebrow">2026-10-29</p>
