@@ -300,7 +300,7 @@ const ko: Record<TKey, ReactNode> = {
   "pr.eyebrow": "Ecosystem Projects",
   "pr.title": "GenePad 생태계 프로젝트",
   "pr.lead":
-    "분자 클로닝 툴체인을 중심으로 GenePad 조직은 GitHub에서 여러 독립 프로젝트를 관리합니다. 출처를 추적할 수 있는 플라스미드 공통 요소 라이브러리부터 조직 특이적 코돈 사용 통계 파이프라인까지, 각 프로젝트는 메인 프로그램과 독립적이며 따로 가져다 쓸 수 있습니다. 연구자와 개발자의 반복 작업을 줄이는 것이 목표입니다.",
+    "분자 클로닝 툴체인을 중심으로 GenePad는 여러 독립 프로젝트를 관리합니다. 출처를 추적할 수 있는 플라스미드 공통 요소 라이브러리와 조직 특이적 코돈 사용 통계 파이프라인부터 AAV 연구를 위한 문헌 Q&A 어시스턴트까지, 각 프로젝트는 메인 프로그램과 독립적이며 따로 가져다 쓸 수 있습니다. 연구자와 개발자의 반복 작업을 줄이는 것이 목표입니다.",
   "pr.specs": "데이터 사양",
   "pr.cf.head": "플라스미드 공통 요소 라이브러리",
   "pr.cf.title": "플라스미드 구축용 공통 요소 서열 라이브러리",
@@ -316,8 +316,15 @@ const ko: Record<TKey, ReactNode> = {
   "pr.ca.metricsTitle": "출력 지표",
   "pr.ca.usage":
     "python scripts/build_atlas.py가 GTEx / GENCODE 입력으로 모든 조직 표를 재구축하며, check_release.py와 package_release.py가 릴리스 전 검증과 패키징을 담당합니다.",
+  "pr.aav.head": "AAV 문헌 어시스턴트",
+  "pr.aav.title": "AAV 연구용 온라인 문헌 Q&A 도구",
+  "pr.aav.desc":
+    "아데노 연관 바이러스(AAV) 연구를 위한 온라인 문헌 Q&A 도구입니다. 대화형으로 AAV 관련 문헌의 핵심 정보를 조회하여 문헌 조사와 벡터 설계를 돕습니다. 브라우저에서 바로 사용하며 설치가 필요 없고, GenePad 본체와 독립적으로 동작합니다.",
+  "pr.aav.featsTitle": "도구 특징",
+  "pr.aav.usage":
+    "브라우저에서 aav.genepad.cn을 열고 자연어로 질문하면 바로 조회를 시작할 수 있습니다. GenePad가 공식 호스팅하고 온라인으로 업데이트되므로 설치가 필요 없습니다.",
   "pr.org.text":
-    "위 프로젝트는 GenePad 메인 프로젝트에서 시작되어 같은 기준으로 관리됩니다. 소스 코드와 진행 상황은 GitHub 조직 페이지에서 확인할 수 있으며, Issue 피드백을 환영합니다.",
+    "위 프로젝트는 GenePad 메인 프로젝트에서 시작되어 같은 기준으로 관리되며, AAV 문헌 어시스턴트는 공식 호스팅 온라인 서비스입니다. 오픈소스 프로젝트의 소스 코드와 진행 상황은 GitHub 조직 페이지에서 확인할 수 있으며, Issue 피드백을 환영합니다.",
 
   // 라이브러리 페이지 (유전자 파일 라이브러리 홍보 페이지)
   "lib.eyebrow": "Gene File Library",

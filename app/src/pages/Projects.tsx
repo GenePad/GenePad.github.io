@@ -4,7 +4,7 @@ import Footer from "../sections/Footer";
 import { useLang, usePageTitle, type Lang } from "../i18n";
 import { dismissBoot } from "../boot";
 
-/* 生态项目页：GenePad 组织的两个独立小项目（commonfeatures / CodonAtlas）
+/* 生态项目页：GenePad 的三个独立小项目（commonfeatures / CodonAtlas / AAV 文献助手）
    叙述文案走 i18n（pr.*），规格表与分类 chips 属于结构化数据，按语言记录在本文件内。
    这批术语性短标签只录了 zh/en：镜像语言回落英文（pick），要做翻译时补对应键即可 */
 
@@ -15,6 +15,7 @@ const pick = (l: L, lang: Lang): string => l[lang] ?? l.en;
 const CF_REPO = "https://github.com/GenePad/genepad-commonfeatures/";
 const CF_FEATURES = "https://github.com/GenePad/genepad-commonfeatures/blob/main/docs/FEATURES.md";
 const CA_REPO = "https://github.com/GenePad/GenePadCodonAtlas";
+const AAV_URL = "https://aav.genepad.cn/";
 const ORG_URL = "https://github.com/GenePad";
 
 const CF_CATS: { name: L; n: number }[] = [
@@ -131,6 +132,44 @@ const CA_METRICS = [
   "SYNONYMOUS FRACTION",
   "PREFERRED CODONS",
   "PER-TISSUE TABLES",
+];
+
+const AAV_SPECS: { k: L; v: L }[] = [
+  {
+    k: { zh: "定位", en: "Focus" },
+    v: {
+      zh: "腺相关病毒（AAV）研究方向",
+      en: "Adeno-associated virus (AAV) research",
+    },
+  },
+  {
+    k: { zh: "交互", en: "Interface" },
+    v: {
+      zh: "对话式提问，用自然语言查询文献信息",
+      en: "Conversational prompts; query the literature in plain language",
+    },
+  },
+  {
+    k: { zh: "获取", en: "Access" },
+    v: {
+      zh: "aav.genepad.cn · 浏览器即开即用",
+      en: "aav.genepad.cn · ready in the browser",
+    },
+  },
+  {
+    k: { zh: "维护", en: "Maintained" },
+    v: {
+      zh: "GenePad 官方托管，与主项目同一标准迭代",
+      en: "Hosted by GenePad, iterated to the same standard",
+    },
+  },
+];
+
+const AAV_FEATS: L[] = [
+  { zh: "对话式文献问答", en: "Conversational literature Q&A" },
+  { zh: "AAV 领域聚焦", en: "AAV-focused" },
+  { zh: "在线使用 · 免安装", en: "Online · no installation" },
+  { zh: "官方托管 · 持续迭代", en: "Officially hosted · continuously updated" },
 ];
 
 function SpecTable({ rows, lang }: { rows: { k: L; v: L }[]; lang: Lang }) {
@@ -332,6 +371,88 @@ export default function Projects() {
                   className="group inline-flex items-center gap-2 text-gfp-deep hover:underline"
                 >
                   GITHUB REPOSITORY
+                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+                </a>
+              </div>
+            </article>
+          </Reveal>
+        </section>
+
+        {/* 03 · AAV 文献助手 */}
+        <section className="mb-16">
+          <Reveal>
+            <div className="mb-8 flex items-end justify-between gap-6 border-t-2 border-ink pt-6">
+              <h2 className="flex items-baseline gap-4">
+                <span className="font-mono text-[12px] font-medium tracking-[0.2em] text-gfp-deep">
+                  03
+                </span>
+                <span className="text-[24px] font-bold leading-none tracking-tight md:text-[30px]">
+                  {t("pr.aav.head")}
+                </span>
+              </h2>
+              <span className="hidden pb-1 font-mono text-[11px] tracking-[0.3em] uppercase text-ink/45 sm:block">
+                AAV ASSISTANT
+              </span>
+            </div>
+          </Reveal>
+
+          <Reveal>
+            <article className="border border-line bg-paper">
+              <div className="border-b border-line p-6 md:p-8">
+                <span className="font-mono text-[10px] tracking-[0.22em] text-gfp-deep">
+                  LITERATURE Q&amp;A · CONVERSATIONAL · ONLINE
+                </span>
+                <div className="mt-3 flex flex-wrap items-baseline gap-x-4 gap-y-1.5">
+                  <h3 className="text-[22px] font-bold tracking-tight md:text-[26px]">
+                    {t("pr.aav.title")}
+                  </h3>
+                  <span className="font-mono text-[12px] text-ink/50">aav.genepad.cn</span>
+                  <span className="border border-line-strong px-1.5 py-0.5 font-mono text-[9.5px] tracking-[0.14em] text-ink/55">
+                    ONLINE SERVICE
+                  </span>
+                </div>
+                <p className="mt-4 max-w-3xl text-[14px] leading-7 text-ink/70">
+                  {t("pr.aav.desc")}
+                </p>
+              </div>
+
+              <div className="grid gap-px bg-line lg:grid-cols-2">
+                <div className="bg-paper p-6 md:p-8">
+                  <p className="font-mono text-[10px] tracking-[0.26em] uppercase text-ink/45">
+                    {t("pr.specs")}
+                  </p>
+                  <SpecTable rows={AAV_SPECS} lang={lang} />
+                </div>
+                <div className="flex flex-col bg-paper p-6 md:p-8">
+                  <p className="font-mono text-[10px] tracking-[0.26em] uppercase text-ink/45">
+                    {t("pr.aav.featsTitle")}
+                  </p>
+                  <ul className="mt-4 flex flex-wrap gap-2">
+                    {AAV_FEATS.map((f) => (
+                      <li
+                        key={f.en}
+                        className="border border-line-strong bg-ink/[0.02] px-2.5 py-1 text-[12px] text-ink/70"
+                      >
+                        {pick(f, lang)}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-auto pt-6">
+                    <div className="border-l-2 border-gfp-deep bg-ink/[0.03] px-4 py-3.5">
+                      <p className="text-[12.5px] leading-6 text-ink/70">{t("pr.aav.usage")}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-x-8 gap-y-2 border-t border-line px-6 py-4 font-mono text-[11px] tracking-[0.16em] md:px-8">
+                <a
+                  href={AAV_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group inline-flex items-center gap-2 text-gfp-deep hover:underline"
+                >
+                  OPEN TOOL · AAV.GENEPAD.CN
                   <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                 </a>
               </div>

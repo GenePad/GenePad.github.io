@@ -312,7 +312,7 @@ const fr: Record<TKey, ReactNode> = {
   "pr.eyebrow": "Projets de l’écosystème",
   "pr.title": "Projets de l’écosystème GenePad",
   "pr.lead":
-    "Autour de la chaîne d’outils de clonage moléculaire, l’organisation GenePad maintient sur GitHub plusieurs projets indépendants — d’une bibliothèque d’éléments plasmidiques communs traçables à un pipeline de statistiques d’usage des codons spécifique aux tissus. Chaque projet se suffit à lui-même et peut être utilisé séparément, dans le but d’alléger le travail répétitif des chercheurs et des développeurs.",
+    "Autour de la chaîne d’outils de clonage moléculaire, GenePad maintient plusieurs projets indépendants — d’une bibliothèque d’éléments plasmidiques communs traçables et d’un pipeline de statistiques d’usage des codons spécifique aux tissus à un assistant de questions-réponses sur la littérature pour la recherche AAV. Chaque projet se suffit à lui-même et peut être utilisé séparément, dans le but d’alléger le travail répétitif des chercheurs et des développeurs.",
   "pr.specs": "Spécifications",
   "pr.cf.head": "Éléments plasmidiques communs",
   "pr.cf.title": "Bibliothèque de séquences d’éléments communs pour la construction plasmidique",
@@ -328,8 +328,15 @@ const fr: Record<TKey, ReactNode> = {
   "pr.ca.metricsTitle": "Indicateurs de sortie",
   "pr.ca.usage":
     "python scripts/build_atlas.py reconstruit toutes les tables tissulaires à partir des entrées GTEx / GENCODE ; check_release.py et package_release.py assurent la validation avant publication et l’empaquetage.",
+  "pr.aav.head": "Assistant de littérature AAV",
+  "pr.aav.title": "Questions-réponses en ligne sur la littérature pour la recherche AAV",
+  "pr.aav.desc":
+    "Un outil en ligne de questions-réponses sur la littérature pour la recherche sur le virus adéno-associé (AAV) : interrogez en mode conversationnel les informations clés de la littérature sur les AAV, pour les revues de littérature et la conception de vecteurs. Il s’utilise directement dans le navigateur, sans installation, et reste indépendant du programme principal GenePad.",
+  "pr.aav.featsTitle": "Points forts",
+  "pr.aav.usage":
+    "Ouvrez aav.genepad.cn dans votre navigateur et posez vos questions en langage naturel pour lancer la recherche ; l’outil est hébergé officiellement par GenePad et mis à jour en ligne — aucune installation requise.",
   "pr.org.text":
-    "Ces projets sont incubés par le projet principal GenePad et maintenus selon le même standard. Pour le code source et l’avancement, consultez la page de l’organisation GitHub ; les issues et retours sont bienvenus.",
+    "Ces projets sont incubés par le projet principal GenePad et maintenus selon le même standard ; l’assistant de littérature AAV est un service en ligne hébergé officiellement. Pour le code source et l’avancement des projets open source, consultez la page de l’organisation GitHub ; les issues et retours sont bienvenus.",
 
   // Page bibliothèque de fichiers géniques
   "lib.eyebrow": "Bibliothèque de fichiers géniques",

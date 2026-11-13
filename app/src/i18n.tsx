@@ -314,7 +314,7 @@ const zhDict = {
     "pr.eyebrow": "Ecosystem Projects · 生态项目",
     "pr.title": "GenePad 生态项目",
     "pr.lead":
-      "围绕分子克隆工具链，GenePad 组织在 GitHub 上维护若干独立项目：从可溯源的质粒通用元件库，到组织特异性密码子统计管线。各项目与主程序相互独立，可单独取用，旨在为科研工作者与开发者减少重复性工作。",
+      "围绕分子克隆工具链，GenePad 维护若干独立项目：从可溯源的质粒通用元件库、组织特异性密码子统计管线，到面向 AAV 研究的文献问答助手。各项目与主程序相互独立，可单独取用，旨在为科研工作者与开发者减少重复性工作。",
     "pr.specs": "数据规格",
     "pr.cf.head": "质粒通用元件库",
     "pr.cf.title": "质粒构建通用元件序列库",
@@ -330,8 +330,15 @@ const zhDict = {
     "pr.ca.metricsTitle": "输出指标",
     "pr.ca.usage":
       "python scripts/build_atlas.py 按 GTEx / GENCODE 输入重建全部组织表；check_release.py 与 package_release.py 负责发布前校验与打包。",
+    "pr.aav.head": "AAV 文献助手",
+    "pr.aav.title": "AAV 文献问答在线工具",
+    "pr.aav.desc":
+      "面向腺相关病毒（AAV）研究的在线文献问答工具：以对话方式查询 AAV 相关文献中的关键信息，辅助文献调研与载体设计。浏览器直接使用，无需安装，与 GenePad 主程序相互独立。",
+    "pr.aav.featsTitle": "工具特性",
+    "pr.aav.usage":
+      "在浏览器中打开 aav.genepad.cn，用自然语言提问即可开始查询；工具由 GenePad 官方托管、在线迭代，无需安装。",
     "pr.org.text":
-      "上述项目由 GenePad 主项目孵化，并按同一标准维护。源码与进展请访问 GitHub 组织主页，欢迎提交 Issue 反馈。",
+      "上述项目由 GenePad 主项目孵化，并按同一标准维护；AAV 文献助手为官方托管的在线服务。开源项目的源码与进展请访问 GitHub 组织主页，欢迎提交 Issue 反馈。",
 
     // Library page（基因文件库宣传页）
     "lib.eyebrow": "Gene File Library · 基因文件库",
@@ -1112,7 +1119,7 @@ const dict: Record<Lang, Record<TKey, ReactNode>> = {
     "pr.eyebrow": "Ecosystem Projects",
     "pr.title": "GenePad Ecosystem Projects",
     "pr.lead":
-      "Around the molecular cloning toolchain, the GenePad organization maintains a number of independent projects on GitHub — from a traceable plasmid common-features library to a tissue-specific codon usage pipeline. Each project stands alone and can be used separately, aiming to reduce repeated work for researchers and developers.",
+      "Around the molecular cloning toolchain, GenePad maintains a number of independent projects — from a traceable plasmid common-features library and a tissue-specific codon usage pipeline to a literature Q&A assistant for AAV research. Each project stands alone and can be used separately, aiming to reduce repeated work for researchers and developers.",
     "pr.specs": "Specifications",
     "pr.cf.head": "Plasmid Common Features",
     "pr.cf.title": "Common feature sequence library for plasmid construction",
@@ -1128,8 +1135,15 @@ const dict: Record<Lang, Record<TKey, ReactNode>> = {
     "pr.ca.metricsTitle": "Output metrics",
     "pr.ca.usage":
       "python scripts/build_atlas.py rebuilds every tissue table from GTEx / GENCODE inputs; check_release.py and package_release.py handle pre-release validation and packaging.",
+    "pr.aav.head": "AAV Literature Assistant",
+    "pr.aav.title": "Online literature Q&A for AAV research",
+    "pr.aav.desc":
+      "An online literature Q&A tool for adeno-associated virus (AAV) research: query key facts from the AAV literature conversationally to support literature surveys and vector design. It runs in the browser with nothing to install and stands apart from the main GenePad app.",
+    "pr.aav.featsTitle": "Highlights",
+    "pr.aav.usage":
+      "Open aav.genepad.cn in your browser and ask in plain language to start querying; the tool is officially hosted by GenePad and iterated online — no installation required.",
     "pr.org.text":
-      "These projects are incubated by the main GenePad project and maintained to the same standard. For source code and progress, visit the GitHub organization; issues and feedback are welcome.",
+      "These projects are incubated by the main GenePad project and maintained to the same standard; the AAV Literature Assistant is an officially hosted online service. For the source code and progress of the open-source projects, visit the GitHub organization — issues and feedback are welcome.",
 
     // Library page
     "lib.eyebrow": "Gene File Library",
