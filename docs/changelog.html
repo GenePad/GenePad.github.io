@@ -52,7 +52,8 @@
                 <button class="doc-toc-toggle" type="button">目录</button>
                 <a class="doc-toc-home" href="/">← 返回首页</a>
                 <p class="doc-toc-group">版本</p>
-                <a class="current" href="#v0-7-12">v0.7.12</a>
+                <a class="current" href="#v0-7-13">v0.7.13</a>
+                <a href="#v0-7-12">v0.7.12</a>
                 <a href="#v0-7-11">v0.7.11</a>
                 <a href="#v0-7-9">v0.7.9</a>
                 <a href="#v0-7-8">v0.7.8</a>
@@ -79,6 +80,34 @@
                     </p>
                 </div>
 
+                <section class="doc-section" id="v0-7-13">
+                    <div class="section-heading">
+                        <p class="eyebrow">2026-11-26</p>
+                        <h2>v0.7.13</h2>
+                    </div>
+                    <p>本次更新为 AI 助手接入分子克隆工具族，并带来新建序列、测序比对、FASTQ 等多处改进与修复。</p>
+
+                    <h3>✨ 新功能</h3>
+                    <ul>
+                        <li>AI 助手新增分子克隆工具族：引物设计、模拟 PCR、限制酶切、无缝连接与连接组装、区域替换，产物携带 SnapGene 编辑历史；环形产物克隆后自动旋转回源质粒起点</li>
+                        <li>序列右键菜单新增「复制氨基酸」，支持正/反义链</li>
+                        <li>新建序列：粘贴 4–20 kb 自动勾选「环状质粒」；支持剪贴板 feature 标注随行带入（默认勾选，取消则不带入）；自动标注窗弹出即自动检索</li>
+                    </ul>
+
+                    <h3>✨ 改进</h3>
+                    <ul>
+                        <li>酶切位点设置：「添加酶到列表」更名为「搜索酶」，输入框提示改为「输入酶以搜索/定位」</li>
+                    </ul>
+
+                    <h3>🐛 问题修复</h3>
+                    <ul>
+                        <li>测序比对：文档色谱在比对插入列/缺口列处的跳跃截断（含单行模式）；只读文档跑比对不再被误标为有未保存改动</li>
+                        <li>粘贴替换选区时，完全落在被替换区段内的 feature 标注随碱基一并移除</li>
+                        <li>比对选区信息展示：多选工具栏常显、状态栏已选长度按泳道实际碱基数、拖选气泡固定在上方按方向展开</li>
+                        <li>序列搜索框聚焦时「下一个/上一个匹配」快捷键不再失效</li>
+                        <li>FASTQ 滤除原因「过短」拆分为三个具体原因：裁切裁空读段、裁切窗口未覆盖配对一端、短于最小长度（附阈值）</li>
+                    </ul>
+                </section>
                 <section class="doc-section" id="v0-7-12">
                     <div class="section-heading">
                         <p class="eyebrow">2026-11-10</p>

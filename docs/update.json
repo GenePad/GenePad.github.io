@@ -1,16 +1,16 @@
 {
-  "version": "0.7.12",
-  "pub_date": "2026-11-10T23:00:00+08:00",
-  "notes": "# GenePad v0.7.12\n\n本次更新集中修复测序比对视图中含大段未比对插入区（如 AB1 读段头/尾低质量区展开显示时）的数个显示问题，并调整线性图谱的比对泳道布局。\n\n## ✨ 改进\n\n- 线性图谱的比对泳道移至酶/引物标签阶梯之下、紧贴序列轴，比对条不再半透明，避免与底色叠加产生误读色段\n\n## 🐛 问题修复\n\n- 测序比对读段含大段插入区（未比对头/尾段展开显示）时：参考行大段「-」下方读段泳道不显示、读段虚线框在插入区断开成两截、单行视图滚动到插入段时整条比对轨道消失——一并修复；插入区首个碱基不再重复显示两列\n- 空白泳道「跳到下一命中」按钮不再浮在插入段之上；跳转目标改为最近的显示内容段（含插入段），不再越过整段插入区直接落到匹配区\n- 环形图谱：近竖直方向被挤压的外圈标签不再发散成异常长的横线\n- 比对色谱：反向链悬停提示改按原始读段序号显示（屏上最右端为 #1）",
+  "version": "0.7.13",
+  "pub_date": "2026-11-26T12:00:00+08:00",
+  "notes": "# GenePad v0.7.13\n\n本次更新为 AI 助手接入分子克隆工具族，并带来新建序列、测序比对、FASTQ 等多处改进与修复。\n\n## ✨ 新功能\n\n- AI 助手新增分子克隆工具族：引物设计、模拟 PCR、限制酶切、无缝连接与连接组装、区域替换，产物携带 SnapGene 编辑历史；环形产物克隆后自动旋转回源质粒起点\n- 序列右键菜单新增「复制氨基酸」，支持正/反义链\n- 新建序列：粘贴 4–20 kb 自动勾选「环状质粒」；支持剪贴板 feature 标注随行带入（默认勾选，取消则不带入）；自动标注窗弹出即自动检索\n\n## ✨ 改进\n\n- 酶切位点设置：「添加酶到列表」更名为「搜索酶」，输入框提示改为「输入酶以搜索/定位」\n\n## 🐛 问题修复\n\n- 测序比对：文档色谱在比对插入列/缺口列处的跳跃截断（含单行模式）；只读文档跑比对不再被误标为有未保存改动\n- 粘贴替换选区时，完全落在被替换区段内的 feature 标注随碱基一并移除\n- 比对选区信息展示：多选工具栏常显、状态栏已选长度按泳道实际碱基数、拖选气泡固定在上方按方向展开\n- 序列搜索框聚焦时「下一个/上一个匹配」快捷键不再失效\n- FASTQ 滤除原因「过短」拆分为三个具体原因：裁切裁空读段、裁切窗口未覆盖配对一端、短于最小长度（附阈值）",
   "platforms": {
     "windows-x86_64": {
-      "url": "https://genepad.pages.dev/release/windows/GenePad_0.7.12_Windows_amd64.zip"
+      "url": "https://genepad.pages.dev/release/windows/GenePad_0.7.13_Windows_amd64.zip"
     },
     "linux-x86_64-deb": {
-      "url": "https://genepad.pages.dev/release/linux/GenePad_0.7.12_Linux_amd64.deb"
+      "url": "https://genepad.pages.dev/release/linux/GenePad_0.7.13_Linux_amd64.deb"
     },
     "android": {
-      "url": "https://genepad.pages.dev/release/android/GenePad-v0.7.12-android-universal-release.apk"
+      "url": "https://genepad.pages.dev/release/android/GenePad-v0.7.13-android-universal-release.apk"
     }
   }
 }
